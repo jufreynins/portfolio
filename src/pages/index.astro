@@ -1,17 +1,208 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/Container.astro';
+import Button from '../components/Button.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import TechStack from '../components/TechStack.astro';
+import ContactForm from '../components/ContactForm.astro';
+import Reveal from '../components/Reveal.astro';
+import { siteConfig } from '../config/site';
+import { services } from '../data/services';
+import { projects } from '../data/projects';
 
+const yearsExperience = new Date().getFullYear() - siteConfig.yearStarted;
+
+const trustPoints = [
+  `${yearsExperience}+ Years of Experience`,
+  'WordPress & Frontend Expertise',
+  'International & Remote Collaboration',
+  'Responsive, Performance-Focused Development',
+];
+
+const processSteps = [
+  { title: 'Discovery', description: 'Understanding your goals, audience, and technical requirements before any design begins.' },
+  { title: 'Planning & Design', description: 'Mapping the site structure and visual direction so every page has a clear purpose.' },
+  { title: 'Development', description: 'Building on WordPress with clean, maintainable code and the right tools for the job.' },
+  { title: 'Responsive QA', description: 'Testing across devices and browsers to catch issues before your visitors do.' },
+  { title: 'Launch & Support', description: 'Deploying with confidence, then staying available for updates and maintenance.' },
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout>
+  <!-- Hero -->
+  <section id="home" class="relative flex min-h-[92vh] items-center overflow-hidden pt-28 pb-20">
+    <div class="pointer-events-none absolute inset-0 -z-10">
+      <div class="absolute left-1/2 top-[-10%] h-[600px] w-[900px] -translate-x-1/2 rounded-full opacity-30 blur-3xl" style="background: radial-gradient(circle, rgba(110,231,255,0.25), transparent 70%);"></div>
+      <div class="absolute right-[-10%] bottom-[-10%] h-[500px] w-[500px] rounded-full opacity-20 blur-3xl" style="background: radial-gradient(circle, rgba(167,139,250,0.3), transparent 70%);"></div>
+    </div>
+
+    <Container class="flex flex-col items-start gap-8">
+      <div class="reveal inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-1.5 text-xs font-medium text-white/80" data-reveal>
+        <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
+        Available for new projects &middot; {yearsExperience}+ years experience
+      </div>
+
+      <h1 class="reveal max-w-4xl text-4xl font-extrabold leading-[1.08] tracking-tight text-white text-balance sm:text-5xl md:text-6xl lg:text-7xl" data-reveal style="animation-delay:80ms">
+        Websites that make your business look as good as the work you do.
+      </h1>
+
+      <p class="reveal max-w-2xl text-lg leading-relaxed sm:text-xl" style="color: var(--color-muted); animation-delay:160ms" data-reveal>
+        I'm {siteConfig.name}, a {siteConfig.title} with over {yearsExperience} years of experience building clean, responsive, high-performing WordPress websites for businesses, agencies, and entrepreneurs around the world.
+      </p>
+
+      <div class="reveal flex flex-col gap-4 sm:flex-row" data-reveal style="animation-delay:240ms">
+        <Button href="#work" variant="primary">View My Work</Button>
+        <Button href="#contact" variant="secondary">Let's Work Together</Button>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Trust strip -->
+  <section class="border-y border-white/10 py-8">
+    <Container>
+      <div class="grid grid-cols-2 gap-y-6 gap-x-4 sm:grid-cols-4">
+        {trustPoints.map((point, i) => (
+          <div class="reveal flex items-center gap-2 text-center sm:text-left" data-reveal style={`animation-delay:${i * 60}ms`}>
+            <p class="text-sm font-medium text-white/75 sm:text-base">{point}</p>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="py-24 sm:py-32">
+    <Container class="grid grid-cols-1 gap-14 lg:grid-cols-2 lg:gap-20">
+      <SectionHeading
+        eyebrow="About"
+        title="A developer who treats your website like it's my own business."
+        description="I help businesses, agencies, and entrepreneurs turn ideas into fast, reliable, and visually polished websites — built to last, not just to launch."
+      />
+
+      <div class="reveal flex flex-col gap-6" data-reveal style="animation-delay:120ms">
+        <p class="leading-relaxed" style="color: var(--color-muted)">
+          For over {yearsExperience} years, I've specialized in WordPress development — from Elementor Pro builds and custom post types to full site migrations and performance tuning. I work closely with remote teams and international clients, so clear communication and dependable delivery are part of how I operate, not an afterthought.
+        </p>
+        <p class="leading-relaxed" style="color: var(--color-muted)">
+          My approach is practical: understand what the business actually needs, build it with clean and maintainable code, and make sure it holds up on every screen size. Whether it's a landing page built for conversions or a full website overhaul, I focus on the details that make a site feel trustworthy — fast load times, responsive layouts, and interfaces that just work.
+        </p>
+        <ul class="grid grid-cols-1 gap-3 pt-2 sm:grid-cols-2">
+          {[
+            'WordPress & Elementor Pro',
+            'Custom Post Types & ACF',
+            'WooCommerce & JetEngine',
+            'Website migrations',
+            'Performance optimization',
+            'Remote & international teams',
+          ].map((item) => (
+            <li class="flex items-center gap-2 text-sm text-white/80">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--color-accent); flex-shrink:0;"><path d="M20 6L9 17l-5-5"/></svg>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="py-24 sm:py-32" style="background: var(--color-surface);">
+    <Container class="flex flex-col gap-14">
+      <SectionHeading
+        eyebrow="Services"
+        title="What I can build for you"
+        description="From full WordPress builds to focused technical support, here's how I can help your business grow online."
+        align="center"
+      />
+      <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {services.map((service, i) => (
+          <ServiceCard service={service} delay={i * 70} />
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- Selected Work -->
+  <section id="work" class="py-24 sm:py-32">
+    <Container class="flex flex-col gap-14">
+      <SectionHeading
+        eyebrow="Selected Work"
+        title="Recent projects"
+        description="A selection of WordPress websites I've designed and developed for real businesses and organizations."
+        align="center"
+      />
+      <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        {projects.map((project, i) => (
+          <ProjectCard project={project} priority={i < 3} />
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- Skills -->
+  <section class="py-24 sm:py-32" style="background: var(--color-surface);">
+    <Container class="flex flex-col gap-14">
+      <SectionHeading
+        eyebrow="Skills & Technology"
+        title="Tools I work with"
+        description="A focused toolkit built around WordPress, dynamic content, and reliable hosting."
+        align="center"
+      />
+      <TechStack />
+    </Container>
+  </section>
+
+  <!-- Process -->
+  <section class="py-24 sm:py-32">
+    <Container class="flex flex-col gap-14">
+      <SectionHeading
+        eyebrow="How I Work"
+        title="A clear, dependable process"
+        description="Every project follows the same reliable path from first conversation to launch and beyond."
+        align="center"
+      />
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-5">
+        {processSteps.map((step, i) => (
+          <div class="reveal relative flex flex-col gap-3 rounded-2xl border border-white/10 p-6" style={`background: var(--color-surface); animation-delay:${i * 80}ms;`} data-reveal>
+            <span class="text-sm font-bold" style="color: var(--color-accent)">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="text-base font-bold text-white">{step.title}</h3>
+            <p class="text-sm leading-relaxed" style="color: var(--color-muted)">{step.description}</p>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="py-24 sm:py-32" style="background: var(--color-surface);">
+    <Container class="grid grid-cols-1 gap-14 lg:grid-cols-2 lg:gap-20">
+      <div class="flex flex-col gap-6">
+        <SectionHeading
+          eyebrow="Contact"
+          title="Ready to start a project?"
+          description="Tell me a bit about what you're building. I typically reply within one business day."
+        />
+        <Reveal delay={100} class="flex flex-col gap-4">
+          <a href={`mailto:${siteConfig.email}`} class="flex items-center gap-3 text-white/85 hover:text-white transition-colors">
+            <span class="flex h-10 w-10 items-center justify-center rounded-full border border-white/15">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>
+            </span>
+            {siteConfig.email}
+          </a>
+          <a href={siteConfig.cvPath} target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-white/85 hover:text-white transition-colors">
+            <span class="flex h-10 w-10 items-center justify-center rounded-full border border-white/15">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </span>
+            Download CV
+          </a>
+        </Reveal>
+      </div>
+
+      <div class="reveal rounded-3xl border border-white/10 p-6 sm:p-8" style="background: var(--color-ink); animation-delay:120ms" data-reveal>
+        <ContactForm />
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

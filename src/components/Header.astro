@@ -1,0 +1,156 @@
+---
+import { siteConfig } from '../config/site';
+import Container from './Container.astro';
+import Button from './Button.astro';
+---
+
+<header id="site-header" class="fixed inset-x-0 top-0 z-50 transition-all duration-300" data-header>
+  <div class="absolute inset-0 -z-10 opacity-0 transition-opacity duration-300 glass" data-header-bg></div>
+  <div class="absolute bottom-0 left-0 h-[2px] bg-white/0 transition-[width] duration-150 ease-out" data-scroll-progress style="background: linear-gradient(90deg, var(--color-accent), var(--color-accent-2)); width: 0%;"></div>
+
+  <Container class="flex items-center justify-between py-4">
+    <a href="#home" class="flex items-center gap-2 text-lg font-bold tracking-tight text-white" aria-label={`${siteConfig.name} — Home`}>
+      <span class="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-sm font-bold" style="background: linear-gradient(135deg, rgba(110,231,255,0.15), rgba(167,139,250,0.15));">
+        {siteConfig.initials}
+      </span>
+      <span class="hidden sm:inline">{siteConfig.name}</span>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-8" aria-label="Primary">
+      {siteConfig.nav.map((item) => (
+        <a
+          href={item.href}
+          class="nav-link relative text-sm font-medium text-white/75 transition-colors hover:text-white py-1"
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="hidden md:flex items-center gap-3">
+      <Button href={siteConfig.cvPath} variant="secondary" target="_blank" rel="noopener noreferrer">
+        Download CV
+      </Button>
+      <Button href="#contact" variant="primary">Let's Talk</Button>
+    </div>
+
+    <button
+      type="button"
+      class="md:hidden inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-white"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      aria-label="Toggle menu"
+      data-menu-toggle
+    >
+      <svg data-icon-open xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <svg data-icon-close class="hidden" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </Container>
+
+  <div id="mobile-menu" class="md:hidden hidden glass mx-4 mb-4 rounded-2xl px-6 py-6" data-mobile-menu>
+    <nav class="flex flex-col gap-1" aria-label="Mobile">
+      {siteConfig.nav.map((item) => (
+        <a
+          href={item.href}
+          class="rounded-lg px-3 py-3 text-base font-medium text-white/85 hover:bg-white/5 hover:text-white"
+          data-mobile-link
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+    <div class="mt-4 flex flex-col gap-3 border-t border-white/10 pt-4">
+      <Button href={siteConfig.cvPath} variant="secondary" class="w-full" target="_blank" rel="noopener noreferrer">
+        Download CV
+      </Button>
+      <Button href="#contact" variant="primary" class="w-full">Let's Talk</Button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 2px;
+    width: 0;
+    background: linear-gradient(90deg, var(--color-accent), var(--color-accent-2));
+    transition: width 0.25s ease;
+  }
+  .nav-link:hover::after,
+  .nav-link:focus-visible::after {
+    width: 100%;
+  }
+</style>
+
+<script>
+  let controller: AbortController | null = null;
+
+  function initHeader() {
+    controller?.abort();
+    controller = new AbortController();
+    const { signal } = controller;
+
+    const header = document.querySelector<HTMLElement>('[data-header]');
+    const headerBg = document.querySelector<HTMLElement>('[data-header-bg]');
+    const progress = document.querySelector<HTMLElement>('[data-scroll-progress]');
+    const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+    const menu = document.querySelector<HTMLElement>('[data-mobile-menu]');
+    const iconOpen = toggle?.querySelector('[data-icon-open]');
+    const iconClose = toggle?.querySelector('[data-icon-close]');
+    const mobileLinks = menu?.querySelectorAll<HTMLElement>('a') ?? [];
+
+    if (!header) return;
+
+    const closeMenu = () => {
+      menu?.classList.add('hidden');
+      toggle?.setAttribute('aria-expanded', 'false');
+      iconOpen?.classList.remove('hidden');
+      iconClose?.classList.add('hidden');
+    };
+
+    toggle?.addEventListener(
+      'click',
+      () => {
+        const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+        if (isOpen) {
+          closeMenu();
+        } else {
+          menu?.classList.remove('hidden');
+          toggle.setAttribute('aria-expanded', 'true');
+          iconOpen?.classList.add('hidden');
+          iconClose?.classList.remove('hidden');
+        }
+      },
+      { signal }
+    );
+
+    mobileLinks.forEach((link) => {
+      link.addEventListener('click', closeMenu, { signal });
+    });
+
+    const onScroll = () => {
+      const scrollY = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
+
+      if (progress) progress.style.width = `${pct}%`;
+      if (headerBg) headerBg.style.opacity = scrollY > 24 ? '1' : '0';
+    };
+
+    window.addEventListener('scroll', onScroll, { signal, passive: true });
+    onScroll();
+
+    document.addEventListener(
+      'astro:before-preparation',
+      () => {
+        closeMenu();
+      },
+      { signal }
+    );
+  }
+
+  document.addEventListener('astro:page-load', initHeader);
+</script>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jufreyninobayogportfolio.com/sitemap.xml

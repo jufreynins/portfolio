@@ -1,0 +1,193 @@
+---
+---
+
+<form
+  name="contact"
+  method="POST"
+  data-netlify="true"
+  netlify-honeypot="company"
+  class="reveal flex flex-col gap-5"
+  data-reveal
+  data-contact-form
+  novalidate
+>
+  <input type="hidden" name="form-name" value="contact" />
+  <div class="hidden">
+    <label>
+      Company (leave this field blank)
+      <input name="company" tabindex="-1" autocomplete="off" />
+    </label>
+  </div>
+
+  <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+    <div class="flex flex-col gap-2">
+      <label for="name" class="text-sm font-medium text-white/85">Name <span aria-hidden="true">*</span></label>
+      <input
+        id="name"
+        name="name"
+        type="text"
+        required
+        autocomplete="name"
+        class="rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/30 transition-colors focus:border-[var(--color-accent)] focus:outline-none"
+        placeholder="Your name"
+      />
+      <p class="hidden text-xs text-red-400" data-error-for="name">Please enter your name.</p>
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <label for="email" class="text-sm font-medium text-white/85">Email <span aria-hidden="true">*</span></label>
+      <input
+        id="email"
+        name="email"
+        type="email"
+        required
+        autocomplete="email"
+        class="rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/30 transition-colors focus:border-[var(--color-accent)] focus:outline-none"
+        placeholder="you@company.com"
+      />
+      <p class="hidden text-xs text-red-400" data-error-for="email">Please enter a valid email.</p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+    <div class="flex flex-col gap-2">
+      <label for="project-type" class="text-sm font-medium text-white/85">Project Type</label>
+      <select
+        id="project-type"
+        name="project_type"
+        class="rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white transition-colors focus:border-[var(--color-accent)] focus:outline-none"
+      >
+        <option value="New WordPress Website" class="bg-[#111114]">New WordPress Website</option>
+        <option value="Landing Page / Funnel" class="bg-[#111114]">Landing Page / Funnel</option>
+        <option value="Website Redesign" class="bg-[#111114]">Website Redesign</option>
+        <option value="Maintenance / Support" class="bg-[#111114]">Maintenance / Support</option>
+        <option value="Other" class="bg-[#111114]">Other</option>
+      </select>
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <label for="budget" class="text-sm font-medium text-white/85">Budget Range</label>
+      <select
+        id="budget"
+        name="budget"
+        class="rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white transition-colors focus:border-[var(--color-accent)] focus:outline-none"
+      >
+        <option value="Under $500" class="bg-[#111114]">Under $500</option>
+        <option value="$500 - $1,500" class="bg-[#111114]">$500 – $1,500</option>
+        <option value="$1,500 - $5,000" class="bg-[#111114]">$1,500 – $5,000</option>
+        <option value="$5,000+" class="bg-[#111114]">$5,000+</option>
+        <option value="Not sure yet" class="bg-[#111114]">Not sure yet</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <label for="message" class="text-sm font-medium text-white/85">Message <span aria-hidden="true">*</span></label>
+    <textarea
+      id="message"
+      name="message"
+      rows="5"
+      required
+      class="resize-none rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/30 transition-colors focus:border-[var(--color-accent)] focus:outline-none"
+      placeholder="Tell me a bit about your project..."
+    ></textarea>
+    <p class="hidden text-xs text-red-400" data-error-for="message">Please enter a message.</p>
+  </div>
+
+  <div class="flex items-center gap-4 pt-2">
+    <button
+      type="submit"
+      class="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-white px-7 py-3 text-sm font-semibold text-black transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/90"
+    >
+      Send Message
+    </button>
+    <p class="text-sm" role="status" aria-live="polite" data-form-status></p>
+  </div>
+</form>
+
+<script>
+  function initContactForm() {
+    const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+    if (!form) return;
+
+    const status = form.querySelector<HTMLElement>('[data-form-status]');
+
+    const setError = (name: string, show: boolean) => {
+      const field = form.querySelector<HTMLElement>(`[data-error-for="${name}"]`);
+      field?.classList.toggle('hidden', !show);
+    };
+
+    const validate = () => {
+      let valid = true;
+      const name = form.querySelector<HTMLInputElement>('#name');
+      const email = form.querySelector<HTMLInputElement>('#email');
+      const message = form.querySelector<HTMLTextAreaElement>('#message');
+
+      if (!name?.value.trim()) {
+        setError('name', true);
+        valid = false;
+      } else {
+        setError('name', false);
+      }
+
+      const emailValid = !!email?.value && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value);
+      if (!emailValid) {
+        setError('email', true);
+        valid = false;
+      } else {
+        setError('email', false);
+      }
+
+      if (!message?.value.trim()) {
+        setError('message', true);
+        valid = false;
+      } else {
+        setError('message', false);
+      }
+
+      return valid;
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!validate()) {
+        if (status) {
+          status.textContent = 'Please fix the highlighted fields.';
+          status.style.color = '#f87171';
+        }
+        return;
+      }
+
+      const submitBtn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      submitBtn?.setAttribute('disabled', 'true');
+      if (status) {
+        status.textContent = 'Sending...';
+        status.style.color = 'var(--color-muted)';
+      }
+
+      try {
+        const formData = new FormData(form);
+        await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(formData as unknown as Record<string, string>).toString(),
+        });
+
+        if (status) {
+          status.textContent = "Thanks! Your message has been sent — I'll be in touch soon.";
+          status.style.color = '#4ade80';
+        }
+        form.reset();
+      } catch {
+        if (status) {
+          status.textContent = 'Something went wrong. Please email me directly instead.';
+          status.style.color = '#f87171';
+        }
+      } finally {
+        submitBtn?.removeAttribute('disabled');
+      }
+    });
+  }
+
+  document.addEventListener('astro:page-load', initContactForm);
+</script>
