@@ -1,0 +1,67 @@
+---
+interface Props {
+  variant: 'build' | 'grow' | 'support';
+  uid: string;
+}
+
+const { variant, uid } = Astro.props;
+const glass = `sv-glass-${uid}`;
+const glow = `sv-glow-${uid}`;
+---
+
+<svg viewBox="0 0 300 180" class="h-full w-full" aria-hidden="true" focusable="false">
+  <defs>
+    <radialGradient id={glow} cx="50%" cy="20%" r="80%">
+      <stop offset="0%" stop-color="#673de6" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#673de6" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id={glass} x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.14" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.04" />
+    </linearGradient>
+  </defs>
+
+  <rect x="0" y="0" width="300" height="180" fill="#0a0a0c" />
+  <rect x="0" y="0" width="300" height="180" fill={`url(#${glow})`} />
+
+  {variant === 'build' && (
+    <g>
+      <rect x="30" y="30" width="160" height="110" rx="12" fill={`url(#${glass})`} stroke="#ffffff" stroke-opacity="0.12" />
+      <rect x="30" y="30" width="160" height="18" rx="12" fill="#ffffff" fill-opacity="0.06" />
+      <circle cx="42" cy="39" r="2.5" fill="#ffffff" fill-opacity="0.3" />
+      <circle cx="51" cy="39" r="2.5" fill="#ffffff" fill-opacity="0.2" />
+      <rect x="44" y="60" width="130" height="36" rx="6" fill="#673de6" fill-opacity="0.25" stroke="#673de6" stroke-opacity="0.5" />
+      <rect x="44" y="104" width="60" height="26" rx="6" fill="#ffffff" fill-opacity="0.08" />
+      <rect x="112" y="104" width="62" height="26" rx="6" fill="#ffffff" fill-opacity="0.08" />
+      <rect x="190" y="60" width="80" height="80" rx="12" fill="#111114" stroke="#ffffff" stroke-opacity="0.12" />
+      <rect x="202" y="74" width="40" height="5" rx="2.5" fill="#673de6" fill-opacity="0.8" />
+      <rect x="202" y="86" width="56" height="4" rx="2" fill="#ffffff" fill-opacity="0.25" />
+      <rect x="202" y="96" width="44" height="4" rx="2" fill="#ffffff" fill-opacity="0.2" />
+      <rect x="202" y="112" width="50" height="4" rx="2" fill="#a78bfa" fill-opacity="0.6" />
+    </g>
+  )}
+
+  {variant === 'grow' && (
+    <g>
+      <rect x="26" y="26" width="248" height="128" rx="12" fill={`url(#${glass})`} stroke="#ffffff" stroke-opacity="0.12" />
+      <g stroke="#ffffff" stroke-opacity="0.06">
+        <line x1="26" y1="66" x2="274" y2="66" />
+        <line x1="26" y1="106" x2="274" y2="106" />
+      </g>
+      <polyline points="50,120 100,90 140,100 190,58 250,42" fill="none" stroke="#673de6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+      <circle cx="250" cy="42" r="5" fill="#673de6" />
+      <path d="M50 120 L100 90 L140 100 L190 58 L250 42 L250 140 L50 140 Z" fill="#673de6" fill-opacity="0.12" />
+      <path d="M226 42 h24 v24" fill="none" stroke="#673de6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+  )}
+
+  {variant === 'support' && (
+    <g>
+      <circle cx="150" cy="90" r="58" fill={`url(#${glass})`} stroke="#ffffff" stroke-opacity="0.12" />
+      <path d="M150 56a34 34 0 1 1-24 10" fill="none" stroke="#673de6" stroke-width="4" stroke-linecap="round" />
+      <path d="M150 44l10 12h-20z" fill="#673de6" />
+      <path d="M138 92l8 8 16-16" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.85" />
+      <circle cx="150" cy="90" r="58" fill="none" stroke="#ffffff" stroke-opacity="0.08" />
+    </g>
+  )}
+</svg>

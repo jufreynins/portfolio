@@ -1,0 +1,132 @@
+<div
+  class="project-modal fixed inset-0 z-[100] hidden items-center justify-center p-4 sm:p-8"
+  data-project-modal
+  role="dialog"
+  aria-modal="true"
+  aria-label="Project details"
+>
+  <div class="absolute inset-0" style="background: rgba(19,11,36,0.65);" data-project-modal-backdrop></div>
+
+  <div
+    class="project-modal-panel relative flex max-h-[88vh] w-full max-w-2xl flex-col overflow-y-auto rounded-2xl p-6 sm:p-8"
+    style="background: var(--surface-white);"
+    data-project-modal-panel
+  >
+    <button
+      type="button"
+      class="absolute right-5 top-5 flex h-10 w-10 items-center justify-center rounded-full border"
+      style="border-color: var(--border-color); color: var(--brand-ink); background: var(--surface-white);"
+      data-project-modal-close
+      aria-label="Close project details"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+
+    <div data-project-modal-content></div>
+  </div>
+</div>
+
+<style>
+  .project-modal.is-open {
+    display: flex;
+  }
+</style>
+
+<script>
+  let controller: AbortController | null = null;
+  let lastTrigger: HTMLElement | null = null;
+
+  function initProjectModal() {
+    controller?.abort();
+    controller = new AbortController();
+    const { signal } = controller;
+
+    const modal = document.querySelector<HTMLElement>('[data-project-modal]');
+    const content = modal?.querySelector<HTMLElement>('[data-project-modal-content]');
+    const closeBtn = modal?.querySelector<HTMLElement>('[data-project-modal-close]');
+    const backdrop = modal?.querySelector<HTMLElement>('[data-project-modal-backdrop]');
+    if (!modal || !content) return;
+
+    const getFocusable = () =>
+      Array.from(
+        modal.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), input, textarea, select, [tabindex]:not([tabindex="-1"])'
+        )
+      );
+
+    const closeModal = () => {
+      modal.classList.remove('is-open');
+      modal.setAttribute('hidden', '');
+      document.body.classList.remove('no-scroll');
+      content.innerHTML = '';
+      lastTrigger?.focus();
+    };
+
+    const openModal = (slug: string, trigger: HTMLElement) => {
+      const template = document.querySelector<HTMLTemplateElement>(`[data-project-template="${slug}"]`);
+      if (!template) return;
+
+      lastTrigger = trigger;
+      content.innerHTML = '';
+      content.appendChild(template.content.cloneNode(true));
+      modal.removeAttribute('hidden');
+      modal.classList.add('is-open');
+      document.body.classList.add('no-scroll');
+
+      const focusable = getFocusable();
+      (focusable[0] ?? closeBtn)?.focus();
+    };
+
+    document.querySelectorAll<HTMLElement>('[data-view-details]').forEach((btn) => {
+      btn.addEventListener(
+        'click',
+        () => {
+          const slug = btn.dataset.projectSlug;
+          if (slug) openModal(slug, btn);
+        },
+        { signal }
+      );
+    });
+
+    closeBtn?.addEventListener('click', closeModal, { signal });
+    backdrop?.addEventListener('click', closeModal, { signal });
+
+    document.addEventListener(
+      'keydown',
+      (e) => {
+        if (!modal.classList.contains('is-open')) return;
+
+        if (e.key === 'Escape') {
+          closeModal();
+          return;
+        }
+
+        if (e.key === 'Tab') {
+          const focusable = getFocusable();
+          if (!focusable.length) return;
+          const first = focusable[0];
+          const last = focusable[focusable.length - 1];
+
+          if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
+      },
+      { signal }
+    );
+
+    document.addEventListener(
+      'astro:before-preparation',
+      () => {
+        closeModal();
+      },
+      { signal }
+    );
+  }
+
+  document.addEventListener('astro:page-load', initProjectModal);
+</script>

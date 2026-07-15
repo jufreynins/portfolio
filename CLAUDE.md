@@ -2,10 +2,11 @@
 
 Premium single-page portfolio. Astro 7 + Tailwind CSS 4 (CSS-first `@theme`, no config file), no React.
 
-- **Content data**: `src/data/projects.ts`, `src/data/services.ts`, `src/data/skills.ts` — edit these to change site content, don't hardcode copy in components.
+- **Content data**: `src/data/projects.ts`, `src/data/services.ts`, `src/data/techLogos.ts` — edit these to change site content, don't hardcode copy in components.
 - **Global settings**: `src/config/site.ts` — name, contact info, nav, CV path.
-- **Layout**: `src/layouts/BaseLayout.astro` wraps every page — includes `<ClientRouter />`, `SEOHead`, `Header`, `Footer`.
-- **Components**: `src/components/` — Header/Footer use the AbortController re-init pattern on `astro:page-load` (see project CLAUDE.md rules in global config). `Reveal.astro` + `.reveal`/`data-reveal` CSS class drive scroll animations via one shared `IntersectionObserver`; respects `prefers-reduced-motion`.
+- **Layout**: `src/layouts/BaseLayout.astro` wraps every page — includes `<ClientRouter />`, `SEOHead`, `Header`, `Footer`, `ScrollFX`.
+- **Theme**: light theme — tokens in `src/styles/global.css` (`--color-ink` is the white page background, `--color-surface` is the alternate light-gray section background, `--color-accent` is a WCAG-safe dark green). Text/border utilities use `zinc-900`/`black` opacity classes, not `white`.
+- **Motion**: `src/components/ScrollFX.astro` is the single GSAP + ScrollTrigger controller for the whole site — hero entrance, a unified `[data-reveal]`/`data-reveal-type` reveal system (fade-up/scale/mask/stagger via `ScrollTrigger.batch`), progress-line sequential activation, project parallax, and magnetic buttons. Desktop-only effects are gated with `ScrollTrigger.matchMedia('(min-width: 1024px)')`; everything respects `prefers-reduced-motion`. `Reveal.astro` is just a thin markup wrapper — it has no logic of its own.
 - **Project images**: `src/assets/images/projects/*.png`, rendered through `astro:assets` `<Image />` (auto-optimized to WebP at build time). Do not hotlink the old WordPress site's images.
 - **CV**: `public/documents/Jufrey-Bayog-CV.pdf`, linked via `siteConfig.cvPath`.
 - **Contact form**: Netlify Forms (`data-netlify="true"`, hidden `form-name`, honeypot field named `company`). No backend — submissions land in the Netlify dashboard once deployed.

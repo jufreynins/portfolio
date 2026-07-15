@@ -9,9 +9,11 @@ export interface Project {
   slug: string;
   name: string;
   category: string;
+  role: string;
   business: string;
   goal: string;
   contribution: string;
+  results: string;
   description: string;
   technologies: string[];
   url: string;
@@ -23,6 +25,9 @@ export const projects: Project[] = [
     slug: 'medic-media',
     name: 'Medic Media',
     category: 'Marketing Agency',
+    role: 'WordPress Developer',
+    results:
+      'A polished, conversion-focused site that gives the agency a professional online presence to support client acquisition.',
     business: 'A med spa marketing agency serving aesthetic and wellness clinics.',
     goal: 'Communicate services, expertise, and value clearly enough to support client growth in a competitive industry.',
     contribution:
@@ -37,6 +42,9 @@ export const projects: Project[] = [
     slug: 'neighborhood-plumbing-drain',
     name: 'Neighborhood Plumbing & Drain',
     category: 'Local Service Business',
+    role: 'WordPress Developer',
+    results:
+      'A fast, trustworthy local site that makes it easy for homeowners to find services and get in touch.',
     business: 'A trusted local plumbing and drain service company.',
     goal: 'Highlight reliability, transparent pricing, and 24/7 customer support with easy scheduling for homeowners.',
     contribution:
@@ -51,6 +59,9 @@ export const projects: Project[] = [
     slug: 'martin-county-humane-society',
     name: 'Martin County Humane Society',
     category: 'Nonprofit / Animal Welfare',
+    role: 'WordPress Developer',
+    results:
+      'An approachable, easy-to-browse site that puts adoptable pets front and center for the community.',
     business: 'A nonprofit animal shelter connecting adoptable pets with new homes.',
     goal: 'Encourage adoption and community engagement through clear storytelling and intuitive navigation.',
     contribution:
@@ -65,6 +76,9 @@ export const projects: Project[] = [
     slug: 'the-pedal-shack',
     name: 'The Pedal Shack',
     category: 'Retail / Bike Shop',
+    role: 'WordPress Developer',
+    results:
+      'A clear, browsable showcase of bikes and services that makes it easy for riders to find what they need.',
     business: 'A community-driven bike shop offering sales, service, and repairs.',
     goal: 'Simplify browsing and connect riders with trusted brands, bikes, and repair services.',
     contribution:
@@ -79,6 +93,9 @@ export const projects: Project[] = [
     slug: 'daviess-county-rural-water',
     name: 'Daviess County Rural Water',
     category: 'Utility / Public Service',
+    role: 'WordPress Developer',
+    results:
+      'A reliable, easy-to-navigate resource for residents to find service and water quality information.',
     business: 'A rural water utility provider serving the local community.',
     goal: 'Clearly present essential services, infrastructure updates, and customer resources with a strong sense of trust.',
     contribution:
@@ -93,6 +110,9 @@ export const projects: Project[] = [
     slug: 'heritage-lux-cabinetry',
     name: 'Heritage Lux Cabinetry',
     category: 'Custom Furniture / Craftsmanship',
+    role: 'WordPress Developer',
+    results:
+      "A refined showcase that reflects the brand's craftsmanship and quality from first impression onward.",
     business: 'A custom cabinetry and furniture maker specializing in handcrafted work.',
     goal: "Showcase the brand's process, partnerships, and commitment to quality from concept to completion.",
     contribution:

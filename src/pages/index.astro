@@ -3,196 +3,306 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Container from '../components/Container.astro';
 import Button from '../components/Button.astro';
 import SectionHeading from '../components/SectionHeading.astro';
-import ServiceCard from '../components/ServiceCard.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import TechStack from '../components/TechStack.astro';
+import ProjectFeature from '../components/ProjectFeature.astro';
+import ProjectModal from '../components/ProjectModal.astro';
+import TechGrid from '../components/TechGrid.astro';
 import ContactForm from '../components/ContactForm.astro';
 import Reveal from '../components/Reveal.astro';
+import ProcessTimeline from '../components/ProcessTimeline.astro';
+import HeroMockup from '../components/HeroMockup.astro';
+import AIWorkflowVisual from '../components/AIWorkflowVisual.astro';
 import { siteConfig } from '../config/site';
-import { services } from '../data/services';
+import { serviceCards } from '../data/services';
 import { projects } from '../data/projects';
 
 const yearsExperience = new Date().getFullYear() - siteConfig.yearStarted;
 
 const trustPoints = [
-  `${yearsExperience}+ Years of Experience`,
-  'WordPress & Frontend Expertise',
-  'International & Remote Collaboration',
-  'Responsive, Performance-Focused Development',
+  {
+    label: `${yearsExperience}+ Years of Experience`,
+    icon: '<circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/>',
+  },
+  {
+    label: 'WordPress & Frontend Expertise',
+    icon: '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>',
+  },
+  {
+    label: 'International & Remote Collaboration',
+    icon: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a13 13 0 0 1 0 18a13 13 0 0 1 0-18Z"/>',
+  },
+  {
+    label: 'Responsive, Performance-Focused Development',
+    icon: '<path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/>',
+  },
+];
+
+const professionalFacts = [
+  { label: 'Experience', value: `${yearsExperience}+ years building for the web` },
+  { label: 'Focus', value: 'WordPress development & modern frontend' },
+  { label: 'Workflow', value: 'AI-assisted with Claude Code and Cursor, human-reviewed' },
+  { label: 'Availability', value: 'Remote, working with clients worldwide' },
 ];
 
 const processSteps = [
-  { title: 'Discovery', description: 'Understanding your goals, audience, and technical requirements before any design begins.' },
-  { title: 'Planning & Design', description: 'Mapping the site structure and visual direction so every page has a clear purpose.' },
-  { title: 'Development', description: 'Building on WordPress with clean, maintainable code and the right tools for the job.' },
-  { title: 'Responsive QA', description: 'Testing across devices and browsers to catch issues before your visitors do.' },
-  { title: 'Launch & Support', description: 'Deploying with confidence, then staying available for updates and maintenance.' },
+  {
+    title: 'Discover',
+    description: "Understanding the client's goals, target audience, problems, and website requirements.",
+    type: 'discover',
+  },
+  {
+    title: 'Plan',
+    description: 'Creating the sitemap, page structure, content hierarchy, and user journey.',
+    type: 'plan',
+  },
+  {
+    title: 'Design and Build',
+    description: 'Turning the plan into a polished interface using modern design tools, WordPress, Elementor, custom code, and AI-assisted development.',
+    type: 'design-build',
+  },
+  {
+    title: 'Test and Refine',
+    description: 'Testing responsiveness, performance, accessibility, functionality, and browser compatibility before launch.',
+    type: 'test-refine',
+  },
 ];
+
+const [firstProject, secondProject, thirdProject, ...remainingProjects] = projects;
 ---
 
 <BaseLayout>
   <!-- Hero -->
-  <section id="home" class="relative flex min-h-[92vh] items-center overflow-hidden pt-28 pb-20">
-    <div class="pointer-events-none absolute inset-0 -z-10">
-      <div class="absolute left-1/2 top-[-10%] h-[600px] w-[900px] -translate-x-1/2 rounded-full opacity-30 blur-3xl" style="background: radial-gradient(circle, rgba(110,231,255,0.25), transparent 70%);"></div>
-      <div class="absolute right-[-10%] bottom-[-10%] h-[500px] w-[500px] rounded-full opacity-20 blur-3xl" style="background: radial-gradient(circle, rgba(167,139,250,0.3), transparent 70%);"></div>
+  <section id="home" class="relative flex items-center overflow-hidden pt-32 pb-14 sm:pt-36 lg:min-h-[88vh]" style="background: var(--brand-lavender);" data-hero-section>
+    <div class="pointer-events-none absolute inset-0 -z-10" data-hero-bg>
+      <div class="absolute inset-0 opacity-[0.06]" style="background-image: linear-gradient(rgba(19,11,36,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(19,11,36,0.6) 1px, transparent 1px); background-size: 64px 64px; mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black, transparent);"></div>
+      <div class="absolute left-[8%] top-[12%] h-[520px] w-[520px] rounded-full opacity-[0.16] blur-3xl" style="background: radial-gradient(circle, var(--brand-primary), transparent 70%);"></div>
+      <div class="absolute right-[-8%] bottom-[-10%] h-[480px] w-[480px] rounded-full opacity-[0.12] blur-3xl" style="background: radial-gradient(circle, var(--brand-primary), transparent 70%);"></div>
     </div>
 
-    <Container class="flex flex-col items-start gap-8">
-      <div class="reveal inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-1.5 text-xs font-medium text-white/80" data-reveal>
-        <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
-        Available for new projects &middot; {yearsExperience}+ years experience
-      </div>
+    <Container>
+      <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-8" data-hero-content>
+        <div class="flex flex-col items-start gap-7 lg:col-span-7">
+          <span class="eyebrow" data-hero-eyebrow>WordPress &amp; Frontend Developer</span>
 
-      <h1 class="reveal max-w-4xl text-4xl font-extrabold leading-[1.08] tracking-tight text-white text-balance sm:text-5xl md:text-6xl lg:text-7xl" data-reveal style="animation-delay:80ms">
-        Websites that make your business look as good as the work you do.
-      </h1>
+          <h1 class="max-w-2xl text-balance" style="color: var(--text-primary);">
+            <span class="block overflow-hidden"><span class="block" data-hero-line>Premium websites</span></span>
+            <span class="block overflow-hidden"><span class="block" data-hero-line>that build trust.</span></span>
+          </h1>
 
-      <p class="reveal max-w-2xl text-lg leading-relaxed sm:text-xl" style="color: var(--color-muted); animation-delay:160ms" data-reveal>
-        I'm {siteConfig.name}, a {siteConfig.title} with over {yearsExperience} years of experience building clean, responsive, high-performing WordPress websites for businesses, agencies, and entrepreneurs around the world.
-      </p>
+          <p class="leading-relaxed" style="color: var(--text-secondary)" data-hero-support>
+            I'm {siteConfig.name}. I design and build WordPress websites that load fast, look premium, and turn visitors into customers.
+          </p>
 
-      <div class="reveal flex flex-col gap-4 sm:flex-row" data-reveal style="animation-delay:240ms">
-        <Button href="#work" variant="primary">View My Work</Button>
-        <Button href="#contact" variant="secondary">Let's Work Together</Button>
+          <div class="flex flex-col gap-4 sm:flex-row" data-hero-support>
+            <Button href="#work" variant="primary" data-magnetic>View Work</Button>
+            <Button href="#contact" variant="secondary" data-magnetic>Start a Project</Button>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-2 pt-1 text-sm" style="color: var(--text-secondary);" data-hero-support>
+            <span class="relative flex h-2 w-2">
+              <span class="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60" style="background: var(--brand-primary);"></span>
+              <span class="relative inline-flex h-2 w-2 rounded-full" style="background: var(--brand-primary);"></span>
+            </span>
+            <span><span data-gsap-count={yearsExperience}>0</span>+ Years Experience</span>
+            <span aria-hidden="true" style="color: var(--border-color);">&bull;</span>
+            <span>WordPress</span>
+            <span aria-hidden="true" style="color: var(--border-color);">&bull;</span>
+            <span>Performance</span>
+            <span aria-hidden="true" style="color: var(--border-color);">&bull;</span>
+            <span>AI-Assisted Development</span>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5" data-hero-support>
+          <HeroMockup />
+        </div>
       </div>
     </Container>
+
+    <div class="pointer-events-none absolute inset-x-0 bottom-6 hidden flex-col items-center gap-2 lg:flex" style="color: var(--text-secondary);" data-scroll-cue>
+      <span class="eyebrow text-[10px]" style="color: inherit">Scroll</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
   </section>
 
   <!-- Trust strip -->
-  <section class="border-y border-white/10 py-8">
+  <section class="py-10 sm:py-12" style="background: var(--surface-white);">
     <Container>
-      <div class="grid grid-cols-2 gap-y-6 gap-x-4 sm:grid-cols-4">
-        {trustPoints.map((point, i) => (
-          <div class="reveal flex items-center gap-2 text-center sm:text-left" data-reveal style={`animation-delay:${i * 60}ms`}>
-            <p class="text-sm font-medium text-white/75 sm:text-base">{point}</p>
+      <div class="grid grid-cols-1 divide-y sm:grid-cols-4 sm:divide-x sm:divide-y-0" style="border-color: var(--border-color);" data-reveal data-reveal-type="stagger">
+        {trustPoints.map((point) => (
+          <div class="flex flex-col items-center gap-3 px-4 py-6 text-center sm:py-0" style="border-color: var(--border-color);">
+            <span class="flex h-11 w-11 items-center justify-center rounded-full" style="background: var(--brand-lavender); color: var(--brand-primary);">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={point.icon} />
+            </span>
+            <p class="max-w-[14rem] text-sm font-medium leading-snug" style="color: var(--text-primary);">{point.label}</p>
           </div>
-        ))}
-      </div>
-    </Container>
-  </section>
-
-  <!-- About -->
-  <section id="about" class="py-24 sm:py-32">
-    <Container class="grid grid-cols-1 gap-14 lg:grid-cols-2 lg:gap-20">
-      <SectionHeading
-        eyebrow="About"
-        title="A developer who treats your website like it's my own business."
-        description="I help businesses, agencies, and entrepreneurs turn ideas into fast, reliable, and visually polished websites — built to last, not just to launch."
-      />
-
-      <div class="reveal flex flex-col gap-6" data-reveal style="animation-delay:120ms">
-        <p class="leading-relaxed" style="color: var(--color-muted)">
-          For over {yearsExperience} years, I've specialized in WordPress development — from Elementor Pro builds and custom post types to full site migrations and performance tuning. I work closely with remote teams and international clients, so clear communication and dependable delivery are part of how I operate, not an afterthought.
-        </p>
-        <p class="leading-relaxed" style="color: var(--color-muted)">
-          My approach is practical: understand what the business actually needs, build it with clean and maintainable code, and make sure it holds up on every screen size. Whether it's a landing page built for conversions or a full website overhaul, I focus on the details that make a site feel trustworthy — fast load times, responsive layouts, and interfaces that just work.
-        </p>
-        <ul class="grid grid-cols-1 gap-3 pt-2 sm:grid-cols-2">
-          {[
-            'WordPress & Elementor Pro',
-            'Custom Post Types & ACF',
-            'WooCommerce & JetEngine',
-            'Website migrations',
-            'Performance optimization',
-            'Remote & international teams',
-          ].map((item) => (
-            <li class="flex items-center gap-2 text-sm text-white/80">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--color-accent); flex-shrink:0;"><path d="M20 6L9 17l-5-5"/></svg>
-              {item}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </Container>
-  </section>
-
-  <!-- Services -->
-  <section id="services" class="py-24 sm:py-32" style="background: var(--color-surface);">
-    <Container class="flex flex-col gap-14">
-      <SectionHeading
-        eyebrow="Services"
-        title="What I can build for you"
-        description="From full WordPress builds to focused technical support, here's how I can help your business grow online."
-        align="center"
-      />
-      <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        {services.map((service, i) => (
-          <ServiceCard service={service} delay={i * 70} />
         ))}
       </div>
     </Container>
   </section>
 
   <!-- Selected Work -->
-  <section id="work" class="py-24 sm:py-32">
-    <Container class="flex flex-col gap-14">
-      <SectionHeading
-        eyebrow="Selected Work"
-        title="Recent projects"
-        description="A selection of WordPress websites I've designed and developed for real businesses and organizations."
-        align="center"
-      />
-      <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        {projects.map((project, i) => (
-          <ProjectCard project={project} priority={i < 3} />
-        ))}
+  <section id="work" class="py-24 sm:py-32" style="background: var(--surface-white);">
+    <Container class="flex flex-col gap-16 sm:gap-20">
+      <div class="relative overflow-hidden">
+        <SectionHeading
+          eyebrow="Selected Work"
+          title="Work that speaks for itself"
+          description="Real businesses, real websites — a closer look at the kind of work I bring to every project."
+          watermark="WORK"
+        />
+      </div>
+
+      <div class="flex flex-col gap-20 sm:gap-24">
+        <ProjectFeature project={firstProject} layout="full" index={1} />
+        <ProjectFeature project={secondProject} layout="left" index={2} />
+        <ProjectFeature project={thirdProject} layout="right" index={3} />
+      </div>
+
+      {remainingProjects.length > 0 && (
+        <div class="grid grid-cols-1 gap-8 border-t pt-16 sm:grid-cols-2 lg:grid-cols-3" style="border-color: var(--border-color);">
+          {remainingProjects.map((project, i) => (
+            <ProjectCard project={project} index={i + 4} />
+          ))}
+        </div>
+      )}
+    </Container>
+    <ProjectModal />
+  </section>
+
+  <!-- About -->
+  <section id="about" class="py-24 sm:py-32" style="background: var(--surface-warm);">
+    <Container class="grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-16">
+      <div class="lg:col-span-7" data-reveal data-reveal-type="fade-up">
+        <span class="eyebrow">About</span>
+        <h2 class="mt-4 max-w-xl text-balance">
+          A developer who treats <span style="color: var(--brand-primary);">your website</span> like it's my own business.
+        </h2>
+      </div>
+
+      <div class="flex flex-col gap-8 lg:col-span-5" data-reveal data-reveal-type="fade-up">
+        <p class="leading-relaxed" style="color: var(--text-secondary)">
+          I help businesses, agencies, and entrepreneurs turn ideas into fast, reliable, and visually polished websites — built to last, not just to launch. For over {yearsExperience} years I've built WordPress sites for businesses, agencies, and remote teams, from Elementor builds to custom post types and full migrations.
+        </p>
+        <dl class="flex flex-col divide-y" style="border-color: var(--border-color);">
+          {professionalFacts.map((fact) => (
+            <div class="grid grid-cols-3 gap-4 py-4">
+              <dt class="eyebrow col-span-1">{fact.label}</dt>
+              <dd class="col-span-2 text-sm" style="color: var(--text-primary);">{fact.value}</dd>
+            </div>
+          ))}
+        </dl>
       </div>
     </Container>
   </section>
 
   <!-- Skills -->
-  <section class="py-24 sm:py-32" style="background: var(--color-surface);">
-    <Container class="flex flex-col gap-14">
-      <SectionHeading
-        eyebrow="Skills & Technology"
-        title="Tools I work with"
-        description="A focused toolkit built around WordPress, dynamic content, and reliable hosting."
-        align="center"
-      />
-      <TechStack />
+  <section id="skills" class="py-24 sm:py-32" style="background: var(--surface-white);">
+    <Container class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
+      <div class="lg:col-span-4">
+        <div class="relative overflow-hidden lg:sticky lg:top-32">
+          <SectionHeading
+            eyebrow="Skills & Technology"
+            title="Tools that power my work"
+            description="A carefully selected toolkit for building scalable, high-performing, and conversion-focused digital experiences."
+            watermark="CAPABILITIES"
+          />
+        </div>
+      </div>
+      <div class="lg:col-span-8">
+        <TechGrid />
+      </div>
     </Container>
   </section>
 
-  <!-- Process -->
-  <section class="py-24 sm:py-32">
+  <!-- Services -->
+  <section id="services" class="py-24 sm:py-32" style="background: var(--surface-warm);">
     <Container class="flex flex-col gap-14">
       <SectionHeading
-        eyebrow="How I Work"
-        title="A clear, dependable process"
-        description="Every project follows the same reliable path from first conversation to launch and beyond."
-        align="center"
+        eyebrow="Services"
+        title="What I can build for you"
+        description="Whatever stage your website is at, here's how I can help you move it forward."
       />
-      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-5">
-        {processSteps.map((step, i) => (
-          <div class="reveal relative flex flex-col gap-3 rounded-2xl border border-white/10 p-6" style={`background: var(--color-surface); animation-delay:${i * 80}ms;`} data-reveal>
-            <span class="text-sm font-bold" style="color: var(--color-accent)">{String(i + 1).padStart(2, '0')}</span>
-            <h3 class="text-base font-bold text-white">{step.title}</h3>
-            <p class="text-sm leading-relaxed" style="color: var(--color-muted)">{step.description}</p>
-          </div>
+      <div class="flex flex-col border-t" style="border-color: var(--border-color);">
+        {serviceCards.map((service, i) => (
+          <a
+            href="#contact"
+            class="service-row group flex flex-col gap-4 border-b py-10 transition-colors duration-300 sm:-mx-6 sm:flex-row sm:items-center sm:justify-between sm:gap-10 sm:px-6"
+            style={`border-color: var(--border-color); animation-delay:${i * 50}ms;`}
+            data-reveal
+          >
+            <div class="flex items-start gap-5">
+              <span class="font-mono text-sm" style="color: var(--brand-primary)">{String(i + 1).padStart(2, '0')}</span>
+              <div class="flex flex-col gap-2">
+                <h3 class="text-xl sm:text-2xl">{service.title}</h3>
+                <p class="max-w-lg leading-relaxed" style="color: var(--text-secondary)">{service.outcome}</p>
+                <div class="flex flex-wrap gap-x-4 gap-y-1.5 pt-1">
+                  {service.inclusions.map((item) => (
+                    <span class="text-xs font-medium" style="color: var(--text-secondary)">{item}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" style="color: var(--brand-primary);"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </a>
         ))}
       </div>
     </Container>
   </section>
 
+  <!-- Process -->
+  <section class="py-24 sm:py-32" style="background: #25134f;">
+    <Container class="grid grid-cols-1 gap-16 lg:grid-cols-[38%_62%] lg:gap-12">
+      <div class="min-w-0">
+        <div class="lg:sticky lg:top-32">
+          <SectionHeading
+            eyebrow="How I Work"
+            title="A clear, dependable process"
+            description="No surprises, no guesswork — just a proven path from first conversation to launch."
+            titleClass="max-w-[420px] break-words text-[clamp(2.75rem,4.2vw,5rem)] leading-[0.95]"
+            dark
+          />
+        </div>
+      </div>
+
+      <div>
+        <ProcessTimeline steps={processSteps} />
+      </div>
+    </Container>
+  </section>
+
+  <!-- AI-assisted development -->
+  <section class="py-24 sm:py-32" style="background: var(--surface-white);">
+    <Container class="flex flex-col gap-14">
+      <SectionHeading
+        eyebrow="Workflow"
+        title="AI-assisted development. Human-led execution."
+        description="I use Claude Code and Cursor for planning, debugging, and QA — architecture, design decisions, and final review stay human-led."
+        titleClass="text-3xl sm:text-4xl lg:text-5xl"
+      />
+      <AIWorkflowVisual />
+    </Container>
+  </section>
+
   <!-- Contact -->
-  <section id="contact" class="py-24 sm:py-32" style="background: var(--color-surface);">
+  <section id="contact" class="py-24 sm:py-32" style="background: var(--brand-dark);">
     <Container class="grid grid-cols-1 gap-14 lg:grid-cols-2 lg:gap-20">
       <div class="flex flex-col gap-6">
         <SectionHeading
           eyebrow="Contact"
           title="Ready to start a project?"
           description="Tell me a bit about what you're building. I typically reply within one business day."
+          dark
         />
         <Reveal delay={100} class="flex flex-col gap-4">
-          <a href={`mailto:${siteConfig.email}`} class="flex items-center gap-3 text-white/85 hover:text-white transition-colors">
-            <span class="flex h-10 w-10 items-center justify-center rounded-full border border-white/15">
+          <a href={`mailto:${siteConfig.email}`} class="flex items-center gap-3 transition-colors" style="color: rgba(255,255,255,0.85);">
+            <span class="flex h-10 w-10 items-center justify-center rounded-full border" style="border-color: rgba(255,255,255,0.2);">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>
             </span>
             {siteConfig.email}
           </a>
-          <a href={siteConfig.cvPath} target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-white/85 hover:text-white transition-colors">
-            <span class="flex h-10 w-10 items-center justify-center rounded-full border border-white/15">
+          <a href={siteConfig.cvPath} target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 transition-colors" style="color: rgba(255,255,255,0.85);">
+            <span class="flex h-10 w-10 items-center justify-center rounded-full border" style="border-color: rgba(255,255,255,0.2);">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             </span>
             Download CV
@@ -200,9 +310,15 @@ const processSteps = [
         </Reveal>
       </div>
 
-      <div class="reveal rounded-3xl border border-white/10 p-6 sm:p-8" style="background: var(--color-ink); animation-delay:120ms" data-reveal>
+      <div class="reveal rounded-3xl p-6 sm:p-8" style="background: var(--surface-white); animation-delay:120ms" data-reveal>
         <ContactForm />
       </div>
     </Container>
   </section>
 </BaseLayout>
+
+<style>
+  .service-row:hover {
+    background: var(--brand-lavender);
+  }
+</style>

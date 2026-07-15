@@ -1,56 +1,75 @@
-export interface Service {
+export interface ServiceCard {
   title: string;
-  description: string;
-  icon: string;
+  outcome: string;
+  inclusions: string[];
+  visual: 'build' | 'grow' | 'support';
 }
 
-export const services: Service[] = [
+export const serviceCards: ServiceCard[] = [
   {
     title: 'WordPress Development',
-    description:
-      'Modern WordPress websites with clean, responsive layouts built for speed and long-term maintainability.',
-    icon: 'wordpress',
+    outcome: 'A custom-built WordPress site that looks premium and holds up long-term.',
+    inclusions: [
+      'Custom WordPress builds',
+      'Elementor Pro development',
+      'Custom Post Types & ACF',
+      'Clean, maintainable code',
+    ],
+    visual: 'build',
   },
   {
-    title: 'Elementor Website Development',
-    description:
-      'Pixel-precise builds with Elementor Pro, from custom sections to full site design and interactions.',
-    icon: 'layout',
+    title: 'Landing Pages & Optimization',
+    outcome: 'Focused pages built to convert, with the technical foundation to back it up.',
+    inclusions: [
+      'Conversion-focused landing pages',
+      'Speed & performance optimization',
+      'Technical SEO foundations',
+      'Clean markup & fast load times',
+    ],
+    visual: 'grow',
   },
   {
-    title: 'Custom WordPress Development',
-    description:
-      'Advanced functionality using Custom Post Types, ACF, and JetEngine for content that goes beyond the basics.',
-    icon: 'code',
+    title: 'Maintenance & AI-Assisted Support',
+    outcome: 'Ongoing support that keeps your site current, secure, and running smoothly.',
+    inclusions: [
+      'Website maintenance & updates',
+      'Responsive & UI fixes',
+      'AI-assisted frontend development',
+      'Fast turnaround, human-reviewed',
+    ],
+    visual: 'support',
   },
   {
-    title: 'Landing Pages & Funnels',
-    description:
-      'Focused, conversion-minded landing pages designed to turn visitors into leads and customers.',
-    icon: 'target',
+    title: 'E-Commerce Development',
+    outcome: 'A fully functional online store built to convert browsers into buyers.',
+    inclusions: [
+      'WooCommerce & Shopify setup',
+      'Product catalog & checkout flow',
+      'Payment gateway integration',
+      'Mobile-optimized shopping experience',
+    ],
+    visual: 'grow',
   },
   {
-    title: 'Website Maintenance',
-    description:
-      'Ongoing updates, backups, and monitoring so your site stays secure, current, and running smoothly.',
-    icon: 'shield',
+    title: 'Automation & CRM Setup',
+    outcome: 'Connected systems that capture leads and keep your pipeline moving automatically.',
+    inclusions: [
+      'GoHighLevel & Zapier workflows',
+      'Lead capture & follow-up automation',
+      'CRM integration & pipeline setup',
+      'Reduced manual admin work',
+    ],
+    visual: 'support',
   },
   {
-    title: 'Responsive & UI Fixes',
-    description:
-      'Troubleshooting and refining layouts so your site looks and works correctly on every device.',
-    icon: 'devices',
-  },
-  {
-    title: 'Performance Optimization',
-    description:
-      'Speed and technical improvements, including basic technical SEO, for faster, more discoverable pages.',
-    icon: 'speed',
-  },
-  {
-    title: 'Technical Web Support',
-    description:
-      'Migrations, hosting and domain coordination, and reliable troubleshooting for remote and international teams.',
-    icon: 'support',
+    title: 'Website Redesign & Migration',
+    outcome: 'A modern rebuild of your existing site with zero disruption to your business.',
+    inclusions: [
+      'Legacy site migration to WordPress',
+      'Design refresh with improved UX',
+      'Content and SEO preserved',
+      'Careful, tested go-live process',
+    ],
+    visual: 'build',
   },
 ];

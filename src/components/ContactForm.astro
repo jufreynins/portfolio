@@ -1,4 +1,18 @@
 ---
+interface Props {
+  dark?: boolean;
+}
+
+const { dark = false } = Astro.props;
+
+const labelClass = dark ? 'text-sm font-medium text-white/85' : 'text-sm font-medium text-zinc-900/85';
+const fieldClass = dark
+  ? 'rounded-xl border border-white/15 bg-white/[0.05] px-4 py-3 text-sm text-white placeholder:text-white/35 transition-colors focus:border-[var(--color-accent)] focus:outline-none'
+  : 'rounded-xl border border-black/15 bg-black/[0.03] px-4 py-3 text-sm text-zinc-900 placeholder:text-zinc-900/30 transition-colors focus:border-[var(--color-accent)] focus:outline-none';
+const submitClass =
+  'inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-[var(--brand-primary)] px-7 py-3 text-[0.9375rem] font-bold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[var(--brand-hover)]';
+const errorColor = dark ? '#fca5a5' : '#dc2626';
+const successColor = dark ? '#86efac' : '#16a34a';
 ---
 
 <form
@@ -9,6 +23,8 @@
   class="reveal flex flex-col gap-5"
   data-reveal
   data-contact-form
+  data-error-color={errorColor}
+  data-success-color={successColor}
   novalidate
 >
   <input type="hidden" name="form-name" value="contact" />
@@ -21,87 +37,76 @@
 
   <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
     <div class="flex flex-col gap-2">
-      <label for="name" class="text-sm font-medium text-white/85">Name <span aria-hidden="true">*</span></label>
+      <label for="name" class={labelClass}>Name <span aria-hidden="true">*</span></label>
       <input
         id="name"
         name="name"
         type="text"
         required
         autocomplete="name"
-        class="rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/30 transition-colors focus:border-[var(--color-accent)] focus:outline-none"
+        class={fieldClass}
         placeholder="Your name"
       />
-      <p class="hidden text-xs text-red-400" data-error-for="name">Please enter your name.</p>
+      <p class="hidden text-xs" style={`color:${errorColor}`} data-error-for="name">Please enter your name.</p>
     </div>
 
     <div class="flex flex-col gap-2">
-      <label for="email" class="text-sm font-medium text-white/85">Email <span aria-hidden="true">*</span></label>
+      <label for="email" class={labelClass}>Email <span aria-hidden="true">*</span></label>
       <input
         id="email"
         name="email"
         type="email"
         required
         autocomplete="email"
-        class="rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/30 transition-colors focus:border-[var(--color-accent)] focus:outline-none"
+        class={fieldClass}
         placeholder="you@company.com"
       />
-      <p class="hidden text-xs text-red-400" data-error-for="email">Please enter a valid email.</p>
+      <p class="hidden text-xs" style={`color:${errorColor}`} data-error-for="email">Please enter a valid email.</p>
     </div>
   </div>
 
   <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
     <div class="flex flex-col gap-2">
-      <label for="project-type" class="text-sm font-medium text-white/85">Project Type</label>
-      <select
-        id="project-type"
-        name="project_type"
-        class="rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white transition-colors focus:border-[var(--color-accent)] focus:outline-none"
-      >
-        <option value="New WordPress Website" class="bg-[#111114]">New WordPress Website</option>
-        <option value="Landing Page / Funnel" class="bg-[#111114]">Landing Page / Funnel</option>
-        <option value="Website Redesign" class="bg-[#111114]">Website Redesign</option>
-        <option value="Maintenance / Support" class="bg-[#111114]">Maintenance / Support</option>
-        <option value="Other" class="bg-[#111114]">Other</option>
+      <label for="project-type" class={labelClass}>Project Type</label>
+      <select id="project-type" name="project_type" class={fieldClass}>
+        <option value="New WordPress Website">New WordPress Website</option>
+        <option value="Landing Page / Funnel">Landing Page / Funnel</option>
+        <option value="Website Redesign">Website Redesign</option>
+        <option value="Maintenance / Support">Maintenance / Support</option>
+        <option value="Other">Other</option>
       </select>
     </div>
 
     <div class="flex flex-col gap-2">
-      <label for="budget" class="text-sm font-medium text-white/85">Budget Range</label>
-      <select
-        id="budget"
-        name="budget"
-        class="rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white transition-colors focus:border-[var(--color-accent)] focus:outline-none"
-      >
-        <option value="Under $500" class="bg-[#111114]">Under $500</option>
-        <option value="$500 - $1,500" class="bg-[#111114]">$500 – $1,500</option>
-        <option value="$1,500 - $5,000" class="bg-[#111114]">$1,500 – $5,000</option>
-        <option value="$5,000+" class="bg-[#111114]">$5,000+</option>
-        <option value="Not sure yet" class="bg-[#111114]">Not sure yet</option>
+      <label for="budget" class={labelClass}>Budget Range</label>
+      <select id="budget" name="budget" class={fieldClass}>
+        <option value="Under $500">Under $500</option>
+        <option value="$500 - $1,500">$500 – $1,500</option>
+        <option value="$1,500 - $5,000">$1,500 – $5,000</option>
+        <option value="$5,000+">$5,000+</option>
+        <option value="Not sure yet">Not sure yet</option>
       </select>
     </div>
   </div>
 
   <div class="flex flex-col gap-2">
-    <label for="message" class="text-sm font-medium text-white/85">Message <span aria-hidden="true">*</span></label>
+    <label for="message" class={labelClass}>Message <span aria-hidden="true">*</span></label>
     <textarea
       id="message"
       name="message"
       rows="5"
       required
-      class="resize-none rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/30 transition-colors focus:border-[var(--color-accent)] focus:outline-none"
+      class:list={['resize-none', fieldClass]}
       placeholder="Tell me a bit about your project..."
     ></textarea>
-    <p class="hidden text-xs text-red-400" data-error-for="message">Please enter a message.</p>
+    <p class="hidden text-xs" style={`color:${errorColor}`} data-error-for="message">Please enter a message.</p>
   </div>
 
   <div class="flex items-center gap-4 pt-2">
-    <button
-      type="submit"
-      class="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-white px-7 py-3 text-sm font-semibold text-black transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/90"
-    >
+    <button type="submit" class={submitClass}>
       Send Message
     </button>
-    <p class="text-sm" role="status" aria-live="polite" data-form-status></p>
+    <p class="text-sm" role="status" aria-live="polite" data-form-status style={dark ? 'color: rgba(255,255,255,0.6)' : undefined}></p>
   </div>
 </form>
 
@@ -111,6 +116,8 @@
     if (!form) return;
 
     const status = form.querySelector<HTMLElement>('[data-form-status]');
+    const errorColor = form.dataset.errorColor || '#dc2626';
+    const successColor = form.dataset.successColor || '#16a34a';
 
     const setError = (name: string, show: boolean) => {
       const field = form.querySelector<HTMLElement>(`[data-error-for="${name}"]`);
@@ -153,7 +160,7 @@
       if (!validate()) {
         if (status) {
           status.textContent = 'Please fix the highlighted fields.';
-          status.style.color = '#f87171';
+          status.style.color = errorColor;
         }
         return;
       }
@@ -175,13 +182,13 @@
 
         if (status) {
           status.textContent = "Thanks! Your message has been sent — I'll be in touch soon.";
-          status.style.color = '#4ade80';
+          status.style.color = successColor;
         }
         form.reset();
       } catch {
         if (status) {
           status.textContent = 'Something went wrong. Please email me directly instead.';
-          status.style.color = '#f87171';
+          status.style.color = errorColor;
         }
       } finally {
         submitBtn?.removeAttribute('disabled');

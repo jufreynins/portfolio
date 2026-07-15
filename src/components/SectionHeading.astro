@@ -5,24 +5,41 @@ interface Props {
   description?: string;
   align?: 'left' | 'center';
   as?: 'h2' | 'h1';
+  dark?: boolean;
+  watermark?: string;
+  /** Override the default clamp() size for long headlines. */
+  titleClass?: string;
 }
 
-const { eyebrow, title, description, align = 'left', as: Tag = 'h2' } = Astro.props;
+const { eyebrow, title, description, align = 'left', as: Tag = 'h2', dark = false, watermark, titleClass = '' } = Astro.props;
 
 const alignClass = align === 'center' ? 'text-center items-center mx-auto' : 'text-left items-start';
 ---
 
-<div class:list={['reveal flex flex-col gap-4 max-w-2xl', alignClass]} data-reveal>
-  {eyebrow && (
-    <span class="text-xs font-semibold uppercase tracking-[0.2em] text-accent" style="color: var(--color-accent)">
-      {eyebrow}
+<div class:list={['reveal relative flex flex-col gap-4 max-w-2xl', alignClass]} data-reveal>
+  {watermark && (
+    <span
+      class:list={[
+        'pointer-events-none absolute -top-5 left-0 -z-0 select-none whitespace-nowrap font-serif text-[3.5rem] leading-none tracking-tight opacity-[0.07] sm:text-[5rem] lg:-top-8 lg:text-[6rem]',
+        align === 'center' ? 'inset-x-0 text-center' : '',
+      ]}
+      style={`color: ${dark ? 'var(--text-on-dark)' : 'var(--text-primary)'};`}
+      aria-hidden="true"
+    >
+      {watermark}
     </span>
   )}
-  <Tag class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white text-balance">
+  {eyebrow && (
+    <div class:list={['relative flex items-center gap-3', align === 'center' ? 'justify-center' : '']}>
+      <span class="h-px w-8" style={`background: ${dark ? 'var(--brand-lavender)' : 'var(--brand-primary)'};`}></span>
+      <span class="eyebrow" style={dark ? 'color: var(--brand-lavender)' : undefined}>{eyebrow}</span>
+    </div>
+  )}
+  <Tag class:list={['relative text-balance break-words', titleClass]} style={`color: ${dark ? 'var(--text-on-dark)' : 'var(--text-primary)'};`}>
     {title}
   </Tag>
   {description && (
-    <p class="text-base sm:text-lg leading-relaxed" style="color: var(--color-muted)">
+    <p class="relative leading-relaxed" style={`color: ${dark ? 'var(--text-on-dark)' : 'var(--text-secondary)'}; opacity: ${dark ? '0.75' : '1'};`}>
       {description}
     </p>
   )}

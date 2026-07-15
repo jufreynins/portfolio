@@ -6,11 +6,11 @@ import Button from './Button.astro';
 
 <header id="site-header" class="fixed inset-x-0 top-0 z-50 transition-all duration-300" data-header>
   <div class="absolute inset-0 -z-10 opacity-0 transition-opacity duration-300 glass" data-header-bg></div>
-  <div class="absolute bottom-0 left-0 h-[2px] bg-white/0 transition-[width] duration-150 ease-out" data-scroll-progress style="background: linear-gradient(90deg, var(--color-accent), var(--color-accent-2)); width: 0%;"></div>
+  <div class="absolute bottom-0 left-0 h-px bg-white/0 transition-[width] duration-150 ease-out" data-scroll-progress style="background: var(--color-accent); width: 0%;"></div>
 
-  <Container class="flex items-center justify-between py-4">
-    <a href="#home" class="flex items-center gap-2 text-lg font-bold tracking-tight text-white" aria-label={`${siteConfig.name} — Home`}>
-      <span class="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-sm font-bold" style="background: linear-gradient(135deg, rgba(110,231,255,0.15), rgba(167,139,250,0.15));">
+  <Container class="flex items-center justify-between py-4 transition-[padding] duration-300" data-header-inner>
+    <a href="#home" class="flex items-center gap-2.5 text-xl font-serif tracking-tight text-zinc-900" aria-label={`${siteConfig.name} — Home`}>
+      <span class="flex h-9 w-9 items-center justify-center rounded-full border border-black/10 font-mono text-xs font-medium" style="background: var(--brand-lavender); color: var(--brand-primary);">
         {siteConfig.initials}
       </span>
       <span class="hidden sm:inline">{siteConfig.name}</span>
@@ -20,7 +20,8 @@ import Button from './Button.astro';
       {siteConfig.nav.map((item) => (
         <a
           href={item.href}
-          class="nav-link relative text-sm font-medium text-white/75 transition-colors hover:text-white py-1"
+          data-nav-link={item.href}
+          class="nav-link relative text-sm font-medium text-zinc-900/70 transition-colors hover:text-zinc-900 py-1"
         >
           {item.label}
         </a>
@@ -36,7 +37,7 @@ import Button from './Button.astro';
 
     <button
       type="button"
-      class="md:hidden inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-white"
+      class="md:hidden inline-flex h-11 w-11 items-center justify-center rounded-full border border-black/10 text-zinc-900"
       aria-expanded="false"
       aria-controls="mobile-menu"
       aria-label="Toggle menu"
@@ -52,14 +53,14 @@ import Button from './Button.astro';
       {siteConfig.nav.map((item) => (
         <a
           href={item.href}
-          class="rounded-lg px-3 py-3 text-base font-medium text-white/85 hover:bg-white/5 hover:text-white"
+          class="rounded-lg px-3 py-3 text-base font-medium text-zinc-900/85 hover:bg-black/5 hover:text-zinc-900"
           data-mobile-link
         >
           {item.label}
         </a>
       ))}
     </nav>
-    <div class="mt-4 flex flex-col gap-3 border-t border-white/10 pt-4">
+    <div class="mt-4 flex flex-col gap-3 border-t border-black/10 pt-4">
       <Button href={siteConfig.cvPath} variant="secondary" class="w-full" target="_blank" rel="noopener noreferrer">
         Download CV
       </Button>
@@ -76,12 +77,16 @@ import Button from './Button.astro';
     bottom: -2px;
     height: 2px;
     width: 0;
-    background: linear-gradient(90deg, var(--color-accent), var(--color-accent-2));
+    background: var(--color-accent);
     transition: width 0.25s ease;
   }
   .nav-link:hover::after,
-  .nav-link:focus-visible::after {
+  .nav-link:focus-visible::after,
+  .nav-link.is-active::after {
     width: 100%;
+  }
+  .nav-link.is-active {
+    color: #18181b;
   }
 </style>
 
@@ -95,6 +100,7 @@ import Button from './Button.astro';
 
     const header = document.querySelector<HTMLElement>('[data-header]');
     const headerBg = document.querySelector<HTMLElement>('[data-header-bg]');
+    const headerInner = document.querySelector<HTMLElement>('[data-header-inner]');
     const progress = document.querySelector<HTMLElement>('[data-scroll-progress]');
     const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
     const menu = document.querySelector<HTMLElement>('[data-mobile-menu]');
@@ -109,6 +115,7 @@ import Button from './Button.astro';
       toggle?.setAttribute('aria-expanded', 'false');
       iconOpen?.classList.remove('hidden');
       iconClose?.classList.add('hidden');
+      document.body.classList.remove('no-scroll');
     };
 
     toggle?.addEventListener(
@@ -122,6 +129,7 @@ import Button from './Button.astro';
           toggle.setAttribute('aria-expanded', 'true');
           iconOpen?.classList.add('hidden');
           iconClose?.classList.remove('hidden');
+          document.body.classList.add('no-scroll');
         }
       },
       { signal }
@@ -138,6 +146,8 @@ import Button from './Button.astro';
 
       if (progress) progress.style.width = `${pct}%`;
       if (headerBg) headerBg.style.opacity = scrollY > 24 ? '1' : '0';
+      if (headerInner) headerInner.classList.toggle('py-2.5', scrollY > 24);
+      if (headerInner) headerInner.classList.toggle('py-4', scrollY <= 24);
     };
 
     window.addEventListener('scroll', onScroll, { signal, passive: true });
@@ -150,6 +160,30 @@ import Button from './Button.astro';
       },
       { signal }
     );
+
+    const navLinks = document.querySelectorAll<HTMLElement>('[data-nav-link]');
+    const sections = Array.from(navLinks)
+      .map((link) => document.querySelector(link.dataset.navLink ?? ''))
+      .filter((el): el is HTMLElement => !!el);
+
+    if (sections.length && 'IntersectionObserver' in window) {
+      const setActive = (id: string) => {
+        navLinks.forEach((link) => {
+          link.classList.toggle('is-active', link.dataset.navLink === `#${id}`);
+        });
+      };
+
+      const spy = new IntersectionObserver(
+        (entries) => {
+          const visible = entries.filter((e) => e.isIntersecting);
+          if (visible.length) setActive(visible[0].target.id);
+        },
+        { rootMargin: '-40% 0px -50% 0px' }
+      );
+
+      sections.forEach((section) => spy.observe(section));
+      signal.addEventListener('abort', () => spy.disconnect());
+    }
   }
 
   document.addEventListener('astro:page-load', initHeader);

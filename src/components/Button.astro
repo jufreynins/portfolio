@@ -6,6 +6,7 @@ interface Props {
   class?: string;
   target?: string;
   rel?: string;
+  [key: string]: unknown;
 }
 
 const {
@@ -15,18 +16,21 @@ const {
   class: className = '',
   target,
   rel,
+  ...rest
 } = Astro.props;
 
 const base =
-  'group relative inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 min-h-[44px]';
+  'group relative inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[0.9375rem] font-bold transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 min-h-[48px]';
 
 const variants = {
   primary:
-    'bg-white text-black hover:bg-white/90 hover:-translate-y-0.5 active:translate-y-0 shadow-[0_0_0_0_rgba(110,231,255,0)] hover:shadow-[0_8px_30px_-6px_rgba(110,231,255,0.35)]',
+    'bg-[var(--brand-primary)] text-[var(--text-on-dark)] hover:bg-[var(--brand-hover)] hover:-translate-y-0.5 active:translate-y-0 shadow-[0_8px_24px_-8px_rgba(103,61,230,0.45)]',
   secondary:
-    'glass text-white hover:border-white/30 hover:-translate-y-0.5 active:translate-y-0',
-  ghost: 'text-white/80 hover:text-white',
+    'bg-[var(--surface-white)] border-2 border-[var(--brand-primary)] text-[var(--brand-primary)] hover:bg-[var(--brand-primary)] hover:text-[var(--text-on-dark)] active:translate-y-0',
+  ghost: 'text-[var(--text-primary)]/80 hover:text-[var(--brand-primary)]',
 };
+
+const arrowClass = '';
 
 const classes = `${base} ${variants[variant]} ${className}`;
 
@@ -39,6 +43,19 @@ const Tag = href ? 'a' : 'button';
   target={target}
   rel={rel}
   class={classes}
+  {...rest}
 >
   <slot />
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="14"
+    height="14"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    class:list={['transition-all duration-300 group-hover:translate-x-1', arrowClass]}
+  ><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
 </Tag>

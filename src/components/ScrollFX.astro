@@ -1,0 +1,322 @@
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  let ctx: gsap.Context | null = null;
+  let rawListenerController: AbortController | null = null;
+
+  const EASE = 'power3.out';
+
+  function initReveals(reduced: boolean) {
+    const els = gsap.utils.toArray<HTMLElement>('[data-reveal]');
+    if (!els.length) return;
+
+    if (reduced) {
+      gsap.set(els, { clearProps: 'all' });
+      return;
+    }
+
+    const byType = (type: string) =>
+      els.filter((el) => (el.dataset.revealType || 'fade-up') === type);
+
+    const fadeUp = byType('fade-up');
+    if (fadeUp.length) {
+      gsap.set(fadeUp, { opacity: 0, y: 28 });
+      ScrollTrigger.batch(fadeUp, {
+        start: 'top 88%',
+        once: true,
+        onEnter: (batch) =>
+          gsap.to(batch, { opacity: 1, y: 0, duration: 0.9, ease: EASE, stagger: 0.1 }),
+      });
+    }
+
+    const scaleEls = byType('scale');
+    if (scaleEls.length) {
+      gsap.set(scaleEls, { opacity: 0, scale: 0.94 });
+      ScrollTrigger.batch(scaleEls, {
+        start: 'top 85%',
+        once: true,
+        onEnter: (batch) =>
+          gsap.to(batch, { opacity: 1, scale: 1, duration: 1.1, ease: EASE, stagger: 0.1 }),
+      });
+    }
+
+    const maskEls = byType('mask');
+    maskEls.forEach((el) => {
+      gsap.set(el, { clipPath: 'inset(0 0 100% 0)', scale: 0.96 });
+      ScrollTrigger.create({
+        trigger: el,
+        start: 'top 85%',
+        once: true,
+        onEnter: () =>
+          gsap.to(el, { clipPath: 'inset(0 0 0% 0)', scale: 1, duration: 1.1, ease: EASE }),
+      });
+    });
+
+    const staggerEls = byType('stagger');
+    staggerEls.forEach((el) => {
+      const children = Array.from(el.children) as HTMLElement[];
+      if (!children.length) return;
+      gsap.set(children, { opacity: 0, y: 20 });
+      ScrollTrigger.create({
+        trigger: el,
+        start: 'top 85%',
+        once: true,
+        onEnter: () =>
+          gsap.to(children, { opacity: 1, y: 0, duration: 0.8, ease: EASE, stagger: 0.08 }),
+      });
+    });
+  }
+
+  function initHero(reduced: boolean) {
+    const eyebrow = document.querySelector<HTMLElement>('[data-hero-eyebrow]');
+    const lines = gsap.utils.toArray<HTMLElement>('[data-hero-line]');
+    const support = gsap.utils.toArray<HTMLElement>('[data-hero-support]');
+    const indicators = document.querySelector<HTMLElement>('[data-hero-indicators]');
+    const scrollCue = document.querySelector<HTMLElement>('[data-scroll-cue]');
+
+    const targets = [eyebrow, ...lines, ...support, indicators].filter(Boolean) as HTMLElement[];
+    if (!targets.length) return;
+
+    if (reduced) {
+      gsap.set(targets, { clearProps: 'all' });
+      if (scrollCue) scrollCue.style.display = 'none';
+      return;
+    }
+
+    gsap.set(lines, { yPercent: 100 });
+    gsap.set([eyebrow, ...support, indicators, scrollCue].filter(Boolean), { opacity: 0, y: 16 });
+
+    const tl = gsap.timeline({ delay: 0.1 });
+    if (eyebrow) tl.to(eyebrow, { opacity: 1, y: 0, duration: 0.6, ease: EASE });
+    tl.to(lines, { yPercent: 0, duration: 0.9, ease: EASE, stagger: 0.1 }, '-=0.2');
+    if (support.length) tl.to(support, { opacity: 1, y: 0, duration: 0.7, ease: EASE, stagger: 0.08 }, '-=0.4');
+    if (indicators) tl.to(indicators, { opacity: 1, y: 0, duration: 0.7, ease: EASE }, '-=0.3');
+    if (scrollCue) tl.to(scrollCue, { opacity: 1, y: 0, duration: 0.6, ease: EASE }, '-=0.2');
+
+    // Depth + fade as visitor scrolls away from hero
+    const heroSection = document.querySelector<HTMLElement>('[data-hero-section]');
+    const heroContent = document.querySelector<HTMLElement>('[data-hero-content]');
+    const heroBg = document.querySelector<HTMLElement>('[data-hero-bg]');
+    if (heroSection && heroContent) {
+      gsap.to(heroContent, {
+        yPercent: -8,
+        opacity: 0.55,
+        ease: 'none',
+        scrollTrigger: { trigger: heroSection, start: 'top top', end: 'bottom top', scrub: true },
+      });
+    }
+    if (heroSection && heroBg) {
+      gsap.to(heroBg, {
+        yPercent: 12,
+        ease: 'none',
+        scrollTrigger: { trigger: heroSection, start: 'top top', end: 'bottom top', scrub: true },
+      });
+    }
+  }
+
+  function initSequentialProgress(
+    trackSelector: string,
+    lineSelector: string,
+    stepSelector: string,
+    reduced: boolean
+  ) {
+    const track = document.querySelector<HTMLElement>(trackSelector);
+    const line = document.querySelector<HTMLElement>(lineSelector);
+    const steps = gsap.utils.toArray<HTMLElement>(stepSelector);
+    if (!track || !line) return;
+
+    if (reduced) {
+      gsap.set(line, { scaleX: 1, scaleY: 1 });
+      steps.forEach((s) => s.classList.add('is-active'));
+      return;
+    }
+
+    gsap.set(line, { transformOrigin: 'top left', scaleX: 0, scaleY: 0 });
+    ScrollTrigger.create({
+      trigger: track,
+      start: 'top 70%',
+      end: 'bottom 60%',
+      scrub: 0.6,
+      onUpdate: (self) => {
+        gsap.set(line, { scaleY: self.progress, scaleX: self.progress });
+        const activeCount = Math.round(self.progress * steps.length);
+        steps.forEach((step, i) => step.classList.toggle('is-active', i < activeCount));
+      },
+    });
+  }
+
+  function initProcessImageSwap() {
+    const steps = gsap.utils.toArray<HTMLElement>('[data-process-step]');
+    const images = gsap.utils.toArray<HTMLElement>('[data-process-image]');
+    if (!steps.length || !images.length) return;
+
+    gsap.set(images, { scale: 1.04 });
+    gsap.set(images[0], { scale: 1 });
+
+    let current = 0;
+    const setActive = (index: number) => {
+      if (index === current || !images[index]) return;
+      gsap.to(images[current], { opacity: 0, scale: 1.04, duration: 0.6, ease: 'power2.inOut' });
+      gsap.fromTo(
+        images[index],
+        { scale: 0.97 },
+        { opacity: 1, scale: 1, duration: 0.6, ease: 'power2.out' }
+      );
+      current = index;
+    };
+
+    steps.forEach((step, i) => {
+      ScrollTrigger.create({
+        trigger: step,
+        start: 'top center',
+        end: 'bottom center',
+        onEnter: () => setActive(i),
+        onEnterBack: () => setActive(i),
+      });
+    });
+  }
+
+  function initTypewriter(reduced: boolean) {
+    const el = document.querySelector<HTMLElement>('[data-typewriter]');
+    if (!el) return;
+    const lines = JSON.parse(el.dataset.typewriter || '[]') as string[];
+    if (!lines.length) return;
+
+    if (reduced) {
+      el.innerHTML = lines.map((l) => `<div>${l}</div>`).join('');
+      return;
+    }
+
+    el.innerHTML = '';
+    ScrollTrigger.create({
+      trigger: el,
+      start: 'top 80%',
+      once: true,
+      onEnter: () => {
+        const state = { i: 0 };
+        const lineEls = lines.map(() => {
+          const div = document.createElement('div');
+          div.className = 'whitespace-pre';
+          el.appendChild(div);
+          return div;
+        });
+        const full = lines.join('\n');
+        gsap.to(state, {
+          i: full.length,
+          duration: Math.min(2.2, full.length * 0.035),
+          ease: 'none',
+          onUpdate: () => {
+            let remaining = Math.round(state.i);
+            lines.forEach((line, idx) => {
+              const take = Math.max(0, Math.min(line.length, remaining));
+              lineEls[idx].textContent = line.slice(0, take);
+              remaining -= line.length + 1;
+            });
+          },
+        });
+      },
+    });
+  }
+
+  function initScrollFX() {
+    ctx?.revert();
+    ScrollTrigger.getAll().forEach((t) => t.kill());
+    rawListenerController?.abort();
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    ctx = gsap.context(() => {
+      initHero(reduced);
+      initReveals(reduced);
+
+      // Hero count-up
+      document.querySelectorAll<HTMLElement>('[data-gsap-count]').forEach((el) => {
+        const target = Number(el.dataset.gsapCount ?? '0');
+        if (reduced) {
+          el.textContent = String(target);
+          return;
+        }
+        const counter = { value: 0 };
+        gsap.to(counter, {
+          value: target,
+          duration: 1.2,
+          delay: 0.9,
+          ease: 'power2.out',
+          onUpdate: () => {
+            el.textContent = String(Math.round(counter.value));
+          },
+        });
+      });
+
+      // Process progress line + sequential step activation
+      initSequentialProgress(
+        '[data-gsap-progress-track]',
+        '[data-gsap-progress]',
+        '[data-process-step]',
+        reduced
+      );
+
+      // AI workflow progress line + sequential icon activation
+      initSequentialProgress(
+        '[data-ai-progress-track]',
+        '[data-ai-progress]',
+        '[data-ai-step]',
+        reduced
+      );
+
+      initTypewriter(reduced);
+
+      if (reduced) return;
+
+      ScrollTrigger.matchMedia({
+        '(min-width: 1024px)': () => {
+          initProcessImageSwap();
+
+          document.querySelectorAll<HTMLElement>('[data-gsap-parallax]').forEach((el) => {
+            gsap.to(el, {
+              yPercent: -10,
+              ease: 'none',
+              scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true },
+            });
+          });
+
+          rawListenerController = new AbortController();
+          const { signal } = rawListenerController;
+          document.querySelectorAll<HTMLElement>('[data-magnetic]').forEach((btn) => {
+            const strength = 0.25;
+            btn.addEventListener(
+              'mousemove',
+              (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = (e as MouseEvent).clientX - rect.left - rect.width / 2;
+                const y = (e as MouseEvent).clientY - rect.top - rect.height / 2;
+                gsap.to(btn, { x: x * strength, y: y * strength, duration: 0.4, ease: EASE });
+              },
+              { signal }
+            );
+            btn.addEventListener(
+              'mouseleave',
+              () => gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.4)' }),
+              { signal }
+            );
+          });
+        },
+      });
+
+      ScrollTrigger.refresh();
+    });
+  }
+
+  document.addEventListener('astro:page-load', initScrollFX);
+  document.addEventListener('astro:before-swap', () => {
+    ctx?.revert();
+    ScrollTrigger.getAll().forEach((t) => t.kill());
+    rawListenerController?.abort();
+  });
+
+  document.fonts?.ready.then(() => ScrollTrigger.refresh());
+  window.addEventListener('load', () => ScrollTrigger.refresh());
+</script>

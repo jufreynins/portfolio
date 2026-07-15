@@ -1,0 +1,98 @@
+---
+import { Image } from 'astro:assets';
+import type { Project } from '../data/projects';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+---
+
+<article class="flex flex-col gap-10">
+  <a
+    href={project.url}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="shine group relative block overflow-hidden rounded-3xl border border-black/10 shadow-[0_30px_70px_-30px_rgba(0,0,0,0.3)] transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_40px_80px_-30px_rgba(0,0,0,0.4)]"
+    aria-label={`Visit the live ${project.name} website`}
+    data-reveal
+    data-reveal-type="mask"
+  >
+    <div class="relative aspect-[16/9] overflow-hidden sm:aspect-[21/9]" style="background: var(--color-surface);">
+      <Image
+        src={project.image}
+        alt={`Screenshot of the ${project.name} website`}
+        width={1600}
+        height={900}
+        loading="eager"
+        data-gsap-parallax
+        class="h-full w-full scale-[1.12] object-cover transition-transform duration-700 ease-out group-hover:scale-[1.16]"
+      />
+      <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
+      <span class="absolute left-6 top-6 rounded-full border border-white/25 bg-black/30 px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.15em] text-white backdrop-blur-sm">
+        Featured Case Study
+      </span>
+      <div class="absolute bottom-6 left-6 right-6 flex flex-wrap items-end justify-between gap-4">
+        <div class="flex flex-col gap-1">
+          <span class="eyebrow" style="color: #d9ff6e">{project.category}</span>
+          <h3 class="font-serif text-3xl text-white sm:text-5xl">{project.name}</h3>
+        </div>
+        <span class="pointer-events-none flex translate-y-1 items-center gap-1.5 rounded-full bg-white px-4 py-2 text-xs font-semibold text-black opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+          Visit Website
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </span>
+      </div>
+    </div>
+  </a>
+
+  <div class="grid grid-cols-1 gap-10 lg:grid-cols-12" data-reveal data-reveal-type="stagger">
+    <p class="text-lg leading-relaxed lg:col-span-5" style="color: var(--color-muted)">{project.description}</p>
+
+    <dl class="grid grid-cols-1 gap-6 border-t pt-6 hairline sm:grid-cols-4 lg:col-span-7 lg:border-t-0 lg:border-l lg:pl-10 lg:pt-0">
+      <div class="flex flex-col gap-1.5">
+        <dt class="eyebrow" style="color: var(--color-muted)">Role</dt>
+        <dd class="text-sm text-zinc-900/85">{project.role}</dd>
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <dt class="eyebrow" style="color: var(--color-muted)">Challenge</dt>
+        <dd class="text-sm text-zinc-900/85">{project.goal}</dd>
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <dt class="eyebrow" style="color: var(--color-muted)">Solution</dt>
+        <dd class="text-sm text-zinc-900/85">{project.contribution}</dd>
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <dt class="eyebrow" style="color: var(--color-muted)">Results</dt>
+        <dd class="text-sm text-zinc-900/85">{project.results}</dd>
+      </div>
+    </dl>
+  </div>
+
+  <div class="flex flex-wrap items-center gap-2" data-reveal data-reveal-type="fade-up">
+    {project.technologies.map((tech) => (
+      <span class="rounded-full px-3 py-1 text-xs font-medium text-zinc-900/80" style="background: rgba(0,0,0,0.04); border: 1px solid var(--color-border-subtle);">
+        {tech}
+      </span>
+    ))}
+  </div>
+</article>
+
+<style>
+  .shine {
+    position: relative;
+  }
+  .shine::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.16) 50%, transparent 60%);
+    background-size: 250% 250%;
+    background-position: -100% -100%;
+    transition: background-position 0.9s ease;
+    pointer-events: none;
+  }
+  .shine:hover::after {
+    background-position: 100% 100%;
+  }
+</style>

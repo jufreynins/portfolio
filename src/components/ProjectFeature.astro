@@ -4,49 +4,77 @@ import type { Project } from '../data/projects';
 
 interface Props {
   project: Project;
+  layout: 'full' | 'left' | 'right';
   index: number;
-  priority?: boolean;
 }
 
-const { project, index, priority = false } = Astro.props;
+const { project, layout, index } = Astro.props;
+const isFull = layout === 'full';
+const isRight = layout === 'right';
 ---
 
-<article class="project-card reveal flex flex-col overflow-hidden rounded-2xl border" style="border-color: var(--border-color); background: var(--surface-white);" data-reveal data-reveal-type="fade-up">
-  <div class="relative aspect-[4/3] overflow-hidden" style="background: var(--surface-warm);">
+<article
+  class:list={[
+    'project-feature group',
+    isFull ? 'flex flex-col gap-8' : 'grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-12',
+  ]}
+>
+  <a
+    href={project.url}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label={`Visit the live ${project.name} website`}
+    class:list={[
+      'relative block overflow-hidden rounded-2xl',
+      isFull ? 'aspect-[21/9]' : 'aspect-[4/3] lg:col-span-7',
+      isRight ? 'lg:order-2' : '',
+    ]}
+    style="background: var(--surface-warm);"
+    data-reveal
+    data-reveal-type="mask"
+  >
     <Image
       src={project.image}
       alt={`Screenshot of the ${project.name} website`}
-      width={900}
-      height={675}
-      loading={priority ? 'eager' : 'lazy'}
-      class="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+      width={1600}
+      height={900}
+      loading={index === 1 ? 'eager' : 'lazy'}
+      class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
     />
-    <span class="absolute left-4 top-4 rounded-full px-3 py-1 font-mono text-[11px]" style="background: var(--surface-white); color: var(--text-primary);">
-      {String(index).padStart(2, '0')}
+    <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--brand-ink)]/55 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
+    <span class="pointer-events-none absolute bottom-5 right-5 flex translate-y-2 items-center gap-1.5 rounded-full px-4 py-2 text-xs font-bold opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100" style="background: var(--surface-white); color: var(--brand-ink);">
+      Visit Website
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
     </span>
-  </div>
+  </a>
 
-  <div class="flex flex-1 flex-col gap-3 p-6">
-    <span class="eyebrow">{project.category}</span>
-    <h3 class="text-xl" style="color: var(--text-primary);">{project.name}</h3>
-    <p class="text-sm leading-relaxed" style="color: var(--text-secondary); max-width: none;">{project.results}</p>
+  <div class:list={['flex flex-col gap-4', isFull ? 'max-w-2xl' : 'lg:col-span-5', isRight ? 'lg:order-1' : '']} data-reveal data-reveal-type="stagger">
+    <div class="flex items-center gap-3">
+      <span class="font-mono text-xs" style="color: var(--brand-primary);">{String(index).padStart(2, '0')}</span>
+      <span class="eyebrow">{project.category}</span>
+    </div>
 
-    <div class="mt-auto flex flex-wrap gap-3 pt-4">
+    <h3 class="project-feature-title relative w-fit text-2xl sm:text-3xl">{project.name}</h3>
+
+    <p class="leading-relaxed" style="color: var(--text-secondary);">{project.results}</p>
+
+    <div class="mt-2 flex flex-wrap gap-4">
       <button
         type="button"
         data-view-details
         data-project-slug={project.slug}
-        class="view-details-btn inline-flex min-h-[44px] items-center justify-center rounded-full border-2 px-5 text-sm font-bold transition-colors duration-300"
-        style="border-color: var(--brand-primary); color: var(--brand-primary);"
+        class="inline-flex items-center gap-1.5 text-sm font-bold transition-colors duration-300"
+        style="color: var(--brand-primary);"
       >
         View Details
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-300 group-hover:translate-x-1"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
       </button>
       <a
         href={project.url}
         target="_blank"
         rel="noopener noreferrer"
-        class="inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-full px-5 text-sm font-bold transition-colors duration-300"
-        style="background: var(--brand-primary); color: var(--text-on-dark);"
+        class="inline-flex items-center gap-1.5 text-sm font-bold transition-colors duration-300"
+        style="color: var(--text-primary);"
       >
         Visit Website
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
@@ -115,15 +143,17 @@ const { project, index, priority = false } = Astro.props;
 </article>
 
 <style>
-  .project-card:hover {
-    box-shadow: 0 20px 40px -20px rgba(37, 19, 79, 0.25);
-    transform: translateY(-4px);
-  }
-  .project-card {
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-  }
-  .view-details-btn:hover {
+  .project-feature-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    height: 2px;
+    width: 0;
     background: var(--brand-primary);
-    color: var(--text-on-dark);
+    transition: width 0.3s ease;
+  }
+  .project-feature:hover .project-feature-title::after {
+    width: 100%;
   }
 </style>
