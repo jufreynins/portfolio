@@ -14,6 +14,8 @@ export const siteConfig = {
 
   cvPath: '/documents/Jufrey-Bayog-CV.pdf',
 
+  tools: [{ label: 'Image to WebP Converter', href: '/tools/image-to-webp' }],
+
   social: {
     // Add links here when available
   },

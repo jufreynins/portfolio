@@ -18,6 +18,11 @@ const year = new Date().getFullYear();
           {item.label}
         </a>
       ))}
+      {siteConfig.tools.map((tool) => (
+        <a href={tool.href} class="text-sm text-zinc-900/70 hover:text-zinc-900 transition-colors">
+          {tool.label}
+        </a>
+      ))}
     </nav>
 
     <div class="flex flex-col gap-2 text-sm" style="color: var(--color-muted)">

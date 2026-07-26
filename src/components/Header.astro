@@ -26,6 +26,12 @@ import Button from './Button.astro';
           {item.label}
         </a>
       ))}
+      <a
+        href={siteConfig.tools[0].href}
+        class="nav-link relative text-sm font-medium text-zinc-900/70 transition-colors hover:text-zinc-900 py-1"
+      >
+        Tools
+      </a>
     </nav>
 
     <div class="hidden md:flex items-center gap-3">
@@ -59,6 +65,13 @@ import Button from './Button.astro';
           {item.label}
         </a>
       ))}
+      <a
+        href={siteConfig.tools[0].href}
+        class="rounded-lg px-3 py-3 text-base font-medium text-zinc-900/85 hover:bg-black/5 hover:text-zinc-900"
+        data-mobile-link
+      >
+        Tools
+      </a>
     </nav>
     <div class="mt-4 flex flex-col gap-3 border-t border-black/10 pt-4">
       <Button href={siteConfig.cvPath} variant="secondary" class="w-full" target="_blank" rel="noopener noreferrer">
