@@ -2,14 +2,28 @@
 import { siteConfig } from '../config/site';
 import Container from './Container.astro';
 import Button from './Button.astro';
+
+interface Props {
+  /** Set when the page's first section has a dark background, so header text stays legible before scrolling. */
+  dark?: boolean;
+}
+
+const { dark = false } = Astro.props;
+
+const currentPath = Astro.url.pathname;
+
+function isNavActive(href: string) {
+  if (href === '/') return currentPath === '/';
+  return currentPath === href || currentPath.startsWith(`${href}/`);
+}
 ---
 
-<header id="site-header" class="fixed inset-x-0 top-0 z-50 transition-all duration-300" data-header>
+<header id="site-header" class="fixed inset-x-0 top-0 z-50 transition-all duration-300" data-header data-header-variant={dark ? 'dark' : 'light'}>
   <div class="absolute inset-0 -z-10 opacity-0 transition-opacity duration-300 glass" data-header-bg></div>
   <div class="absolute bottom-0 left-0 h-px bg-white/0 transition-[width] duration-150 ease-out" data-scroll-progress style="background: var(--color-accent); width: 0%;"></div>
 
   <Container class="flex items-center justify-between py-4 transition-[padding] duration-300" data-header-inner>
-    <a href="#home" class="flex items-center gap-2.5 text-xl font-serif tracking-tight text-zinc-900" aria-label={`${siteConfig.name} — Home`}>
+    <a href="/" class="site-logo-link flex items-center gap-2.5 text-xl font-serif tracking-tight text-zinc-900" aria-label={`${siteConfig.name} — Home`}>
       <span class="flex h-9 w-9 items-center justify-center rounded-full border border-black/10 font-mono text-xs font-medium" style="background: var(--brand-lavender); color: var(--brand-primary);">
         {siteConfig.initials}
       </span>
@@ -20,30 +34,24 @@ import Button from './Button.astro';
       {siteConfig.nav.map((item) => (
         <a
           href={item.href}
-          data-nav-link={item.href}
-          class="nav-link relative text-sm font-medium text-zinc-900/70 transition-colors hover:text-zinc-900 py-1"
+          class:list={['nav-link relative text-sm font-medium text-zinc-900/70 transition-colors hover:text-zinc-900 py-1', { 'is-active': isNavActive(item.href) }]}
+          aria-current={isNavActive(item.href) ? 'page' : undefined}
         >
           {item.label}
         </a>
       ))}
-      <a
-        href={siteConfig.tools[0].href}
-        class="nav-link relative text-sm font-medium text-zinc-900/70 transition-colors hover:text-zinc-900 py-1"
-      >
-        Tools
-      </a>
     </nav>
 
     <div class="hidden md:flex items-center gap-3">
       <Button href={siteConfig.cvPath} variant="secondary" target="_blank" rel="noopener noreferrer">
         Download CV
       </Button>
-      <Button href="#contact" variant="primary">Let's Talk</Button>
+      <Button href="/contact" variant="primary">Let's Talk</Button>
     </div>
 
     <button
       type="button"
-      class="md:hidden inline-flex h-11 w-11 items-center justify-center rounded-full border border-black/10 text-zinc-900"
+      class="header-mobile-toggle md:hidden inline-flex h-11 w-11 items-center justify-center rounded-full border border-black/10 text-zinc-900"
       aria-expanded="false"
       aria-controls="mobile-menu"
       aria-label="Toggle menu"
@@ -59,25 +67,19 @@ import Button from './Button.astro';
       {siteConfig.nav.map((item) => (
         <a
           href={item.href}
-          class="rounded-lg px-3 py-3 text-base font-medium text-zinc-900/85 hover:bg-black/5 hover:text-zinc-900"
+          class:list={['rounded-lg px-3 py-3 text-base font-medium hover:bg-black/5', isNavActive(item.href) ? 'text-zinc-900 bg-black/5' : 'text-zinc-900/85 hover:text-zinc-900']}
+          aria-current={isNavActive(item.href) ? 'page' : undefined}
           data-mobile-link
         >
           {item.label}
         </a>
       ))}
-      <a
-        href={siteConfig.tools[0].href}
-        class="rounded-lg px-3 py-3 text-base font-medium text-zinc-900/85 hover:bg-black/5 hover:text-zinc-900"
-        data-mobile-link
-      >
-        Tools
-      </a>
     </nav>
     <div class="mt-4 flex flex-col gap-3 border-t border-black/10 pt-4">
       <Button href={siteConfig.cvPath} variant="secondary" class="w-full" target="_blank" rel="noopener noreferrer">
         Download CV
       </Button>
-      <Button href="#contact" variant="primary" class="w-full">Let's Talk</Button>
+      <Button href="/contact" variant="primary" class="w-full">Let's Talk</Button>
     </div>
   </div>
 </header>
@@ -100,6 +102,20 @@ import Button from './Button.astro';
   }
   .nav-link.is-active {
     color: #18181b;
+  }
+
+  /* Before the user scrolls, a page whose first section is dark needs light header text for contrast. */
+  [data-header-variant='dark']:not(.is-scrolled) .nav-link,
+  [data-header-variant='dark']:not(.is-scrolled) .site-logo-link,
+  [data-header-variant='dark']:not(.is-scrolled) .header-mobile-toggle {
+    color: rgba(255, 255, 255, 0.85);
+  }
+  [data-header-variant='dark']:not(.is-scrolled) .nav-link:hover,
+  [data-header-variant='dark']:not(.is-scrolled) .nav-link.is-active {
+    color: #fff;
+  }
+  [data-header-variant='dark']:not(.is-scrolled) .header-mobile-toggle {
+    border-color: rgba(255, 255, 255, 0.25);
   }
 </style>
 
@@ -161,6 +177,7 @@ import Button from './Button.astro';
       if (headerBg) headerBg.style.opacity = scrollY > 24 ? '1' : '0';
       if (headerInner) headerInner.classList.toggle('py-2.5', scrollY > 24);
       if (headerInner) headerInner.classList.toggle('py-4', scrollY <= 24);
+      header.classList.toggle('is-scrolled', scrollY > 24);
     };
 
     window.addEventListener('scroll', onScroll, { signal, passive: true });
@@ -173,30 +190,6 @@ import Button from './Button.astro';
       },
       { signal }
     );
-
-    const navLinks = document.querySelectorAll<HTMLElement>('[data-nav-link]');
-    const sections = Array.from(navLinks)
-      .map((link) => document.querySelector(link.dataset.navLink ?? ''))
-      .filter((el): el is HTMLElement => !!el);
-
-    if (sections.length && 'IntersectionObserver' in window) {
-      const setActive = (id: string) => {
-        navLinks.forEach((link) => {
-          link.classList.toggle('is-active', link.dataset.navLink === `#${id}`);
-        });
-      };
-
-      const spy = new IntersectionObserver(
-        (entries) => {
-          const visible = entries.filter((e) => e.isIntersecting);
-          if (visible.length) setActive(visible[0].target.id);
-        },
-        { rootMargin: '-40% 0px -50% 0px' }
-      );
-
-      sections.forEach((section) => spy.observe(section));
-      signal.addEventListener('abort', () => spy.disconnect());
-    }
   }
 
   document.addEventListener('astro:page-load', initHeader);

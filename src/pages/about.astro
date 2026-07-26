@@ -1,0 +1,145 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/Container.astro';
+import Button from '../components/Button.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import TechGrid from '../components/TechGrid.astro';
+import ProcessTimeline from '../components/ProcessTimeline.astro';
+import AIWorkflowVisual from '../components/AIWorkflowVisual.astro';
+import { siteConfig } from '../config/site';
+
+const pageTitle = `About — ${siteConfig.name}`;
+const pageDescription =
+  'A closer look at Jufrey Niño Bayog — background, working philosophy, technical toolkit, and the AI-assisted, human-led process behind every project.';
+const canonical = `${siteConfig.url}/about`;
+
+const yearsExperience = new Date().getFullYear() - siteConfig.yearStarted;
+
+const professionalFacts = [
+  { label: 'Experience', value: `${yearsExperience}+ years building for the web` },
+  { label: 'Focus', value: 'WordPress development & modern frontend' },
+  { label: 'Workflow', value: 'AI-assisted with Claude Code and Cursor, human-reviewed' },
+  { label: 'Availability', value: 'Remote, working with clients worldwide' },
+];
+
+const processSteps: { title: string; description: string; type: 'discover' | 'plan' | 'design-build' | 'test-refine' }[] = [
+  {
+    title: 'Discover',
+    description: "Understanding the client's goals, target audience, problems, and website requirements.",
+    type: 'discover',
+  },
+  {
+    title: 'Plan',
+    description: 'Creating the sitemap, page structure, content hierarchy, and user journey.',
+    type: 'plan',
+  },
+  {
+    title: 'Design and Build',
+    description: 'Turning the plan into a polished interface using modern design tools, WordPress, Elementor, custom code, and AI-assisted development.',
+    type: 'design-build',
+  },
+  {
+    title: 'Test and Refine',
+    description: 'Testing responsiveness, performance, accessibility, functionality, and browser compatibility before launch.',
+    type: 'test-refine',
+  },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonical={canonical}>
+  <!-- Intro -->
+  <section class="pt-32 pb-20 sm:pt-40 sm:pb-24" style="background: var(--surface-warm);">
+    <Container class="grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-16">
+      <div class="lg:col-span-7" data-reveal data-reveal-type="fade-up">
+        <SectionHeading
+          as="h1"
+          eyebrow="About"
+          title="A developer who treats your website like it's my own business."
+        />
+      </div>
+
+      <div class="flex flex-col gap-8 lg:col-span-5" data-reveal data-reveal-type="fade-up">
+        <p class="leading-relaxed" style="color: var(--text-secondary)">
+          I'm {siteConfig.name}, a {siteConfig.shortTitle.toLowerCase()} based in the Philippines, working remotely with businesses, agencies, and entrepreneurs around the world. For over {yearsExperience} years I've built WordPress sites end to end — from Elementor builds and custom post types to full site migrations and performance overhauls.
+        </p>
+        <p class="leading-relaxed" style="color: var(--text-secondary)">
+          I care about the same things a business owner cares about: does the site load fast, does it look credible, and does it actually help win customers. That's the lens I bring to every project, whether it's a five-page brochure site or a multi-year ongoing maintenance relationship.
+        </p>
+        <dl class="flex flex-col divide-y" style="border-color: var(--border-color);">
+          {professionalFacts.map((fact) => (
+            <div class="grid grid-cols-3 gap-4 py-4">
+              <dt class="eyebrow col-span-1">{fact.label}</dt>
+              <dd class="col-span-2 text-sm" style="color: var(--text-primary);">{fact.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Skills -->
+  <section class="py-24 sm:py-32" style="background: var(--surface-white);">
+    <Container class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
+      <div class="lg:col-span-4">
+        <div class="relative overflow-hidden lg:sticky lg:top-32">
+          <SectionHeading
+            eyebrow="Skills & Technology"
+            title="Tools that power my work"
+            description="A carefully selected toolkit for building scalable, high-performing, and conversion-focused digital experiences — from WordPress and Elementor to modern frontend frameworks and AI-assisted tooling."
+            watermark="CAPABILITIES"
+          />
+        </div>
+      </div>
+      <div class="lg:col-span-8">
+        <TechGrid />
+      </div>
+    </Container>
+  </section>
+
+  <!-- Process -->
+  <section class="py-24 sm:py-32" style="background: #25134f;">
+    <Container class="grid grid-cols-1 gap-16 lg:grid-cols-[38%_62%] lg:gap-12">
+      <div class="min-w-0">
+        <div class="lg:sticky lg:top-32">
+          <SectionHeading
+            eyebrow="How I Work"
+            title="A clear, dependable process"
+            description="No surprises, no guesswork — just a proven path from first conversation to launch. Every project moves through the same four stages, whether it's a one-page landing site or a full platform rebuild."
+            titleClass="max-w-[420px] break-words text-[clamp(2.75rem,4.2vw,5rem)] leading-[0.95]"
+            dark
+          />
+        </div>
+      </div>
+
+      <div>
+        <ProcessTimeline steps={processSteps} />
+      </div>
+    </Container>
+  </section>
+
+  <!-- AI-assisted development -->
+  <section class="py-24 sm:py-32" style="background: var(--surface-white);">
+    <Container class="flex flex-col gap-14">
+      <SectionHeading
+        eyebrow="Workflow"
+        title="AI-assisted development. Human-led execution."
+        description="I use Claude Code and Cursor for planning, debugging, scaffolding, and QA — but architecture decisions, design judgment, and final review always stay human-led. AI speeds up the repetitive parts of the job so more time goes into getting the details that actually matter right: performance, accessibility, and whether the site genuinely serves the business."
+        titleClass="text-3xl sm:text-4xl lg:text-5xl"
+      />
+      <AIWorkflowVisual />
+    </Container>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20 sm:py-24" style="background: var(--brand-dark);">
+    <Container class="flex flex-col items-start gap-6">
+      <SectionHeading
+        eyebrow="Let's build something"
+        title="Ready to start a project?"
+        description="Tell me a bit about what you're building. I typically reply within one business day."
+        dark
+      />
+      <Button href="/contact" variant="primary">Start a Conversation</Button>
+    </Container>
+  </section>
+</BaseLayout>

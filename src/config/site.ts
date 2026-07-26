@@ -14,18 +14,17 @@ export const siteConfig = {
 
   cvPath: '/documents/Jufrey-Bayog-CV.pdf',
 
-  tools: [{ label: 'Image to WebP Converter', href: '/tools/image-to-webp' }],
-
   social: {
     // Add links here when available
   },
 
   nav: [
-    { label: 'Home', href: '#home' },
-    { label: 'About', href: '#about' },
-    { label: 'Services', href: '#services' },
-    { label: 'Work', href: '#work' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'Home', href: '/' },
+    { label: 'About', href: '/about' },
+    { label: 'Services', href: '/services' },
+    { label: 'Work', href: '/work' },
+    { label: 'Tools', href: '/tools' },
+    { label: 'Contact', href: '/contact' },
   ],
 
   initials: 'JB',

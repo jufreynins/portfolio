@@ -11,9 +11,11 @@ interface Props {
   description?: string;
   canonical?: string;
   noindex?: boolean;
+  /** Set when the page's first section has a dark background. */
+  darkHeader?: boolean;
 }
 
-const { title, description, canonical, noindex } = Astro.props;
+const { title, description, canonical, noindex, darkHeader = false } = Astro.props;
 ---
 
 <html lang="en">
@@ -36,7 +38,7 @@ const { title, description, canonical, noindex } = Astro.props;
     <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-white focus:text-black focus:px-4 focus:py-2 focus:rounded">
       Skip to content
     </a>
-    <Header />
+    <Header dark={darkHeader} />
     <main id="main">
       <slot />
     </main>

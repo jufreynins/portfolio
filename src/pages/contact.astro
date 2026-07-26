@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/Container.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ContactForm from '../components/ContactForm.astro';
+import Reveal from '../components/Reveal.astro';
+import { siteConfig } from '../config/site';
+
+const pageTitle = `Contact — ${siteConfig.name}`;
+const pageDescription =
+  'Get in touch to discuss your WordPress website or custom web app project. I typically reply within one business day.';
+const canonical = `${siteConfig.url}/contact`;
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonical={canonical} darkHeader>
+  <section class="pt-32 pb-24 sm:pt-40 sm:pb-32" style="background: var(--brand-dark);">
+    <Container class="grid grid-cols-1 gap-14 lg:grid-cols-2 lg:gap-20">
+      <div class="flex flex-col gap-6">
+        <SectionHeading
+          as="h1"
+          eyebrow="Contact"
+          title="Ready to start a project?"
+          description="Tell me a bit about what you're building. I typically reply within one business day."
+          dark
+        />
+        <Reveal delay={100} class="flex flex-col gap-4">
+          <a href={`mailto:${siteConfig.email}`} class="flex items-center gap-3 transition-colors" style="color: rgba(255,255,255,0.85);">
+            <span class="flex h-10 w-10 items-center justify-center rounded-full border" style="border-color: rgba(255,255,255,0.2);">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>
+            </span>
+            {siteConfig.email}
+          </a>
+          <a href={siteConfig.cvPath} target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 transition-colors" style="color: rgba(255,255,255,0.85);">
+            <span class="flex h-10 w-10 items-center justify-center rounded-full border" style="border-color: rgba(255,255,255,0.2);">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </span>
+            Download CV
+          </a>
+        </Reveal>
+      </div>
+
+      <div class="reveal rounded-3xl p-6 sm:p-8" style="background: var(--surface-white); animation-delay:120ms" data-reveal>
+        <ContactForm />
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/Container.astro';
+import Button from '../../components/Button.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import { siteConfig } from '../../config/site';
+import { serviceCards } from '../../data/services';
+
+const pageTitle = `WordPress Website Development — ${siteConfig.name}`;
+const pageDescription =
+  'Custom WordPress development services — new builds, landing pages, e-commerce, redesigns, automation, and ongoing maintenance.';
+const canonical = `${siteConfig.url}/services/website-wordpress`;
+
+const yearsExperience = new Date().getFullYear() - siteConfig.yearStarted;
+
+const expandedDetails: Record<string, string> = {
+  'WordPress Development':
+    'Whether you need a brochure site, a multi-page business site, or something more custom, I build on WordPress using Elementor Pro for flexible, editable layouts and Advanced Custom Fields for structured, maintainable content. The goal is always the same: a site that looks premium out of the gate and that you (or your team) can actually update without breaking anything.',
+  'Landing Pages & Optimization':
+    'A landing page only works if it loads fast and gets straight to the point. I build focused, conversion-oriented pages with clean markup, optimized assets, and a technical SEO foundation — so paid traffic and organic search both have a real chance of converting.',
+  'Maintenance & AI-Assisted Support':
+    'Websites need upkeep — plugin updates, small fixes, content changes, the occasional layout tweak. I offer ongoing maintenance with AI-assisted development for faster turnaround on routine work, while every change is still human-reviewed before it goes live.',
+  'E-Commerce Development':
+    'For stores, I set up WooCommerce or Shopify with a product catalog, checkout flow, and payment gateway integration built for real-world use — mobile-optimized, fast-loading, and structured so you can manage inventory without needing a developer for every change.',
+  'Automation & CRM Setup':
+    'A lot of manual admin work can be automated away. I set up GoHighLevel and Zapier workflows to capture leads, trigger follow-ups, and keep your CRM pipeline moving — so inquiries don\'t sit in an inbox waiting for someone to notice them.',
+  'Website Redesign & Migration':
+    'If your current site is outdated, slow, or built on a legacy platform, I handle the migration to WordPress carefully — preserving your existing content and SEO equity while modernizing the design and user experience, tested thoroughly before go-live.',
+};
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonical={canonical}>
+  <section class="pt-32 pb-16 sm:pt-40 sm:pb-20" style="background: var(--surface-warm);">
+    <Container class="flex flex-col gap-8">
+      <a
+        href="/services"
+        class="inline-flex w-fit items-center gap-2 text-sm font-medium transition-colors hover:text-zinc-900"
+        style="color: var(--text-secondary);"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        Back to Services
+      </a>
+      <SectionHeading
+        as="h1"
+        eyebrow="Website Development"
+        title="WordPress websites built to last"
+        description={`Over ${yearsExperience} years building WordPress sites for businesses, agencies, and entrepreneurs — clean code, editable layouts, and a foundation that holds up long after launch.`}
+      />
+    </Container>
+  </section>
+
+  <section class="py-20 sm:py-28" style="background: var(--surface-white);">
+    <Container class="flex flex-col gap-16">
+      {serviceCards.map((service, i) => (
+        <div class="grid grid-cols-1 gap-6 border-t pt-10 lg:grid-cols-12 lg:gap-10" style="border-color: var(--border-color);" data-reveal>
+          <div class="flex items-start gap-4 lg:col-span-4">
+            <span class="font-mono text-sm" style="color: var(--brand-primary)">{String(i + 1).padStart(2, '0')}</span>
+            <div class="flex flex-col gap-2">
+              <h2 class="text-2xl">{service.title}</h2>
+              <p class="leading-relaxed" style="color: var(--text-secondary)">{service.outcome}</p>
+            </div>
+          </div>
+          <div class="flex flex-col gap-4 lg:col-span-8">
+            <p class="leading-relaxed" style="color: var(--text-secondary)">{expandedDetails[service.title]}</p>
+            <div class="flex flex-wrap gap-x-4 gap-y-2">
+              {service.inclusions.map((item) => (
+                <span class="inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium" style="border-color: var(--border-color); color: var(--text-primary);">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--brand-primary);"><polyline points="20 6 9 17 4 12"/></svg>
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </Container>
+  </section>
+
+  <section class="py-20 sm:py-24" style="background: var(--brand-dark);">
+    <Container class="flex flex-col items-start gap-6">
+      <SectionHeading
+        eyebrow="Let's build something"
+        title="Ready to start a WordPress project?"
+        description="Tell me a bit about what you're building. I typically reply within one business day."
+        dark
+      />
+      <Button href="/contact" variant="primary">Start a Conversation</Button>
+    </Container>
+  </section>
+</BaseLayout>

@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/Container.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import { siteConfig } from '../../config/site';
+
+const pageTitle = `Free Web Tools — ${siteConfig.name}`;
+const pageDescription =
+  'Free, browser-based web tools built by Jufrey Niño Bayog. No uploads, no accounts, no tracking — everything runs locally in your browser.';
+const canonical = `${siteConfig.url}/tools`;
+
+const tools = [
+  {
+    title: 'Image to WebP Converter',
+    description:
+      'Convert JPG and PNG images to lightweight WebP files directly in your browser. No uploads, no storage, and no account required.',
+    href: '/tools/image-to-webp',
+  },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonical={canonical}>
+  <section class="pt-32 pb-20 sm:pt-40 sm:pb-24" style="background: var(--surface-warm);">
+    <Container>
+      <SectionHeading
+        as="h1"
+        eyebrow="Free Tools"
+        title="Web tools you can use for free"
+        description="Small, focused, browser-based tools — no uploads, no accounts, no tracking. Built the same way I build client sites: fast, clean, and privacy-respecting."
+      />
+    </Container>
+  </section>
+
+  <section class="py-16 sm:py-20" style="background: var(--surface-white);">
+    <Container>
+      <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        {tools.map((tool) => (
+          <a
+            href={tool.href}
+            class="group flex flex-col gap-4 rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-1"
+            style="border-color: var(--border-color); background: var(--surface-warm);"
+            data-reveal
+          >
+            <span class="flex h-11 w-11 items-center justify-center rounded-full" style="background: var(--brand-lavender); color: var(--brand-primary);">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            </span>
+            <div class="flex flex-col gap-2">
+              <h3 class="text-xl font-bold" style="color: var(--text-primary); font-family: var(--font-heading);">{tool.title}</h3>
+              <p class="leading-relaxed" style="color: var(--text-secondary)">{tool.description}</p>
+            </div>
+            <span class="mt-auto flex items-center gap-1.5 text-sm font-bold" style="color: var(--brand-primary);">
+              Open tool
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="transition-all duration-300 group-hover:translate-x-1"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            </span>
+          </a>
+        ))}
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

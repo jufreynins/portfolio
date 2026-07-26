@@ -44,7 +44,7 @@ const professionalFacts = [
   { label: 'Availability', value: 'Remote, working with clients worldwide' },
 ];
 
-const processSteps = [
+const processSteps: { title: string; description: string; type: 'discover' | 'plan' | 'design-build' | 'test-refine' }[] = [
   {
     title: 'Discover',
     description: "Understanding the client's goals, target audience, problems, and website requirements.",
@@ -94,8 +94,8 @@ const [firstProject, secondProject, thirdProject, ...remainingProjects] = projec
           </p>
 
           <div class="flex flex-col gap-4 sm:flex-row" data-hero-support>
-            <Button href="#work" variant="primary" data-magnetic>View Work</Button>
-            <Button href="#contact" variant="secondary" data-magnetic>Start a Project</Button>
+            <Button href="/work" variant="primary" data-magnetic>View Work</Button>
+            <Button href="/contact" variant="secondary" data-magnetic>Start a Project</Button>
           </div>
 
           <div class="flex flex-wrap items-center gap-x-3 gap-y-2 pt-1 text-sm" style="color: var(--text-secondary);" data-hero-support>
@@ -166,6 +166,10 @@ const [firstProject, secondProject, thirdProject, ...remainingProjects] = projec
           ))}
         </div>
       )}
+
+      <div data-reveal>
+        <Button href="/work" variant="secondary">View All Work</Button>
+      </div>
     </Container>
     <ProjectModal />
   </section>
@@ -192,6 +196,9 @@ const [firstProject, secondProject, thirdProject, ...remainingProjects] = projec
             </div>
           ))}
         </dl>
+        <div>
+          <Button href="/about" variant="secondary">More About Me</Button>
+        </div>
       </div>
     </Container>
   </section>
@@ -226,7 +233,7 @@ const [firstProject, secondProject, thirdProject, ...remainingProjects] = projec
       <div class="flex flex-col border-t" style="border-color: var(--border-color);">
         {serviceCards.map((service, i) => (
           <a
-            href="#contact"
+            href="/contact"
             class="service-row group flex flex-col gap-4 border-b py-10 transition-colors duration-300 sm:-mx-6 sm:flex-row sm:items-center sm:justify-between sm:gap-10 sm:px-6"
             style={`border-color: var(--border-color); animation-delay:${i * 50}ms;`}
             data-reveal
@@ -247,6 +254,9 @@ const [firstProject, secondProject, thirdProject, ...remainingProjects] = projec
           </a>
         ))}
       </div>
+      <div data-reveal>
+        <Button href="/services" variant="secondary">Explore Services in Detail</Button>
+      </div>
     </Container>
   </section>
 
@@ -265,8 +275,11 @@ const [firstProject, secondProject, thirdProject, ...remainingProjects] = projec
         </div>
       </div>
 
-      <div>
+      <div class="flex flex-col gap-10">
         <ProcessTimeline steps={processSteps} />
+        <div data-reveal>
+          <Button href="/about" variant="primary">More About How I Work</Button>
+        </div>
       </div>
     </Container>
   </section>
@@ -281,6 +294,9 @@ const [firstProject, secondProject, thirdProject, ...remainingProjects] = projec
         titleClass="text-3xl sm:text-4xl lg:text-5xl"
       />
       <AIWorkflowVisual />
+      <div data-reveal>
+        <Button href="/about" variant="secondary">More About My Workflow</Button>
+      </div>
     </Container>
   </section>
 
