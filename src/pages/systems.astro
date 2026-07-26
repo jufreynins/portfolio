@@ -1,0 +1,102 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/Container.astro';
+import Button from '../components/Button.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import { siteConfig } from '../config/site';
+
+const pageTitle = `Custom Systems — ${siteConfig.name}`;
+const pageDescription =
+  'Custom booking, inventory, dashboard, and workflow systems built with modern, framework-light JavaScript and TypeScript.';
+const canonical = `${siteConfig.url}/systems`;
+
+const systems = [
+  {
+    title: 'Booking & Reservation Systems',
+    description:
+      'Scheduling and availability tools for appointments, rentals, or reservations — built around how your business actually books work, not a generic template.',
+    icon: '<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
+  },
+  {
+    title: 'Inventory & Order Management',
+    description:
+      'Systems for tracking stock, processing orders, and keeping product data consistent across your site and your team.',
+    icon: '<path d="M21 8l-9-5-9 5 9 5 9-5Z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/>',
+  },
+  {
+    title: 'Admin Dashboards & Internal Tools',
+    description:
+      'Focused internal interfaces for viewing data, managing content, or running day-to-day operations — built for the people who use them, not a generic admin panel.',
+    icon: '<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>',
+  },
+  {
+    title: 'Customer & Client Portals',
+    description:
+      'Login-gated areas where clients can check order status, view documents, or manage their account, without needing a full custom app.',
+    icon: '<circle cx="12" cy="8" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/>',
+  },
+  {
+    title: 'Point of Sale & Checkout Flows',
+    description:
+      'Custom checkout and sales flows for online or in-person use, integrated with the payment processors and inventory you already rely on.',
+    icon: '<rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>',
+  },
+  {
+    title: 'Automation & Workflow Systems',
+    description:
+      'Connected systems that move data between the tools you already use — reducing manual data entry and keeping information in sync automatically.',
+    icon: '<circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M9 6h6a3 3 0 0 1 3 3v3M15 18H9a3 3 0 0 1-3-3v-3"/>',
+  },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonical={canonical}>
+  <section class="pt-32 pb-16 sm:pt-40 sm:pb-20" style="background: var(--surface-warm);">
+    <Container class="flex flex-col gap-8">
+      <a
+        href="/services/custom-web-apps"
+        class="inline-flex w-fit items-center gap-2 text-sm font-medium transition-colors hover:text-zinc-900"
+        style="color: var(--text-secondary);"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        Back to Custom Web Apps
+      </a>
+      <SectionHeading
+        as="h1"
+        eyebrow="Custom Systems"
+        title="Systems built around how you work"
+        description="Beyond one-off tools, I build the kinds of internal systems that keep a business running — booking, inventory, dashboards, and the automation that connects them."
+      />
+    </Container>
+  </section>
+
+  <section class="py-20 sm:py-28" style="background: var(--surface-white);">
+    <Container>
+      <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        {systems.map((system) => (
+          <div class="flex flex-col gap-4 rounded-2xl border p-6" style="border-color: var(--border-color); background: var(--surface-warm);" data-reveal>
+            <span class="flex h-11 w-11 items-center justify-center rounded-full" style="background: var(--brand-lavender); color: var(--brand-primary);">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={system.icon} />
+            </span>
+            <div class="flex flex-col gap-2">
+              <h2 class="text-lg font-bold" style="color: var(--text-primary); font-family: var(--font-heading);">{system.title}</h2>
+              <p class="leading-relaxed" style="color: var(--text-secondary)">{system.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <section class="py-20 sm:py-24" style="background: var(--brand-dark);">
+    <Container class="flex flex-col items-start gap-6">
+      <SectionHeading
+        eyebrow="Have a system in mind?"
+        title="Let's talk about what you need"
+        description="Tell me how your business currently handles it — I'll tell you honestly whether a custom system makes sense, or if a simpler tool would do the job."
+        dark
+      />
+      <Button href="/contact" variant="primary">Start a Conversation</Button>
+    </Container>
+  </section>
+</BaseLayout>

@@ -30,7 +30,7 @@ function isNavActive(href: string) {
       <span class="hidden sm:inline">{siteConfig.name}</span>
     </a>
 
-    <nav class="hidden md:flex items-center gap-8" aria-label="Primary">
+    <nav class="hidden xl:flex items-center gap-6" aria-label="Primary">
       {siteConfig.nav.map((item) => (
         <a
           href={item.href}
@@ -42,7 +42,7 @@ function isNavActive(href: string) {
       ))}
     </nav>
 
-    <div class="hidden md:flex items-center gap-3">
+    <div class="hidden xl:flex items-center gap-3">
       <Button href={siteConfig.cvPath} variant="secondary" target="_blank" rel="noopener noreferrer">
         Download CV
       </Button>
@@ -51,7 +51,7 @@ function isNavActive(href: string) {
 
     <button
       type="button"
-      class="header-mobile-toggle md:hidden inline-flex h-11 w-11 items-center justify-center rounded-full border border-black/10 text-zinc-900"
+      class="header-mobile-toggle xl:hidden inline-flex h-11 w-11 items-center justify-center rounded-full border border-black/10 text-zinc-900"
       aria-expanded="false"
       aria-controls="mobile-menu"
       aria-label="Toggle menu"
@@ -62,7 +62,7 @@ function isNavActive(href: string) {
     </button>
   </Container>
 
-  <div id="mobile-menu" class="md:hidden hidden glass mx-4 mb-4 rounded-2xl px-6 py-6" data-mobile-menu>
+  <div id="mobile-menu" class="xl:hidden hidden glass mx-4 mb-4 rounded-2xl px-6 py-6" data-mobile-menu>
     <nav class="flex flex-col gap-1" aria-label="Mobile">
       {siteConfig.nav.map((item) => (
         <a
