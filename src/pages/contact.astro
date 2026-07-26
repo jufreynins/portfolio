@@ -6,10 +6,32 @@ import ContactForm from '../components/ContactForm.astro';
 import Reveal from '../components/Reveal.astro';
 import { siteConfig } from '../config/site';
 
-const pageTitle = `Contact — ${siteConfig.name}`;
+const pageTitle = `Start a Web Project | ${siteConfig.name}`;
 const pageDescription =
-  'Tell me what you are trying to improve, organize, automate, or build. I will review the requirements and recommend a practical next step.';
+  'Discuss your website, custom web system, admin dashboard, WordPress project, or browser-based tool with Jufrey Niño Bayog.';
 const canonical = `${siteConfig.url}/contact`;
+
+const trustIndicators = [
+  'Replies within one business day',
+  'Available for project-based and agency support',
+  'Remote collaboration',
+  'Clear scope and next-step recommendations',
+];
+
+const nextSteps = [
+  {
+    title: 'Send Your Requirements',
+    description: 'Fill out the project form with what you need, your goals, and any existing website or system involved.',
+  },
+  {
+    title: 'Project Review',
+    description: 'I review the details and assess scope, feasibility, and the right approach for your situation.',
+  },
+  {
+    title: 'Next-Step Recommendation',
+    description: "You'll get a clear, honest recommendation for the most practical next step — no pressure, no obligation.",
+  },
+];
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription} canonical={canonical} darkHeader>
@@ -37,10 +59,42 @@ const canonical = `${siteConfig.url}/contact`;
             Download CV
           </a>
         </Reveal>
+        <Reveal delay={150}>
+          <ul class="flex flex-col gap-2.5 border-t pt-6" style="border-color: rgba(255,255,255,0.15);">
+            {trustIndicators.map((item) => (
+              <li class="flex items-center gap-2.5 text-sm" style="color: rgba(255,255,255,0.75);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0" style="color: var(--brand-lavender);"><polyline points="20 6 9 17 4 12"/></svg>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </Reveal>
       </div>
 
       <div class="reveal rounded-3xl p-6 sm:p-8" style="background: var(--surface-white); animation-delay:120ms" data-reveal>
         <ContactForm />
+      </div>
+    </Container>
+  </section>
+
+  <!-- What Happens Next -->
+  <section class="py-20 sm:py-28" style="background: var(--surface-warm);">
+    <Container class="flex flex-col gap-12">
+      <SectionHeading
+        eyebrow="What Happens Next"
+        title="A simple, no-pressure process"
+        description="Here's what happens after you send your project details."
+      />
+      <div class="grid grid-cols-1 gap-8 sm:grid-cols-3" data-reveal data-reveal-type="stagger">
+        {nextSteps.map((step, i) => (
+          <div class="flex flex-col gap-3">
+            <span class="flex h-11 w-11 items-center justify-center rounded-full font-mono text-sm font-bold" style="background: var(--brand-lavender); color: var(--brand-primary);">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <h3 class="text-lg font-bold" style="color: var(--text-primary); font-family: var(--font-heading);">{step.title}</h3>
+            <p class="leading-relaxed" style="color: var(--text-secondary)">{step.description}</p>
+          </div>
+        ))}
       </div>
     </Container>
   </section>

@@ -8,7 +8,7 @@ export const siteConfig = {
   locale: 'en-US',
   yearStarted: 2019,
 
-  email: 'jufreyninsbayog@gmail.com',
+  email: 'jufreyninobayog@gmail.com',
   phone: '+639652100539',
   phoneDisplay: '+63 965 210 0539',
 

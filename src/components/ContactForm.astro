@@ -10,7 +10,7 @@ const fieldClass = dark
   ? 'rounded-xl border border-white/15 bg-white/[0.05] px-4 py-3 text-sm text-white placeholder:text-white/35 transition-colors focus:border-[var(--color-accent)] focus:outline-none'
   : 'rounded-xl border border-black/15 bg-black/[0.03] px-4 py-3 text-sm text-zinc-900 placeholder:text-zinc-900/30 transition-colors focus:border-[var(--color-accent)] focus:outline-none';
 const submitClass =
-  'inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-[var(--brand-primary)] px-7 py-3 text-[0.9375rem] font-bold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[var(--brand-hover)]';
+  'inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-[var(--brand-primary)] px-7 py-3 text-[0.9375rem] font-bold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[var(--brand-hover)] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0';
 const errorColor = dark ? 'var(--color-error-dark)' : 'var(--color-error)';
 const successColor = dark ? 'var(--color-success-dark)' : 'var(--color-success)';
 ---
@@ -44,10 +44,11 @@ const successColor = dark ? 'var(--color-success-dark)' : 'var(--color-success)'
         type="text"
         required
         autocomplete="name"
+        aria-describedby="name-error"
         class={fieldClass}
         placeholder="Your name"
       />
-      <p class="hidden text-xs" style={`color:${errorColor}`} data-error-for="name">Please enter your name.</p>
+      <p id="name-error" class="hidden text-xs" style={`color:${errorColor}`} data-error-for="name" role="alert">Please enter your name.</p>
     </div>
 
     <div class="flex flex-col gap-2">
@@ -58,10 +59,11 @@ const successColor = dark ? 'var(--color-success-dark)' : 'var(--color-success)'
         type="email"
         required
         autocomplete="email"
+        aria-describedby="email-error"
         class={fieldClass}
         placeholder="you@company.com"
       />
-      <p class="hidden text-xs" style={`color:${errorColor}`} data-error-for="email">Please enter a valid email.</p>
+      <p id="email-error" class="hidden text-xs" style={`color:${errorColor}`} data-error-for="email" role="alert">Please enter a valid email.</p>
     </div>
   </div>
 
@@ -97,12 +99,14 @@ const successColor = dark ? 'var(--color-success-dark)' : 'var(--color-success)'
       <select id="project-type" name="project_type" class={fieldClass}>
         <option value="Business Website">Business Website</option>
         <option value="WordPress Development">WordPress Development</option>
-        <option value="Web System">Web System</option>
+        <option value="Web System Development">Web System Development</option>
         <option value="Admin Dashboard">Admin Dashboard</option>
-        <option value="Web Tool">Web Tool</option>
+        <option value="Web Tool or Calculator">Web Tool or Calculator</option>
         <option value="Website Redesign">Website Redesign</option>
-        <option value="Maintenance and Support">Maintenance and Support</option>
+        <option value="UI/UX Improvements">UI/UX Improvements</option>
+        <option value="Maintenance and Technical Support">Maintenance and Technical Support</option>
         <option value="Agency Development Support">Agency Development Support</option>
+        <option value="Other">Other</option>
       </select>
     </div>
 
@@ -135,18 +139,23 @@ const successColor = dark ? 'var(--color-success-dark)' : 'var(--color-success)'
       name="message"
       rows="5"
       required
+      aria-describedby="message-error"
       class:list={['resize-none', fieldClass]}
-      placeholder="Tell me what you're trying to improve, organize, automate, or build..."
+      placeholder="Briefly describe what you need, the problem you are trying to solve, important features, and any existing website or system involved."
     ></textarea>
-    <p class="hidden text-xs" style={`color:${errorColor}`} data-error-for="message">Please enter a project description.</p>
+    <p id="message-error" class="hidden text-xs" style={`color:${errorColor}`} data-error-for="message" role="alert">Please enter a project description.</p>
   </div>
 
-  <div class="flex items-center gap-4 pt-2">
-    <button type="submit" class={submitClass}>
+  <div class="flex flex-col items-start gap-3 pt-2 sm:flex-row sm:items-center sm:gap-4">
+    <button type="submit" class:list={[submitClass, 'w-full sm:w-auto']} data-submit-btn>
       Send Project Details
     </button>
     <p class="text-sm" role="status" aria-live="polite" data-form-status style={dark ? 'color: rgba(255,255,255,0.6)' : undefined}></p>
   </div>
+
+  <p class="text-xs" style={dark ? 'color: rgba(255,255,255,0.5)' : 'color: var(--text-secondary)'}>
+    Your information will only be used to review and respond to your project inquiry.
+  </p>
 </form>
 
 <script>
@@ -155,12 +164,16 @@ const successColor = dark ? 'var(--color-success-dark)' : 'var(--color-success)'
     if (!form) return;
 
     const status = form.querySelector<HTMLElement>('[data-form-status]');
+    const submitBtn = form.querySelector<HTMLButtonElement>('[data-submit-btn]');
     const errorColor = form.dataset.errorColor || 'var(--color-error)';
     const successColor = form.dataset.successColor || 'var(--color-success)';
+    let isSubmitting = false;
 
     const setError = (name: string, show: boolean) => {
       const field = form.querySelector<HTMLElement>(`[data-error-for="${name}"]`);
+      const input = form.querySelector<HTMLElement>(`#${name}`);
       field?.classList.toggle('hidden', !show);
+      input?.setAttribute('aria-invalid', show ? 'true' : 'false');
     };
 
     const validate = () => {
@@ -196,6 +209,9 @@ const successColor = dark ? 'var(--color-success-dark)' : 'var(--color-success)'
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+
+      if (isSubmitting) return;
+
       if (!validate()) {
         if (status) {
           status.textContent = 'Please fix the highlighted fields.';
@@ -204,7 +220,7 @@ const successColor = dark ? 'var(--color-success-dark)' : 'var(--color-success)'
         return;
       }
 
-      const submitBtn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      isSubmitting = true;
       submitBtn?.setAttribute('disabled', 'true');
       if (status) {
         status.textContent = 'Sending...';
@@ -213,14 +229,18 @@ const successColor = dark ? 'var(--color-success-dark)' : 'var(--color-success)'
 
       try {
         const formData = new FormData(form);
-        await fetch('/', {
+        const response = await fetch('/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           body: new URLSearchParams(formData as unknown as Record<string, string>).toString(),
         });
 
+        if (!response.ok) {
+          throw new Error(`Form submission failed with status ${response.status}`);
+        }
+
         if (status) {
-          status.textContent = "Thanks! Your project details have been sent — I'll be in touch soon.";
+          status.textContent = "Thank you—your project details have been received. I'll review your inquiry and respond within one business day.";
           status.style.color = successColor;
         }
         form.reset();
@@ -230,6 +250,7 @@ const successColor = dark ? 'var(--color-success-dark)' : 'var(--color-success)'
           status.style.color = errorColor;
         }
       } finally {
+        isSubmitting = false;
         submitBtn?.removeAttribute('disabled');
       }
     });
