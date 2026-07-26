@@ -24,7 +24,7 @@ const trustPoints = [
     icon: '<circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/>',
   },
   {
-    label: 'WordPress & Frontend Expertise',
+    label: 'WordPress, Systems & Frontend Expertise',
     icon: '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>',
   },
   {
@@ -34,6 +34,60 @@ const trustPoints = [
   {
     label: 'Responsive, Performance-Focused Development',
     icon: '<path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/>',
+  },
+];
+
+const capabilities = [
+  {
+    title: 'Web System Development',
+    description:
+      'Custom web systems designed to organize information, simplify workflows, track activity, and support daily business operations.',
+    features: [
+      'Admin dashboards',
+      'Task management systems',
+      'Inventory management',
+      'Appointment systems',
+      'Customer portals',
+      'Reports and analytics',
+    ],
+    cta: 'Explore Web Systems',
+    href: '/systems',
+    icon: '<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>',
+    featured: true,
+  },
+  {
+    title: 'Website Development',
+    description:
+      'Professional, responsive, and easy-to-manage websites built for businesses, organizations, agencies, and service providers.',
+    features: [
+      'WordPress websites',
+      'Elementor development',
+      'Landing pages',
+      'Business websites',
+      'Website redesign',
+      'Technical support',
+    ],
+    cta: 'View Website Projects',
+    href: '/portfolio',
+    icon: '<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/><circle cx="6.5" cy="6.5" r=".5" fill="currentColor"/>',
+    featured: false,
+  },
+  {
+    title: 'Web Tools and Utilities',
+    description:
+      'Focused browser-based tools that help users complete common website, content, image, and business tasks faster.',
+    features: [
+      'Image to WebP converter',
+      'Image optimizer',
+      'Business calculators',
+      'Developer utilities',
+      'Text and URL tools',
+      'Website utilities',
+    ],
+    cta: 'Browse Web Tools',
+    href: '/tools',
+    icon: '<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4l-6 6a2 2 0 0 0 3 3l6-6a4 4 0 0 0 5.4-5.4l-3 3-2-2 3-3Z"/>',
+    featured: false,
   },
 ];
 
@@ -68,9 +122,12 @@ const processSteps: { title: string; description: string; type: 'discover' | 'pl
 ];
 
 const [firstProject, secondProject, thirdProject, ...remainingProjects] = projects;
+
+const pageTitle = `${siteConfig.name} | Web Systems, WordPress & Web Tools Developer`;
+const pageDescription = siteConfig.description;
 ---
 
-<BaseLayout>
+<BaseLayout title={pageTitle} description={pageDescription}>
   <!-- Hero -->
   <section id="home" class="relative flex items-center overflow-hidden pt-32 pb-14 sm:pt-36 lg:min-h-[88vh]" style="background: var(--brand-lavender);" data-hero-section>
     <div class="pointer-events-none absolute inset-0 -z-10" data-hero-bg>
@@ -82,20 +139,21 @@ const [firstProject, secondProject, thirdProject, ...remainingProjects] = projec
     <Container>
       <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-8" data-hero-content>
         <div class="flex flex-col items-start gap-7 lg:col-span-7">
-          <span class="eyebrow" data-hero-eyebrow>WordPress &amp; Frontend Developer</span>
+          <span class="eyebrow" data-hero-eyebrow>Web Systems &bull; WordPress &bull; Digital Tools</span>
 
-          <h1 class="max-w-2xl text-balance" style="color: var(--text-primary);">
-            <span class="block overflow-hidden"><span class="block" data-hero-line>Premium websites</span></span>
-            <span class="block overflow-hidden"><span class="block" data-hero-line>that build trust.</span></span>
+          <h1 class="max-w-2xl text-balance text-[clamp(1.85rem,3.4vw,3.5rem)] leading-[1.08]" style="color: var(--text-primary);">
+            <span class="block overflow-hidden"><span class="block" data-hero-line>Websites, Web Systems,</span></span>
+            <span class="block overflow-hidden"><span class="block" data-hero-line>and Digital Tools Built</span></span>
+            <span class="block overflow-hidden"><span class="block" data-hero-line>for Real Business Needs</span></span>
           </h1>
 
           <p class="leading-relaxed" style="color: var(--text-secondary)" data-hero-support>
-            I'm {siteConfig.name}. I design and build WordPress websites that load fast, look premium, and turn visitors into customers.
+            I design and develop professional websites, custom web-based systems, and practical digital tools that help businesses improve operations, manage information, and serve customers more effectively.
           </p>
 
           <div class="flex flex-col gap-4 sm:flex-row" data-hero-support>
-            <Button href="/work" variant="primary" data-magnetic>View Work</Button>
-            <Button href="/contact" variant="secondary" data-magnetic>Start a Project</Button>
+            <Button href="/portfolio" variant="primary" data-magnetic>Explore My Work</Button>
+            <Button href="/tools" variant="secondary" data-magnetic>View Web Tools</Button>
           </div>
 
           <div class="flex flex-wrap items-center gap-x-3 gap-y-2 pt-1 text-sm" style="color: var(--text-secondary);" data-hero-support>
@@ -103,13 +161,11 @@ const [firstProject, secondProject, thirdProject, ...remainingProjects] = projec
               <span class="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60" style="background: var(--brand-primary);"></span>
               <span class="relative inline-flex h-2 w-2 rounded-full" style="background: var(--brand-primary);"></span>
             </span>
-            <span><span data-gsap-count={yearsExperience}>0</span>+ Years Experience</span>
+            <span><span data-gsap-count={yearsExperience}>0</span>+ Years of Web Development Experience</span>
             <span aria-hidden="true" style="color: var(--border-color);">&bull;</span>
-            <span>WordPress</span>
+            <span>Responsive Builds</span>
             <span aria-hidden="true" style="color: var(--border-color);">&bull;</span>
-            <span>Performance</span>
-            <span aria-hidden="true" style="color: var(--border-color);">&bull;</span>
-            <span>AI-Assisted Development</span>
+            <span>Agency-Ready Workflow</span>
           </div>
         </div>
 
@@ -135,6 +191,60 @@ const [firstProject, secondProject, thirdProject, ...remainingProjects] = projec
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={point.icon} />
             </span>
             <p class="max-w-[14rem] text-sm font-medium leading-snug" style="color: var(--text-primary);">{point.label}</p>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- Digital Solutions -->
+  <section class="py-24 sm:py-32" style="background: var(--surface-warm);">
+    <Container class="flex flex-col gap-14">
+      <SectionHeading
+        eyebrow="What I Build"
+        title="Digital Solutions Beyond Standard Websites"
+        description="Three ways I help businesses build, manage, and grow their online presence."
+      />
+      <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+        {capabilities.map((capability) => (
+          <div
+            class:list={[
+              'flex flex-col gap-6 rounded-2xl border p-8 sm:p-10',
+              capability.featured ? 'lg:col-span-2' : '',
+            ]}
+            style={
+              capability.featured
+                ? 'border-color: var(--brand-primary); background: var(--brand-soft); box-shadow: var(--shadow-brand);'
+                : 'border-color: var(--border-color); background: var(--surface-white);'
+            }
+            data-reveal
+          >
+            <div class="flex flex-wrap items-start justify-between gap-4">
+              <span class="flex h-14 w-14 items-center justify-center rounded-full" style="background: var(--brand-lavender); color: var(--brand-primary);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={capability.icon} />
+              </span>
+              {capability.featured && (
+                <span class="eyebrow rounded-full border px-3 py-1" style="border-color: var(--brand-primary); background: var(--surface-white);">Core Specialty</span>
+              )}
+            </div>
+
+            <div class="flex flex-col gap-3">
+              <h3 class:list={[capability.featured ? 'text-2xl sm:text-3xl' : 'text-xl sm:text-2xl']}>{capability.title}</h3>
+              <p class="max-w-2xl leading-relaxed" style="color: var(--text-secondary)">{capability.description}</p>
+            </div>
+
+            <ul class:list={['grid grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-2', capability.featured ? 'lg:grid-cols-3' : '']}>
+              {capability.features.map((feature) => (
+                <li class="flex items-center gap-2 text-sm" style="color: var(--text-primary);">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0" style="color: var(--brand-primary);"><polyline points="20 6 9 17 4 12"/></svg>
+                  {feature}
+                </li>
+              ))}
+            </ul>
+
+            <div class="mt-auto pt-2">
+              <Button href={capability.href} variant={capability.featured ? 'primary' : 'secondary'}>{capability.cta}</Button>
+            </div>
           </div>
         ))}
       </div>
@@ -168,7 +278,7 @@ const [firstProject, secondProject, thirdProject, ...remainingProjects] = projec
       )}
 
       <div data-reveal>
-        <Button href="/work" variant="secondary">View All Work</Button>
+        <Button href="/portfolio" variant="secondary">View Portfolio</Button>
       </div>
     </Container>
     <ProjectModal />

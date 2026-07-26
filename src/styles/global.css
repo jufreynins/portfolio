@@ -36,6 +36,39 @@
   --color-muted: var(--text-secondary);
   --color-ink-dark: var(--brand-ink);
   --color-surface-dark: var(--brand-dark);
+
+  /* Status colors */
+  --color-success: #16a34a;
+  --color-success-dark: #86efac;
+  --color-success-soft: #f0fdf4;
+  --color-warning: #b45309;
+  --color-warning-dark: #fbbf24;
+  --color-warning-soft: #fffbeb;
+  --color-error: #dc2626;
+  --color-error-dark: #fca5a5;
+  --color-error-soft: #fef2f2;
+}
+
+:root {
+  /* Reusable, non-Tailwind-reserved tokens — referenced via var(), not utility classes */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 2px 8px -4px rgba(19, 11, 36, 0.12);
+  --shadow-md: 0 12px 32px -16px rgba(19, 11, 36, 0.25);
+  --shadow-lg: 0 24px 48px -20px rgba(19, 11, 36, 0.35);
+  --shadow-brand: 0 12px 32px -16px rgba(103, 61, 230, 0.35);
+
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.5rem;
+  --space-xl: 4rem;
+
+  --container-max: 72rem;
 }
 
 @layer base {

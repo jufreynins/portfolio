@@ -1,9 +1,9 @@
 export const siteConfig = {
   name: 'Jufrey Niño Bayog',
-  title: 'WordPress Developer & Technical Web Specialist',
-  shortTitle: 'WordPress Developer',
+  title: 'Web Systems, WordPress & Web Tools Developer',
+  shortTitle: 'web developer',
   description:
-    'Jufrey Niño Bayog is a WordPress Developer and Technical Web Specialist with over 5 years of experience building clean, responsive, and high-performing websites for businesses, agencies, and entrepreneurs worldwide.',
+    'Web developer with 5+ years of experience creating responsive WordPress websites, custom web systems, business dashboards, and practical browser-based tools.',
   url: 'https://jufreyninobayogportfolio.com',
   locale: 'en-US',
   yearStarted: 2019,
@@ -20,11 +20,10 @@ export const siteConfig = {
 
   nav: [
     { label: 'Home', href: '/' },
+    { label: 'Web Systems', href: '/systems' },
+    { label: 'Web Tools', href: '/tools' },
+    { label: 'Portfolio', href: '/portfolio' },
     { label: 'About', href: '/about' },
-    { label: 'Services', href: '/services' },
-    { label: 'Work', href: '/work' },
-    { label: 'Systems', href: '/systems' },
-    { label: 'Tools', href: '/tools' },
     { label: 'Contact', href: '/contact' },
   ],
 

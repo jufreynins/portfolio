@@ -9,24 +9,29 @@ import ProjectModal from '../components/ProjectModal.astro';
 import { siteConfig } from '../config/site';
 import { projects } from '../data/projects';
 
-const pageTitle = `Work — ${siteConfig.name}`;
+const pageTitle = `Portfolio — ${siteConfig.name}`;
 const pageDescription =
-  'A closer look at real WordPress websites built for businesses, agencies, and nonprofits — from marketing agencies to e-commerce and community organizations.';
-const canonical = `${siteConfig.url}/work`;
+  'Real WordPress websites built for businesses, agencies, and nonprofits — from marketing agencies to e-commerce and community organizations.';
+const canonical = `${siteConfig.url}/portfolio`;
 
 const [firstProject, secondProject, thirdProject, ...remainingProjects] = projects;
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription} canonical={canonical}>
   <section class="pt-32 pb-16 sm:pt-40 sm:pb-20" style="background: var(--surface-warm);">
-    <Container>
+    <Container class="flex flex-col gap-4">
       <SectionHeading
         as="h1"
-        eyebrow="Selected Work"
-        title="Work that speaks for itself"
+        eyebrow="Portfolio"
+        title="Selected Websites, Web Systems, and Digital Tools"
         description="Real businesses, real websites — a closer look at the kind of work I bring to every project."
         watermark="WORK"
       />
+      <p class="text-sm" style="color: var(--text-secondary)">
+        The websites below are completed client work. Looking for something else? See
+        <a href="/systems" class="font-medium underline" style="color: var(--brand-primary);">Web Systems</a>
+        or <a href="/tools" class="font-medium underline" style="color: var(--brand-primary);">Web Tools</a>.
+      </p>
     </Container>
   </section>
 

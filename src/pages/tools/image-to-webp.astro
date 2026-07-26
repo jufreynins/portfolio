@@ -73,13 +73,13 @@ const infoCards = [
 
       <div
         class="hidden rounded-xl border px-4 py-3 text-sm font-medium"
-        style="border-color: #fecaca; background: #fef2f2; color: #b91c1c;"
+        style="border-color: color-mix(in srgb, var(--color-error) 30%, white); background: var(--color-error-soft); color: var(--color-error);"
         data-error-banner
       ></div>
 
       <div
         class="hidden rounded-xl border px-4 py-3 text-sm font-medium"
-        style="border-color: #fde68a; background: #fffbeb; color: #92400e;"
+        style="border-color: color-mix(in srgb, var(--color-warning) 30%, white); background: var(--color-warning-soft); color: var(--color-warning);"
         data-unsupported-banner
       >
         Your browser does not support WebP conversion. Please use an updated version of Chrome, Edge, Firefox, or Safari.
@@ -416,12 +416,12 @@ const infoCards = [
         canDownload = true;
         const saved = percentSaved(item.originalSize, item.convertedSize);
         if (saved >= 0) {
-          statusHtml = `<p class="mt-2 text-xs font-semibold" style="color:#16a34a">Completed — ${formatBytes(item.convertedSize)} · Saved ${saved.toFixed(0)}%</p>`;
+          statusHtml = `<p class="mt-2 text-xs font-semibold" style="color:var(--color-success)">Completed — ${formatBytes(item.convertedSize)} · Saved ${saved.toFixed(0)}%</p>`;
         } else {
-          statusHtml = `<p class="mt-2 text-xs font-semibold" style="color:#b45309">File size increased by ${Math.abs(saved).toFixed(0)}% — try a lower quality or keep the original.</p>`;
+          statusHtml = `<p class="mt-2 text-xs font-semibold" style="color:var(--color-warning)">File size increased by ${Math.abs(saved).toFixed(0)}% — try a lower quality or keep the original.</p>`;
         }
       } else if (item.status === 'failed') {
-        statusHtml = `<p class="mt-2 text-xs font-semibold" style="color:#dc2626">${escapeHtml(item.errorMessage ?? 'Conversion failed.')}</p>`;
+        statusHtml = `<p class="mt-2 text-xs font-semibold" style="color:var(--color-error)">${escapeHtml(item.errorMessage ?? 'Conversion failed.')}</p>`;
       }
 
       return `
@@ -502,7 +502,7 @@ const infoCards = [
       if (savedEl) {
         savedEl.textContent =
           totalSaved >= 0 ? `${totalSaved.toFixed(0)}% saved` : `${Math.abs(totalSaved).toFixed(0)}% larger`;
-        savedEl.style.color = totalSaved >= 0 ? 'var(--brand-primary)' : '#b45309';
+        savedEl.style.color = totalSaved >= 0 ? 'var(--brand-primary)' : 'var(--color-warning)';
       }
     }
 

@@ -17,9 +17,19 @@ const yearsExperience = new Date().getFullYear() - siteConfig.yearStarted;
 
 const professionalFacts = [
   { label: 'Experience', value: `${yearsExperience}+ years building for the web` },
-  { label: 'Focus', value: 'WordPress development & modern frontend' },
+  { label: 'Focus', value: 'WordPress, web systems & digital tools' },
   { label: 'Workflow', value: 'AI-assisted with Claude Code and Cursor, human-reviewed' },
   { label: 'Availability', value: 'Remote, working with clients worldwide' },
+];
+
+const capabilityHighlights = [
+  'WordPress development',
+  'Custom web systems',
+  'Dashboard and admin UI development',
+  'Dynamic content systems',
+  'Web tools and utilities',
+  'Responsive UI/UX improvements',
+  'Technical website support',
 ];
 
 const processSteps: { title: string; description: string; type: 'discover' | 'plan' | 'design-build' | 'test-refine' }[] = [
@@ -54,17 +64,28 @@ const processSteps: { title: string; description: string; type: 'discover' | 'pl
         <SectionHeading
           as="h1"
           eyebrow="About"
-          title="A developer who treats your website like it's my own business."
+          title="Web Developer Focused on Websites, Systems, and Practical Digital Tools"
         />
       </div>
 
       <div class="flex flex-col gap-8 lg:col-span-5" data-reveal data-reveal-type="fade-up">
         <p class="leading-relaxed" style="color: var(--text-secondary)">
-          I'm {siteConfig.name}, a {siteConfig.shortTitle.toLowerCase()} based in the Philippines, working remotely with businesses, agencies, and entrepreneurs around the world. For over {yearsExperience} years I've built WordPress sites end to end — from Elementor builds and custom post types to full site migrations and performance overhauls.
+          I'm {siteConfig.name}, a web developer with {yearsExperience}+ years of experience working on WordPress websites, business platforms, landing pages, dynamic content systems, and custom web-based solutions.
         </p>
         <p class="leading-relaxed" style="color: var(--text-secondary)">
-          I care about the same things a business owner cares about: does the site load fast, does it look credible, and does it actually help win customers. That's the lens I bring to every project, whether it's a five-page brochure site or a multi-year ongoing maintenance relationship.
+          My background started with professional website development and expanded into dashboard design, internal business systems, structured workflows, and browser-based tools.
         </p>
+        <p class="leading-relaxed" style="color: var(--text-secondary)">
+          I focus on solving practical problems through technology — whether that means improving an existing website, creating a management system, or developing a focused tool that helps users complete a task faster.
+        </p>
+        <ul class="flex flex-wrap gap-x-4 gap-y-2">
+          {capabilityHighlights.map((item) => (
+            <li class="flex items-center gap-1.5 text-sm font-medium" style="color: var(--text-primary);">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--brand-primary);"><polyline points="20 6 9 17 4 12"/></svg>
+              {item}
+            </li>
+          ))}
+        </ul>
         <dl class="flex flex-col divide-y" style="border-color: var(--border-color);">
           {professionalFacts.map((fact) => (
             <div class="grid grid-cols-3 gap-4 py-4">
