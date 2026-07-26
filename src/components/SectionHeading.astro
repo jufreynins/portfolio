@@ -16,7 +16,7 @@ const { eyebrow, title, description, align = 'left', as: Tag = 'h2', dark = fals
 const alignClass = align === 'center' ? 'text-center items-center mx-auto' : 'text-left items-start';
 ---
 
-<div class:list={['reveal relative flex flex-col gap-4 max-w-2xl', alignClass]} data-reveal>
+<div class:list={['reveal relative flex flex-col gap-3 max-w-2xl', alignClass]} data-reveal>
   {watermark && (
     <span
       class:list={[
@@ -39,7 +39,7 @@ const alignClass = align === 'center' ? 'text-center items-center mx-auto' : 'te
     {title}
   </Tag>
   {description && (
-    <p class="relative leading-relaxed" style={`color: ${dark ? 'var(--text-on-dark)' : 'var(--text-secondary)'}; opacity: ${dark ? '0.75' : '1'};`}>
+    <p class="relative mt-2 leading-relaxed" style={`color: ${dark ? 'var(--text-on-dark)' : 'var(--text-secondary)'}; opacity: ${dark ? '0.75' : '1'};`}>
       {description}
     </p>
   )}
