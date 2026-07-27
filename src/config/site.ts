@@ -3,9 +3,9 @@ const yearsExperience = new Date().getFullYear() - yearStarted;
 
 export const siteConfig = {
   name: 'Jufrey Niño Bayog',
-  title: 'Web Systems, WordPress & Web Tools Developer',
-  shortTitle: 'web developer',
-  description: `Web developer with ${yearsExperience}+ years of experience creating responsive WordPress websites, custom web systems, business dashboards, and practical browser-based tools.`,
+  title: 'WordPress Developer & Frontend Specialist',
+  shortTitle: 'WordPress developer',
+  description: `WordPress developer with ${yearsExperience}+ years of experience building polished, reliable business websites with Elementor, dynamic content, and custom functionality — plus practical web systems and browser-based tools.`,
   url: 'https://jufreyninobayogportfolio.com',
   locale: 'en-US',
   yearStarted,
@@ -23,21 +23,9 @@ export const siteConfig = {
 
   nav: [
     { label: 'Home', href: '/' },
-    {
-      label: 'Solutions',
-      href: '/services',
-      children: [
-        { label: 'All Solutions', href: '/services' },
-        { label: 'Website Development', href: '/services/website-wordpress' },
-        { label: 'Business Web Systems', href: '/systems' },
-        { label: 'Custom Web Applications', href: '/services/custom-web-apps' },
-        { label: 'UI Systems & Frontend Improvement', href: '/services#ui-systems' },
-        { label: 'Automation & Integration', href: '/services#automation' },
-      ],
-    },
-    { label: 'Web Systems', href: '/systems' },
-    { label: 'Web Tools', href: '/tools' },
+    { label: 'WordPress Services', href: '/services' },
     { label: 'Portfolio', href: '/portfolio' },
+    { label: 'Development Lab', href: '/lab' },
     { label: 'About', href: '/about' },
     { label: 'Contact', href: '/contact' },
   ],

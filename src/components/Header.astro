@@ -31,57 +31,15 @@ function isNavActive(href: string) {
     </a>
 
     <nav class="hidden 2xl:flex items-center gap-5" aria-label="Primary">
-      {siteConfig.nav.map((item) => {
-        const children = 'children' in item ? item.children : undefined;
-
-        if (children && children.length > 0) {
-          const groupActive = isNavActive(item.href) || children.some((child) => isNavActive(child.href.split('#')[0]));
-          const panelId = `dropdown-${item.label.toLowerCase().replace(/\s+/g, '-')}`;
-          return (
-            <div class="relative" data-dropdown>
-              <button
-                type="button"
-                class:list={['nav-link relative flex items-center gap-1.5 text-sm font-medium text-zinc-900/70 transition-colors hover:text-zinc-900 py-1', { 'is-active': groupActive }]}
-                aria-expanded="false"
-                aria-haspopup="true"
-                aria-controls={panelId}
-                data-dropdown-toggle
-              >
-                {item.label}
-                <svg data-dropdown-chevron xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dropdown-chevron transition-transform duration-200"><polyline points="6 9 12 15 18 9"/></svg>
-              </button>
-              <div
-                id={panelId}
-                role="menu"
-                aria-label={item.label}
-                class="dropdown-panel absolute left-0 top-full mt-2 w-72 rounded-2xl border p-2"
-                style="border-color: var(--border-color); background: var(--surface-white); box-shadow: var(--shadow-md);"
-                data-dropdown-panel
-              >
-                {children.map((child) => (
-                  <a
-                    role="menuitem"
-                    href={child.href}
-                    class="block rounded-xl px-4 py-2.5 text-sm font-medium text-zinc-900/80 transition-colors hover:bg-black/5 hover:text-zinc-900"
-                  >
-                    {child.label}
-                  </a>
-                ))}
-              </div>
-            </div>
-          );
-        }
-
-        return (
-          <a
-            href={item.href}
-            class:list={['nav-link relative text-sm font-medium text-zinc-900/70 transition-colors hover:text-zinc-900 py-1', { 'is-active': isNavActive(item.href) }]}
-            aria-current={isNavActive(item.href) ? 'page' : undefined}
-          >
-            {item.label}
-          </a>
-        );
-      })}
+      {siteConfig.nav.map((item) => (
+        <a
+          href={item.href}
+          class:list={['nav-link relative text-sm font-medium text-zinc-900/70 transition-colors hover:text-zinc-900 py-1', { 'is-active': isNavActive(item.href) }]}
+          aria-current={isNavActive(item.href) ? 'page' : undefined}
+        >
+          {item.label}
+        </a>
+      ))}
     </nav>
 
     <div class="hidden 2xl:flex items-center gap-3">
@@ -106,48 +64,16 @@ function isNavActive(href: string) {
 
   <div id="mobile-menu" class="2xl:hidden hidden glass mx-4 mb-4 rounded-2xl px-6 py-6" data-mobile-menu>
     <nav class="flex flex-col gap-1" aria-label="Mobile">
-      {siteConfig.nav.map((item) => {
-        const children = 'children' in item ? item.children : undefined;
-
-        if (children && children.length > 0) {
-          const groupActive = isNavActive(item.href) || children.some((child) => isNavActive(child.href.split('#')[0]));
-          return (
-            <div class="flex flex-col" data-mobile-dropdown>
-              <button
-                type="button"
-                class:list={['flex items-center justify-between rounded-lg px-3 py-3 text-base font-medium hover:bg-black/5', groupActive ? 'text-zinc-900 bg-black/5' : 'text-zinc-900/85 hover:text-zinc-900']}
-                aria-expanded="false"
-                data-mobile-dropdown-toggle
-              >
-                {item.label}
-                <svg data-mobile-dropdown-chevron xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dropdown-chevron transition-transform duration-200"><polyline points="6 9 12 15 18 9"/></svg>
-              </button>
-              <div class="hidden flex-col gap-0.5 py-1 pl-3" data-mobile-dropdown-panel>
-                {children.map((child) => (
-                  <a
-                    href={child.href}
-                    class="rounded-lg px-3 py-2.5 text-sm font-medium text-zinc-900/70 hover:bg-black/5 hover:text-zinc-900"
-                    data-mobile-link
-                  >
-                    {child.label}
-                  </a>
-                ))}
-              </div>
-            </div>
-          );
-        }
-
-        return (
-          <a
-            href={item.href}
-            class:list={['rounded-lg px-3 py-3 text-base font-medium hover:bg-black/5', isNavActive(item.href) ? 'text-zinc-900 bg-black/5' : 'text-zinc-900/85 hover:text-zinc-900']}
-            aria-current={isNavActive(item.href) ? 'page' : undefined}
-            data-mobile-link
-          >
-            {item.label}
-          </a>
-        );
-      })}
+      {siteConfig.nav.map((item) => (
+        <a
+          href={item.href}
+          class:list={['rounded-lg px-3 py-3 text-base font-medium hover:bg-black/5', isNavActive(item.href) ? 'text-zinc-900 bg-black/5' : 'text-zinc-900/85 hover:text-zinc-900']}
+          aria-current={isNavActive(item.href) ? 'page' : undefined}
+          data-mobile-link
+        >
+          {item.label}
+        </a>
+      ))}
     </nav>
     <div class="mt-4 flex flex-col gap-3 border-t border-black/10 pt-4">
       <Button href={siteConfig.cvPath} variant="secondary" class="w-full" target="_blank" rel="noopener noreferrer">
@@ -176,27 +102,6 @@ function isNavActive(href: string) {
   }
   .nav-link.is-active {
     color: #18181b;
-  }
-
-  .dropdown-panel {
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(4px);
-    transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
-  }
-  .dropdown-panel.is-open {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-  }
-  .dropdown-chevron.is-open {
-    transform: rotate(180deg);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .dropdown-panel {
-      transition: opacity 0.01ms;
-    }
   }
 
   /* Before the user scrolls, a page whose first section is dark needs light header text for contrast. */
@@ -240,13 +145,6 @@ function isNavActive(href: string) {
       iconOpen?.classList.remove('hidden');
       iconClose?.classList.add('hidden');
       document.body.classList.remove('no-scroll');
-
-      menu?.querySelectorAll<HTMLElement>('[data-mobile-dropdown-panel]').forEach((panel) => {
-        panel.classList.add('hidden');
-        panel.classList.remove('flex');
-      });
-      menu?.querySelectorAll<HTMLElement>('[data-mobile-dropdown-toggle]').forEach((btn) => btn.setAttribute('aria-expanded', 'false'));
-      menu?.querySelectorAll<HTMLElement>('[data-mobile-dropdown-chevron]').forEach((chevron) => chevron.classList.remove('is-open'));
     };
 
     toggle?.addEventListener(
@@ -270,100 +168,6 @@ function isNavActive(href: string) {
       link.addEventListener('click', closeMenu, { signal });
     });
 
-    // --- Desktop "Solutions" dropdown ---
-    const dropdowns = document.querySelectorAll<HTMLElement>('[data-dropdown]');
-
-    const closeDropdown = (dropdown: HTMLElement) => {
-      dropdown.querySelector('[data-dropdown-panel]')?.classList.remove('is-open');
-      dropdown.querySelector('[data-dropdown-toggle]')?.setAttribute('aria-expanded', 'false');
-      dropdown.querySelector('[data-dropdown-chevron]')?.classList.remove('is-open');
-    };
-
-    const closeAllDropdowns = () => dropdowns.forEach(closeDropdown);
-
-    dropdowns.forEach((dropdown) => {
-      const dropdownToggle = dropdown.querySelector<HTMLButtonElement>('[data-dropdown-toggle]');
-      const panel = dropdown.querySelector<HTMLElement>('[data-dropdown-panel]');
-      const chevron = dropdown.querySelector<HTMLElement>('[data-dropdown-chevron]');
-      if (!dropdownToggle || !panel) return;
-
-      let closeTimer: ReturnType<typeof setTimeout> | null = null;
-
-      const openDropdown = () => {
-        if (closeTimer) clearTimeout(closeTimer);
-        panel.classList.add('is-open');
-        dropdownToggle.setAttribute('aria-expanded', 'true');
-        chevron?.classList.add('is-open');
-      };
-
-      const scheduleClose = () => {
-        closeTimer = setTimeout(() => closeDropdown(dropdown), 150);
-      };
-
-      // Click always opens rather than toggling: on mouse it arrives after "mouseenter"
-      // already opened the panel, so a toggle would immediately re-close it. Touch devices
-      // (no hover) rely on this to open; a second tap outside the panel closes it.
-      dropdownToggle.addEventListener('click', openDropdown, { signal });
-
-      dropdown.addEventListener('mouseenter', openDropdown, { signal });
-      dropdown.addEventListener('mouseleave', scheduleClose, { signal });
-      dropdown.addEventListener('focusin', openDropdown, { signal });
-      dropdown.addEventListener(
-        'focusout',
-        (e) => {
-          const next = (e as FocusEvent).relatedTarget as Node | null;
-          if (!next || !dropdown.contains(next)) closeDropdown(dropdown);
-        },
-        { signal }
-      );
-
-      panel.addEventListener(
-        'click',
-        (e) => {
-          if ((e.target as HTMLElement).closest('a')) closeDropdown(dropdown);
-        },
-        { signal }
-      );
-    });
-
-    document.addEventListener(
-      'click',
-      (e) => {
-        dropdowns.forEach((dropdown) => {
-          if (!dropdown.contains(e.target as Node)) closeDropdown(dropdown);
-        });
-      },
-      { signal }
-    );
-
-    document.addEventListener(
-      'keydown',
-      (e) => {
-        if (e.key === 'Escape') closeAllDropdowns();
-      },
-      { signal }
-    );
-
-    // --- Mobile "Solutions" accordion ---
-    document.querySelectorAll<HTMLElement>('[data-mobile-dropdown]').forEach((dropdown) => {
-      const accordionToggle = dropdown.querySelector<HTMLButtonElement>('[data-mobile-dropdown-toggle]');
-      const panel = dropdown.querySelector<HTMLElement>('[data-mobile-dropdown-panel]');
-      const chevron = dropdown.querySelector<HTMLElement>('[data-mobile-dropdown-chevron]');
-      if (!accordionToggle || !panel) return;
-
-      accordionToggle.addEventListener(
-        'click',
-        () => {
-          const isOpen = accordionToggle.getAttribute('aria-expanded') === 'true';
-          accordionToggle.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
-          panel.classList.toggle('hidden', isOpen);
-          panel.classList.toggle('flex', !isOpen);
-          chevron?.classList.toggle('is-open', !isOpen);
-        },
-        { signal }
-      );
-    });
-
     const onScroll = () => {
       const scrollY = window.scrollY;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -383,7 +187,6 @@ function isNavActive(href: string) {
       'astro:before-preparation',
       () => {
         closeMenu();
-        closeAllDropdowns();
       },
       { signal }
     );

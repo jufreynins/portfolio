@@ -1,107 +1,64 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Container from '../components/Container.astro';
 import Button from '../components/Button.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import ProjectFeature from '../components/ProjectFeature.astro';
 import ProjectModal from '../components/ProjectModal.astro';
-import TechGrid from '../components/TechGrid.astro';
-import ContactForm from '../components/ContactForm.astro';
-import Reveal from '../components/Reveal.astro';
 import ProcessTimeline from '../components/ProcessTimeline.astro';
-import HeroMockup from '../components/HeroMockup.astro';
-import AIWorkflowVisual from '../components/AIWorkflowVisual.astro';
 import { siteConfig } from '../config/site';
-import { serviceCards } from '../data/services';
+import { wordpressServices } from '../data/services';
 import { projects } from '../data/projects';
 
 const { yearsExperience } = siteConfig;
 
-const trustPoints = [
+const [featuredService, ...supportingServices] = wordpressServices;
+
+const credibilityPoints = [
   {
-    label: `${yearsExperience}+ Years of Experience`,
+    label: `${yearsExperience}+ Years WordPress Experience`,
     icon: '<circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/>',
   },
   {
-    label: 'WordPress, Systems & Frontend Expertise',
-    icon: '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>',
+    label: 'Responsive, Performance-Focused Builds',
+    icon: '<path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/>',
   },
   {
-    label: 'International & Remote Collaboration',
+    label: 'Agency & Remote Team Collaboration',
     icon: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a13 13 0 0 1 0 18a13 13 0 0 1 0-18Z"/>',
   },
   {
-    label: 'Responsive, Performance-Focused Development',
-    icon: '<path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/>',
+    label: 'Dynamic Content & Frontend Customization',
+    icon: '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>',
   },
 ];
 
-const capabilities = [
-  {
-    title: 'Web System Development',
-    description:
-      'Custom web systems designed to organize information, simplify workflows, track activity, and support daily business operations.',
-    features: [
-      'Admin dashboards',
-      'Task management systems',
-      'Inventory management',
-      'Appointment systems',
-      'Customer portals',
-      'Reports and analytics',
-    ],
-    cta: 'Explore Web Systems',
-    href: '/systems',
-    icon: '<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>',
-    featured: true,
-  },
-  {
-    title: 'Website Development',
-    description:
-      'Professional, responsive, and easy-to-manage websites built for businesses, organizations, agencies, and service providers.',
-    features: [
-      'WordPress websites',
-      'Elementor development',
-      'Landing pages',
-      'Business websites',
-      'Website redesign',
-      'Technical support',
-    ],
-    cta: 'View Website Projects',
-    href: '/portfolio',
-    icon: '<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/><circle cx="6.5" cy="6.5" r=".5" fill="currentColor"/>',
-    featured: false,
-  },
-  {
-    title: 'Web Tools and Utilities',
-    description:
-      'Focused browser-based tools that help users complete common website, content, image, and business tasks faster.',
-    features: [
-      'Image to WebP converter',
-      'Image optimizer',
-      'Business calculators',
-      'Developer utilities',
-      'Text and URL tools',
-      'Website utilities',
-    ],
-    cta: 'Browse Web Tools',
-    href: '/tools',
-    icon: '<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4l-6 6a2 2 0 0 0 3 3l6-6a4 4 0 0 0 5.4-5.4l-3 3-2-2 3-3Z"/>',
-    featured: false,
-  },
+const advancedCapabilities = [
+  { label: 'Custom Post Types & Taxonomies', icon: '<path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="M3 16l9 5 9-5"/><path d="M3 12l9 5 9-5"/>' },
+  { label: 'Advanced Custom Fields', icon: '<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/><circle cx="6.5" cy="6.5" r=".5" fill="currentColor"/>' },
+  { label: 'JetEngine & Dynamic Listings', icon: '<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>' },
+  { label: 'Custom Templates', icon: '<rect x="4" y="4" width="16" height="16" rx="4"/>' },
+  { label: 'Search & Filtering', icon: '<circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>' },
+  { label: 'Forms & Integrations', icon: '<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>' },
+  { label: 'Custom CSS & JavaScript', icon: '<polyline points="9 6 3 12 9 18"/><polyline points="15 6 21 12 15 18"/>' },
+  { label: 'Responsive Troubleshooting', icon: '<rect x="2" y="4" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/>' },
+  { label: 'Performance Optimization', icon: '<path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/>' },
+  { label: 'Hosting & Deployment Support', icon: '<rect x="2.5" y="3.5" width="19" height="7" rx="1.2"/><rect x="2.5" y="13.5" width="19" height="7" rx="1.2"/><path d="M6.5 7h.01M6.5 17h.01"/>' },
 ];
 
-const professionalFacts = [
-  { label: 'Experience', value: `${yearsExperience}+ years building for the web` },
-  { label: 'Focus', value: 'WordPress development & modern frontend' },
-  { label: 'Workflow', value: 'AI-assisted with Claude Code and Cursor, human-reviewed' },
-  { label: 'Availability', value: 'Remote, working with clients worldwide' },
+const aboutProofPoints = [
+  'WordPress & Elementor Pro experience',
+  'Agency collaboration',
+  'Dynamic-content builds (ACF, JetEngine)',
+  'Frontend customization',
+  'AI-assisted development, human-reviewed',
 ];
 
 const processSteps: { title: string; description: string; type: 'discover' | 'plan' | 'design-build' | 'test-refine' }[] = [
   {
-    title: 'Discover',
-    description: "Understanding the client's goals, target audience, problems, and website requirements.",
+    title: 'Understand',
+    description: "Understanding the client's goals, target audience, and website requirements.",
     type: 'discover',
   },
   {
@@ -110,20 +67,20 @@ const processSteps: { title: string; description: string; type: 'discover' | 'pl
     type: 'plan',
   },
   {
-    title: 'Design and Build',
-    description: 'Turning the plan into a polished interface using modern design tools, WordPress, Elementor, custom code, and AI-assisted development.',
+    title: 'Build',
+    description: 'Building the site in WordPress with Elementor, dynamic content, and custom functionality where needed.',
     type: 'design-build',
   },
   {
-    title: 'Test and Refine',
-    description: 'Testing responsiveness, performance, accessibility, functionality, and browser compatibility before launch.',
+    title: 'Test, Launch & Support',
+    description: 'Testing responsiveness, performance, and functionality before launch — with support available after.',
     type: 'test-refine',
   },
 ];
 
-const [firstProject, secondProject, thirdProject, ...remainingProjects] = projects;
+const [firstProject, secondProject, thirdProject] = projects;
 
-const pageTitle = `${siteConfig.name} | Web Systems, WordPress & Web Tools Developer`;
+const pageTitle = `${siteConfig.name} | WordPress Developer & Frontend Specialist`;
 const pageDescription = siteConfig.description;
 ---
 
@@ -139,21 +96,21 @@ const pageDescription = siteConfig.description;
     <Container>
       <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-8" data-hero-content>
         <div class="flex flex-col items-start gap-5 lg:col-span-7">
-          <span class="eyebrow" data-hero-eyebrow>Web Systems &bull; WordPress &bull; Digital Tools</span>
+          <span class="eyebrow" data-hero-eyebrow>WordPress Developer &bull; Frontend Specialist</span>
 
           <h1 class="max-w-2xl text-balance text-[clamp(1.85rem,3.4vw,3.5rem)] leading-[1.08]" style="color: var(--text-primary);">
-            <span class="block overflow-hidden"><span class="block" data-hero-line>Websites, Web Systems,</span></span>
-            <span class="block overflow-hidden"><span class="block" data-hero-line>and Digital Tools Built</span></span>
-            <span class="block overflow-hidden"><span class="block" data-hero-line>for Real Business Needs</span></span>
+            <span class="block overflow-hidden"><span class="block" data-hero-line>WordPress Websites Built</span></span>
+            <span class="block overflow-hidden"><span class="block" data-hero-line>to Look Polished, Perform</span></span>
+            <span class="block overflow-hidden"><span class="block" data-hero-line>Reliably, and Support Goals</span></span>
           </h1>
 
           <p class="max-w-lg leading-relaxed" style="color: var(--text-secondary)" data-hero-support>
-            I design and develop professional websites, custom web-based systems, and practical digital tools that help businesses improve operations, manage information, and serve customers more effectively.
+            I design, build, and improve professional WordPress websites using Elementor, dynamic content, custom functionality, and responsive frontend development.
           </p>
 
           <div class="mt-2 flex flex-col gap-4 sm:flex-row" data-hero-support>
-            <Button href="/portfolio" variant="primary" data-magnetic>Explore My Work</Button>
-            <Button href="/tools" variant="secondary" data-magnetic>View Web Tools</Button>
+            <Button href="/portfolio" variant="primary" data-magnetic>View WordPress Work</Button>
+            <Button href="/contact" variant="secondary" data-magnetic>Start a Project</Button>
           </div>
 
           <div class="flex flex-wrap items-center gap-x-3 gap-y-2 pt-1 text-sm" style="color: var(--text-secondary);" data-hero-support>
@@ -161,16 +118,35 @@ const pageDescription = siteConfig.description;
               <span class="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60" style="background: var(--brand-primary);"></span>
               <span class="relative inline-flex h-2 w-2 rounded-full" style="background: var(--brand-primary);"></span>
             </span>
-            <span><span data-gsap-count={yearsExperience}>0</span>+ Years of Web Development Experience</span>
-            <span aria-hidden="true" style="color: var(--border-color);">&bull;</span>
-            <span>Responsive Builds</span>
-            <span aria-hidden="true" style="color: var(--border-color);">&bull;</span>
-            <span>Agency-Ready Workflow</span>
+            <span>WordPress &bull; Elementor Pro &bull; Dynamic Content &bull; Frontend Development</span>
           </div>
+          <p class="text-xs" style="color: var(--text-muted);" data-hero-support>
+            Also building practical web systems and browser tools — see the <a href="/lab" class="underline" style="color: var(--brand-primary);">Development Lab</a>.
+          </p>
         </div>
 
-        <div class="lg:col-span-5" data-hero-support>
-          <HeroMockup />
+        <div class="relative lg:col-span-5" data-hero-support>
+          <div class="pointer-events-none absolute -inset-8 -z-10 hidden rounded-full opacity-40 blur-3xl lg:block" style="background: radial-gradient(circle, var(--brand-primary), transparent 70%);"></div>
+          <Image
+            src={firstProject.image}
+            alt={`${firstProject.name} website shown on desktop and mobile`}
+            width={900}
+            height={900}
+            class="mx-auto h-auto w-full max-w-[420px] drop-shadow-2xl lg:max-w-none"
+          />
+          <div class="hero-badge absolute left-0 top-4 flex items-center gap-2 rounded-2xl border px-3.5 py-2.5 sm:-left-4" style="border-color: var(--border-color); background: var(--surface-white); box-shadow: var(--shadow-md);">
+            <span class="flex h-8 w-8 items-center justify-center rounded-full" style="background: var(--brand-lavender); color: var(--brand-primary);">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            </span>
+            <div class="flex flex-col">
+              <span class="text-[11px] font-bold" style="color: var(--brand-ink); font-family: var(--font-heading);">Elementor Pro</span>
+              <span class="text-[10px]" style="color: var(--text-secondary);">Live client build</span>
+            </div>
+          </div>
+          <div class="hero-badge absolute bottom-6 right-0 flex items-center gap-2 rounded-full border px-4 py-2 sm:-right-3" style="border-color: var(--border-color); background: var(--surface-white); box-shadow: var(--shadow-md);">
+            <span class="h-2 w-2 rounded-full" style="background: var(--color-success);"></span>
+            <span class="text-xs font-bold" style="color: var(--brand-ink);">Responsive Layout</span>
+          </div>
         </div>
       </div>
     </Container>
@@ -181,11 +157,11 @@ const pageDescription = siteConfig.description;
     </div>
   </section>
 
-  <!-- Trust strip -->
+  <!-- Credibility strip -->
   <section class="py-10 sm:py-12" style="background: var(--surface-white);">
     <Container>
       <div class="grid grid-cols-1 divide-y sm:grid-cols-4 sm:divide-x sm:divide-y-0" style="border-color: var(--border-color);" data-reveal data-reveal-type="stagger">
-        {trustPoints.map((point) => (
+        {credibilityPoints.map((point) => (
           <div class="flex flex-col items-center gap-3 px-4 py-6 text-center sm:py-0" style="border-color: var(--border-color);">
             <span class="flex h-11 w-11 items-center justify-center rounded-full" style="background: var(--brand-lavender); color: var(--brand-primary);">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={point.icon} />
@@ -197,175 +173,103 @@ const pageDescription = siteConfig.description;
     </Container>
   </section>
 
-  <!-- Digital Solutions -->
+  <!-- Core WordPress Services -->
   <section class="py-24 sm:py-32" style="background: var(--surface-warm);">
     <Container class="flex flex-col gap-14">
       <SectionHeading
-        eyebrow="What I Build"
-        title="Digital Solutions Beyond Standard Websites"
-        description="Three ways I help businesses build, manage, and grow their online presence."
+        eyebrow="WordPress Services"
+        title="Core WordPress Development Services"
+        description="What I help business websites and agencies with most often."
       />
-      <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        {capabilities.map((capability) => (
-          <div
-            class:list={[
-              'capability-card flex flex-col gap-6 rounded-2xl border p-8 sm:p-10',
-              capability.featured ? 'lg:col-span-2' : '',
-            ]}
-            style={
-              capability.featured
-                ? 'border-color: var(--brand-primary); background: var(--brand-soft); box-shadow: var(--shadow-brand);'
-                : 'border-color: var(--border-color); background: var(--surface-white); box-shadow: var(--shadow-sm);'
-            }
-            data-reveal
-          >
-            <div class="flex flex-wrap items-start justify-between gap-4">
-              <span class="flex h-14 w-14 items-center justify-center rounded-full" style="background: var(--brand-lavender); color: var(--brand-primary);">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={capability.icon} />
-              </span>
-              {capability.featured && (
-                <span class="eyebrow rounded-full border px-3 py-1" style="border-color: var(--brand-primary); background: var(--surface-white);">Core Specialty</span>
-              )}
-            </div>
 
-            <div class="flex flex-col gap-3">
-              <h3 class:list={[capability.featured ? 'text-2xl sm:text-3xl' : 'text-xl sm:text-2xl']}>{capability.title}</h3>
-              <p class="max-w-2xl leading-relaxed" style="color: var(--text-secondary)">{capability.description}</p>
-            </div>
-
-            <ul class:list={['grid grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-2', capability.featured ? 'lg:grid-cols-3' : '']}>
-              {capability.features.map((feature) => (
-                <li class="flex items-center gap-2 text-sm" style="color: var(--text-primary);">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0" style="color: var(--brand-primary);"><polyline points="20 6 9 17 4 12"/></svg>
-                  {feature}
-                </li>
-              ))}
-            </ul>
-
-            <div class="mt-auto pt-2">
-              <Button href={capability.href} variant={capability.featured ? 'primary' : 'secondary'}>{capability.cta}</Button>
-            </div>
-          </div>
-        ))}
-      </div>
-    </Container>
-  </section>
-
-  <!-- Selected Work -->
-  <section id="work" class="py-24 sm:py-32" style="background: var(--surface-white);">
-    <Container class="flex flex-col gap-16 sm:gap-20">
-      <div class="relative overflow-hidden">
-        <SectionHeading
-          eyebrow="Selected Work"
-          title="Work that speaks for itself"
-          description="Real businesses, real websites — a closer look at the kind of work I bring to every project."
-          watermark="WORK"
-        />
-      </div>
-
-      <div class="flex flex-col gap-20 sm:gap-24">
-        <ProjectFeature project={firstProject} layout="full" index={1} />
-        <ProjectFeature project={secondProject} layout="left" index={2} />
-        <ProjectFeature project={thirdProject} layout="right" index={3} />
-      </div>
-
-      {remainingProjects.length > 0 && (
-        <div class="grid grid-cols-1 gap-8 border-t pt-16 sm:grid-cols-2 lg:grid-cols-3" style="border-color: var(--border-color);">
-          {remainingProjects.map((project, i) => (
-            <ProjectCard project={project} index={i + 4} />
+      <div class="flex flex-col gap-6 rounded-2xl border p-8 sm:p-10" style="border-color: var(--brand-primary); background: var(--brand-soft); box-shadow: var(--shadow-brand);" data-reveal>
+        <div class="flex flex-wrap items-start justify-between gap-4">
+          <span class="flex h-14 w-14 items-center justify-center rounded-full" style="background: var(--brand-lavender); color: var(--brand-primary);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H4z"/><path d="M2 20h20"/><path d="M9 20l1-4h4l1 4"/></svg>
+          </span>
+          <span class="eyebrow rounded-full border px-3 py-1" style="border-color: var(--brand-primary); background: var(--surface-white);">Most Requested</span>
+        </div>
+        <div class="flex flex-col gap-3">
+          <h3 class="text-2xl sm:text-3xl">{featuredService.title}</h3>
+          <p class="max-w-2xl leading-relaxed" style="color: var(--text-secondary)">{featuredService.outcome}</p>
+        </div>
+        <ul class="grid grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-2 lg:grid-cols-4">
+          {featuredService.deliverables.map((item) => (
+            <li class="flex items-center gap-2 text-sm" style="color: var(--text-primary);">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0" style="color: var(--brand-primary);"><polyline points="20 6 9 17 4 12"/></svg>
+              {item}
+            </li>
           ))}
-        </div>
-      )}
-
-      <div data-reveal>
-        <Button href="/portfolio" variant="secondary">View Portfolio</Button>
-      </div>
-    </Container>
-    <ProjectModal />
-  </section>
-
-  <!-- About -->
-  <section id="about" class="py-24 sm:py-32" style="background: var(--surface-warm);">
-    <Container class="grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-16">
-      <div class="lg:col-span-7" data-reveal data-reveal-type="fade-up">
-        <span class="eyebrow">About</span>
-        <h2 class="mt-4 max-w-xl text-balance">
-          A developer who treats <span style="color: var(--brand-primary);">your website</span> like it's my own business.
-        </h2>
-      </div>
-
-      <div class="flex flex-col gap-8 lg:col-span-5" data-reveal data-reveal-type="fade-up">
-        <p class="leading-relaxed" style="color: var(--text-secondary)">
-          I help businesses, agencies, and entrepreneurs turn ideas into fast, reliable, and visually polished websites — built to last, not just to launch. For over {yearsExperience} years I've built WordPress sites for businesses, agencies, and remote teams, from Elementor builds to custom post types and full migrations.
-        </p>
-        <dl class="flex flex-col divide-y" style="border-color: var(--border-color);">
-          {professionalFacts.map((fact) => (
-            <div class="grid grid-cols-3 gap-4 py-4">
-              <dt class="eyebrow col-span-1">{fact.label}</dt>
-              <dd class="col-span-2 text-sm" style="color: var(--text-primary);">{fact.value}</dd>
-            </div>
-          ))}
-        </dl>
-        <div>
-          <Button href="/about" variant="secondary">More About Me</Button>
+        </ul>
+        <div class="mt-auto pt-2">
+          <Button href="/services" variant="primary">Explore WordPress Services</Button>
         </div>
       </div>
-    </Container>
-  </section>
 
-  <!-- Skills -->
-  <section id="skills" class="py-24 sm:py-32" style="background: var(--surface-white);">
-    <Container class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
-      <div class="lg:col-span-4">
-        <div class="relative overflow-hidden lg:sticky lg:top-32">
-          <SectionHeading
-            eyebrow="Skills & Technology"
-            title="Tools that power my work"
-            description="A carefully selected toolkit for building scalable, high-performing, and conversion-focused digital experiences."
-            watermark="CAPABILITIES"
-          />
-        </div>
-      </div>
-      <div class="lg:col-span-8">
-        <TechGrid />
-      </div>
-    </Container>
-  </section>
-
-  <!-- Solutions -->
-  <section id="services" class="py-24 sm:py-32" style="background: var(--surface-warm);">
-    <Container class="flex flex-col gap-14">
-      <SectionHeading
-        eyebrow="Solutions"
-        title="What I can build for you"
-        description="Whatever stage your website or system is at, here's how I can help you move it forward."
-      />
       <div class="flex flex-col border-t" style="border-color: var(--border-color);">
-        {serviceCards.map((service, i) => (
+        {supportingServices.map((service, i) => (
           <a
-            href="/contact"
-            class="service-row group flex flex-col gap-4 border-b py-10 transition-colors duration-300 sm:-mx-6 sm:flex-row sm:items-center sm:justify-between sm:gap-10 sm:px-6"
+            href="/services"
+            class="service-row group flex flex-col gap-4 border-b py-8 transition-colors duration-300 sm:-mx-6 sm:flex-row sm:items-center sm:justify-between sm:gap-10 sm:px-6"
             style={`border-color: var(--border-color); animation-delay:${i * 50}ms;`}
             data-reveal
           >
             <div class="flex items-start gap-5">
-              <span class="font-mono text-sm" style="color: var(--brand-primary)">{String(i + 1).padStart(2, '0')}</span>
+              <span class="font-mono text-sm" style="color: var(--brand-primary)">{String(i + 2).padStart(2, '0')}</span>
               <div class="flex flex-col gap-2">
-                <h3 class="text-xl sm:text-2xl">{service.title}</h3>
+                <h3 class="text-xl">{service.title}</h3>
                 <p class="max-w-lg leading-relaxed" style="color: var(--text-secondary)">{service.outcome}</p>
-                <div class="flex flex-wrap gap-x-4 gap-y-1.5 pt-1">
-                  {service.inclusions.map((item) => (
-                    <span class="text-xs font-medium" style="color: var(--text-secondary)">{item}</span>
-                  ))}
-                </div>
               </div>
             </div>
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" style="color: var(--brand-primary);"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
           </a>
         ))}
       </div>
+    </Container>
+  </section>
+
+  <!-- Featured WordPress Work -->
+  <section id="work" class="py-24 sm:py-32" style="background: var(--surface-white);">
+    <Container class="flex flex-col gap-16 sm:gap-20">
+      <div class="relative overflow-hidden">
+        <SectionHeading
+          eyebrow="Featured WordPress Work"
+          title="Real client websites, built to perform"
+          description="A closer look at recent WordPress projects — the business need, my contribution, and the technology behind each one."
+          watermark="WORK"
+        />
+      </div>
+
+      <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <ProjectCard project={firstProject} index={1} priority />
+        <ProjectCard project={secondProject} index={2} priority />
+        <ProjectCard project={thirdProject} index={3} priority />
+      </div>
+
       <div data-reveal>
-        <Button href="/services" variant="secondary">Explore Solutions in Detail</Button>
+        <Button href="/portfolio" variant="secondary">View Full Portfolio</Button>
+      </div>
+    </Container>
+    <ProjectModal />
+  </section>
+
+  <!-- Advanced WordPress Capabilities -->
+  <section class="py-24 sm:py-32" style="background: var(--surface-warm);">
+    <Container class="flex flex-col gap-14">
+      <SectionHeading
+        eyebrow="Beyond Page Building"
+        title="WordPress development beyond basic page building"
+        description="Structured content, custom functionality, and technical troubleshooting — not just drag-and-drop layouts."
+      />
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        {advancedCapabilities.map((cap) => (
+          <div class="flex flex-col items-start gap-3 rounded-2xl border p-5" style="border-color: var(--border-color); background: var(--surface-white); box-shadow: var(--shadow-sm);" data-reveal>
+            <span class="flex h-10 w-10 items-center justify-center rounded-full" style="background: var(--brand-lavender); color: var(--brand-primary);">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={cap.icon} />
+            </span>
+            <p class="text-sm font-semibold leading-snug" style="color: var(--text-primary);">{cap.label}</p>
+          </div>
+        ))}
       </div>
     </Container>
   </section>
@@ -378,7 +282,7 @@ const pageDescription = siteConfig.description;
           <SectionHeading
             eyebrow="How I Work"
             title="A clear, dependable process"
-            description="No surprises, no guesswork — just a proven path from first conversation to launch."
+            description="No surprises, no guesswork — just a proven path from first conversation to launch and beyond."
             titleClass="max-w-[460px] break-words text-[clamp(2.5rem,3.8vw,4.25rem)] leading-[1.08]"
             dark
           />
@@ -394,50 +298,83 @@ const pageDescription = siteConfig.description;
     </Container>
   </section>
 
-  <!-- AI-assisted development -->
-  <section class="py-24 sm:py-32" style="background: var(--surface-white);">
-    <Container class="flex flex-col gap-14">
+  <!-- Development Lab preview -->
+  <section class="py-20 sm:py-24" style="background: var(--surface-white);">
+    <Container class="flex flex-col gap-10">
       <SectionHeading
-        eyebrow="Workflow"
-        title="AI-assisted development. Human-led execution."
-        description="I use Claude Code and Cursor for planning, debugging, and QA — architecture, design decisions, and final review stay human-led."
-        titleClass="text-3xl sm:text-4xl lg:text-5xl"
+        eyebrow="Beyond WordPress"
+        title="Development Lab"
+        description="I also create personal system concepts and browser-based tools to explore better workflows, cleaner interfaces, and practical digital solutions."
       />
-      <AIWorkflowVisual />
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <a href="/lab#systems" class="lab-card flex flex-col gap-4 rounded-2xl border p-6" style="border-color: var(--border-color); background: var(--surface-warm); box-shadow: var(--shadow-sm);" data-reveal>
+          <div class="flex items-start justify-between gap-3">
+            <span class="flex h-11 w-11 items-center justify-center rounded-full" style="background: var(--brand-lavender); color: var(--brand-primary);">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+            </span>
+            <span class="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wide" style="border-color: var(--border-color); color: var(--text-secondary);">Personal Concept</span>
+          </div>
+          <h3 class="text-lg font-bold" style="color: var(--text-primary); font-family: var(--font-heading);">Web System Concepts</h3>
+          <p class="text-sm leading-relaxed" style="color: var(--text-secondary)">Dashboard and workflow concepts for task management, inventory, healthcare, and internal operations.</p>
+        </a>
+        <a href="/lab#tools" class="lab-card flex flex-col gap-4 rounded-2xl border p-6" style="border-color: var(--border-color); background: var(--surface-warm); box-shadow: var(--shadow-sm);" data-reveal>
+          <div class="flex items-start justify-between gap-3">
+            <span class="flex h-11 w-11 items-center justify-center rounded-full" style="background: var(--brand-lavender); color: var(--brand-primary);">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4l-6 6a2 2 0 0 0 3 3l6-6a4 4 0 0 0 5.4-5.4l-3 3-2-2 3-3Z"/></svg>
+            </span>
+            <span class="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wide" style="border-color: color-mix(in srgb, var(--color-success) 35%, white); color: var(--color-success); background: var(--color-success-soft);">Free Tool</span>
+          </div>
+          <h3 class="text-lg font-bold" style="color: var(--text-primary); font-family: var(--font-heading);">Browser-Based Tools</h3>
+          <p class="text-sm leading-relaxed" style="color: var(--text-secondary)">Small privacy-focused utilities such as image conversion, with more SEO and development tools planned.</p>
+        </a>
+      </div>
       <div data-reveal>
-        <Button href="/about" variant="secondary">More About My Workflow</Button>
+        <Button href="/lab" variant="secondary">Visit the Development Lab</Button>
       </div>
     </Container>
   </section>
 
-  <!-- Contact -->
-  <section id="contact" class="dark-grid-bg py-24 sm:py-32" style="background: var(--brand-dark);">
-    <Container class="grid grid-cols-1 gap-14 lg:grid-cols-[2fr_3fr] lg:gap-16">
-      <div class="flex flex-col gap-6">
-        <SectionHeading
-          eyebrow="Contact"
-          title="Ready to start a project?"
-          description="Tell me a bit about what you're building. I typically reply within one business day."
-          dark
-        />
-        <Reveal delay={100} class="flex flex-col gap-4">
-          <a href={`mailto:${siteConfig.email}`} class="flex items-center gap-3 transition-colors" style="color: rgba(255,255,255,0.85);">
-            <span class="flex h-10 w-10 items-center justify-center rounded-full border" style="border-color: rgba(255,255,255,0.2);">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>
-            </span>
-            {siteConfig.email}
-          </a>
-          <a href={siteConfig.cvPath} target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 transition-colors" style="color: rgba(255,255,255,0.85);">
-            <span class="flex h-10 w-10 items-center justify-center rounded-full border" style="border-color: rgba(255,255,255,0.2);">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            </span>
-            Download CV
-          </a>
-        </Reveal>
+  <!-- Short About -->
+  <section id="about" class="py-24 sm:py-32" style="background: var(--surface-warm);">
+    <Container class="grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-16">
+      <div class="lg:col-span-7" data-reveal data-reveal-type="fade-up">
+        <span class="eyebrow">About</span>
+        <h2 class="mt-4 max-w-xl text-balance">
+          A <span style="color: var(--brand-primary);">WordPress developer</span> focused on reliable builds and maintainable solutions.
+        </h2>
       </div>
 
-      <div class="reveal rounded-3xl p-6 sm:p-8" style="background: var(--surface-white); animation-delay:120ms" data-reveal>
-        <ContactForm />
+      <div class="flex flex-col gap-8 lg:col-span-5" data-reveal data-reveal-type="fade-up">
+        <p class="leading-relaxed" style="color: var(--text-secondary)">
+          I focus on reliable WordPress builds, responsive interfaces, structured content, and maintainable solutions — with {yearsExperience}+ years building for the web, from Elementor sites to custom post types and full migrations.
+        </p>
+        <ul class="flex flex-wrap gap-x-4 gap-y-2">
+          {aboutProofPoints.map((item) => (
+            <li class="flex items-center gap-1.5 text-sm font-medium" style="color: var(--text-primary);">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--brand-primary);"><polyline points="20 6 9 17 4 12"/></svg>
+              {item}
+            </li>
+          ))}
+        </ul>
+        <div>
+          <Button href="/about" variant="secondary">More About Me</Button>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Final CTA -->
+  <section id="contact" class="dark-grid-bg py-24 sm:py-28" style="background: var(--brand-dark);">
+    <Container class="flex flex-col items-start gap-6">
+      <SectionHeading
+        eyebrow="Contact"
+        title="Need a WordPress developer for your next project?"
+        description="Tell me what you are building, improving, or maintaining. I will review the requirements and recommend a practical next step."
+        dark
+      />
+      <div class="flex flex-wrap gap-4" data-reveal>
+        <Button href="/contact" variant="primary">Start a Project</Button>
+        <Button href="/portfolio" variant="secondary">View Portfolio</Button>
       </div>
     </Container>
   </section>
@@ -447,12 +384,22 @@ const pageDescription = siteConfig.description;
   .service-row:hover {
     background: var(--brand-lavender);
   }
-  .capability-card {
+  .lab-card {
     transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
   }
-  .capability-card:hover {
+  .lab-card:hover {
     box-shadow: var(--shadow-md);
     border-color: var(--border-strong);
     transform: translateY(-2px);
+  }
+  .hero-badge {
+    animation: hero-badge-float 6s ease-in-out infinite;
+  }
+  @keyframes hero-badge-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-badge { animation: none; }
   }
 </style>

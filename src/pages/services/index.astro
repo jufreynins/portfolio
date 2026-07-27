@@ -4,106 +4,24 @@ import Container from '../../components/Container.astro';
 import Button from '../../components/Button.astro';
 import SectionHeading from '../../components/SectionHeading.astro';
 import { siteConfig } from '../../config/site';
+import { wordpressServices } from '../../data/services';
+import { projects } from '../../data/projects';
 
-const pageTitle = `Solutions — ${siteConfig.name}`;
+const pageTitle = `WordPress Services — ${siteConfig.name}`;
 const pageDescription =
-  'Technology solutions for websites and business operations: website platforms, business web systems, custom web applications, UI systems, and automation.';
+  'Professional WordPress development for business websites, landing pages, dynamic content, and ongoing improvements — Elementor Pro, ACF, JetEngine, and custom functionality.';
 const canonical = `${siteConfig.url}/services`;
 
-interface Category {
-  id: string;
-  title: string;
-  useCase: string;
-  deliverables: string[];
-  recommendedFor: string;
-  cta: { label: string; href: string; internal?: boolean };
-  icon: string;
-}
+const projectBySlug = Object.fromEntries(projects.map((p) => [p.slug, p]));
 
-const categories: Category[] = [
-  {
-    id: 'website-platforms',
-    title: 'Website Platforms',
-    useCase:
-      'You need a professional, easy-to-manage website to represent your business, generate leads, or sell products online.',
-    deliverables: [
-      'WordPress websites',
-      'Landing pages',
-      'Service websites',
-      'E-commerce (WooCommerce)',
-      'Dynamic content',
-      'Redesigns & migrations',
-    ],
-    recommendedFor: 'New business sites, marketing sites, online stores, or a redesign of an aging website.',
-    cta: { label: 'View Website Development Details', href: '/services/website-wordpress' },
-    icon: '<path d="M4 5h16v11H4z"/><path d="M2 20h20"/><path d="M9 20l1-4h4l1 4"/>',
-  },
-  {
-    id: 'business-web-systems',
-    title: 'Business Web Systems',
-    useCase:
-      'Your business runs on spreadsheets, chat threads, or disconnected tools, and you need a central place to manage records, tasks, or activity.',
-    deliverables: [
-      'Admin dashboards',
-      'Client & customer portals',
-      'Inventory systems',
-      'Task management systems',
-      'Appointment systems',
-      'Record-management platforms',
-    ],
-    recommendedFor: 'Internal operations tools, booking systems, or a dashboard that replaces manual tracking.',
-    cta: { label: 'See Web Systems', href: '/systems' },
-    icon: '<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>',
-  },
-  {
-    id: 'custom-web-applications',
-    title: 'Custom Web Applications',
-    useCase:
-      'You have an idea that does not fit a page builder — a browser-based tool, a calculator, or a focused internal utility.',
-    deliverables: [
-      'Browser-based tools & utilities',
-      'Third-party integrations',
-      'Calculators',
-      'Data interfaces',
-      'Lightweight applications',
-    ],
-    recommendedFor: 'Free web tools, internal utilities, or a lightweight app built without a heavy framework.',
-    cta: { label: 'View Custom Web Apps Details', href: '/services/custom-web-apps' },
-    icon: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>',
-  },
-  {
-    id: 'ui-systems',
-    title: 'UI Systems and Frontend Improvement',
-    useCase:
-      'Your existing site or system works, but the interface feels inconsistent, dated, or hard to use on mobile.',
-    deliverables: [
-      'Responsive refactoring',
-      'Dashboard consistency',
-      'Reusable components',
-      'Accessibility improvements',
-      'Interface modernization',
-    ],
-    recommendedFor: 'A frontend refresh, a responsive fix-up, or bringing an existing UI up to a consistent standard.',
-    cta: { label: 'Start a Project', href: '/contact' },
-    icon: '<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/><circle cx="6.5" cy="6.5" r=".5" fill="currentColor"/>',
-  },
-  {
-    id: 'automation',
-    title: 'Automation and Integration',
-    useCase:
-      'Leads or information sit in an inbox or spreadsheet instead of moving automatically to where they need to go.',
-    deliverables: [
-      'CRM workflows (GoHighLevel)',
-      'API integrations',
-      'Form automation',
-      'Analytics setup',
-      'Lead routing',
-      'Business-process connections',
-    ],
-    recommendedFor: 'Connecting your website to a CRM, automating follow-ups, or reducing manual admin work.',
-    cta: { label: 'Start a Project', href: '/contact' },
-    icon: '<circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M9 6h6a3 3 0 0 1 3 3v3M15 18H9a3 3 0 0 1-3-3v-3"/>',
-  },
+const whyWorkWithMe = [
+  'Comfortable working inside existing websites, not just building from scratch',
+  'Can follow an existing design system instead of imposing my own',
+  'Strong responsive troubleshooting across real devices and browsers',
+  'Experience with dynamic content: ACF, JetEngine, custom post types',
+  'Collaborates well with agencies, designers, and other developers',
+  'Does not unnecessarily rebuild systems that are already working',
+  'Uses AI tools to move faster — every change is still human-reviewed',
 ];
 ---
 
@@ -112,57 +30,98 @@ const categories: Category[] = [
     <Container>
       <SectionHeading
         as="h1"
-        eyebrow="Solutions"
-        title="Technology Solutions for Websites and Business Operations"
-        description="Five ways I help businesses build, manage, and improve their online presence — from a first website to a custom internal system."
+        eyebrow="WordPress Services"
+        title="Professional WordPress Development"
+        description="Business websites, landing pages, dynamic content, and ongoing improvements — built with Elementor Pro, structured content, and clean custom code."
       />
     </Container>
   </section>
 
-  <section class="pb-24 sm:pb-32" style="background: var(--surface-white);">
-    <Container class="flex flex-col gap-10">
-      {categories.map((category, i) => (
-        <div
-          id={category.id}
-          class="grid scroll-mt-28 grid-cols-1 gap-6 rounded-2xl border p-6 sm:p-8 lg:grid-cols-12 lg:gap-8"
-          style="border-color: var(--border-color); background: var(--surface-warm);"
-          data-reveal
-        >
-          <div class="flex flex-col gap-4 lg:col-span-4">
-            <span class="flex h-12 w-12 items-center justify-center rounded-full" style="background: var(--brand-lavender); color: var(--brand-primary);">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={category.icon} />
-            </span>
-            <div class="flex items-center gap-3">
+  <section class="py-20 sm:py-28" style="background: var(--surface-white);">
+    <Container class="flex flex-col gap-16">
+      {wordpressServices.map((service, i) => {
+        const project = service.relatedProjectSlug ? projectBySlug[service.relatedProjectSlug] : undefined;
+        return (
+          <div class="grid grid-cols-1 gap-6 border-t pt-10 lg:grid-cols-12 lg:gap-10" style="border-color: var(--border-color);" data-reveal>
+            <div class="flex items-start gap-4 lg:col-span-4">
               <span class="font-mono text-sm" style="color: var(--brand-primary)">{String(i + 1).padStart(2, '0')}</span>
-              <h2 class="text-2xl">{category.title}</h2>
+              <div class="flex flex-col gap-2">
+                <h2 class="text-2xl">{service.title}</h2>
+                <p class="leading-relaxed" style="color: var(--text-secondary)">{service.outcome}</p>
+              </div>
             </div>
-            <p class="leading-relaxed" style="color: var(--text-secondary)">{category.useCase}</p>
-          </div>
 
-          <div class="flex flex-col gap-5 lg:col-span-8">
-            <div class="flex flex-col gap-2">
-              <span class="eyebrow">Typical Deliverables</span>
-              <ul class="flex flex-wrap gap-x-4 gap-y-2">
-                {category.deliverables.map((item) => (
-                  <li class="flex items-center gap-1.5 text-sm" style="color: var(--text-primary);">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0" style="color: var(--brand-primary);"><polyline points="20 6 9 17 4 12"/></svg>
+            <div class="flex flex-col gap-4 lg:col-span-8">
+              <dl class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div class="flex flex-col gap-1">
+                  <dt class="text-xs font-bold uppercase tracking-wide" style="color: var(--text-secondary);">Who It's For</dt>
+                  <dd class="text-sm leading-relaxed" style="color: var(--text-primary);">{service.whoFor}</dd>
+                </div>
+                <div class="flex flex-col gap-1">
+                  <dt class="text-xs font-bold uppercase tracking-wide" style="color: var(--text-secondary);">Common Problem</dt>
+                  <dd class="text-sm leading-relaxed" style="color: var(--text-primary);">{service.problem}</dd>
+                </div>
+              </dl>
+
+              <div class="flex flex-wrap gap-x-4 gap-y-2">
+                {service.deliverables.map((item) => (
+                  <span class="inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium" style="border-color: var(--border-color); color: var(--text-primary);">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--brand-primary);"><polyline points="20 6 9 17 4 12"/></svg>
                     {item}
-                  </li>
+                  </span>
                 ))}
-              </ul>
-            </div>
+              </div>
 
-            <div class="flex flex-col gap-1">
-              <span class="eyebrow">Recommended For</span>
-              <p class="text-sm" style="color: var(--text-secondary)">{category.recommendedFor}</p>
-            </div>
-
-            <div class="mt-auto pt-2">
-              <Button href={category.cta.href} variant="secondary">{category.cta.label}</Button>
+              <div class="flex flex-wrap items-center justify-between gap-4 border-t pt-4" style="border-color: var(--border-color);">
+                <p class="text-xs" style="color: var(--text-muted);">
+                  <span class="font-bold uppercase tracking-wide">Technology:</span> {service.technology}
+                </p>
+                {project && (
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1.5 text-sm font-bold"
+                    style="color: var(--brand-primary);"
+                  >
+                    Related project: {project.name}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                  </a>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
+    </Container>
+  </section>
+
+  <!-- Why work with me -->
+  <section class="py-20 sm:py-24" style="background: var(--surface-warm);">
+    <Container class="flex flex-col gap-10">
+      <SectionHeading
+        eyebrow="Why Work With Me"
+        title="A developer who fits into how you already work"
+        description="Truthful differentiators, not sales language."
+      />
+      <ul class="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
+        {whyWorkWithMe.map((item) => (
+          <li class="flex items-start gap-3 rounded-2xl border p-5" style="border-color: var(--border-color); background: var(--surface-white); box-shadow: var(--shadow-sm);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 flex-shrink-0" style="color: var(--brand-primary);"><polyline points="20 6 9 17 4 12"/></svg>
+            <span class="text-sm leading-relaxed" style="color: var(--text-primary);">{item}</span>
+          </li>
+        ))}
+      </ul>
+    </Container>
+  </section>
+
+  <section class="py-20 sm:py-24" style="background: var(--surface-warm);">
+    <Container class="flex flex-col items-start gap-5 border-t pt-14" style="border-color: var(--border-color);">
+      <span class="eyebrow">Beyond WordPress</span>
+      <p class="max-w-xl leading-relaxed" style="color: var(--text-secondary);">
+        I also build personal web system concepts and browser-based tools as a secondary interest — a look at how I approach problems beyond page-builder work.
+      </p>
+      <Button href="/lab" variant="secondary">Visit the Development Lab</Button>
     </Container>
   </section>
 

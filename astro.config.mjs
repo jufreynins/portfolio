@@ -8,6 +8,12 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://jufreyninobayogportfolio.com',
   integrations: [sitemap()],
+  redirects: {
+    '/systems': '/lab#systems',
+    '/tools': '/lab#tools',
+    '/services/website-wordpress': '/services',
+    '/services/custom-web-apps': '/lab',
+  },
   vite: {
     plugins: [tailwindcss()]
   }

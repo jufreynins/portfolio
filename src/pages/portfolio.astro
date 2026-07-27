@@ -3,18 +3,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Container from '../components/Container.astro';
 import Button from '../components/Button.astro';
 import SectionHeading from '../components/SectionHeading.astro';
-import ProjectFeature from '../components/ProjectFeature.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import ProjectModal from '../components/ProjectModal.astro';
 import { siteConfig } from '../config/site';
 import { projects } from '../data/projects';
 
-const pageTitle = `Portfolio — ${siteConfig.name}`;
+const pageTitle = `WordPress Portfolio — ${siteConfig.name}`;
 const pageDescription =
   'Real WordPress websites built for businesses, agencies, and nonprofits — from marketing agencies to e-commerce and community organizations.';
 const canonical = `${siteConfig.url}/portfolio`;
-
-const [firstProject, secondProject, thirdProject, ...remainingProjects] = projects;
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription} canonical={canonical}>
@@ -23,35 +20,59 @@ const [firstProject, secondProject, thirdProject, ...remainingProjects] = projec
       <SectionHeading
         as="h1"
         eyebrow="Portfolio"
-        title="Selected Websites, Web Systems, and Digital Tools"
-        description="Real businesses, real websites — a closer look at the kind of work I bring to every project."
+        title="WordPress Websites Built for Real Businesses"
+        description="Real client work — the business need, my contribution, and the WordPress technology behind each site."
         watermark="WORK"
       />
       <p class="text-sm" style="color: var(--text-secondary)">
-        The websites below are completed client work. Looking for something else? See
-        <a href="/systems" class="font-medium underline" style="color: var(--brand-primary);">Web Systems</a>
-        or <a href="/tools" class="font-medium underline" style="color: var(--brand-primary);">Web Tools</a>.
+        Every project below is completed client work. Looking for personal projects instead? See the
+        <a href="/lab" class="font-medium underline" style="color: var(--brand-primary);">Development Lab</a>.
       </p>
     </Container>
   </section>
 
   <section class="pb-24 sm:pb-32" style="background: var(--surface-white);">
-    <Container class="flex flex-col gap-20 sm:gap-24">
-      <div class="flex flex-col gap-20 sm:gap-24">
-        <ProjectFeature project={firstProject} layout="full" index={1} />
-        <ProjectFeature project={secondProject} layout="left" index={2} />
-        <ProjectFeature project={thirdProject} layout="right" index={3} />
+    <Container>
+      <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        {projects.map((project, i) => (
+          <ProjectCard project={project} index={i + 1} priority={i < 3} />
+        ))}
       </div>
-
-      {remainingProjects.length > 0 && (
-        <div class="grid grid-cols-1 gap-8 border-t pt-16 sm:grid-cols-2 lg:grid-cols-3" style="border-color: var(--border-color);">
-          {remainingProjects.map((project, i) => (
-            <ProjectCard project={project} index={i + 4} />
-          ))}
-        </div>
-      )}
     </Container>
     <ProjectModal />
+  </section>
+
+  <!-- Development Lab (personal projects — after client work, visually distinct) -->
+  <section class="border-t py-20 sm:py-24" style="border-color: var(--border-color); background: var(--surface-warm);">
+    <Container class="flex flex-col gap-10">
+      <SectionHeading
+        eyebrow="Also Explore"
+        title="Development Lab"
+        description="Personal system concepts and browser-based tools — separate from the client work above."
+      />
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <a href="/lab#systems" class="lab-card flex flex-col gap-4 rounded-2xl border p-6" style="border-color: var(--border-color); background: var(--surface-white); box-shadow: var(--shadow-sm);" data-reveal>
+          <div class="flex items-start justify-between gap-3">
+            <span class="flex h-11 w-11 items-center justify-center rounded-full" style="background: var(--brand-lavender); color: var(--brand-primary);">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+            </span>
+            <span class="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wide" style="border-color: var(--border-color); color: var(--text-secondary);">Personal Concept</span>
+          </div>
+          <h3 class="text-lg font-bold" style="color: var(--text-primary); font-family: var(--font-heading);">Web System Concepts</h3>
+          <p class="text-sm leading-relaxed" style="color: var(--text-secondary)">Dashboard and workflow concepts for task management, inventory, healthcare, and internal operations.</p>
+        </a>
+        <a href="/lab#tools" class="lab-card flex flex-col gap-4 rounded-2xl border p-6" style="border-color: var(--border-color); background: var(--surface-white); box-shadow: var(--shadow-sm);" data-reveal>
+          <div class="flex items-start justify-between gap-3">
+            <span class="flex h-11 w-11 items-center justify-center rounded-full" style="background: var(--brand-lavender); color: var(--brand-primary);">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4l-6 6a2 2 0 0 0 3 3l6-6a4 4 0 0 0 5.4-5.4l-3 3-2-2 3-3Z"/></svg>
+            </span>
+            <span class="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wide" style="border-color: color-mix(in srgb, var(--color-success) 35%, white); color: var(--color-success); background: var(--color-success-soft);">Free Tool</span>
+          </div>
+          <h3 class="text-lg font-bold" style="color: var(--text-primary); font-family: var(--font-heading);">Browser-Based Tools</h3>
+          <p class="text-sm leading-relaxed" style="color: var(--text-secondary)">Small privacy-focused utilities such as image conversion, with more planned.</p>
+        </a>
+      </div>
+    </Container>
   </section>
 
   <section class="dark-grid-bg py-20 sm:py-24" style="background: var(--brand-dark);">
@@ -66,3 +87,14 @@ const [firstProject, secondProject, thirdProject, ...remainingProjects] = projec
     </Container>
   </section>
 </BaseLayout>
+
+<style>
+  .lab-card {
+    transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+  }
+  .lab-card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+  }
+</style>

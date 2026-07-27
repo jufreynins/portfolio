@@ -8,28 +8,28 @@ import ProcessTimeline from '../components/ProcessTimeline.astro';
 import AIWorkflowVisual from '../components/AIWorkflowVisual.astro';
 import { siteConfig } from '../config/site';
 
-const pageTitle = `About — ${siteConfig.name}`;
+const pageTitle = `About — WordPress Developer — ${siteConfig.name}`;
 const pageDescription =
-  'A closer look at Jufrey Niño Bayog — background, working philosophy, technical toolkit, and the AI-assisted, human-led process behind every project.';
+  'A closer look at Jufrey Niño Bayog — WordPress specialization, agency collaboration, dynamic-content capabilities, and the AI-assisted, human-led process behind every project.';
 const canonical = `${siteConfig.url}/about`;
 
 const { yearsExperience } = siteConfig;
 
 const professionalFacts = [
   { label: 'Experience', value: `${yearsExperience}+ years building for the web` },
-  { label: 'Focus', value: 'WordPress, web systems & digital tools' },
+  { label: 'Focus', value: 'WordPress development & frontend execution' },
   { label: 'Workflow', value: 'AI-assisted with Claude Code and Cursor, human-reviewed' },
   { label: 'Availability', value: 'Remote, working with clients worldwide' },
 ];
 
 const capabilityHighlights = [
   'WordPress development',
-  'Custom web systems',
-  'Dashboard and admin UI development',
-  'Dynamic content systems',
-  'Web tools and utilities',
+  'Elementor Pro',
+  'Dynamic content (ACF, JetEngine)',
+  'Frontend customization',
+  'Agency collaboration',
   'Responsive UI/UX improvements',
-  'Technical website support',
+  'Development Lab (secondary interest)',
 ];
 
 const processSteps: { title: string; description: string; type: 'discover' | 'plan' | 'design-build' | 'test-refine' }[] = [
@@ -64,19 +64,19 @@ const processSteps: { title: string; description: string; type: 'discover' | 'pl
         <SectionHeading
           as="h1"
           eyebrow="About"
-          title="Web Developer Focused on Websites, Systems, and Practical Digital Tools"
+          title="WordPress Developer Focused on Polished Websites and Reliable Frontend Execution"
         />
       </div>
 
       <div class="flex flex-col gap-8 lg:col-span-5" data-reveal data-reveal-type="fade-up">
         <p class="leading-relaxed" style="color: var(--text-secondary)">
-          I'm {siteConfig.name}, a web developer with {yearsExperience}+ years of experience working on WordPress websites, business platforms, landing pages, dynamic content systems, and custom web-based solutions.
+          I'm {siteConfig.name}, a WordPress developer with {yearsExperience}+ years of experience building business websites, landing pages, and dynamic-content sites with Elementor Pro, Advanced Custom Fields, and JetEngine.
         </p>
         <p class="leading-relaxed" style="color: var(--text-secondary)">
-          My background started with professional website development and expanded into dashboard design, internal business systems, structured workflows, and browser-based tools.
+          I've worked directly with agencies and remote teams, following existing design systems and collaborating alongside other developers and designers rather than working in isolation.
         </p>
         <p class="leading-relaxed" style="color: var(--text-secondary)">
-          I focus on solving practical problems through technology — whether that means improving an existing website, creating a management system, or developing a focused tool that helps users complete a task faster.
+          As a secondary interest, I also build personal web system concepts and browser-based tools in my <a href="/lab" class="underline" style="color: var(--brand-primary);">Development Lab</a> — a way to explore problems beyond standard page-builder work.
         </p>
         <ul class="flex flex-wrap gap-x-4 gap-y-2">
           {capabilityHighlights.map((item) => (
