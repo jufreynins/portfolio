@@ -25,7 +25,7 @@ export const siteConfig = {
     { label: 'Home', href: '/' },
     { label: 'WordPress Services', href: '/services' },
     { label: 'Portfolio', href: '/portfolio' },
-    { label: 'Development Lab', href: '/lab' },
+    { label: 'Personal Projects', href: '/lab' },
     { label: 'About', href: '/about' },
     { label: 'Contact', href: '/contact' },
   ],
