@@ -1,0 +1,132 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/Container.astro';
+import Button from '../../components/Button.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import SystemPreview from '../../components/SystemPreview.astro';
+import { siteConfig } from '../../config/site';
+
+const pageTitle = `Personal Projects — ${siteConfig.name}`;
+const pageDescription =
+  'Personal web system concepts — clearly labeled experiments outside client work, not existing production systems.';
+const canonical = `${siteConfig.url}/personal-projects`;
+
+interface ConceptSystem {
+  name: string;
+  category: string;
+  problem: string;
+  modules: string[];
+  techDirection: string;
+  routeLabel: string;
+}
+
+const conceptSystems: ConceptSystem[] = [
+  {
+    name: 'Task Management System',
+    category: 'Business Productivity',
+    problem: 'Tasks get lost across email, chat, and spreadsheets, making it hard to see what is actually in progress.',
+    modules: ['Task assignment & due dates', 'Status tracking', 'Team member views', 'Activity history', 'Priority tagging'],
+    techDirection: 'TypeScript, structured data model, role-based views',
+    routeLabel: 'app.system/tasks/board',
+  },
+  {
+    name: 'Retail & Inventory Management System',
+    category: 'Operations & Inventory',
+    problem: 'Manually tracking inventory in spreadsheets leads to overselling, stockouts, and inaccurate product counts.',
+    modules: ['Stock level tracking', 'Low-stock alerts', 'Product catalog', 'Order history', 'Basic reporting'],
+    techDirection: 'TypeScript, structured data model, dashboard UI',
+    routeLabel: 'app.system/inventory/products',
+  },
+  {
+    name: 'Dental Clinic Management System',
+    category: 'Healthcare Practice',
+    problem: 'Paper-based or disconnected scheduling makes it hard to track appointments, patient history, and daily clinic capacity.',
+    modules: ['Appointment scheduling', 'Patient records', 'Treatment history', 'Staff calendar', 'Automated reminders'],
+    techDirection: 'TypeScript, calendar/scheduling UI, structured records',
+    routeLabel: 'app.system/clinic/schedule',
+  },
+  {
+    name: 'Business Admin Dashboard',
+    category: 'Internal Admin',
+    problem: 'Important business information is scattered across separate tools, making it hard to get a clear, current picture.',
+    modules: ['Data overview widgets', 'User & role management', 'Activity logs', 'Searchable records', 'Reporting views'],
+    techDirection: 'TypeScript, dashboard UI, role-based access',
+    routeLabel: 'app.system/admin/overview',
+  },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonical={canonical}>
+  <section class="pt-28 pb-12 sm:pt-32 sm:pb-14" style="background: var(--surface-warm);">
+    <Container>
+      <SectionHeading
+        as="h1"
+        eyebrow="Personal Projects"
+        title="Personal system concepts, outside client work."
+        description="Concept designs for internal tools — not existing client or production systems."
+      />
+    </Container>
+  </section>
+
+  <section class="py-14 sm:py-16" style="background: var(--surface-white);">
+    <Container class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+      {conceptSystems.map((system, i) => (
+        <div class="concept-card flex flex-col gap-4 rounded-2xl border p-6" style="border-color: var(--border-color); background: var(--surface-warm); box-shadow: var(--shadow-sm);" data-reveal>
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div class="flex flex-col gap-1">
+              <span class="eyebrow">{system.category}</span>
+              <h3 class="text-xl">{system.name}</h3>
+            </div>
+            <span
+              class="inline-flex flex-shrink-0 items-center gap-1.5 rounded-full border px-3 py-1 font-mono text-xs font-bold uppercase tracking-wide"
+              style="border-color: var(--border-color); color: var(--text-secondary); background: var(--surface-white);"
+            >
+              Personal Concept
+            </span>
+          </div>
+
+          <SystemPreview routeLabel={system.routeLabel} activeNav={i % 4} />
+
+          <p class="text-sm leading-relaxed" style="color: var(--text-secondary)">{system.problem}</p>
+
+          <ul class="flex flex-wrap gap-x-4 gap-y-1.5">
+            {system.modules.map((feature) => (
+              <li class="flex items-center gap-1.5 text-sm" style="color: var(--text-primary);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0" style="color: var(--brand-primary);"><polyline points="20 6 9 17 4 12"/></svg>
+                {feature}
+              </li>
+            ))}
+          </ul>
+
+          <p class="text-xs" style="color: var(--text-secondary);">
+            <span class="font-bold uppercase tracking-wide">Tech direction:</span> {system.techDirection}
+          </p>
+        </div>
+      ))}
+    </Container>
+  </section>
+
+  <section class="py-14 sm:py-16" style="background: var(--surface-warm);">
+    <Container class="flex flex-col items-start gap-5">
+      <span class="eyebrow">Looking for WordPress work instead?</span>
+      <p class="max-w-xl leading-relaxed" style="color: var(--text-secondary);">
+        This page is a look at what I build outside of client projects. For professional WordPress websites, see Services and Portfolio.
+      </p>
+      <div class="flex flex-wrap gap-4">
+        <Button href="/services" variant="secondary">Explore WordPress Services</Button>
+        <Button href="/portfolio" variant="primary">View WordPress Projects</Button>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>
+
+<style>
+  .concept-card {
+    transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+  }
+  .concept-card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+  }
+</style>

@@ -26,23 +26,23 @@ const whyWorkWithMe = [
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription} canonical={canonical}>
-  <section class="pt-32 pb-16 sm:pt-40 sm:pb-20" style="background: var(--surface-warm);">
+  <section class="pt-28 pb-12 sm:pt-32 sm:pb-14" style="background: var(--surface-warm);">
     <Container>
       <SectionHeading
         as="h1"
         eyebrow="WordPress Services"
         title="WordPress development for websites that need to perform."
-        description="Business websites, landing pages, dynamic content, and ongoing improvements — built with Elementor Pro, structured content, and clean custom code."
+        description="Business websites, landing pages, dynamic content, and ongoing improvements."
       />
     </Container>
   </section>
 
-  <section class="py-20 sm:py-28" style="background: var(--surface-white);">
-    <Container class="flex flex-col gap-16">
+  <section class="py-14 sm:py-16" style="background: var(--surface-white);">
+    <Container class="flex flex-col gap-10">
       {wordpressServices.map((service, i) => {
         const project = service.relatedProjectSlug ? projectBySlug[service.relatedProjectSlug] : undefined;
         return (
-          <div class="grid grid-cols-1 gap-6 border-t pt-10 lg:grid-cols-12 lg:gap-10" style="border-color: var(--border-color);" data-reveal>
+          <div class="grid grid-cols-1 gap-6 border-t pt-8 lg:grid-cols-12 lg:gap-10" style="border-color: var(--border-color);" data-reveal>
             <div class="flex items-start gap-4 lg:col-span-4">
               <span class="font-mono text-sm" style="color: var(--brand-primary)">{String(i + 1).padStart(2, '0')}</span>
               <div class="flex flex-col gap-2">
@@ -52,16 +52,9 @@ const whyWorkWithMe = [
             </div>
 
             <div class="flex flex-col gap-4 lg:col-span-8">
-              <dl class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div class="flex flex-col gap-1">
-                  <dt class="text-xs font-bold uppercase tracking-wide" style="color: var(--text-secondary);">Who It's For</dt>
-                  <dd class="text-sm leading-relaxed" style="color: var(--text-primary);">{service.whoFor}</dd>
-                </div>
-                <div class="flex flex-col gap-1">
-                  <dt class="text-xs font-bold uppercase tracking-wide" style="color: var(--text-secondary);">Common Problem</dt>
-                  <dd class="text-sm leading-relaxed" style="color: var(--text-primary);">{service.problem}</dd>
-                </div>
-              </dl>
+              <p class="text-sm" style="color: var(--text-primary);">
+                <span class="text-xs font-bold uppercase tracking-wide" style="color: var(--text-secondary);">Who it helps:</span> {service.whoFor}
+              </p>
 
               <div class="flex flex-wrap gap-x-4 gap-y-2">
                 {service.deliverables.map((item) => (
@@ -97,8 +90,8 @@ const whyWorkWithMe = [
   </section>
 
   <!-- Why work with me -->
-  <section class="py-20 sm:py-24" style="background: var(--surface-warm);">
-    <Container class="flex flex-col gap-10">
+  <section class="py-14 sm:py-16" style="background: var(--surface-warm);">
+    <Container class="flex flex-col gap-8">
       <SectionHeading
         eyebrow="Why Work With Me"
         title="A developer who fits into how you already work"
@@ -115,17 +108,20 @@ const whyWorkWithMe = [
     </Container>
   </section>
 
-  <section class="py-20 sm:py-24" style="background: var(--surface-warm);">
-    <Container class="flex flex-col items-start gap-5 border-t pt-14" style="border-color: var(--border-color);">
+  <section class="py-14 sm:py-16" style="background: var(--surface-warm);">
+    <Container class="flex flex-col items-start gap-5 border-t pt-10" style="border-color: var(--border-color);">
       <span class="eyebrow">Beyond WordPress</span>
       <p class="max-w-xl leading-relaxed" style="color: var(--text-secondary);">
-        I also build personal web system concepts and browser-based tools as a secondary interest — a look at how I approach problems beyond page-builder work.
+        I also build <a href="/personal-projects" class="underline" style="color: var(--brand-primary);">Personal Projects</a> and <a href="/tools" class="underline" style="color: var(--brand-primary);">Tools</a> as a secondary interest.
       </p>
-      <Button href="/lab" variant="secondary">Visit Personal Projects</Button>
+      <div class="flex flex-wrap gap-4">
+        <Button href="/personal-projects" variant="secondary">Personal Projects</Button>
+        <Button href="/tools" variant="secondary">Tools</Button>
+      </div>
     </Container>
   </section>
 
-  <section class="dark-grid-bg py-20 sm:py-24" style="background: var(--brand-dark);">
+  <section class="dark-grid-bg py-16 sm:py-20" style="background: var(--brand-dark);">
     <Container class="flex flex-col items-start gap-6">
       <SectionHeading
         eyebrow="Not sure which one you need?"

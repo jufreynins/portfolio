@@ -16,11 +16,6 @@ function isNavActive(href: string) {
   if (href === '/') return currentPath === '/';
   return currentPath === href || currentPath.startsWith(`${href}/`);
 }
-
-function isGroupActive(item: { href: string; children?: readonly { href: string }[] }) {
-  if (isNavActive(item.href)) return true;
-  return item.children?.some((child) => isNavActive(child.href.split('#')[0])) ?? false;
-}
 ---
 
 <header id="site-header" class="fixed inset-x-0 top-0 z-50 transition-all duration-300" data-header data-header-variant={dark ? 'dark' : 'light'}>
@@ -35,41 +30,16 @@ function isGroupActive(item: { href: string; children?: readonly { href: string 
       <span class="hidden sm:inline">{siteConfig.name}</span>
     </a>
 
-    <nav class="hidden 2xl:flex items-center gap-7" aria-label="Primary">
-      {siteConfig.nav.map((item) =>
-        'children' in item && item.children ? (
-          <div class="nav-dropdown relative">
-            <a
-              href={item.href}
-              class:list={['nav-link relative inline-flex items-center gap-1 whitespace-nowrap text-sm font-medium text-zinc-900/70 transition-colors hover:text-zinc-900 py-1', { 'is-active': isGroupActive(item) }]}
-              aria-current={isGroupActive(item) ? 'page' : undefined}
-            >
-              {item.label}
-              <svg class="nav-dropdown-chevron" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-            </a>
-            <div class="nav-dropdown-panel absolute left-0 top-full pt-3">
-              <div class="flex min-w-[200px] flex-col gap-1 rounded-2xl border p-2" style="border-color: var(--border-color); background: var(--surface-white); box-shadow: var(--shadow-md);">
-                {item.children.map((child) => (
-                  <a
-                    href={child.href}
-                    class:list={['rounded-lg px-3 py-2.5 text-sm font-medium transition-colors hover:bg-black/5', isNavActive(child.href.split('#')[0]) ? 'text-zinc-900 bg-black/5' : 'text-zinc-900/80 hover:text-zinc-900']}
-                  >
-                    {child.label}
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
-        ) : (
-          <a
-            href={item.href}
-            class:list={['nav-link relative whitespace-nowrap text-sm font-medium text-zinc-900/70 transition-colors hover:text-zinc-900 py-1', { 'is-active': isNavActive(item.href) }]}
-            aria-current={isNavActive(item.href) ? 'page' : undefined}
-          >
-            {item.label}
-          </a>
-        )
-      )}
+    <nav class="hidden 2xl:flex items-center gap-5" aria-label="Primary">
+      {siteConfig.nav.map((item) => (
+        <a
+          href={item.href}
+          class:list={['nav-link relative whitespace-nowrap text-sm font-medium text-zinc-900/70 transition-colors hover:text-zinc-900 py-1', { 'is-active': isNavActive(item.href) }]}
+          aria-current={isNavActive(item.href) ? 'page' : undefined}
+        >
+          {item.label}
+        </a>
+      ))}
     </nav>
 
     <div class="hidden 2xl:flex items-center">
@@ -91,40 +61,16 @@ function isGroupActive(item: { href: string; children?: readonly { href: string 
 
   <div id="mobile-menu" class="2xl:hidden hidden glass mx-4 mb-4 rounded-2xl px-6 py-6" data-mobile-menu>
     <nav class="flex flex-col gap-1" aria-label="Mobile">
-      {siteConfig.nav.map((item) =>
-        'children' in item && item.children ? (
-          <div class="flex flex-col">
-            <a
-              href={item.href}
-              class:list={['rounded-lg px-3 py-3 text-base font-medium hover:bg-black/5', isGroupActive(item) ? 'text-zinc-900 bg-black/5' : 'text-zinc-900/85 hover:text-zinc-900']}
-              aria-current={isGroupActive(item) ? 'page' : undefined}
-              data-mobile-link
-            >
-              {item.label}
-            </a>
-            <div class="ml-3 flex flex-col border-l pl-3" style="border-color: var(--border-color);">
-              {item.children.map((child) => (
-                <a
-                  href={child.href}
-                  class:list={['rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-black/5', isNavActive(child.href.split('#')[0]) ? 'text-zinc-900 bg-black/5' : 'text-zinc-900/70 hover:text-zinc-900']}
-                  data-mobile-link
-                >
-                  {child.label}
-                </a>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <a
-            href={item.href}
-            class:list={['rounded-lg px-3 py-3 text-base font-medium hover:bg-black/5', isNavActive(item.href) ? 'text-zinc-900 bg-black/5' : 'text-zinc-900/85 hover:text-zinc-900']}
-            aria-current={isNavActive(item.href) ? 'page' : undefined}
-            data-mobile-link
-          >
-            {item.label}
-          </a>
-        )
-      )}
+      {siteConfig.nav.map((item) => (
+        <a
+          href={item.href}
+          class:list={['rounded-lg px-3 py-3 text-base font-medium hover:bg-black/5', isNavActive(item.href) ? 'text-zinc-900 bg-black/5' : 'text-zinc-900/85 hover:text-zinc-900']}
+          aria-current={isNavActive(item.href) ? 'page' : undefined}
+          data-mobile-link
+        >
+          {item.label}
+        </a>
+      ))}
     </nav>
     <div class="mt-4 flex flex-col gap-3 border-t border-black/10 pt-4">
       <Button href={siteConfig.cvPath} variant="secondary" class="w-full" target="_blank" rel="noopener noreferrer">
@@ -169,27 +115,6 @@ function isGroupActive(item: { href: string; children?: readonly { href: string 
     border-color: rgba(255, 255, 255, 0.25);
   }
 
-  .nav-dropdown-chevron {
-    transition: transform 0.2s ease;
-  }
-  .nav-dropdown-panel {
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-4px);
-    pointer-events: none;
-    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
-  }
-  .nav-dropdown:hover .nav-dropdown-panel,
-  .nav-dropdown:focus-within .nav-dropdown-panel {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-  .nav-dropdown:hover .nav-dropdown-chevron,
-  .nav-dropdown:focus-within .nav-dropdown-chevron {
-    transform: rotate(180deg);
-  }
 </style>
 
 <script>

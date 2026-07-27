@@ -9,10 +9,10 @@ export default defineConfig({
   site: 'https://jufreyninobayogportfolio.com',
   integrations: [sitemap()],
   redirects: {
-    '/systems': '/lab#systems',
-    '/tools': '/lab#tools',
+    '/systems': '/personal-projects',
+    '/lab': '/personal-projects',
     '/services/website-wordpress': '/services',
-    '/services/custom-web-apps': '/lab',
+    '/services/custom-web-apps': '/personal-projects',
   },
   vite: {
     plugins: [tailwindcss()]

@@ -7,6 +7,7 @@ import TechGrid from '../components/TechGrid.astro';
 import ProcessTimeline from '../components/ProcessTimeline.astro';
 import AIWorkflowVisual from '../components/AIWorkflowVisual.astro';
 import { siteConfig } from '../config/site';
+import { processSteps } from '../data/process';
 
 const pageTitle = `About — WordPress Developer — ${siteConfig.name}`;
 const pageDescription =
@@ -32,34 +33,12 @@ const capabilityHighlights = [
   'Personal Projects (secondary interest)',
 ];
 
-const processSteps: { title: string; description: string; type: 'discover' | 'plan' | 'design-build' | 'test-refine' }[] = [
-  {
-    title: 'Discover',
-    description: "Understanding the client's goals, target audience, problems, and website requirements.",
-    type: 'discover',
-  },
-  {
-    title: 'Plan',
-    description: 'Creating the sitemap, page structure, content hierarchy, and user journey.',
-    type: 'plan',
-  },
-  {
-    title: 'Design and Build',
-    description: 'Turning the plan into a polished interface using modern design tools, WordPress, Elementor, custom code, and AI-assisted development.',
-    type: 'design-build',
-  },
-  {
-    title: 'Test and Refine',
-    description: 'Testing responsiveness, performance, accessibility, functionality, and browser compatibility before launch.',
-    type: 'test-refine',
-  },
-];
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription} canonical={canonical}>
   <!-- Intro -->
-  <section class="pt-32 pb-20 sm:pt-40 sm:pb-24" style="background: var(--surface-warm);">
-    <Container class="grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-16">
+  <section class="pt-28 pb-14 sm:pt-32 sm:pb-16" style="background: var(--surface-warm);">
+    <Container class="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-16">
       <div class="lg:col-span-7" data-reveal data-reveal-type="fade-up">
         <SectionHeading
           as="h1"
@@ -68,15 +47,12 @@ const processSteps: { title: string; description: string; type: 'discover' | 'pl
         />
       </div>
 
-      <div class="flex flex-col gap-8 lg:col-span-5" data-reveal data-reveal-type="fade-up">
+      <div class="flex flex-col gap-6 lg:col-span-5" data-reveal data-reveal-type="fade-up">
         <p class="leading-relaxed" style="color: var(--text-secondary)">
-          I'm {siteConfig.name}, a WordPress developer with {yearsExperience}+ years of experience building business websites, landing pages, and dynamic-content sites with Elementor Pro, Advanced Custom Fields, and JetEngine.
+          I'm {siteConfig.name}, a WordPress developer with {yearsExperience}+ years building business websites and dynamic-content sites with Elementor Pro, ACF, and JetEngine — often alongside agencies and remote teams, following their existing design systems.
         </p>
         <p class="leading-relaxed" style="color: var(--text-secondary)">
-          I've worked directly with agencies and remote teams, following existing design systems and collaborating alongside other developers and designers rather than working in isolation.
-        </p>
-        <p class="leading-relaxed" style="color: var(--text-secondary)">
-          As a secondary interest, I also build personal web system concepts and browser-based tools in my <a href="/lab" class="underline" style="color: var(--brand-primary);">Personal Projects</a> section — a way to explore problems beyond standard page-builder work.
+          As a secondary interest, I also build <a href="/personal-projects" class="underline" style="color: var(--brand-primary);">Personal Projects</a> and <a href="/tools" class="underline" style="color: var(--brand-primary);">Tools</a> — a way to explore problems beyond page-builder work.
         </p>
         <ul class="flex flex-wrap gap-x-4 gap-y-2">
           {capabilityHighlights.map((item) => (
@@ -99,14 +75,14 @@ const processSteps: { title: string; description: string; type: 'discover' | 'pl
   </section>
 
   <!-- Skills -->
-  <section class="py-24 sm:py-32" style="background: var(--surface-white);">
-    <Container class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
+  <section class="py-14 sm:py-16" style="background: var(--surface-white);">
+    <Container class="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-16">
       <div class="lg:col-span-4">
         <div class="relative overflow-hidden lg:sticky lg:top-32">
           <SectionHeading
             eyebrow="Skills & Technology"
             title="Tools that power my work"
-            description="A carefully selected toolkit for building scalable, high-performing, and conversion-focused digital experiences — from WordPress and Elementor to modern frontend frameworks and AI-assisted tooling."
+            description="WordPress, Elementor Pro, dynamic content, frontend development, hosting, and AI-assisted development tools."
           />
         </div>
       </div>
@@ -117,15 +93,14 @@ const processSteps: { title: string; description: string; type: 'discover' | 'pl
   </section>
 
   <!-- Process -->
-  <section class="dark-grid-bg py-24 sm:py-32" style="background: #25134f;">
-    <Container class="grid grid-cols-1 gap-16 lg:grid-cols-[38fr_62fr] lg:gap-12">
+  <section class="dark-grid-bg py-14 sm:py-16" style="background: #25134f;">
+    <Container class="grid grid-cols-1 gap-10 lg:grid-cols-[38fr_62fr] lg:gap-12">
       <div class="min-w-0">
         <div class="lg:sticky lg:top-32">
           <SectionHeading
             eyebrow="How I Work"
-            title="A clear, dependable process"
-            description="No surprises, no guesswork — just a proven path from first conversation to launch. Every project moves through the same four stages, whether it's a one-page landing site or a full platform rebuild."
-            titleClass="max-w-[460px] break-words text-[clamp(2.5rem,3.8vw,4.25rem)] leading-[1.08]"
+            title="A practical process from brief to launch."
+            titleClass="max-w-[460px] break-words"
             dark
           />
         </div>
@@ -138,20 +113,19 @@ const processSteps: { title: string; description: string; type: 'discover' | 'pl
   </section>
 
   <!-- AI-assisted development -->
-  <section class="py-24 sm:py-32" style="background: var(--surface-white);">
-    <Container class="flex flex-col gap-14">
+  <section class="py-14 sm:py-16" style="background: var(--surface-white);">
+    <Container class="flex flex-col gap-8">
       <SectionHeading
         eyebrow="Workflow"
         title="AI-assisted development. Human-led execution."
-        description="I use Claude Code and Cursor for planning, debugging, scaffolding, and QA — but architecture decisions, design judgment, and final review always stay human-led. AI speeds up the repetitive parts of the job so more time goes into getting the details that actually matter right: performance, accessibility, and whether the site genuinely serves the business."
-        titleClass="text-3xl sm:text-4xl lg:text-5xl"
+        description="I use Claude Code and Cursor for planning and scaffolding — architecture, design judgment, and final review stay human-led."
       />
       <AIWorkflowVisual />
     </Container>
   </section>
 
   <!-- CTA -->
-  <section class="dark-grid-bg py-20 sm:py-24" style="background: var(--brand-dark);">
+  <section class="dark-grid-bg py-16 sm:py-20" style="background: var(--brand-dark);">
     <Container class="flex flex-col items-start gap-6">
       <SectionHeading
         eyebrow="Let's build something"

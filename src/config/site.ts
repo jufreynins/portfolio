@@ -23,16 +23,10 @@ export const siteConfig = {
 
   nav: [
     { label: 'Home', href: '/' },
-    {
-      label: 'Services',
-      href: '/services',
-      children: [
-        { label: 'WordPress Services', href: '/services' },
-        { label: 'Tools', href: '/lab#tools' },
-        { label: 'Personal Projects', href: '/lab#systems' },
-      ],
-    },
+    { label: 'Services', href: '/services' },
     { label: 'Portfolio', href: '/portfolio' },
+    { label: 'Tools', href: '/tools' },
+    { label: 'Personal Projects', href: '/personal-projects' },
     { label: 'About', href: '/about' },
     { label: 'Contact', href: '/contact' },
   ],
