@@ -30,11 +30,11 @@ function isNavActive(href: string) {
       <span class="hidden sm:inline">{siteConfig.name}</span>
     </a>
 
-    <nav class="hidden 2xl:flex items-center gap-5" aria-label="Primary">
+    <nav class="hidden 2xl:flex items-center gap-7" aria-label="Primary">
       {siteConfig.nav.map((item) => (
         <a
           href={item.href}
-          class:list={['nav-link relative text-sm font-medium text-zinc-900/70 transition-colors hover:text-zinc-900 py-1', { 'is-active': isNavActive(item.href) }]}
+          class:list={['nav-link relative whitespace-nowrap text-sm font-medium text-zinc-900/70 transition-colors hover:text-zinc-900 py-1', { 'is-active': isNavActive(item.href) }]}
           aria-current={isNavActive(item.href) ? 'page' : undefined}
         >
           {item.label}
@@ -42,10 +42,7 @@ function isNavActive(href: string) {
       ))}
     </nav>
 
-    <div class="hidden 2xl:flex items-center gap-3">
-      <Button href={siteConfig.cvPath} variant="secondary" target="_blank" rel="noopener noreferrer">
-        Download CV
-      </Button>
+    <div class="hidden 2xl:flex items-center">
       <Button href="/contact" variant="primary">Discuss Website</Button>
     </div>
 
