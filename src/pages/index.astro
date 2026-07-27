@@ -34,17 +34,37 @@ const credibilityPoints = [
   },
 ];
 
-const advancedCapabilities = [
-  { label: 'Custom Post Types & Taxonomies', icon: '<path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="M3 16l9 5 9-5"/><path d="M3 12l9 5 9-5"/>' },
-  { label: 'Advanced Custom Fields', icon: '<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/><circle cx="6.5" cy="6.5" r=".5" fill="currentColor"/>' },
-  { label: 'JetEngine & Dynamic Listings', icon: '<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>' },
-  { label: 'Custom Templates', icon: '<rect x="4" y="4" width="16" height="16" rx="4"/>' },
-  { label: 'Search & Filtering', icon: '<circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>' },
-  { label: 'Forms & Integrations', icon: '<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>' },
-  { label: 'Custom CSS & JavaScript', icon: '<polyline points="9 6 3 12 9 18"/><polyline points="15 6 21 12 15 18"/>' },
-  { label: 'Responsive Troubleshooting', icon: '<rect x="2" y="4" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/>' },
-  { label: 'Performance Optimization', icon: '<path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/>' },
-  { label: 'Hosting & Deployment Support', icon: '<rect x="2.5" y="3.5" width="19" height="7" rx="1.2"/><rect x="2.5" y="13.5" width="19" height="7" rx="1.2"/><path d="M6.5 7h.01M6.5 17h.01"/>' },
+const capabilityGroups = [
+  {
+    label: 'Structured Content',
+    items: [
+      { label: 'Custom Post Types & Taxonomies', icon: '<path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="M3 16l9 5 9-5"/><path d="M3 12l9 5 9-5"/>' },
+      { label: 'Advanced Custom Fields', icon: '<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/><circle cx="6.5" cy="6.5" r=".5" fill="currentColor"/>' },
+      { label: 'JetEngine & Dynamic Listings', icon: '<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>' },
+      { label: 'Search & Filtering', icon: '<circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>' },
+    ],
+  },
+  {
+    label: 'Elementor Development',
+    items: [
+      { label: 'Custom Templates', icon: '<rect x="4" y="4" width="16" height="16" rx="4"/>' },
+      { label: 'Reusable Global Widgets', icon: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>' },
+    ],
+  },
+  {
+    label: 'Frontend Improvements',
+    items: [
+      { label: 'Custom CSS & JavaScript', icon: '<polyline points="9 6 3 12 9 18"/><polyline points="15 6 21 12 15 18"/>' },
+      { label: 'Responsive Troubleshooting', icon: '<rect x="2" y="4" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/>' },
+    ],
+  },
+  {
+    label: 'Website Operations',
+    items: [
+      { label: 'Forms & Integrations', icon: '<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>' },
+      { label: 'Performance Optimization', icon: '<path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/>' },
+    ],
+  },
 ];
 
 const aboutProofPoints = [
@@ -57,22 +77,22 @@ const aboutProofPoints = [
 
 const processSteps: { title: string; description: string; type: 'discover' | 'plan' | 'design-build' | 'test-refine' }[] = [
   {
-    title: 'Understand',
+    title: 'Understand the Project',
     description: "Understanding the client's goals, target audience, and website requirements.",
     type: 'discover',
   },
   {
-    title: 'Plan',
+    title: 'Define the Build',
     description: 'Creating the sitemap, page structure, content hierarchy, and user journey.',
     type: 'plan',
   },
   {
-    title: 'Build',
+    title: 'Develop and Review',
     description: 'Building the site in WordPress with Elementor, dynamic content, and custom functionality where needed.',
     type: 'design-build',
   },
   {
-    title: 'Test, Launch & Support',
+    title: 'Test and Deliver',
     description: 'Testing responsiveness, performance, and functionality before launch — with support available after.',
     type: 'test-refine',
   },
@@ -96,21 +116,21 @@ const pageDescription = siteConfig.description;
     <Container>
       <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-8" data-hero-content>
         <div class="flex flex-col items-start gap-5 lg:col-span-7">
-          <span class="eyebrow" data-hero-eyebrow>WordPress Developer &bull; Frontend Specialist</span>
+          <span class="eyebrow" data-hero-eyebrow>WordPress Developer &amp; Frontend Specialist</span>
 
           <h1 class="max-w-2xl text-balance text-[clamp(1.85rem,3.4vw,3.5rem)] leading-[1.08]" style="color: var(--text-primary);">
             <span class="block overflow-hidden"><span class="block" data-hero-line>WordPress Websites Built</span></span>
-            <span class="block overflow-hidden"><span class="block" data-hero-line>to Look Polished, Perform</span></span>
-            <span class="block overflow-hidden"><span class="block" data-hero-line>Reliably, and Support Goals</span></span>
+            <span class="block overflow-hidden"><span class="block" data-hero-line>to Win Trust and</span></span>
+            <span class="block overflow-hidden"><span class="block" data-hero-line>Generate Leads</span></span>
           </h1>
 
           <p class="max-w-lg leading-relaxed" style="color: var(--text-secondary)" data-hero-support>
-            I design, build, and improve professional WordPress websites using Elementor, dynamic content, custom functionality, and responsive frontend development.
+            I build and improve professional WordPress websites for businesses and agencies using Elementor Pro, dynamic content, responsive development, and custom frontend solutions.
           </p>
 
           <div class="mt-2 flex flex-col gap-4 sm:flex-row" data-hero-support>
-            <Button href="/portfolio" variant="primary" data-magnetic>View WordPress Work</Button>
-            <Button href="/contact" variant="secondary" data-magnetic>Start a Project</Button>
+            <Button href="/portfolio" variant="primary" data-magnetic>View WordPress Projects</Button>
+            <Button href="/contact" variant="secondary" data-magnetic>Discuss Your Website</Button>
           </div>
 
           <div class="flex flex-wrap items-center gap-x-3 gap-y-2 pt-1 text-sm" style="color: var(--text-secondary);" data-hero-support>
@@ -118,10 +138,10 @@ const pageDescription = siteConfig.description;
               <span class="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60" style="background: var(--brand-primary);"></span>
               <span class="relative inline-flex h-2 w-2 rounded-full" style="background: var(--brand-primary);"></span>
             </span>
-            <span>WordPress &bull; Elementor Pro &bull; Dynamic Content &bull; Frontend Development</span>
+            <span>WordPress &bull; Elementor Pro &bull; ACF &bull; JetEngine &bull; Custom CSS &amp; JavaScript</span>
           </div>
           <p class="text-xs" style="color: var(--text-muted);" data-hero-support>
-            Also building practical web systems and browser tools — see the <a href="/lab" class="underline" style="color: var(--brand-primary);">Development Lab</a>.
+            Also building personal web systems and browser tools — see the <a href="/lab" class="underline" style="color: var(--brand-primary);">Development Lab</a>.
           </p>
         </div>
 
@@ -178,8 +198,8 @@ const pageDescription = siteConfig.description;
     <Container class="flex flex-col gap-14">
       <SectionHeading
         eyebrow="WordPress Services"
-        title="Core WordPress Development Services"
-        description="What I help business websites and agencies with most often."
+        title="WordPress services built around your business."
+        description="From complete website builds to redesigns and ongoing improvements, I help businesses create websites that are professional, manageable, and ready to grow."
       />
 
       <div class="flex flex-col gap-6 rounded-2xl border p-8 sm:p-10" style="border-color: var(--brand-primary); background: var(--brand-soft); box-shadow: var(--shadow-brand);" data-reveal>
@@ -233,10 +253,9 @@ const pageDescription = siteConfig.description;
     <Container class="flex flex-col gap-16 sm:gap-20">
       <div class="relative overflow-hidden">
         <SectionHeading
-          eyebrow="Featured WordPress Work"
-          title="Real client websites, built to perform"
-          description="A closer look at recent WordPress projects — the business need, my contribution, and the technology behind each one."
-          watermark="WORK"
+          eyebrow="Selected WordPress Work"
+          title="Websites built for real businesses."
+          description="Selected WordPress projects designed to strengthen credibility, organize content, and make it easier for customers to find information and take action."
         />
       </div>
 
@@ -247,7 +266,7 @@ const pageDescription = siteConfig.description;
       </div>
 
       <div data-reveal>
-        <Button href="/portfolio" variant="secondary">View Full Portfolio</Button>
+        <Button href="/portfolio" variant="secondary">View WordPress Projects</Button>
       </div>
     </Container>
     <ProjectModal />
@@ -257,17 +276,24 @@ const pageDescription = siteConfig.description;
   <section class="py-24 sm:py-32" style="background: var(--surface-warm);">
     <Container class="flex flex-col gap-14">
       <SectionHeading
-        eyebrow="Beyond Page Building"
-        title="WordPress development beyond basic page building"
-        description="Structured content, custom functionality, and technical troubleshooting — not just drag-and-drop layouts."
+        eyebrow="Advanced WordPress Capabilities"
+        title="More than basic page building."
+        description="I combine WordPress tools with frontend development to create websites that remain manageable for editors and reliable across devices."
       />
-      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
-        {advancedCapabilities.map((cap) => (
-          <div class="flex flex-col items-start gap-3 rounded-2xl border p-5" style="border-color: var(--border-color); background: var(--surface-white); box-shadow: var(--shadow-sm);" data-reveal>
-            <span class="flex h-10 w-10 items-center justify-center rounded-full" style="background: var(--brand-lavender); color: var(--brand-primary);">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={cap.icon} />
-            </span>
-            <p class="text-sm font-semibold leading-snug" style="color: var(--text-primary);">{cap.label}</p>
+      <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        {capabilityGroups.map((group) => (
+          <div class="flex flex-col gap-4">
+            <span class="eyebrow" style="color: var(--brand-primary);">{group.label}</span>
+            <div class="flex flex-col gap-3">
+              {group.items.map((cap) => (
+                <div class="flex items-center gap-3 rounded-2xl border p-4" style="border-color: var(--border-color); background: var(--surface-white); box-shadow: var(--shadow-sm);" data-reveal>
+                  <span class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full" style="background: var(--brand-lavender); color: var(--brand-primary);">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={cap.icon} />
+                  </span>
+                  <p class="text-sm font-semibold leading-snug" style="color: var(--text-primary);">{cap.label}</p>
+                </div>
+              ))}
+            </div>
           </div>
         ))}
       </div>
@@ -281,7 +307,7 @@ const pageDescription = siteConfig.description;
         <div class="lg:sticky lg:top-32">
           <SectionHeading
             eyebrow="How I Work"
-            title="A clear, dependable process"
+            title="A practical process from brief to launch."
             description="No surprises, no guesswork — just a proven path from first conversation to launch and beyond."
             titleClass="max-w-[460px] break-words text-[clamp(2.5rem,3.8vw,4.25rem)] leading-[1.08]"
             dark
@@ -302,9 +328,9 @@ const pageDescription = siteConfig.description;
   <section class="py-20 sm:py-24" style="background: var(--surface-white);">
     <Container class="flex flex-col gap-10">
       <SectionHeading
-        eyebrow="Beyond WordPress"
-        title="Development Lab"
-        description="I also create personal system concepts and browser-based tools to explore better workflows, cleaner interfaces, and practical digital solutions."
+        eyebrow="Development Lab"
+        title="Exploring solutions beyond WordPress websites."
+        description="Alongside client work, I build personal system concepts and browser-based tools to strengthen my skills in interface design, structured data, workflows, and practical problem-solving."
       />
       <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
         <a href="/lab#systems" class="lab-card flex flex-col gap-4 rounded-2xl border p-6" style="border-color: var(--border-color); background: var(--surface-warm); box-shadow: var(--shadow-sm);" data-reveal>
@@ -324,7 +350,7 @@ const pageDescription = siteConfig.description;
             </span>
             <span class="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wide" style="border-color: color-mix(in srgb, var(--color-success) 35%, white); color: var(--color-success); background: var(--color-success-soft);">Free Tool</span>
           </div>
-          <h3 class="text-lg font-bold" style="color: var(--text-primary); font-family: var(--font-heading);">Browser-Based Tools</h3>
+          <h3 class="text-lg font-bold" style="color: var(--text-primary); font-family: var(--font-heading);">Free Browser Tools</h3>
           <p class="text-sm leading-relaxed" style="color: var(--text-secondary)">Small privacy-focused utilities such as image conversion, with more SEO and development tools planned.</p>
         </a>
       </div>
@@ -340,13 +366,13 @@ const pageDescription = siteConfig.description;
       <div class="lg:col-span-7" data-reveal data-reveal-type="fade-up">
         <span class="eyebrow">About</span>
         <h2 class="mt-4 max-w-xl text-balance">
-          A <span style="color: var(--brand-primary);">WordPress developer</span> focused on reliable builds and maintainable solutions.
+          A <span style="color: var(--brand-primary);">WordPress developer</span> who understands existing websites.
         </h2>
       </div>
 
       <div class="flex flex-col gap-8 lg:col-span-5" data-reveal data-reveal-type="fade-up">
         <p class="leading-relaxed" style="color: var(--text-secondary)">
-          I focus on reliable WordPress builds, responsive interfaces, structured content, and maintainable solutions — with {yearsExperience}+ years building for the web, from Elementor sites to custom post types and full migrations.
+          I work with businesses and agencies to build new WordPress websites, improve existing builds, and solve frontend or content-management issues without introducing unnecessary complexity.
         </p>
         <ul class="flex flex-wrap gap-x-4 gap-y-2">
           {aboutProofPoints.map((item) => (
@@ -368,13 +394,13 @@ const pageDescription = siteConfig.description;
     <Container class="flex flex-col items-start gap-6">
       <SectionHeading
         eyebrow="Contact"
-        title="Need a WordPress developer for your next project?"
-        description="Tell me what you are building, improving, or maintaining. I will review the requirements and recommend a practical next step."
+        title="Need help with a WordPress website?"
+        description="Tell me whether you need a new build, a redesign, dynamic content, responsive fixes, or ongoing development support. I'll review the project and recommend a practical next step."
         dark
       />
       <div class="flex flex-wrap gap-4" data-reveal>
-        <Button href="/contact" variant="primary">Start a Project</Button>
-        <Button href="/portfolio" variant="secondary">View Portfolio</Button>
+        <Button href="/contact" variant="primary">Discuss Your Project</Button>
+        <Button href="/portfolio" variant="secondary">View WordPress Work</Button>
       </div>
     </Container>
   </section>

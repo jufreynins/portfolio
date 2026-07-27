@@ -5,7 +5,7 @@ export const siteConfig = {
   name: 'Jufrey Niño Bayog',
   title: 'WordPress Developer & Frontend Specialist',
   shortTitle: 'WordPress developer',
-  description: `WordPress developer with ${yearsExperience}+ years of experience building polished, reliable business websites with Elementor, dynamic content, and custom functionality — plus practical web systems and browser-based tools.`,
+  description: `WordPress developer with ${yearsExperience}+ years of experience building polished, reliable business websites with Elementor, dynamic content, and custom functionality — plus personal web systems and browser tools.`,
   url: 'https://jufreyninobayogportfolio.com',
   locale: 'en-US',
   yearStarted,
