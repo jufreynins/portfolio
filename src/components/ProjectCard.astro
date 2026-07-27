@@ -31,6 +31,14 @@ const { project, index, priority = false } = Astro.props;
     <h3 class="text-xl" style="color: var(--text-primary);">{project.name}</h3>
     <p class="text-sm leading-relaxed" style="color: var(--text-secondary); max-width: none;">{project.results}</p>
 
+    <ul class="flex flex-wrap gap-1.5" aria-label="Technologies used">
+      {project.technologies.map((tech) => (
+        <li class="rounded-full px-2.5 py-1 font-mono text-[10px] font-medium" style="background: var(--surface-warm); border: 1px solid var(--border-color); color: var(--text-secondary);">
+          {tech}
+        </li>
+      ))}
+    </ul>
+
     <div class="mt-auto flex flex-wrap gap-3 pt-4">
       <button
         type="button"
@@ -115,8 +123,12 @@ const { project, index, priority = false } = Astro.props;
 </article>
 
 <style>
+  .project-card {
+    box-shadow: var(--shadow-sm);
+  }
   .project-card:hover {
     box-shadow: 0 20px 40px -20px rgba(37, 19, 79, 0.25);
+    border-color: var(--border-strong);
     transform: translateY(-4px);
   }
   .project-card {

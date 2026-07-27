@@ -35,14 +35,15 @@ const nextSteps = [
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription} canonical={canonical} darkHeader>
-  <section class="pt-32 pb-24 sm:pt-40 sm:pb-32" style="background: var(--brand-dark);">
-    <Container class="grid grid-cols-1 gap-14 lg:grid-cols-2 lg:gap-20">
+  <section class="dark-grid-bg pt-32 pb-24 sm:pt-40 sm:pb-32" style="background: var(--brand-dark);">
+    <Container class="grid grid-cols-1 gap-14 lg:grid-cols-[2fr_3fr] lg:gap-16">
       <div class="flex flex-col gap-6">
         <SectionHeading
           as="h1"
           eyebrow="Contact"
           title="Need a Website, Web System, or Custom Tool?"
           description="Tell me what you are trying to improve, organize, automate, or build. I'll review the requirements and recommend a practical next step."
+          titleClass="max-w-none text-[clamp(2rem,3.4vw,3rem)] leading-[1.1]"
           dark
         />
         <Reveal delay={100} class="flex flex-col gap-4">

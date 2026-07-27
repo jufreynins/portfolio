@@ -13,7 +13,7 @@ const pageDescription =
   'A closer look at Jufrey Niño Bayog — background, working philosophy, technical toolkit, and the AI-assisted, human-led process behind every project.';
 const canonical = `${siteConfig.url}/about`;
 
-const yearsExperience = new Date().getFullYear() - siteConfig.yearStarted;
+const { yearsExperience } = siteConfig;
 
 const professionalFacts = [
   { label: 'Experience', value: `${yearsExperience}+ years building for the web` },
@@ -118,7 +118,7 @@ const processSteps: { title: string; description: string; type: 'discover' | 'pl
   </section>
 
   <!-- Process -->
-  <section class="py-24 sm:py-32" style="background: #25134f;">
+  <section class="dark-grid-bg py-24 sm:py-32" style="background: #25134f;">
     <Container class="grid grid-cols-1 gap-16 lg:grid-cols-[38fr_62fr] lg:gap-12">
       <div class="min-w-0">
         <div class="lg:sticky lg:top-32">
@@ -126,7 +126,7 @@ const processSteps: { title: string; description: string; type: 'discover' | 'pl
             eyebrow="How I Work"
             title="A clear, dependable process"
             description="No surprises, no guesswork — just a proven path from first conversation to launch. Every project moves through the same four stages, whether it's a one-page landing site or a full platform rebuild."
-            titleClass="max-w-[420px] break-words text-[clamp(2.75rem,4.2vw,5rem)] leading-[0.95]"
+            titleClass="max-w-[460px] break-words text-[clamp(2.5rem,3.8vw,4.25rem)] leading-[1.08]"
             dark
           />
         </div>
@@ -152,7 +152,7 @@ const processSteps: { title: string; description: string; type: 'discover' | 'pl
   </section>
 
   <!-- CTA -->
-  <section class="py-20 sm:py-24" style="background: var(--brand-dark);">
+  <section class="dark-grid-bg py-20 sm:py-24" style="background: var(--brand-dark);">
     <Container class="flex flex-col items-start gap-6">
       <SectionHeading
         eyebrow="Let's build something"

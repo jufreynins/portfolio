@@ -5,10 +5,10 @@ interface Props {
 
 const { dark = false } = Astro.props;
 
-const labelClass = dark ? 'text-sm font-medium text-white/85' : 'text-sm font-medium text-zinc-900/85';
+const labelClass = dark ? 'text-sm font-semibold text-white/90' : 'text-sm font-semibold text-zinc-900/90';
 const fieldClass = dark
-  ? 'rounded-xl border border-white/15 bg-white/[0.05] px-4 py-3 text-sm text-white placeholder:text-white/35 transition-colors focus:border-[var(--color-accent)] focus:outline-none'
-  : 'rounded-xl border border-black/15 bg-black/[0.03] px-4 py-3 text-sm text-zinc-900 placeholder:text-zinc-900/30 transition-colors focus:border-[var(--color-accent)] focus:outline-none';
+  ? 'rounded-xl border border-white/20 bg-white/[0.06] px-4 py-2.5 text-sm text-white placeholder:text-white/45 transition-all focus:border-[var(--color-accent)] focus:bg-white/[0.08] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)]/30'
+  : 'rounded-xl border border-black/15 bg-black/[0.025] px-4 py-2.5 text-sm text-zinc-900 placeholder:text-zinc-900/40 transition-all focus:border-[var(--color-accent)] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)]/20';
 const submitClass =
   'inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-[var(--brand-primary)] px-7 py-3 text-[0.9375rem] font-bold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[var(--brand-hover)] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0';
 const errorColor = dark ? 'var(--color-error-dark)' : 'var(--color-error)';
@@ -18,16 +18,13 @@ const successColor = dark ? 'var(--color-success-dark)' : 'var(--color-success)'
 <form
   name="contact"
   method="POST"
-  data-netlify="true"
-  netlify-honeypot="company"
-  class="reveal flex flex-col gap-5"
+  class="reveal flex flex-col gap-4"
   data-reveal
   data-contact-form
   data-error-color={errorColor}
   data-success-color={successColor}
   novalidate
 >
-  <input type="hidden" name="form-name" value="contact" />
   <div class="hidden">
     <label>
       Company (leave this field blank)
@@ -35,7 +32,7 @@ const successColor = dark ? 'var(--color-success-dark)' : 'var(--color-success)'
     </label>
   </div>
 
-  <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
     <div class="flex flex-col gap-2">
       <label for="name" class={labelClass}>Full Name <span aria-hidden="true">*</span></label>
       <input
@@ -67,7 +64,7 @@ const successColor = dark ? 'var(--color-success-dark)' : 'var(--color-success)'
     </div>
   </div>
 
-  <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
     <div class="flex flex-col gap-2">
       <label for="business" class={labelClass}>Company or Business</label>
       <input
@@ -93,7 +90,7 @@ const successColor = dark ? 'var(--color-success-dark)' : 'var(--color-success)'
     </div>
   </div>
 
-  <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
     <div class="flex flex-col gap-2">
       <label for="project-type" class={labelClass}>Project Type</label>
       <select id="project-type" name="project_type" class={fieldClass}>
@@ -137,7 +134,7 @@ const successColor = dark ? 'var(--color-success-dark)' : 'var(--color-success)'
     <textarea
       id="message"
       name="message"
-      rows="5"
+      rows="4"
       required
       aria-describedby="message-error"
       class:list={['resize-none', fieldClass]}
@@ -229,7 +226,7 @@ const successColor = dark ? 'var(--color-success-dark)' : 'var(--color-success)'
 
       try {
         const formData = new FormData(form);
-        const response = await fetch('/', {
+        const response = await fetch('/contact.php', {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           body: new URLSearchParams(formData as unknown as Record<string, string>).toString(),

@@ -28,14 +28,14 @@ const { steps } = Astro.props;
         <span
           class="process-node relative z-10 flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full border font-mono text-sm transition-all duration-500"
           data-process-node
-          style="border-color: rgba(255,255,255,0.25); color: rgba(255,255,255,0.55);"
+          style="border-color: rgba(255,255,255,0.35); color: rgba(255,255,255,0.8);"
         >
           {String(i + 1).padStart(2, '0')}
         </span>
 
         <div class="flex flex-1 flex-col gap-2.5">
-          <h3 class="process-title text-xl transition-colors duration-500 sm:text-2xl" style="color: rgba(255,255,255,0.55);">{step.title}</h3>
-          <p class="process-desc max-w-sm text-sm leading-relaxed transition-colors duration-500" style="color: rgba(198,188,224,0.75);">{step.description}</p>
+          <h3 class="process-title text-xl transition-colors duration-500 sm:text-2xl" style="color: rgba(255,255,255,0.82);">{step.title}</h3>
+          <p class="process-desc max-w-sm text-sm leading-relaxed transition-colors duration-500" style="color: rgba(224,218,240,0.85);">{step.description}</p>
         </div>
 
         <div class="process-visual h-24 w-full flex-shrink-0 opacity-50 transition-all duration-500 sm:h-28 sm:w-44">
@@ -51,7 +51,7 @@ const { steps } = Astro.props;
     border-bottom: none;
   }
   .process-row.is-active {
-    background: #321b63;
+    background: rgba(103, 61, 230, 0.18);
   }
   .process-row.is-active .process-node {
     background: #673de6;

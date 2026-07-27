@@ -9,7 +9,7 @@ Premium single-page portfolio. Astro 7 + Tailwind CSS 4 (CSS-first `@theme`, no 
 - **Motion**: `src/components/ScrollFX.astro` is the single GSAP + ScrollTrigger controller for the whole site — hero entrance, a unified `[data-reveal]`/`data-reveal-type` reveal system (fade-up/scale/mask/stagger via `ScrollTrigger.batch`), progress-line sequential activation, project parallax, and magnetic buttons. Desktop-only effects are gated with `ScrollTrigger.matchMedia('(min-width: 1024px)')`; everything respects `prefers-reduced-motion`. `Reveal.astro` is just a thin markup wrapper — it has no logic of its own.
 - **Project images**: `src/assets/images/projects/*.png`, rendered through `astro:assets` `<Image />` (auto-optimized to WebP at build time). Do not hotlink the old WordPress site's images.
 - **CV**: `public/documents/Jufrey-Bayog-CV.pdf`, linked via `siteConfig.cvPath`.
-- **Contact form**: Netlify Forms (`data-netlify="true"`, hidden `form-name`, honeypot field named `company`). No backend — submissions land in the Netlify dashboard once deployed.
+- **Contact form**: submits via `fetch` to `public/contact.php` (a plain PHP `mail()` endpoint, chosen for Hostinger shared hosting — no Netlify Forms). Requires a PHP-capable host; honeypot field named `company` is checked server-side in `contact.php`.
 - Single page (`src/pages/index.astro`); sections are anchor-linked (`#about`, `#services`, `#work`, `#contact`).
 
 ## Development

@@ -2,13 +2,13 @@
 import { techCategories } from '../data/techLogos';
 ---
 
-<div class="flex flex-col divide-y" style="border-color: var(--border-color);">
+<div class="flex flex-col gap-4">
   {techCategories.map((cat, i) => (
     <div
-      class="capability-row reveal grid grid-cols-1 gap-6 rounded-xl py-8 transition-colors duration-300 sm:grid-cols-12 sm:items-start sm:-mx-6 sm:px-6"
+      class="capability-row reveal grid grid-cols-1 gap-6 rounded-2xl border p-6 transition-all duration-300 sm:grid-cols-12 sm:items-start sm:p-7"
       data-reveal
       data-reveal-type="fade-up"
-      style={`animation-delay:${i * 60}ms;`}
+      style={`animation-delay:${i * 60}ms; border-color: var(--border-color); background: var(--surface-white); box-shadow: var(--shadow-sm);`}
     >
       <div class="flex items-start gap-4 sm:col-span-5">
         <span class="font-mono text-sm" style="color: var(--brand-primary);">{String(i + 1).padStart(2, '0')}</span>
@@ -44,6 +44,7 @@ import { techCategories } from '../data/techLogos';
 
 <style>
   .capability-row:hover {
-    background: var(--brand-soft);
+    box-shadow: var(--shadow-md);
+    border-color: var(--border-strong);
   }
 </style>

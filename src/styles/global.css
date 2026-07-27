@@ -10,18 +10,20 @@
 
   /* Global brand color system (purple) */
   --brand-primary: #673de6;
-  --brand-hover: #5630c7;
-  --brand-dark: #25134f;
+  --brand-hover: #5630c9;
+  --brand-dark: #1d123f;
   --brand-ink: #130b24;
   --brand-lavender: #ede7ff;
-  --brand-soft: #f7f4ff;
+  --brand-soft: #f3efff;
 
   --surface-white: #ffffff;
-  --surface-warm: #faf9fc;
+  --surface-warm: #f7f6fa;
 
   --text-primary: #17131f;
-  --text-secondary: #686272;
-  --border-color: #ded7ee;
+  --text-secondary: #4b4658;
+  --text-muted: #8b8495;
+  --border-color: rgba(23, 19, 31, 0.12);
+  --border-strong: rgba(103, 61, 230, 0.28);
 
   --text-on-dark: #ffffff;
 
@@ -30,7 +32,7 @@
   --color-surface: var(--surface-warm);
   --color-surface-raised: var(--brand-lavender);
   --color-border-subtle: var(--border-color);
-  --color-border-strong: var(--border-color);
+  --color-border-strong: var(--border-strong);
   --color-accent: var(--brand-primary);
   --color-accent-2: var(--brand-dark);
   --color-muted: var(--text-secondary);
@@ -51,16 +53,16 @@
 
 :root {
   /* Reusable, non-Tailwind-reserved tokens — referenced via var(), not utility classes */
-  --radius-sm: 0.5rem;
-  --radius-md: 0.75rem;
-  --radius-lg: 1rem;
-  --radius-xl: 1.5rem;
+  --radius-sm: 0.625rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+  --radius-xl: 2rem;
   --radius-full: 9999px;
 
-  --shadow-sm: 0 2px 8px -4px rgba(19, 11, 36, 0.12);
-  --shadow-md: 0 12px 32px -16px rgba(19, 11, 36, 0.25);
-  --shadow-lg: 0 24px 48px -20px rgba(19, 11, 36, 0.35);
-  --shadow-brand: 0 12px 32px -16px rgba(103, 61, 230, 0.35);
+  --shadow-sm: 0 1px 2px rgba(19, 11, 36, 0.04), 0 4px 12px -6px rgba(19, 11, 36, 0.1);
+  --shadow-md: 0 8px 24px -12px rgba(19, 11, 36, 0.22);
+  --shadow-lg: 0 20px 44px -18px rgba(19, 11, 36, 0.32);
+  --shadow-brand: 0 12px 28px -14px rgba(103, 61, 230, 0.38);
 
   --space-xs: 0.5rem;
   --space-sm: 1rem;
@@ -106,34 +108,36 @@
     color: var(--text-primary);
   }
 
+  /* Homepage hero sets its own explicit size; this governs every inner-page hero (h1) by default. */
   h1 {
-    font-size: clamp(3.25rem, 6vw, 6.5rem);
-    line-height: 0.98;
-    letter-spacing: -0.045em;
-  }
-
-  h2 {
-    font-size: clamp(2.5rem, 4.5vw, 4.75rem);
-    line-height: 1;
+    font-size: clamp(3rem, 5vw, 5.25rem);
+    line-height: 1.04;
     letter-spacing: -0.04em;
   }
 
-  h3 {
-    font-size: clamp(1.875rem, 3vw, 3rem);
+  /* Primary section heading, used sitewide via SectionHeading's default <h2>. */
+  h2 {
+    font-size: clamp(2.25rem, 4vw, 4rem);
     line-height: 1.08;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.035em;
+  }
+
+  h3 {
+    font-size: clamp(1.5rem, 2.4vw, 2.25rem);
+    line-height: 1.16;
+    letter-spacing: -0.02em;
   }
 
   h4 {
-    font-size: clamp(1.4rem, 2vw, 2rem);
-    line-height: 1.15;
-    letter-spacing: -0.015em;
+    font-size: clamp(1.25rem, 1.6vw, 1.65rem);
+    line-height: 1.2;
+    letter-spacing: -0.012em;
   }
 
   h5 {
-    font-size: clamp(1.1rem, 1.5vw, 1.35rem);
-    line-height: 1.25;
-    letter-spacing: -0.01em;
+    font-size: clamp(1.05rem, 1.3vw, 1.25rem);
+    line-height: 1.3;
+    letter-spacing: -0.008em;
   }
 
   p {
@@ -194,5 +198,43 @@
 
   .hairline {
     border-color: var(--border-color);
+  }
+
+  /* Shared card treatment: a visible neutral border + a resting shadow so cards read as
+     distinct surfaces against the page instead of disappearing into it. Hover deepens the
+     shadow and swaps to the branded border for a clear, purposeful interaction cue. */
+  .card-surface {
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+  }
+  .card-surface:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--border-strong);
+  }
+  .card-surface.card-surface--featured {
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-brand);
+  }
+
+  /* Subtle technical grid texture for dark sections — keeps "technology studio" sections
+     from reading as flat blocks of color without resorting to gradients or glow effects. */
+  .dark-grid-bg {
+    position: relative;
+  }
+  .dark-grid-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    opacity: 0.05;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.8) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.8) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 75% 65% at 50% 20%, black, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 20%, black, transparent 75%);
+    pointer-events: none;
   }
 }

@@ -16,7 +16,7 @@ import { siteConfig } from '../config/site';
 import { serviceCards } from '../data/services';
 import { projects } from '../data/projects';
 
-const yearsExperience = new Date().getFullYear() - siteConfig.yearStarted;
+const { yearsExperience } = siteConfig;
 
 const trustPoints = [
   {
@@ -209,13 +209,13 @@ const pageDescription = siteConfig.description;
         {capabilities.map((capability) => (
           <div
             class:list={[
-              'flex flex-col gap-6 rounded-2xl border p-8 sm:p-10',
+              'capability-card flex flex-col gap-6 rounded-2xl border p-8 sm:p-10',
               capability.featured ? 'lg:col-span-2' : '',
             ]}
             style={
               capability.featured
                 ? 'border-color: var(--brand-primary); background: var(--brand-soft); box-shadow: var(--shadow-brand);'
-                : 'border-color: var(--border-color); background: var(--surface-white);'
+                : 'border-color: var(--border-color); background: var(--surface-white); box-shadow: var(--shadow-sm);'
             }
             data-reveal
           >
@@ -332,13 +332,13 @@ const pageDescription = siteConfig.description;
     </Container>
   </section>
 
-  <!-- Services -->
+  <!-- Solutions -->
   <section id="services" class="py-24 sm:py-32" style="background: var(--surface-warm);">
     <Container class="flex flex-col gap-14">
       <SectionHeading
-        eyebrow="Services"
+        eyebrow="Solutions"
         title="What I can build for you"
-        description="Whatever stage your website is at, here's how I can help you move it forward."
+        description="Whatever stage your website or system is at, here's how I can help you move it forward."
       />
       <div class="flex flex-col border-t" style="border-color: var(--border-color);">
         {serviceCards.map((service, i) => (
@@ -365,13 +365,13 @@ const pageDescription = siteConfig.description;
         ))}
       </div>
       <div data-reveal>
-        <Button href="/services" variant="secondary">Explore Services in Detail</Button>
+        <Button href="/services" variant="secondary">Explore Solutions in Detail</Button>
       </div>
     </Container>
   </section>
 
   <!-- Process -->
-  <section class="py-24 sm:py-32" style="background: #25134f;">
+  <section class="dark-grid-bg py-24 sm:py-32" style="background: #25134f;">
     <Container class="grid grid-cols-1 gap-16 lg:grid-cols-[38fr_62fr] lg:gap-12">
       <div class="min-w-0">
         <div class="lg:sticky lg:top-32">
@@ -379,7 +379,7 @@ const pageDescription = siteConfig.description;
             eyebrow="How I Work"
             title="A clear, dependable process"
             description="No surprises, no guesswork — just a proven path from first conversation to launch."
-            titleClass="max-w-[420px] break-words text-[clamp(2.75rem,4.2vw,5rem)] leading-[0.95]"
+            titleClass="max-w-[460px] break-words text-[clamp(2.5rem,3.8vw,4.25rem)] leading-[1.08]"
             dark
           />
         </div>
@@ -411,8 +411,8 @@ const pageDescription = siteConfig.description;
   </section>
 
   <!-- Contact -->
-  <section id="contact" class="py-24 sm:py-32" style="background: var(--brand-dark);">
-    <Container class="grid grid-cols-1 gap-14 lg:grid-cols-2 lg:gap-20">
+  <section id="contact" class="dark-grid-bg py-24 sm:py-32" style="background: var(--brand-dark);">
+    <Container class="grid grid-cols-1 gap-14 lg:grid-cols-[2fr_3fr] lg:gap-16">
       <div class="flex flex-col gap-6">
         <SectionHeading
           eyebrow="Contact"
@@ -446,5 +446,13 @@ const pageDescription = siteConfig.description;
 <style>
   .service-row:hover {
     background: var(--brand-lavender);
+  }
+  .capability-card {
+    transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+  }
+  .capability-card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
   }
 </style>
