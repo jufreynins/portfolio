@@ -1,8 +1,9 @@
-# build output
+# build output (out/ is the export staging dir; its contents get copied to
+# the repo root and DEPLOYED — /_next/, index.html etc. at root ARE the live
+# site and must stay tracked, only the staging copy in out/ is ignored)
 dist/
 out/
 .next/
-/_next/
 # generated types
 .astro/
 next-env.d.ts
