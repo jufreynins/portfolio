@@ -1,3 +1,4 @@
+import type { StaticImageData } from 'next/image';
 import medicMedia from '../assets/images/projects/medic-media.png';
 import neighborhoodPlumbing from '../assets/images/projects/neighborhood-plumbing.png';
 import martinCountyHumane from '../assets/images/projects/martin-county-humane.png';
@@ -17,7 +18,7 @@ export interface Project {
   description: string;
   technologies: string[];
   url: string;
-  image: ImageMetadata;
+  image: StaticImageData;
 }
 
 export const projects: Project[] = [

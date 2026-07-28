@@ -22,7 +22,7 @@ jobs:
       - run: npm run build
 
       - name: Copy build output to repo root for Hostinger's plain Git deploy
-        run: cp -r dist/. .
+        run: cp -r out/. .
 
       - name: Commit and push built output
         run: |
