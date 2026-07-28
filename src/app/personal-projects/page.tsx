@@ -54,6 +54,14 @@ const conceptSystems: ConceptSystem[] = [
     techDirection: 'TypeScript, dashboard UI, role-based access',
     routeLabel: 'app.system/admin/overview',
   },
+  {
+    name: 'Attendance Monitoring System',
+    category: 'Workforce Management',
+    problem: 'Manual time sheets or paper logs make it hard to verify attendance, calculate accurate hours, and catch patterns like tardiness or absenteeism.',
+    modules: ['Clock in/out tracking', 'Attendance reports', 'Leave & absence logs', 'Late/undertime alerts', 'Employee schedules'],
+    techDirection: 'TypeScript, structured data model, dashboard UI',
+    routeLabel: 'app.system/attendance/log',
+  },
 ];
 
 export default function PersonalProjectsPage() {

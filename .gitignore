@@ -2,6 +2,7 @@
 dist/
 out/
 .next/
+/_next/
 # generated types
 .astro/
 next-env.d.ts
