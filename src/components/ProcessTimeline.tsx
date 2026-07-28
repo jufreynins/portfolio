@@ -95,7 +95,7 @@ export default function ProcessTimeline({ steps }: ProcessTimelineProps) {
   return (
     <div className="relative" data-process-timeline>
       <div className="absolute w-0.5" data-process-track style={{ left: '27px', background: 'rgba(255,255,255,0.12)' }} />
-      <div className="absolute w-0.5 origin-top" data-process-fill style={{ left: '27px', background: '#673de6', transform: 'scaleY(0)' }} />
+      <div className="absolute w-0.5 origin-top" data-process-fill style={{ left: '27px', background: 'var(--brand-primary)', transform: 'scaleY(0)' }} />
 
       <div className="flex flex-col">
         {steps.map((step, i) => (
@@ -134,11 +134,11 @@ export default function ProcessTimeline({ steps }: ProcessTimelineProps) {
           border-bottom: none;
         }
         .process-row.is-active {
-          background: rgba(103, 61, 230, 0.18);
+          background: rgba(67, 39, 128, 0.18);
         }
         .process-row.is-active .process-node {
-          background: #673de6;
-          border-color: #673de6;
+          background: var(--brand-primary);
+          border-color: var(--brand-primary);
           color: #ffffff;
         }
         .process-row.is-active .process-title {

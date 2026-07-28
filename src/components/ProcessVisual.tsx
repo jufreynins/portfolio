@@ -29,13 +29,13 @@ export default function ProcessVisual({ type, uid }: ProcessVisualProps) {
             <rect x="28" y="104" width="70" height="4" rx="2" fill="rgba(255,255,255,0.25)" />
             <rect x="28" y="114" width="40" height="4" rx="2" fill="rgba(255,255,255,0.2)" />
 
-            <circle cx="160" cy="52" r="26" fill="rgba(103,61,230,0.16)" stroke="#673de6" strokeWidth="1.5" />
-            <circle cx="160" cy="52" r="10" fill="none" stroke="#673de6" strokeWidth="2" />
-            <circle cx="160" cy="52" r="3" fill="#673de6" />
+            <circle cx="160" cy="52" r="26" fill="rgba(67,39,128,0.16)" stroke="#432780" strokeWidth="1.5" />
+            <circle cx="160" cy="52" r="10" fill="none" stroke="#432780" strokeWidth="2" />
+            <circle cx="160" cy="52" r="3" fill="#432780" />
 
             <rect x="130" y="96" width="60" height="34" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)" />
-            <path d="M144 116a12 12 0 1 1 22 -3" fill="none" stroke="#673de6" strokeWidth="2" strokeLinecap="round" />
-            <circle cx="156" cy="107" r="4" fill="#673de6" />
+            <path d="M144 116a12 12 0 1 1 22 -3" fill="none" stroke="#432780" strokeWidth="2" strokeLinecap="round" />
+            <circle cx="156" cy="107" r="4" fill="#432780" />
           </g>
         )}
 
@@ -51,8 +51,8 @@ export default function ProcessVisual({ type, uid }: ProcessVisualProps) {
               <path d="M150 72 H180 V94" />
             </g>
             <g>
-              <rect x="34" y="16" width="52" height="20" rx="6" fill="rgba(103,61,230,0.18)" stroke="#673de6" />
-              <rect x="44" y="23" width="32" height="6" rx="3" fill="#673de6" />
+              <rect x="34" y="16" width="52" height="20" rx="6" fill="rgba(67,39,128,0.18)" stroke="#432780" />
+              <rect x="44" y="23" width="32" height="6" rx="3" fill="#432780" />
 
               <rect x="8" y="72" width="44" height="26" rx="6" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)" />
               <rect x="16" y="82" width="28" height="4" rx="2" fill="rgba(255,255,255,0.35)" />
@@ -66,8 +66,8 @@ export default function ProcessVisual({ type, uid }: ProcessVisualProps) {
               <rect x="104" y="104" width="34" height="4" rx="2" fill="rgba(255,255,255,0.35)" />
               <rect x="104" y="112" width="24" height="4" rx="2" fill="rgba(255,255,255,0.2)" />
 
-              <rect x="158" y="94" width="52" height="28" rx="6" fill="rgba(103,61,230,0.16)" stroke="#673de6" />
-              <rect x="166" y="104" width="34" height="4" rx="2" fill="#673de6" />
+              <rect x="158" y="94" width="52" height="28" rx="6" fill="rgba(67,39,128,0.16)" stroke="#432780" />
+              <rect x="166" y="104" width="34" height="4" rx="2" fill="#432780" />
               <rect x="166" y="112" width="24" height="4" rx="2" fill="rgba(255,255,255,0.4)" />
             </g>
           </>
@@ -81,8 +81,8 @@ export default function ProcessVisual({ type, uid }: ProcessVisualProps) {
             <circle cx="38" cy="29" r="3" fill="rgba(255,255,255,0.22)" />
             <circle cx="48" cy="29" r="3" fill="rgba(255,255,255,0.16)" />
 
-            <rect x="28" y="48" width="90" height="30" rx="6" fill="rgba(103,61,230,0.2)" stroke="#673de6" />
-            <rect x="36" y="58" width="50" height="5" rx="2.5" fill="#673de6" />
+            <rect x="28" y="48" width="90" height="30" rx="6" fill="rgba(67,39,128,0.2)" stroke="#432780" />
+            <rect x="36" y="58" width="50" height="5" rx="2.5" fill="#432780" />
             <rect x="36" y="68" width="34" height="4" rx="2" fill="rgba(255,255,255,0.5)" />
 
             <rect x="28" y="86" width="42" height="34" rx="6" fill="rgba(255,255,255,0.06)" />
@@ -90,10 +90,10 @@ export default function ProcessVisual({ type, uid }: ProcessVisualProps) {
 
             <rect x="130" y="48" width="60" height="72" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.14)" />
             <rect x="140" y="60" width="40" height="5" rx="2.5" fill="rgba(255,255,255,0.4)" />
-            <rect x="140" y="72" width="28" height="4" rx="2" fill="#673de6" />
+            <rect x="140" y="72" width="28" height="4" rx="2" fill="#432780" />
             <rect x="140" y="82" width="34" height="4" rx="2" fill="rgba(255,255,255,0.25)" />
             <rect x="140" y="92" width="24" height="4" rx="2" fill="rgba(255,255,255,0.2)" />
-            <rect x="140" y="102" width="30" height="4" rx="2" fill="#673de6" opacity="0.6" />
+            <rect x="140" y="102" width="30" height="4" rx="2" fill="#432780" opacity="0.6" />
           </g>
         )}
 
@@ -101,26 +101,26 @@ export default function ProcessVisual({ type, uid }: ProcessVisualProps) {
           <g>
             <rect x="16" y="22" width="70" height="106" rx="10" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)" />
             <rect x="26" y="34" width="50" height="66" rx="5" fill="rgba(255,255,255,0.06)" />
-            <rect x="34" y="44" width="18" height="4" rx="2" fill="#673de6" />
+            <rect x="34" y="44" width="18" height="4" rx="2" fill="#432780" />
             <rect x="34" y="54" width="30" height="4" rx="2" fill="rgba(255,255,255,0.3)" />
             <circle cx="51" cy="110" r="6" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" />
 
             <rect x="96" y="22" width="46" height="76" rx="10" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)" />
             <rect x="104" y="32" width="30" height="52" rx="4" fill="rgba(255,255,255,0.06)" />
-            <rect x="110" y="42" width="18" height="4" rx="2" fill="#673de6" />
+            <rect x="110" y="42" width="18" height="4" rx="2" fill="#432780" />
 
-            <circle cx="176" cy="50" r="26" fill="rgba(103,61,230,0.14)" stroke="#673de6" strokeWidth="1.5" />
+            <circle cx="176" cy="50" r="26" fill="rgba(67,39,128,0.14)" stroke="#432780" strokeWidth="1.5" />
             <path
               d="M176 50 m-18 0 a18 18 0 1 1 36 0"
               fill="none"
-              stroke="#673de6"
+              stroke="#432780"
               strokeWidth="3"
               strokeLinecap="round"
             />
             <path d="M176 50 L184 40" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" />
 
             <rect x="150" y="88" width="52" height="34" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)" />
-            <path d="M162 106l7 7 15-16" fill="none" stroke="#673de6" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M162 106l7 7 15-16" fill="none" stroke="#432780" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
           </g>
         )}
       </g>

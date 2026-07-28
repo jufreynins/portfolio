@@ -9,12 +9,12 @@
   --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
 
   /* Global brand color system (purple) */
-  --brand-primary: #673de6;
-  --brand-hover: #5630c9;
+  --brand-primary: #432780;
+  --brand-hover: #361f66;
   --brand-dark: #1d123f;
   --brand-ink: #130b24;
-  --brand-lavender: #ede7ff;
-  --brand-soft: #f3efff;
+  --brand-lavender: #ebf0fa;
+  --brand-soft: #f5f7fc;
 
   --surface-white: #ffffff;
   --surface-warm: #f7f6fa;
@@ -23,7 +23,7 @@
   --text-secondary: #4b4658;
   --text-muted: #8b8495;
   --border-color: rgba(23, 19, 31, 0.12);
-  --border-strong: rgba(103, 61, 230, 0.28);
+  --border-strong: rgba(67, 39, 128, 0.28);
 
   --text-on-dark: #ffffff;
 
@@ -62,7 +62,7 @@
   --shadow-sm: 0 1px 2px rgba(19, 11, 36, 0.04), 0 4px 12px -6px rgba(19, 11, 36, 0.1);
   --shadow-md: 0 8px 24px -12px rgba(19, 11, 36, 0.22);
   --shadow-lg: 0 20px 44px -18px rgba(19, 11, 36, 0.32);
-  --shadow-brand: 0 12px 28px -14px rgba(103, 61, 230, 0.38);
+  --shadow-brand: 0 12px 28px -14px rgba(67, 39, 128, 0.38);
 
   --space-xs: 0.5rem;
   --space-sm: 1rem;
