@@ -1,14 +1,18 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
+import type { StaticImageData } from 'next/image';
 import Container from '@/components/Container';
 import Button from '@/components/Button';
 import SectionHeading from '@/components/SectionHeading';
 import SystemPreview from '@/components/SystemPreview';
 import { siteConfig } from '@/config/site';
 import { buildMetadata } from '@/lib/seo';
+import revisiondeskScreenshot from '@/assets/images/personal-projects/revisiondesk.png';
+import stockflowScreenshot from '@/assets/images/personal-projects/stockflow.png';
 
 export const metadata: Metadata = buildMetadata({
   title: `Personal Projects — ${siteConfig.name}`,
-  description: 'Personal web system concepts — clearly labeled experiments outside client work, not existing production systems.',
+  description: 'Personal web system concepts and live deployments — clearly labeled experiments outside client work, not existing production systems.',
   canonical: `${siteConfig.url}/personal-projects`,
 });
 
@@ -19,9 +23,32 @@ interface ConceptSystem {
   modules: string[];
   techDirection: string;
   routeLabel: string;
+  /** Set for systems that have moved beyond a concept mockup into a real, running deployment. */
+  href?: string;
+  screenshot?: StaticImageData;
 }
 
 const conceptSystems: ConceptSystem[] = [
+  {
+    name: 'RevisionDesk',
+    category: 'Web Agency Operations',
+    problem: 'Managing revision requests, bug fixes, and content updates across multiple client websites over email and chat makes it hard to track ownership, status, and history.',
+    modules: ['Task assignment & tracking', 'Role-based access (Admin/PM/Developer/Client)', 'Client-submitted revision requests', 'Activity log & notifications', 'Reports & time tracking'],
+    techDirection: 'Laravel, React + TypeScript (Inertia.js), MySQL',
+    routeLabel: 'revisiondesk.jufreyninobayogportfolio.com',
+    href: 'https://revisiondesk.jufreyninobayogportfolio.com/',
+    screenshot: revisiondeskScreenshot,
+  },
+  {
+    name: 'StockFlow',
+    category: 'Operations & Inventory',
+    problem: 'Manually tracking inventory in spreadsheets leads to overselling, stockouts, and inaccurate product counts.',
+    modules: ['Stock level tracking', 'Low-stock alerts', 'Product catalog', 'Order history', 'Basic reporting'],
+    techDirection: 'Laravel, React + TypeScript, MySQL',
+    routeLabel: 'inventory-system.jufreyninobayogportfolio.com',
+    href: 'https://inventory-system.jufreyninobayogportfolio.com/',
+    screenshot: stockflowScreenshot,
+  },
   {
     name: 'Task Management System',
     category: 'Business Productivity',
@@ -29,14 +56,6 @@ const conceptSystems: ConceptSystem[] = [
     modules: ['Task assignment & due dates', 'Status tracking', 'Team member views', 'Activity history', 'Priority tagging'],
     techDirection: 'TypeScript, structured data model, role-based views',
     routeLabel: 'app.system/tasks/board',
-  },
-  {
-    name: 'Retail & Inventory Management System',
-    category: 'Operations & Inventory',
-    problem: 'Manually tracking inventory in spreadsheets leads to overselling, stockouts, and inaccurate product counts.',
-    modules: ['Stock level tracking', 'Low-stock alerts', 'Product catalog', 'Order history', 'Basic reporting'],
-    techDirection: 'TypeScript, structured data model, dashboard UI',
-    routeLabel: 'app.system/inventory/products',
   },
   {
     name: 'Dental Clinic Management System',
@@ -72,8 +91,8 @@ export default function PersonalProjectsPage() {
           <SectionHeading
             as="h1"
             eyebrow="Personal Projects"
-            title="Personal system concepts, outside client work."
-            description="Concept designs for internal tools — not existing client or production systems."
+            title="Personal systems, outside client work."
+            description="A mix of live personal deployments and concept designs for internal tools — clearly labeled, never existing client or production systems."
           />
         </Container>
       </section>
@@ -87,15 +106,30 @@ export default function PersonalProjectsPage() {
                   <span className="eyebrow">{system.category}</span>
                   <h3 className="text-xl">{system.name}</h3>
                 </div>
-                <span
-                  className="inline-flex flex-shrink-0 items-center gap-1.5 rounded-full border px-3 py-1 font-mono text-xs font-bold uppercase tracking-wide"
-                  style={{ borderColor: 'var(--border-color)', color: 'var(--text-secondary)', background: 'var(--surface-white)' }}
-                >
-                  Personal Concept
-                </span>
+                {system.href ? (
+                  <span
+                    className="inline-flex flex-shrink-0 items-center gap-1.5 rounded-full border px-3 py-1 font-mono text-xs font-bold uppercase tracking-wide"
+                    style={{ borderColor: 'color-mix(in srgb, var(--color-success) 35%, white)', color: 'var(--color-success)', background: 'var(--color-success-soft)' }}
+                  >
+                    Live Demo
+                  </span>
+                ) : (
+                  <span
+                    className="inline-flex flex-shrink-0 items-center gap-1.5 rounded-full border px-3 py-1 font-mono text-xs font-bold uppercase tracking-wide"
+                    style={{ borderColor: 'var(--border-color)', color: 'var(--text-secondary)', background: 'var(--surface-white)' }}
+                  >
+                    Personal Concept
+                  </span>
+                )}
               </div>
 
-              <SystemPreview routeLabel={system.routeLabel} activeNav={i % 4} />
+              {system.screenshot ? (
+                <div className="relative aspect-[16/10] overflow-hidden rounded-xl border" style={{ borderColor: 'var(--border-color)' }}>
+                  <Image src={system.screenshot} alt={`${system.name} dashboard screenshot`} className="h-full w-full object-cover object-top" />
+                </div>
+              ) : (
+                <SystemPreview routeLabel={system.routeLabel} activeNav={i % 4} />
+              )}
 
               <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                 {system.problem}
@@ -115,6 +149,14 @@ export default function PersonalProjectsPage() {
               <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
                 <span className="font-bold uppercase tracking-wide">Tech direction:</span> {system.techDirection}
               </p>
+
+              {system.href && (
+                <div className="mt-1">
+                  <Button href={system.href} variant="secondary" target="_blank" rel="noopener noreferrer">
+                    Visit Live Website
+                  </Button>
+                </div>
+              )}
             </div>
           ))}
         </Container>
