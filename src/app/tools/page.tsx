@@ -62,6 +62,20 @@ const tools: Tool[] = [
     detail: 'No uploads — runs entirely in your browser.',
     href: '/tools/json-formatter',
   },
+  {
+    title: 'Image Resizer & Cropper',
+    status: 'Live',
+    purpose: 'Resize and crop images by custom dimensions, percentage, or social media preset, with an anchor grid to control cropping.',
+    detail: 'No uploads — runs entirely in your browser.',
+    href: '/tools/image-resizer',
+  },
+  {
+    title: 'Social Media Image Resizer',
+    status: 'Live',
+    purpose: 'Resize images to exact preset dimensions for Facebook, Instagram, LinkedIn, YouTube, and X/Twitter.',
+    detail: 'No uploads — runs entirely in your browser.',
+    href: '/tools/social-media-image-resizer',
+  },
 ];
 
 export default function ToolsPage() {
