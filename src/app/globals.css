@@ -71,6 +71,10 @@
   --space-xl: 4rem;
 
   --container-max: 74rem;
+
+  /* Per-tool accent override (set inline per /tools/* page); falls back to the site brand color everywhere else */
+  --tool-accent: var(--brand-primary);
+  --tool-accent-soft: var(--brand-lavender);
 }
 
 @layer base {

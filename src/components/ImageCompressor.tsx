@@ -111,7 +111,7 @@ export default function ImageCompressor() {
       if (item.status === 'queued') {
         statusHtml = `<p class="mt-2 flex items-center gap-1.5 text-xs font-medium" style="color: var(--text-secondary)">Queued</p>`;
       } else if (item.status === 'processing') {
-        statusHtml = `<p class="mt-2 flex items-center gap-1.5 text-xs font-medium" style="color: var(--brand-primary)"><span class="inline-block h-3 w-3 animate-spin rounded-full border-2 border-current border-t-transparent" aria-hidden="true"></span> Compressing…</p>`;
+        statusHtml = `<p class="mt-2 flex items-center gap-1.5 text-xs font-medium" style="color: var(--tool-accent)"><span class="inline-block h-3 w-3 animate-spin rounded-full border-2 border-current border-t-transparent" aria-hidden="true"></span> Compressing…</p>`;
       } else if (item.status === 'completed' && item.convertedSize != null) {
         canDownload = true;
         const saved = percentSaved(item.originalSize, item.convertedSize);
@@ -126,7 +126,7 @@ export default function ImageCompressor() {
 
       return `
         <li class="flex flex-col gap-4 rounded-2xl border p-4 sm:flex-row sm:items-center sm:gap-5 sm:p-5" style="border-color: var(--border-color); background: var(--surface-white);" data-item-id="${item.id}">
-          <img src="${item.originalUrl}" alt="" loading="lazy" class="h-20 w-20 flex-shrink-0 rounded-xl object-cover" style="background: var(--brand-lavender);" />
+          <img src="${item.originalUrl}" alt="" loading="lazy" class="h-20 w-20 flex-shrink-0 rounded-xl object-cover" style="background: var(--tool-accent-soft);" />
           <div class="min-w-0 flex-1">
             <p class="truncate text-sm font-semibold" style="color: var(--text-primary);" title="${name}">${name}</p>
             <p class="mt-0.5 text-xs" style="color: var(--text-secondary);">${metaLine}</p>
@@ -139,7 +139,7 @@ export default function ImageCompressor() {
               data-id="${item.id}"
               ${canDownload ? '' : 'disabled'}
               class="inline-flex min-h-[40px] items-center justify-center rounded-full px-4 py-2 text-xs font-bold text-white transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-40"
-              style="background: var(--brand-primary);"
+              style="background: var(--tool-accent);"
             >
               Download
             </button>
@@ -201,7 +201,7 @@ export default function ImageCompressor() {
       if (convertedSizeEl) convertedSizeEl.textContent = formatBytes(totalConverted);
       if (savedEl) {
         savedEl.textContent = totalSaved >= 0 ? `${totalSaved.toFixed(0)}% saved` : `${Math.abs(totalSaved).toFixed(0)}% larger`;
-        savedEl.style.color = totalSaved >= 0 ? 'var(--brand-primary)' : 'var(--color-warning)';
+        savedEl.style.color = totalSaved >= 0 ? 'var(--tool-accent)' : 'var(--color-warning)';
       }
     }
 

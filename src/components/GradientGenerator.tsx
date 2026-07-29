@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useRef, useState } from 'react';
 import { MAX_STOPS, MIN_STOPS, type ColorStop, type GradientState } from '@/lib/gradient/types';
@@ -174,7 +174,7 @@ export default function GradientGenerator() {
       </p>
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-10">
-        {/* Left column: live preview + CSS output — pinned on desktop so it stays visible while you adjust controls on the right */}
+        {/* Left column: live preview + CSS output â€” pinned on desktop so it stays visible while you adjust controls on the right */}
         <div className="flex flex-col gap-6 lg:sticky lg:top-28">
           {/* Live preview */}
           <div className="gradient-checkerboard overflow-hidden rounded-2xl border" style={{ borderColor: 'var(--border-color)' }}>
@@ -194,7 +194,7 @@ export default function GradientGenerator() {
                 type="button"
                 onClick={copyCss}
                 className="absolute right-3 top-3 inline-flex min-h-[36px] items-center justify-center rounded-full px-4 text-xs font-bold text-white transition-all duration-200"
-                style={{ background: copied ? 'var(--color-success)' : 'var(--brand-primary)' }}
+                style={{ background: copied ? 'var(--color-success)' : 'var(--tool-accent)' }}
               >
                 {copied ? 'Copied!' : 'Copy CSS'}
               </button>
@@ -217,7 +217,7 @@ export default function GradientGenerator() {
               aria-pressed={state.type === type}
               onClick={() => setState((prev) => ({ ...prev, type }))}
               className="min-h-[40px] rounded-full px-4 text-sm font-bold capitalize transition-all duration-200"
-              style={state.type === type ? { background: 'var(--brand-primary)', color: '#ffffff' } : { color: 'var(--text-secondary)' }}
+              style={state.type === type ? { background: 'var(--tool-accent)', color: '#ffffff' } : { color: 'var(--text-secondary)' }}
             >
               {type}
             </button>
@@ -393,7 +393,7 @@ export default function GradientGenerator() {
                   className="flex h-10 items-center justify-center rounded-lg border text-sm transition-colors duration-200"
                   style={
                     state.angle === dir.angle
-                      ? { borderColor: 'var(--brand-primary)', background: 'var(--brand-lavender)', color: 'var(--brand-primary)' }
+                      ? { borderColor: 'var(--tool-accent)', background: 'var(--tool-accent-soft)', color: 'var(--tool-accent)' }
                       : { borderColor: 'var(--border-color)', color: 'var(--text-secondary)' }
                   }
                 >
@@ -427,7 +427,7 @@ export default function GradientGenerator() {
                   aria-pressed={state.shape === shape}
                   onClick={() => setState((prev) => ({ ...prev, shape }))}
                   className="min-h-[40px] rounded-full px-4 text-sm font-bold capitalize transition-all duration-200"
-                  style={state.shape === shape ? { background: 'var(--brand-primary)', color: '#ffffff' } : { color: 'var(--text-secondary)' }}
+                  style={state.shape === shape ? { background: 'var(--tool-accent)', color: '#ffffff' } : { color: 'var(--text-secondary)' }}
                 >
                   {shape}
                 </button>
@@ -486,7 +486,7 @@ export default function GradientGenerator() {
       {/* Actions */}
       <div className="flex flex-col gap-3">
         <div className="flex flex-wrap items-center gap-3">
-          <button type="button" onClick={copyCss} className={primaryActionClass} style={{ background: 'var(--brand-primary)' }}>
+          <button type="button" onClick={copyCss} className={primaryActionClass} style={{ background: 'var(--tool-accent)' }}>
             {copied ? 'Copied!' : 'Copy CSS'}
           </button>
           <button type="button" onClick={reverseColors} className={secondaryActionClass} style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}>
@@ -499,7 +499,7 @@ export default function GradientGenerator() {
             Reset
           </button>
           <button type="button" onClick={downloadPng} disabled={isDownloading} className={secondaryActionClass} style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}>
-            {isDownloading ? 'Generating…' : 'Download PNG'}
+            {isDownloading ? 'Generatingâ€¦' : 'Download PNG'}
           </button>
         </div>
         {downloadError && (
@@ -565,13 +565,13 @@ function PositionGrid({ position, onChange }: PositionGridProps) {
             className="flex h-10 w-10 items-center justify-center rounded-lg border transition-colors duration-200"
             style={
               position === keyword.value
-                ? { borderColor: 'var(--brand-primary)', background: 'var(--brand-lavender)' }
+                ? { borderColor: 'var(--tool-accent)', background: 'var(--tool-accent-soft)' }
                 : { borderColor: 'var(--border-color)' }
             }
           >
             <span
               className="h-2 w-2 rounded-full"
-              style={{ background: position === keyword.value ? 'var(--brand-primary)' : 'var(--text-muted)' }}
+              style={{ background: position === keyword.value ? 'var(--tool-accent)' : 'var(--text-muted)' }}
               aria-hidden="true"
             />
           </button>

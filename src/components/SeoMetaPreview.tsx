@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useId, useRef, useState } from 'react';
 import {
@@ -89,7 +89,7 @@ export default function SeoMetaPreview() {
       </p>
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-10">
-        {/* Left column: live preview + generated tags — pinned on desktop so it stays visible while you edit */}
+        {/* Left column: live preview + generated tags â€” pinned on desktop so it stays visible while you edit */}
         <div className="flex flex-col gap-6 lg:sticky lg:top-28">
           <div className="flex flex-col gap-3">
             <span className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }} id="device-toggle-label">
@@ -103,7 +103,7 @@ export default function SeoMetaPreview() {
                   aria-pressed={device === mode}
                   onClick={() => setDevice(mode)}
                   className="min-h-[40px] rounded-full px-4 text-sm font-bold capitalize transition-all duration-200"
-                  style={device === mode ? { background: 'var(--brand-primary)', color: '#ffffff' } : { color: 'var(--text-secondary)' }}
+                  style={device === mode ? { background: 'var(--tool-accent)', color: '#ffffff' } : { color: 'var(--text-secondary)' }}
                 >
                   {mode}
                 </button>
@@ -116,7 +116,7 @@ export default function SeoMetaPreview() {
               <div className="flex items-center gap-2">
                 <span
                   className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full text-[10px] font-bold uppercase text-white"
-                  style={{ background: 'var(--brand-primary)' }}
+                  style={{ background: 'var(--tool-accent)' }}
                   aria-hidden="true"
                 >
                   {host.charAt(0)}
@@ -146,7 +146,7 @@ export default function SeoMetaPreview() {
                 type="button"
                 onClick={copyMetaTags}
                 className="absolute right-3 top-3 inline-flex min-h-[36px] items-center justify-center rounded-full px-4 text-xs font-bold text-white transition-all duration-200"
-                style={{ background: copied ? 'var(--color-success)' : 'var(--brand-primary)' }}
+                style={{ background: copied ? 'var(--color-success)' : 'var(--tool-accent)' }}
               >
                 {copied ? 'Copied!' : 'Copy Tags'}
               </button>

@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import type { Metadata } from 'next';
 import Container from '@/components/Container';
 import SectionHeading from '@/components/SectionHeading';
@@ -33,9 +34,12 @@ const infoCards = [
   },
 ];
 
+const TOOL_ACCENT = '#0f766e';
+const TOOL_ACCENT_SOFT = '#e7f8f7';
+
 export default function ImageCompressorPage() {
   return (
-    <>
+    <div style={{ '--tool-accent': TOOL_ACCENT, '--tool-accent-soft': TOOL_ACCENT_SOFT } as CSSProperties}>
       {/* Header */}
       <section className="pt-24 pb-10 sm:pt-28 sm:pb-12" style={{ background: 'var(--surface-warm)' }}>
         <Container className="flex flex-col gap-8">
@@ -57,7 +61,7 @@ export default function ImageCompressorPage() {
           <ul className="flex flex-wrap gap-3" aria-label="Trust indicators">
             {badges.map((label) => (
               <li key={label} className="flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-white)', color: 'var(--text-primary)' }}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--brand-primary)' }} aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--tool-accent)' }} aria-hidden="true">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
                 {label}
@@ -84,7 +88,7 @@ export default function ImageCompressorPage() {
 
           {/* Privacy notice */}
           <div className="flex items-start gap-3 rounded-2xl border p-4 sm:p-5" style={{ borderColor: 'var(--border-color)', background: 'var(--brand-soft)' }}>
-            <span className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full" style={{ background: 'var(--brand-lavender)', color: 'var(--brand-primary)' }}>
+            <span className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full" style={{ background: 'var(--tool-accent-soft)', color: 'var(--tool-accent)' }}>
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4Z" />
               </svg>
@@ -99,7 +103,7 @@ export default function ImageCompressorPage() {
             <div className="order-1 flex flex-col gap-6 lg:order-2 lg:sticky lg:top-28">
               {/* Dropzone */}
               <div className="webp-dropzone flex flex-col items-center gap-4 rounded-2xl border-2 border-dashed p-8 text-center transition-colors duration-200 sm:p-10" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }} data-dropzone>
-                <span className="flex h-14 w-14 items-center justify-center rounded-full" style={{ background: 'var(--brand-lavender)', color: 'var(--brand-primary)' }}>
+                <span className="flex h-14 w-14 items-center justify-center rounded-full" style={{ background: 'var(--tool-accent-soft)', color: 'var(--tool-accent)' }}>
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
                     <polyline points="17 8 12 3 7 8" />
@@ -121,7 +125,7 @@ export default function ImageCompressorPage() {
                 </label>
                 <input id="compressor-file-input" type="file" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" multiple className="sr-only" data-file-input />
 
-                <button type="button" className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full px-6 py-2.5 text-sm font-bold text-white transition-all duration-300 hover:-translate-y-0.5" style={{ background: 'var(--brand-primary)' }} data-browse-btn>
+                <button type="button" className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full px-6 py-2.5 text-sm font-bold text-white transition-all duration-300 hover:-translate-y-0.5" style={{ background: 'var(--tool-accent)' }} data-browse-btn>
                   Browse images
                 </button>
 
@@ -137,7 +141,7 @@ export default function ImageCompressorPage() {
                   <label htmlFor="quality-slider" className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
                     Quality
                   </label>
-                  <div className="flex items-center gap-2 text-sm font-semibold" style={{ color: 'var(--brand-primary)' }}>
+                  <div className="flex items-center gap-2 text-sm font-semibold" style={{ color: 'var(--tool-accent)' }}>
                     <output htmlFor="quality-slider" data-quality-value>
                       80%
                     </output>
@@ -199,7 +203,7 @@ export default function ImageCompressorPage() {
                   <span className="text-xs font-medium" style={{ color: 'var(--text-secondary)' }}>
                     Total saved
                   </span>
-                  <span className="text-xl font-bold" style={{ color: 'var(--brand-primary)' }} data-summary-saved>
+                  <span className="text-xl font-bold" style={{ color: 'var(--tool-accent)' }} data-summary-saved>
                     —
                   </span>
                 </div>
@@ -220,7 +224,7 @@ export default function ImageCompressorPage() {
 
               {/* Actions */}
               <div className="flex flex-wrap items-center gap-3">
-                <button type="button" className="hidden min-h-[44px] items-center justify-center gap-2 rounded-full px-6 py-2.5 text-sm font-bold text-white transition-all duration-300 hover:-translate-y-0.5" style={{ background: 'var(--brand-primary)' }} data-download-all-btn>
+                <button type="button" className="hidden min-h-[44px] items-center justify-center gap-2 rounded-full px-6 py-2.5 text-sm font-bold text-white transition-all duration-300 hover:-translate-y-0.5" style={{ background: 'var(--tool-accent)' }} data-download-all-btn>
                   Download All as ZIP
                 </button>
                 <button type="button" className="hidden min-h-[44px] items-center justify-center gap-2 rounded-full border-2 px-6 py-2.5 text-sm font-bold transition-all duration-300" style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)' }} data-clear-all-btn>
@@ -274,6 +278,6 @@ export default function ImageCompressorPage() {
           </Button>
         </Container>
       </section>
-    </>
+    </div>
   );
 }

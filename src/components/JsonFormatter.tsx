@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useId, useMemo, useRef, useState } from 'react';
 import {
@@ -84,7 +84,7 @@ export default function JsonFormatter() {
       </p>
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-10">
-        {/* Left column: live output — pinned on desktop so it stays visible while you edit */}
+        {/* Left column: live output â€” pinned on desktop so it stays visible while you edit */}
         <div className="flex flex-col gap-6 lg:sticky lg:top-28">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <span
@@ -123,7 +123,7 @@ export default function JsonFormatter() {
                     aria-pressed={viewMode === mode}
                     onClick={() => setViewMode(mode)}
                     className="min-h-[40px] rounded-full px-4 text-sm font-bold capitalize transition-all duration-200"
-                    style={viewMode === mode ? { background: 'var(--brand-primary)', color: '#ffffff' } : { color: 'var(--text-secondary)' }}
+                    style={viewMode === mode ? { background: 'var(--tool-accent)', color: '#ffffff' } : { color: 'var(--text-secondary)' }}
                   >
                     {mode}
                   </button>
@@ -139,7 +139,7 @@ export default function JsonFormatter() {
                       aria-pressed={indent === option}
                       onClick={() => setIndent(option)}
                       className="min-h-[40px] rounded-full px-3 text-xs font-bold transition-all duration-200"
-                      style={indent === option ? { background: 'var(--brand-primary)', color: '#ffffff' } : { color: 'var(--text-secondary)' }}
+                      style={indent === option ? { background: 'var(--tool-accent)', color: '#ffffff' } : { color: 'var(--text-secondary)' }}
                     >
                       {option === 'tab' ? 'Tab' : `${option} spaces`}
                     </button>
@@ -157,7 +157,7 @@ export default function JsonFormatter() {
                 onClick={copyOutput}
                 disabled={!output}
                 className="absolute right-3 top-3 inline-flex min-h-[36px] items-center justify-center rounded-full px-4 text-xs font-bold text-white transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50"
-                style={{ background: copied ? 'var(--color-success)' : 'var(--brand-primary)' }}
+                style={{ background: copied ? 'var(--color-success)' : 'var(--tool-accent)' }}
               >
                 {copied ? 'Copied!' : 'Copy Output'}
               </button>

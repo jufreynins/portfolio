@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import type { Metadata } from 'next';
 import Container from '@/components/Container';
 import SectionHeading from '@/components/SectionHeading';
@@ -33,9 +34,12 @@ const infoCards = [
   },
 ];
 
+const TOOL_ACCENT = '#be123c';
+const TOOL_ACCENT_SOFT = '#f8e7eb';
+
 export default function FaviconGeneratorPage() {
   return (
-    <>
+    <div style={{ '--tool-accent': TOOL_ACCENT, '--tool-accent-soft': TOOL_ACCENT_SOFT } as CSSProperties}>
       {/* Header */}
       <section className="pt-24 pb-10 sm:pt-28 sm:pb-12" style={{ background: 'var(--surface-warm)' }}>
         <Container className="flex flex-col gap-8">
@@ -57,7 +61,7 @@ export default function FaviconGeneratorPage() {
           <ul className="flex flex-wrap gap-3" aria-label="Trust indicators">
             {badges.map((label) => (
               <li key={label} className="flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-white)', color: 'var(--text-primary)' }}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--brand-primary)' }} aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--tool-accent)' }} aria-hidden="true">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
                 {label}
@@ -72,7 +76,7 @@ export default function FaviconGeneratorPage() {
         <Container className="flex flex-col gap-8">
           {/* Privacy notice */}
           <div className="flex items-start gap-3 rounded-2xl border p-4 sm:p-5" style={{ borderColor: 'var(--border-color)', background: 'var(--brand-soft)' }}>
-            <span className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full" style={{ background: 'var(--brand-lavender)', color: 'var(--brand-primary)' }}>
+            <span className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full" style={{ background: 'var(--tool-accent-soft)', color: 'var(--tool-accent)' }}>
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4Z" />
               </svg>
@@ -119,6 +123,6 @@ export default function FaviconGeneratorPage() {
           </Button>
         </Container>
       </section>
-    </>
+    </div>
   );
 }

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useRef, useState } from 'react';
 import { decodeImage } from '@/lib/imageConvert/convert';
@@ -54,7 +54,7 @@ export default function FaviconGenerator() {
     setStatus('processing');
     setErrorMessage('');
     setSourceName(file.name);
-    announce('Generating favicon set…');
+    announce('Generating favicon setâ€¦');
 
     try {
       const decoded = await decodeImage(file);
@@ -173,7 +173,7 @@ export default function FaviconGenerator() {
       </p>
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-10">
-        {/* Left column: results — preview, size grid, HTML tags */}
+        {/* Left column: results â€” preview, size grid, HTML tags */}
         <div className="order-2 flex flex-col gap-6 lg:order-1">
           {status === 'idle' && (
             <div className="flex flex-col items-center gap-2 rounded-2xl border border-dashed py-12 text-center" style={{ borderColor: 'var(--border-color)' }}>
@@ -195,7 +195,7 @@ export default function FaviconGenerator() {
           {status === 'processing' && (
             <div className="flex items-center gap-2 rounded-2xl border p-6 text-sm font-medium" style={{ borderColor: 'var(--border-color)', color: 'var(--text-secondary)' }}>
               <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" aria-hidden="true" />
-              Generating favicon set…
+              Generating favicon setâ€¦
             </div>
           )}
 
@@ -229,7 +229,7 @@ export default function FaviconGenerator() {
                         <div className="gradient-checkerboard flex h-14 w-14 items-center justify-center overflow-hidden rounded-lg border" style={{ borderColor: 'var(--border-color)' }}>
                           {url && (
                             // eslint-disable-next-line @next/next/no-img-element -- runtime-generated blob URL, not a static asset next/image can optimize
-                            <img src={url} alt={`${size}×${size} favicon preview`} width={size > 56 ? 56 : size} height={size > 56 ? 56 : size} className="max-h-full max-w-full" />
+                            <img src={url} alt={`${size}Ã—${size} favicon preview`} width={size > 56 ? 56 : size} height={size > 56 ? 56 : size} className="max-h-full max-w-full" />
                           )}
                         </div>
                         <span className="text-[11px] font-medium" style={{ color: 'var(--text-secondary)' }}>
@@ -239,7 +239,7 @@ export default function FaviconGenerator() {
                           type="button"
                           onClick={() => downloadSingle(size)}
                           aria-label={`Download ${size}x${size} PNG`}
-                          title={`Download ${size}×${size} PNG`}
+                          title={`Download ${size}Ã—${size} PNG`}
                           className="flex h-7 w-7 items-center justify-center rounded-full border transition-colors"
                           style={{ borderColor: 'var(--border-color)', color: 'var(--text-secondary)' }}
                         >
@@ -268,7 +268,7 @@ export default function FaviconGenerator() {
                     type="button"
                     onClick={copyHtmlSnippet}
                     className="absolute right-3 top-3 inline-flex min-h-[36px] items-center justify-center rounded-full px-4 text-xs font-bold text-white transition-all duration-200"
-                    style={{ background: copied ? 'var(--color-success)' : 'var(--brand-primary)' }}
+                    style={{ background: copied ? 'var(--color-success)' : 'var(--tool-accent)' }}
                   >
                     {copied ? 'Copied!' : 'Copy Tags'}
                   </button>
@@ -298,7 +298,7 @@ export default function FaviconGenerator() {
               if (file) handleFile(file);
             }}
           >
-            <span className="flex h-14 w-14 items-center justify-center rounded-full" style={{ background: 'var(--brand-lavender)', color: 'var(--brand-primary)' }}>
+            <span className="flex h-14 w-14 items-center justify-center rounded-full" style={{ background: 'var(--tool-accent-soft)', color: 'var(--tool-accent)' }}>
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
                 <polyline points="17 8 12 3 7 8" />
@@ -331,7 +331,7 @@ export default function FaviconGenerator() {
               type="button"
               onClick={() => fileInputRef.current?.click()}
               className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full px-6 py-2.5 text-sm font-bold text-white transition-all duration-300 hover:-translate-y-0.5"
-              style={{ background: 'var(--brand-primary)' }}
+              style={{ background: 'var(--tool-accent)' }}
             >
               Browse image
             </button>
@@ -344,7 +344,7 @@ export default function FaviconGenerator() {
 
           <div className="flex flex-wrap items-center gap-3">
             <button type="button" onClick={downloadZip} disabled={status !== 'ready' || isZipping} className={primaryActionClass}>
-              {isZipping ? 'Preparing ZIP…' : 'Download All as ZIP'}
+              {isZipping ? 'Preparing ZIPâ€¦' : 'Download All as ZIP'}
             </button>
             <button type="button" onClick={reset} disabled={status === 'idle'} className={secondaryActionClass} style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}>
               Clear
