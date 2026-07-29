@@ -3,7 +3,7 @@ import Container from '@/components/Container';
 import SectionHeading from '@/components/SectionHeading';
 import Button from '@/components/Button';
 import ImageResizer from '@/components/ImageResizer';
-import { SOCIAL_PRESETS, ANCHOR_POSITIONS, MIN_PERCENTAGE, MAX_PERCENTAGE, DEFAULT_PERCENTAGE } from '@/lib/imageResize/utils';
+import { SOCIAL_PRESETS, MIN_PERCENTAGE, MAX_PERCENTAGE, DEFAULT_PERCENTAGE } from '@/lib/imageResize/utils';
 import { siteConfig } from '@/config/site';
 import { buildMetadata } from '@/lib/seo';
 
@@ -27,7 +27,7 @@ const infoCards = [
   },
   {
     title: 'Cropping, not stretching',
-    body: 'When a target size has a different aspect ratio than your source image, this tool crops to fit instead of distorting it. Choose which part of the image to keep with the anchor grid.',
+    body: 'When a target size has a different aspect ratio than your source image, this tool crops to fit instead of distorting it. Drag the crop box, or resize it from the corners to zoom, to choose exactly what stays in frame.',
   },
   {
     title: 'Built for batches',
@@ -210,26 +210,69 @@ export default function ImageResizerPage() {
                   </select>
                 </div>
 
-                {/* Anchor grid (shared by custom + preset modes) */}
-                <div data-anchor-wrapper className="flex flex-col gap-2">
-                  <span className="text-xs font-semibold" style={{ color: 'var(--text-secondary)' }} id="anchor-grid-label">
-                    Crop from
-                  </span>
-                  <div className="grid w-fit grid-cols-3 gap-1.5" role="group" aria-labelledby="anchor-grid-label">
-                    {ANCHOR_POSITIONS.map((position) => (
-                      <button
-                        key={position.value}
-                        type="button"
-                        data-anchor-btn
-                        data-anchor={position.value}
-                        aria-label={position.label}
-                        title={position.label}
-                        className="flex h-9 w-9 items-center justify-center rounded-lg border transition-colors duration-200"
-                        style={{ borderColor: position.value === 'center' ? 'var(--brand-primary)' : 'var(--border-color)', background: position.value === 'center' ? 'var(--brand-lavender)' : undefined }}
+                {/* Interactive crop box (shared by custom + preset modes) */}
+                <div data-crop-wrapper className="flex flex-col gap-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-semibold" style={{ color: 'var(--text-secondary)' }} id="crop-box-label">
+                      Crop area
+                    </span>
+                    <button type="button" data-crop-reset-btn className="text-xs font-semibold underline-offset-2 hover:underline" style={{ color: 'var(--brand-primary)' }}>
+                      Reset
+                    </button>
+                  </div>
+
+                  <p data-crop-placeholder className="text-xs" style={{ color: 'var(--text-secondary)' }}>
+                    Add an image to position the crop.
+                  </p>
+
+                  <div data-crop-interactive className="relative hidden w-full overflow-hidden rounded-2xl" style={{ background: 'var(--surface-warm)' }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element -- runtime-generated blob URL, not a static asset next/image can optimize */}
+                    <img data-crop-preview-img alt="" draggable={false} className="block w-full select-none" />
+                    <div
+                      data-crop-box
+                      tabIndex={0}
+                      role="group"
+                      aria-labelledby="crop-box-label"
+                      aria-label="Crop area. Drag to move. Use the corner handles, or arrow and plus/minus keys, to reposition and zoom."
+                      className="absolute touch-none cursor-move outline-none"
+                      style={{ border: '2px solid var(--brand-primary)', boxShadow: '0 0 0 9999px rgba(0,0,0,0.5)' }}
+                    >
+                      {/* 3x3 grid guide */}
+                      <div className="pointer-events-none absolute inset-0">
+                        <div className="absolute top-0 h-full w-px" style={{ left: '33.333%', background: 'rgba(255,255,255,0.7)' }} />
+                        <div className="absolute top-0 h-full w-px" style={{ left: '66.666%', background: 'rgba(255,255,255,0.7)' }} />
+                        <div className="absolute left-0 h-px w-full" style={{ top: '33.333%', background: 'rgba(255,255,255,0.7)' }} />
+                        <div className="absolute left-0 h-px w-full" style={{ top: '66.666%', background: 'rgba(255,255,255,0.7)' }} />
+                      </div>
+
+                      {/* Corner resize/zoom handles */}
+                      {(['nw', 'ne', 'sw', 'se'] as const).map((corner) => (
+                        <button
+                          key={corner}
+                          type="button"
+                          data-crop-handle={corner}
+                          tabIndex={-1}
+                          aria-hidden="true"
+                          className="touch-none absolute h-4 w-4 rounded-full border-2 bg-white"
+                          style={{
+                            borderColor: 'var(--brand-primary)',
+                            cursor: corner === 'nw' || corner === 'se' ? 'nwse-resize' : 'nesw-resize',
+                            top: corner.includes('n') ? '-8px' : undefined,
+                            bottom: corner.includes('s') ? '-8px' : undefined,
+                            left: corner.includes('w') ? '-8px' : undefined,
+                            right: corner.includes('e') ? '-8px' : undefined,
+                          }}
+                        />
+                      ))}
+
+                      <span
+                        data-crop-zoom-label
+                        className="pointer-events-none absolute top-1 left-1 rounded-full px-2 py-0.5 text-[10px] font-bold text-white"
+                        style={{ background: 'rgba(0,0,0,0.55)' }}
                       >
-                        <span className="h-2 w-2 rounded-full" data-anchor-dot style={{ background: position.value === 'center' ? 'var(--brand-primary)' : 'var(--text-muted)' }} aria-hidden="true" />
-                      </button>
-                    ))}
+                        100%
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>

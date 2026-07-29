@@ -2,19 +2,16 @@ import type { OutputFormat } from '@/lib/imageConvert/types';
 
 export type ResizeMode = 'custom' | 'percentage' | 'preset';
 
-export type AnchorPosition = 'top left' | 'top' | 'top right' | 'left' | 'center' | 'right' | 'bottom left' | 'bottom' | 'bottom right';
+/** Interactive crop position: cx/cy is the crop box's center as a fraction (0-1) of the source image; zoom >= 1 shrinks the crop box (magnifies). */
+export interface CropState {
+  cx: number;
+  cy: number;
+  zoom: number;
+}
 
-export const ANCHOR_POSITIONS: Array<{ label: string; value: AnchorPosition }> = [
-  { label: 'Top Left', value: 'top left' },
-  { label: 'Top', value: 'top' },
-  { label: 'Top Right', value: 'top right' },
-  { label: 'Left', value: 'left' },
-  { label: 'Center', value: 'center' },
-  { label: 'Right', value: 'right' },
-  { label: 'Bottom Left', value: 'bottom left' },
-  { label: 'Bottom', value: 'bottom' },
-  { label: 'Bottom Right', value: 'bottom right' },
-];
+export const DEFAULT_CROP: CropState = { cx: 0.5, cy: 0.5, zoom: 1 };
+export const MIN_ZOOM = 1;
+export const MAX_ZOOM = 4;
 
 export interface SizePreset {
   label: string;
@@ -38,15 +35,45 @@ export const MIN_PERCENTAGE = 10;
 export const MAX_PERCENTAGE = 200;
 export const DEFAULT_PERCENTAGE = 100;
 
-function anchorFractions(anchor: AnchorPosition): { fx: number; fy: number } {
-  const fx = anchor.includes('left') ? 0 : anchor.includes('right') ? 1 : 0.5;
-  const fy = anchor.includes('top') ? 0 : anchor.includes('bottom') ? 1 : 0.5;
-  return { fx, fy };
+/**
+ * Resolves a `CropState` (center fraction + zoom) against actual source/target
+ * dimensions into a source-pixel crop rect. Shared by the live overlay preview
+ * (using the reference image's natural size) and the real per-item render pass
+ * (using each item's decoded size), so both agree pixel-for-pixel.
+ */
+export function computeCropBox(
+  sourceWidth: number,
+  sourceHeight: number,
+  targetWidth: number,
+  targetHeight: number,
+  crop: CropState
+): { sx: number; sy: number; cropWidth: number; cropHeight: number } {
+  const targetRatio = targetWidth / targetHeight;
+  const sourceRatio = sourceWidth / sourceHeight;
+
+  let maxCropWidth = sourceWidth;
+  let maxCropHeight = sourceHeight;
+  if (sourceRatio > targetRatio) {
+    maxCropWidth = sourceHeight * targetRatio;
+  } else {
+    maxCropHeight = sourceWidth / targetRatio;
+  }
+
+  const zoom = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, crop.zoom));
+  const cropWidth = maxCropWidth / zoom;
+  const cropHeight = maxCropHeight / zoom;
+
+  const idealSx = crop.cx * sourceWidth - cropWidth / 2;
+  const idealSy = crop.cy * sourceHeight - cropHeight / 2;
+  const sx = Math.min(Math.max(idealSx, 0), sourceWidth - cropWidth);
+  const sy = Math.min(Math.max(idealSy, 0), sourceHeight - cropHeight);
+
+  return { sx, sy, cropWidth, cropHeight };
 }
 
 /**
- * Crops the source to the target aspect ratio (anchored per `anchor`) then scales to
- * targetWidth x targetHeight. Used by custom-size and preset resize modes.
+ * Crops the source per `crop` (center + zoom) then scales to targetWidth x targetHeight.
+ * Used by custom-size and preset resize modes.
  */
 export function renderCroppedResize(
   source: CanvasImageSource,
@@ -54,7 +81,7 @@ export function renderCroppedResize(
   sourceHeight: number,
   targetWidth: number,
   targetHeight: number,
-  anchor: AnchorPosition,
+  crop: CropState,
   format: OutputFormat,
   quality: number
 ): Promise<Blob> {
@@ -68,20 +95,7 @@ export function renderCroppedResize(
       return;
     }
 
-    const targetRatio = targetWidth / targetHeight;
-    const sourceRatio = sourceWidth / sourceHeight;
-
-    let cropWidth = sourceWidth;
-    let cropHeight = sourceHeight;
-    if (sourceRatio > targetRatio) {
-      cropWidth = sourceHeight * targetRatio;
-    } else {
-      cropHeight = sourceWidth / targetRatio;
-    }
-
-    const { fx, fy } = anchorFractions(anchor);
-    const sx = (sourceWidth - cropWidth) * fx;
-    const sy = (sourceHeight - cropHeight) * fy;
+    const { sx, sy, cropWidth, cropHeight } = computeCropBox(sourceWidth, sourceHeight, targetWidth, targetHeight, crop);
 
     if (format === 'jpeg') {
       ctx.fillStyle = '#ffffff';

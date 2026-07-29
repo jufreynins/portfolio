@@ -5,13 +5,17 @@ import { MAX_BATCH_SIZE, type ConversionStatus, type OutputFormat } from '@/lib/
 import { dedupeFilename, formatBytes, percentSaved } from '@/lib/imageConvert/format';
 import { checkDimensions, decodeImage, validateFile } from '@/lib/imageConvert/convert';
 import {
+  DEFAULT_CROP,
   DEFAULT_PERCENTAGE,
   MAX_PERCENTAGE,
+  MAX_ZOOM,
   MIN_PERCENTAGE,
+  MIN_ZOOM,
   SOCIAL_PRESETS,
+  computeCropBox,
   renderCroppedResize,
   renderPercentageResize,
-  type AnchorPosition,
+  type CropState,
   type ResizeMode,
 } from '@/lib/imageResize/utils';
 
@@ -60,7 +64,8 @@ export default function ImageResizer({ defaultMode = 'custom' }: ImageResizerPro
     let aspectLocked = false;
     let aspectRatio = customWidth / customHeight;
     let percentage = DEFAULT_PERCENTAGE;
-    let anchor: AnchorPosition = 'center';
+    let crop: CropState = { ...DEFAULT_CROP };
+    let previewItemId: string | null = null;
     let selectedPresetIndex = 0;
 
     const controller = new AbortController();
@@ -113,8 +118,14 @@ export default function ImageResizer({ defaultMode = 'custom' }: ImageResizerPro
     const percentageSlider = document.querySelector<HTMLInputElement>('[data-percentage-slider]');
     const percentageValueEl = document.querySelector<HTMLElement>('[data-percentage-value]');
     const presetSelect = document.querySelector<HTMLSelectElement>('[data-preset-select]');
-    const anchorWrapper = document.querySelector<HTMLElement>('[data-anchor-wrapper]');
-    const anchorButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-anchor-btn]'));
+    const cropWrapperEl = document.querySelector<HTMLElement>('[data-crop-wrapper]');
+    const cropInteractiveEl = document.querySelector<HTMLElement>('[data-crop-interactive]');
+    const cropPlaceholderEl = document.querySelector<HTMLElement>('[data-crop-placeholder]');
+    const cropImageEl = document.querySelector<HTMLImageElement>('[data-crop-preview-img]');
+    const cropBoxEl = document.querySelector<HTMLElement>('[data-crop-box]');
+    const cropHandles = Array.from(document.querySelectorAll<HTMLElement>('[data-crop-handle]'));
+    const cropZoomLabelEl = document.querySelector<HTMLElement>('[data-crop-zoom-label]');
+    const cropResetBtn = document.querySelector<HTMLButtonElement>('[data-crop-reset-btn]');
     const listEl = document.querySelector<HTMLElement>('[data-list]');
     const emptyStateEl = document.querySelector<HTMLElement>('[data-empty-state]');
     const summaryEl = document.querySelector<HTMLElement>('[data-summary]');
@@ -150,6 +161,53 @@ export default function ImageResizer({ defaultMode = 'custom' }: ImageResizerPro
     function getPresetDimensions(): { width: number; height: number } {
       const preset = SOCIAL_PRESETS[selectedPresetIndex] ?? SOCIAL_PRESETS[0];
       return { width: preset.width, height: preset.height };
+    }
+
+    function getTargetDims(): { width: number; height: number } {
+      return mode === 'preset' ? getPresetDimensions() : { width: customWidth, height: customHeight };
+    }
+
+    function renderCropOverlay() {
+      if (!cropWrapperEl || !cropInteractiveEl || !cropPlaceholderEl || !cropImageEl || !cropBoxEl) return;
+
+      if (mode === 'percentage') {
+        cropWrapperEl.classList.add('hidden');
+        return;
+      }
+      cropWrapperEl.classList.remove('hidden');
+
+      if (!items.length) {
+        cropInteractiveEl.classList.add('hidden');
+        cropPlaceholderEl.classList.remove('hidden');
+        previewItemId = null;
+        return;
+      }
+
+      const first = items[0];
+      if (first.id !== previewItemId) {
+        previewItemId = first.id;
+        cropImageEl.src = first.originalUrl;
+      }
+
+      const naturalW = cropImageEl.naturalWidth;
+      const naturalH = cropImageEl.naturalHeight;
+      if (!naturalW || !naturalH) {
+        cropInteractiveEl.classList.add('hidden');
+        cropPlaceholderEl.classList.remove('hidden');
+        return;
+      }
+
+      cropPlaceholderEl.classList.add('hidden');
+      cropInteractiveEl.classList.remove('hidden');
+
+      const target = getTargetDims();
+      const { sx, sy, cropWidth, cropHeight } = computeCropBox(naturalW, naturalH, target.width, target.height, crop);
+
+      cropBoxEl.style.left = `${(sx / naturalW) * 100}%`;
+      cropBoxEl.style.top = `${(sy / naturalH) * 100}%`;
+      cropBoxEl.style.width = `${(cropWidth / naturalW) * 100}%`;
+      cropBoxEl.style.height = `${(cropHeight / naturalH) * 100}%`;
+      if (cropZoomLabelEl) cropZoomLabelEl.textContent = `${Math.round(crop.zoom * 100)}%`;
     }
 
     function renderItemHTML(item: ResizeItem): string {
@@ -269,6 +327,7 @@ export default function ImageResizer({ defaultMode = 'custom' }: ImageResizerPro
       renderList();
       renderSummary();
       updateActionButtons();
+      renderCropOverlay();
     }
 
     function pump() {
@@ -311,8 +370,8 @@ export default function ImageResizer({ defaultMode = 'custom' }: ImageResizerPro
           outW = Math.max(1, Math.round((decoded.width * percentage) / 100));
           outH = Math.max(1, Math.round((decoded.height * percentage) / 100));
         } else {
-          const target = mode === 'preset' ? getPresetDimensions() : { width: customWidth, height: customHeight };
-          blob = await renderCroppedResize(decoded.source, decoded.width, decoded.height, target.width, target.height, anchor, item.outputFormat, 0.9);
+          const target = getTargetDims();
+          blob = await renderCroppedResize(decoded.source, decoded.width, decoded.height, target.width, target.height, crop, item.outputFormat, 0.9);
           outW = target.width;
           outH = target.height;
         }
@@ -486,7 +545,7 @@ export default function ImageResizer({ defaultMode = 'custom' }: ImageResizerPro
       modePanels.forEach((panel) => {
         panel.classList.toggle('hidden', panel.dataset.modePanel !== mode);
       });
-      anchorWrapper?.classList.toggle('hidden', mode === 'percentage');
+      renderCropOverlay();
       triggerReprocess();
     }
 
@@ -530,6 +589,7 @@ export default function ImageResizer({ defaultMode = 'custom' }: ImageResizerPro
         } else {
           aspectRatio = customWidth / customHeight;
         }
+        renderCropOverlay();
         triggerReprocess();
       },
       { signal }
@@ -546,6 +606,7 @@ export default function ImageResizer({ defaultMode = 'custom' }: ImageResizerPro
         } else {
           aspectRatio = customWidth / customHeight;
         }
+        renderCropOverlay();
         triggerReprocess();
       },
       { signal }
@@ -567,35 +628,132 @@ export default function ImageResizer({ defaultMode = 'custom' }: ImageResizerPro
       'change',
       () => {
         selectedPresetIndex = Number(presetSelect.value) || 0;
+        renderCropOverlay();
         triggerReprocess();
       },
       { signal }
     );
 
-    // --- Anchor grid ---
-    function updateAnchorButtons() {
-      anchorButtons.forEach((btn) => {
-        const isActive = btn.dataset.anchor === anchor;
-        btn.style.borderColor = isActive ? 'var(--brand-primary)' : 'var(--border-color)';
-        btn.style.background = isActive ? 'var(--brand-lavender)' : '';
-        const dot = btn.querySelector<HTMLElement>('[data-anchor-dot]');
-        if (dot) dot.style.background = isActive ? 'var(--brand-primary)' : 'var(--text-muted)';
-      });
-    }
+    // --- Interactive crop box (drag to move, corner handles to zoom) ---
+    const clamp01 = (value: number) => Math.min(1, Math.max(0, value));
+    const clampZoom = (value: number) => Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, value));
 
-    anchorButtons.forEach((btn) => {
-      btn.addEventListener(
-        'click',
-        () => {
-          const value = btn.dataset.anchor as AnchorPosition | undefined;
-          if (!value) return;
-          anchor = value;
-          updateAnchorButtons();
-          triggerReprocess();
+    type CropDrag =
+      | { type: 'move'; pointerId: number; startX: number; startY: number; startCx: number; startCy: number; rectWidth: number; rectHeight: number }
+      | { type: 'resize'; pointerId: number; centerX: number; centerY: number; startDist: number; startZoom: number };
+
+    let cropDrag: CropDrag | null = null;
+
+    cropImageEl?.addEventListener('load', () => renderCropOverlay(), { signal });
+
+    cropBoxEl?.addEventListener(
+      'pointerdown',
+      (e) => {
+        if ((e.target as HTMLElement).closest('[data-crop-handle]')) return;
+        if (!cropImageEl) return;
+        const rect = cropImageEl.getBoundingClientRect();
+        if (!rect.width || !rect.height) return;
+        e.preventDefault();
+        cropDrag = { type: 'move', pointerId: e.pointerId, startX: e.clientX, startY: e.clientY, startCx: crop.cx, startCy: crop.cy, rectWidth: rect.width, rectHeight: rect.height };
+      },
+      { signal }
+    );
+
+    cropHandles.forEach((handle) => {
+      handle.addEventListener(
+        'pointerdown',
+        (e) => {
+          if (!cropBoxEl) return;
+          e.preventDefault();
+          e.stopPropagation();
+          const boxRect = cropBoxEl.getBoundingClientRect();
+          const centerX = boxRect.left + boxRect.width / 2;
+          const centerY = boxRect.top + boxRect.height / 2;
+          const startDist = Math.hypot(e.clientX - centerX, e.clientY - centerY) || 1;
+          cropDrag = { type: 'resize', pointerId: e.pointerId, centerX, centerY, startDist, startZoom: crop.zoom };
         },
         { signal }
       );
     });
+
+    window.addEventListener(
+      'pointermove',
+      (e) => {
+        if (!cropDrag || e.pointerId !== cropDrag.pointerId) return;
+        e.preventDefault();
+
+        if (cropDrag.type === 'move') {
+          const dxFrac = (e.clientX - cropDrag.startX) / cropDrag.rectWidth;
+          const dyFrac = (e.clientY - cropDrag.startY) / cropDrag.rectHeight;
+          crop.cx = clamp01(cropDrag.startCx + dxFrac);
+          crop.cy = clamp01(cropDrag.startCy + dyFrac);
+        } else {
+          const currentDist = Math.hypot(e.clientX - cropDrag.centerX, e.clientY - cropDrag.centerY) || 1;
+          crop.zoom = clampZoom(cropDrag.startZoom / (currentDist / cropDrag.startDist));
+        }
+
+        renderCropOverlay();
+        triggerReprocess();
+      },
+      { signal }
+    );
+
+    window.addEventListener(
+      'pointerup',
+      (e) => {
+        if (!cropDrag || e.pointerId !== cropDrag.pointerId) return;
+        cropDrag = null;
+      },
+      { signal }
+    );
+
+    cropBoxEl?.addEventListener(
+      'keydown',
+      (e) => {
+        const step = 0.02;
+        let handled = true;
+        switch (e.key) {
+          case 'ArrowLeft':
+            crop.cx = clamp01(crop.cx - step);
+            break;
+          case 'ArrowRight':
+            crop.cx = clamp01(crop.cx + step);
+            break;
+          case 'ArrowUp':
+            crop.cy = clamp01(crop.cy - step);
+            break;
+          case 'ArrowDown':
+            crop.cy = clamp01(crop.cy + step);
+            break;
+          case '+':
+          case '=':
+            crop.zoom = clampZoom(crop.zoom + 0.1);
+            break;
+          case '-':
+          case '_':
+            crop.zoom = clampZoom(crop.zoom - 0.1);
+            break;
+          default:
+            handled = false;
+        }
+        if (handled) {
+          e.preventDefault();
+          renderCropOverlay();
+          triggerReprocess();
+        }
+      },
+      { signal }
+    );
+
+    cropResetBtn?.addEventListener(
+      'click',
+      () => {
+        crop = { ...DEFAULT_CROP };
+        renderCropOverlay();
+        triggerReprocess();
+      },
+      { signal }
+    );
 
     // --- Upload wiring ---
     browseBtn?.addEventListener('click', () => fileInput.click(), { signal });
@@ -666,7 +824,6 @@ export default function ImageResizer({ defaultMode = 'custom' }: ImageResizerPro
     // --- Initial state ---
     setMode(mode);
     updateAspectIcon();
-    updateAnchorButtons();
     if (widthInput) widthInput.value = String(customWidth);
     if (heightInput) heightInput.value = String(customHeight);
     if (percentageValueEl) percentageValueEl.textContent = `${percentage}%`;
