@@ -173,12 +173,38 @@ export default function GradientGenerator() {
         {announcement}
       </p>
 
-      {/* Live preview */}
-      <div className="gradient-checkerboard overflow-hidden rounded-2xl border" style={{ borderColor: 'var(--border-color)' }}>
-        <div className="flex h-56 w-full sm:h-72 lg:h-80" style={{ background: cssValue }} role="img" aria-label={`Live gradient preview: ${cssValue}`} />
-      </div>
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-10">
+        {/* Left column: live preview + CSS output — pinned on desktop so it stays visible while you adjust controls on the right */}
+        <div className="flex flex-col gap-6 lg:sticky lg:top-28">
+          {/* Live preview */}
+          <div className="gradient-checkerboard overflow-hidden rounded-2xl border" style={{ borderColor: 'var(--border-color)' }}>
+            <div className="flex h-56 w-full sm:h-72 lg:h-80" style={{ background: cssValue }} role="img" aria-label={`Live gradient preview: ${cssValue}`} />
+          </div>
 
-      {/* Gradient type */}
+          {/* CSS output */}
+          <div className="flex flex-col gap-3">
+            <h2 className="text-lg font-bold" style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-heading)' }}>
+              CSS output
+            </h2>
+            <div className="relative overflow-hidden rounded-2xl border" style={{ borderColor: 'var(--border-color)', background: 'var(--brand-ink)' }}>
+              <pre className="overflow-x-auto p-4 pr-28 text-xs leading-relaxed sm:text-sm">
+                <code style={{ color: '#e5e7eb', fontFamily: 'var(--font-mono)' }}>{cssCode}</code>
+              </pre>
+              <button
+                type="button"
+                onClick={copyCss}
+                className="absolute right-3 top-3 inline-flex min-h-[36px] items-center justify-center rounded-full px-4 text-xs font-bold text-white transition-all duration-200"
+                style={{ background: copied ? 'var(--color-success)' : 'var(--brand-primary)' }}
+              >
+                {copied ? 'Copied!' : 'Copy CSS'}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Right column: all controls */}
+        <div className="flex flex-col gap-8">
+          {/* Gradient type */}
       <div className="flex flex-col gap-3">
         <span className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }} id="gradient-type-label">
           Gradient type
@@ -457,26 +483,6 @@ export default function GradientGenerator() {
         </div>
       )}
 
-      {/* CSS output */}
-      <div className="flex flex-col gap-3">
-        <h2 className="text-lg font-bold" style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-heading)' }}>
-          CSS output
-        </h2>
-        <div className="relative overflow-hidden rounded-2xl border" style={{ borderColor: 'var(--border-color)', background: 'var(--brand-ink)' }}>
-          <pre className="overflow-x-auto p-4 pr-28 text-xs leading-relaxed sm:text-sm">
-            <code style={{ color: '#e5e7eb', fontFamily: 'var(--font-mono)' }}>{cssCode}</code>
-          </pre>
-          <button
-            type="button"
-            onClick={copyCss}
-            className="absolute right-3 top-3 inline-flex min-h-[36px] items-center justify-center rounded-full px-4 text-xs font-bold text-white transition-all duration-200"
-            style={{ background: copied ? 'var(--color-success)' : 'var(--brand-primary)' }}
-          >
-            {copied ? 'Copied!' : 'Copy CSS'}
-          </button>
-        </div>
-      </div>
-
       {/* Actions */}
       <div className="flex flex-col gap-3">
         <div className="flex flex-wrap items-center gap-3">
@@ -528,6 +534,8 @@ export default function GradientGenerator() {
               </button>
             );
           })}
+        </div>
+      </div>
         </div>
       </div>
     </div>
