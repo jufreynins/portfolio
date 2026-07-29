@@ -86,7 +86,7 @@ const conceptSystems: ConceptSystem[] = [
 export default function PersonalProjectsPage() {
   return (
     <>
-      <section className="pt-28 pb-12 sm:pt-32 sm:pb-14" style={{ background: 'var(--surface-warm)' }}>
+      <section className="pt-24 pb-10 sm:pt-28 sm:pb-12" style={{ background: 'var(--surface-warm)' }}>
         <Container>
           <SectionHeading
             as="h1"
@@ -97,7 +97,7 @@ export default function PersonalProjectsPage() {
         </Container>
       </section>
 
-      <section className="py-14 sm:py-16" style={{ background: 'var(--surface-white)' }}>
+      <section className="py-12 sm:py-14" style={{ background: 'var(--surface-white)' }}>
         <Container className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           {conceptSystems.map((system, i) => (
             <div key={system.name} className="concept-card flex flex-col gap-4 rounded-2xl border p-6" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)', boxShadow: 'var(--shadow-sm)' }} data-reveal>
@@ -162,7 +162,7 @@ export default function PersonalProjectsPage() {
         </Container>
       </section>
 
-      <section className="py-14 sm:py-16" style={{ background: 'var(--surface-warm)' }}>
+      <section className="py-12 sm:py-14" style={{ background: 'var(--surface-warm)' }}>
         <Container className="flex flex-col items-start gap-5">
           <span className="eyebrow">Looking for WordPress work instead?</span>
           <p className="max-w-xl leading-relaxed" style={{ color: 'var(--text-secondary)' }}>

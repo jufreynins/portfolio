@@ -29,7 +29,7 @@ const whyWorkWithMe = [
 export default function ServicesPage() {
   return (
     <>
-      <section className="pt-28 pb-12 sm:pt-32 sm:pb-14" style={{ background: 'var(--surface-warm)' }}>
+      <section className="pt-24 pb-10 sm:pt-28 sm:pb-12" style={{ background: 'var(--surface-warm)' }}>
         <Container>
           <SectionHeading
             as="h1"
@@ -40,7 +40,7 @@ export default function ServicesPage() {
         </Container>
       </section>
 
-      <section className="py-14 sm:py-16" style={{ background: 'var(--surface-white)' }}>
+      <section className="py-12 sm:py-14" style={{ background: 'var(--surface-white)' }}>
         <Container className="flex flex-col gap-10">
           {wordpressServices.map((service, i) => {
             const project = service.relatedProjectSlug ? projectBySlug[service.relatedProjectSlug] : undefined;
@@ -99,7 +99,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Why work with me */}
-      <section className="py-14 sm:py-16" style={{ background: 'var(--surface-warm)' }}>
+      <section className="py-12 sm:py-14" style={{ background: 'var(--surface-warm)' }}>
         <Container className="flex flex-col gap-8">
           <SectionHeading eyebrow="Why Work With Me" title="A developer who fits into how you already work" description="Truthful differentiators, not sales language." />
           <ul className="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
@@ -117,7 +117,7 @@ export default function ServicesPage() {
         </Container>
       </section>
 
-      <section className="py-14 sm:py-16" style={{ background: 'var(--surface-warm)' }}>
+      <section className="py-12 sm:py-14" style={{ background: 'var(--surface-warm)' }}>
         <Container className="flex flex-col items-start gap-5 border-t pt-10" style={{ borderColor: 'var(--border-color)' }}>
           <span className="eyebrow">Beyond WordPress</span>
           <p className="max-w-xl leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
@@ -142,7 +142,7 @@ export default function ServicesPage() {
         </Container>
       </section>
 
-      <section className="dark-grid-bg py-16 sm:py-20" style={{ background: 'var(--brand-dark)' }}>
+      <section className="dark-grid-bg py-14 sm:py-16" style={{ background: 'var(--brand-dark)' }}>
         <Container className="flex flex-col items-start gap-6">
           <SectionHeading
             eyebrow="Not sure which one you need?"
@@ -150,7 +150,7 @@ export default function ServicesPage() {
             description="Tell me what you're building and I'll point you in the right direction — no pressure, no obligation."
             dark
           />
-          <Button href="/contact" variant="primary">
+          <Button href="/contact" variant="primary" size="large">
             Discuss Your Website
           </Button>
         </Container>

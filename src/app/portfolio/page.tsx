@@ -18,7 +18,7 @@ export const metadata: Metadata = buildMetadata({
 export default function PortfolioPage() {
   return (
     <>
-      <section className="pt-28 pb-12 sm:pt-32 sm:pb-14" style={{ background: 'var(--surface-warm)' }}>
+      <section className="pt-24 pb-10 sm:pt-28 sm:pb-12" style={{ background: 'var(--surface-warm)' }}>
         <Container className="flex flex-col gap-4">
           <SectionHeading
             as="h1"
@@ -37,7 +37,7 @@ export default function PortfolioPage() {
       </section>
 
       <ProjectModalProvider>
-        <section className="pb-16 sm:pb-20" style={{ background: 'var(--surface-white)' }}>
+        <section className="pb-14 sm:pb-16" style={{ background: 'var(--surface-white)' }}>
           <Container>
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
               {projects.map((project, i) => (
@@ -50,7 +50,7 @@ export default function PortfolioPage() {
       </ProjectModalProvider>
 
       {/* Personal Projects (after client work, visually distinct) */}
-      <section className="border-t py-14 sm:py-16" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }}>
+      <section className="border-t py-12 sm:py-14" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }}>
         <Container className="flex flex-col gap-8">
           <SectionHeading eyebrow="Also Explore" title="Personal Projects" description="Personal system concepts and browser-based tools — separate from the client work above." />
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
@@ -100,10 +100,10 @@ export default function PortfolioPage() {
         </Container>
       </section>
 
-      <section className="dark-grid-bg py-16 sm:py-20" style={{ background: 'var(--brand-dark)' }}>
+      <section className="dark-grid-bg py-14 sm:py-16" style={{ background: 'var(--brand-dark)' }}>
         <Container className="flex flex-col items-start gap-6">
           <SectionHeading eyebrow="Let's build something" title="Ready to start a project?" description="Tell me a bit about what you're building. I typically reply within one business day." dark />
-          <Button href="/contact" variant="primary">
+          <Button href="/contact" variant="primary" size="large">
             Discuss Your Website
           </Button>
         </Container>

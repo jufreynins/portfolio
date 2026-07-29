@@ -39,8 +39,8 @@ export default function AboutPage() {
   return (
     <>
       {/* Intro */}
-      <section className="pt-28 pb-14 sm:pt-32 sm:pb-16" style={{ background: 'var(--surface-warm)' }}>
-        <Container className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-16">
+      <section className="pt-24 pb-12 sm:pt-28 sm:pb-14" style={{ background: 'var(--surface-warm)' }}>
+        <Container className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-7" data-reveal data-reveal-type="fade-up">
             <SectionHeading as="h1" eyebrow="About" title="WordPress developer focused on reliable, polished execution." />
           </div>
@@ -86,8 +86,8 @@ export default function AboutPage() {
       </section>
 
       {/* Skills */}
-      <section className="py-14 sm:py-16" style={{ background: 'var(--surface-white)' }}>
-        <Container className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-16">
+      <section className="py-12 sm:py-14" style={{ background: 'var(--surface-white)' }}>
+        <Container className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-4">
             <div className="relative overflow-hidden lg:sticky lg:top-32">
               <SectionHeading
@@ -104,7 +104,7 @@ export default function AboutPage() {
       </section>
 
       {/* Process */}
-      <section className="dark-grid-bg py-14 sm:py-16" style={{ background: '#25134f' }}>
+      <section className="dark-grid-bg py-12 sm:py-14" style={{ background: '#25134f' }}>
         <Container className="grid grid-cols-1 gap-10 lg:grid-cols-[38fr_62fr] lg:gap-12">
           <div className="min-w-0">
             <div className="lg:sticky lg:top-32">
@@ -119,7 +119,7 @@ export default function AboutPage() {
       </section>
 
       {/* AI-assisted development */}
-      <section className="py-14 sm:py-16" style={{ background: 'var(--surface-white)' }}>
+      <section className="py-12 sm:py-14" style={{ background: 'var(--surface-white)' }}>
         <Container className="flex flex-col gap-8">
           <SectionHeading
             eyebrow="Workflow"
@@ -131,10 +131,10 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="dark-grid-bg py-16 sm:py-20" style={{ background: 'var(--brand-dark)' }}>
+      <section className="dark-grid-bg py-14 sm:py-16" style={{ background: 'var(--brand-dark)' }}>
         <Container className="flex flex-col items-start gap-6">
           <SectionHeading eyebrow="Let's build something" title="Ready to start a project?" description="Tell me a bit about what you're building. I typically reply within one business day." dark />
-          <Button href="/contact" variant="primary">
+          <Button href="/contact" variant="primary" size="large">
             Discuss Your Website
           </Button>
         </Container>

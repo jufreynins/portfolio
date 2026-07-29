@@ -21,9 +21,10 @@ export default function SectionHeading({
   titleClass = '',
 }: SectionHeadingProps) {
   const alignClass = align === 'center' ? 'text-center items-center mx-auto' : 'text-left items-start';
+  const widthClass = Tag === 'h1' ? 'max-w-3xl' : 'max-w-2xl';
 
   return (
-    <div className={`reveal relative flex flex-col gap-3 max-w-2xl ${alignClass}`} data-reveal>
+    <div className={`reveal relative flex flex-col gap-3 ${widthClass} ${alignClass}`} data-reveal>
       {watermark && (
         <span
           className={`pointer-events-none absolute -top-5 left-0 -z-0 select-none whitespace-nowrap font-serif text-[3.5rem] leading-none tracking-tight opacity-[0.07] sm:text-[5rem] lg:-top-8 lg:text-[6rem] ${

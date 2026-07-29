@@ -28,6 +28,13 @@ const tools: Tool[] = [
     href: '/tools/image-to-webp',
   },
   {
+    title: 'CSS Gradient Generator',
+    status: 'Live',
+    purpose: 'Create custom linear, radial, and conic gradients with a live preview, then copy the production-ready CSS instantly.',
+    detail: 'No uploads — runs entirely in your browser.',
+    href: '/tools/css-gradient-generator',
+  },
+  {
     title: 'Image Compressor',
     status: 'Planned',
     purpose: 'Reduce image file size while preserving visual quality, without converting format.',
@@ -56,7 +63,7 @@ const tools: Tool[] = [
 export default function ToolsPage() {
   return (
     <>
-      <section className="pt-28 pb-12 sm:pt-32 sm:pb-14" style={{ background: 'var(--surface-warm)' }}>
+      <section className="pt-24 pb-10 sm:pt-28 sm:pb-12" style={{ background: 'var(--surface-warm)' }}>
         <Container>
           <SectionHeading
             as="h1"
@@ -67,7 +74,7 @@ export default function ToolsPage() {
         </Container>
       </section>
 
-      <section className="py-14 sm:py-16" style={{ background: 'var(--surface-white)' }}>
+      <section className="py-12 sm:py-14" style={{ background: 'var(--surface-white)' }}>
         <Container>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {tools.map((tool) => (
@@ -115,7 +122,7 @@ export default function ToolsPage() {
         </Container>
       </section>
 
-      <section className="py-14 sm:py-16" style={{ background: 'var(--surface-warm)' }}>
+      <section className="py-12 sm:py-14" style={{ background: 'var(--surface-warm)' }}>
         <Container className="flex flex-col items-start gap-5">
           <span className="eyebrow">Looking for WordPress work instead?</span>
           <p className="max-w-xl leading-relaxed" style={{ color: 'var(--text-secondary)' }}>

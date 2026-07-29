@@ -37,7 +37,7 @@ export default function ImageToWebpPage() {
   return (
     <>
       {/* Header */}
-      <section className="pt-28 pb-12 sm:pt-32 sm:pb-14" style={{ background: 'var(--surface-warm)' }}>
+      <section className="pt-24 pb-10 sm:pt-28 sm:pb-12" style={{ background: 'var(--surface-warm)' }}>
         <Container className="flex flex-col gap-8">
           <a href="/tools" className="inline-flex w-fit items-center gap-2 text-sm font-medium transition-colors hover:text-zinc-900" style={{ color: 'var(--text-secondary)' }}>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -68,7 +68,7 @@ export default function ImageToWebpPage() {
       </section>
 
       {/* Tool */}
-      <section style={{ background: 'var(--surface-white)' }} className="py-16 sm:py-20">
+      <section style={{ background: 'var(--surface-white)' }} className="py-14 sm:py-16">
         <Container className="flex flex-col gap-8">
           <div role="status" aria-live="polite" className="sr-only" data-live-region />
 
@@ -224,7 +224,7 @@ export default function ImageToWebpPage() {
       </section>
 
       {/* Info */}
-      <section style={{ background: 'var(--surface-warm)' }} className="py-14 sm:py-16">
+      <section style={{ background: 'var(--surface-warm)' }} className="py-12 sm:py-14">
         <Container className="flex flex-col gap-12">
           <SectionHeading eyebrow="Good to know" title="About the WebP format" description="A quick primer on what WebP is and how this tool works." />
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
@@ -243,7 +243,7 @@ export default function ImageToWebpPage() {
       </section>
 
       {/* CTA */}
-      <section style={{ background: 'var(--brand-dark)' }} className="dark-grid-bg py-16 sm:py-20">
+      <section style={{ background: 'var(--brand-dark)' }} className="dark-grid-bg py-14 sm:py-16">
         <Container className="flex flex-col items-start gap-6">
           <SectionHeading
             eyebrow="Need more speed?"
@@ -251,7 +251,7 @@ export default function ImageToWebpPage() {
             description="I can optimize images, improve Core Web Vitals, clean up WordPress performance issues, and make your website faster across desktop and mobile."
             dark
           />
-          <Button href="/contact" variant="primary">
+          <Button href="/contact" variant="primary" size="large">
             Request a Website Performance Review
           </Button>
         </Container>

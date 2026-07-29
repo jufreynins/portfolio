@@ -1,9 +1,15 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react';
 
 type Variant = 'primary' | 'secondary' | 'ghost';
+type Size = 'default' | 'large';
 
 const base =
-  'group relative inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full px-6 py-3 text-[0.9375rem] font-bold transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 min-h-[48px]';
+  'group relative inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-bold transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2';
+
+const sizes: Record<Size, string> = {
+  default: 'px-5 py-2.5 text-sm min-h-[44px]',
+  large: 'px-6 py-3 text-[0.9375rem] min-h-[48px]',
+};
 
 const variants: Record<Variant, string> = {
   primary:
@@ -15,6 +21,7 @@ const variants: Record<Variant, string> = {
 
 interface CommonProps {
   variant?: Variant;
+  size?: Size;
   className?: string;
   children?: ReactNode;
   [dataAttr: `data-${string}`]: unknown;
@@ -42,8 +49,8 @@ const Arrow = () => (
   </svg>
 );
 
-export default function Button({ href, variant = 'primary', className = '', children, ...rest }: ButtonProps) {
-  const classes = `${base} ${variants[variant]} ${className}`;
+export default function Button({ href, variant = 'primary', size = 'default', className = '', children, ...rest }: ButtonProps) {
+  const classes = `${base} ${sizes[size]} ${variants[variant]} ${className}`;
 
   if (href) {
     return (

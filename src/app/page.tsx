@@ -88,7 +88,7 @@ export default function HomePage() {
   return (
     <>
       {/* Hero */}
-      <section id="home" className="relative flex items-center overflow-hidden pt-28 pb-14 sm:pt-32" style={{ background: 'var(--brand-lavender)' }} data-hero-section>
+      <section id="home" className="relative flex items-center overflow-hidden pt-24 pb-12 sm:pt-28" style={{ background: 'var(--brand-lavender)' }} data-hero-section>
         <div className="pointer-events-none absolute inset-0 -z-10" data-hero-bg>
           <div
             className="absolute inset-0 opacity-[0.06]"
@@ -133,10 +133,10 @@ export default function HomePage() {
               </p>
 
               <div className="mt-2 flex flex-col gap-4 sm:flex-row" data-hero-support>
-                <Button href="/portfolio" variant="primary" data-magnetic="">
+                <Button href="/portfolio" variant="primary" size="large" data-magnetic="">
                   View WordPress Projects
                 </Button>
-                <Button href="/contact" variant="secondary" data-magnetic="">
+                <Button href="/contact" variant="secondary" size="large" data-magnetic="">
                   Discuss Your Website
                 </Button>
               </div>
@@ -224,7 +224,7 @@ export default function HomePage() {
       </section>
 
       {/* Core WordPress Services */}
-      <section className="py-16 sm:py-20" style={{ background: 'var(--surface-warm)' }}>
+      <section className="py-14 sm:py-16" style={{ background: 'var(--surface-warm)' }}>
         <Container className="flex flex-col gap-10">
           <SectionHeading
             eyebrow="WordPress Services"
@@ -300,7 +300,7 @@ export default function HomePage() {
 
       {/* Featured WordPress Work */}
       <ProjectModalProvider>
-        <section id="work" className="py-16 sm:py-20" style={{ background: 'var(--surface-white)' }}>
+        <section id="work" className="py-14 sm:py-16" style={{ background: 'var(--surface-white)' }}>
           <Container className="flex flex-col gap-10 sm:gap-12">
             <div className="relative overflow-hidden">
               <SectionHeading
@@ -327,7 +327,7 @@ export default function HomePage() {
       </ProjectModalProvider>
 
       {/* Advanced WordPress Capabilities */}
-      <section className="py-14 sm:py-16" style={{ background: 'var(--surface-warm)' }}>
+      <section className="py-12 sm:py-14" style={{ background: 'var(--surface-warm)' }}>
         <Container className="flex flex-col gap-8">
           <SectionHeading
             eyebrow="Advanced WordPress Capabilities"
@@ -359,7 +359,7 @@ export default function HomePage() {
       </section>
 
       {/* Process */}
-      <section className="dark-grid-bg py-14 sm:py-16" style={{ background: '#25134f' }}>
+      <section className="dark-grid-bg py-12 sm:py-14" style={{ background: '#25134f' }}>
         <Container className="grid grid-cols-1 gap-10 lg:grid-cols-[38fr_62fr] lg:gap-12">
           <div className="min-w-0">
             <div className="lg:sticky lg:top-32">
@@ -374,7 +374,7 @@ export default function HomePage() {
       </section>
 
       {/* Tools & Personal Projects preview */}
-      <section className="py-14 sm:py-16" style={{ background: 'var(--surface-white)' }}>
+      <section className="py-12 sm:py-14" style={{ background: 'var(--surface-white)' }}>
         <Container className="flex flex-col gap-8">
           <SectionHeading
             eyebrow="Side Projects"
@@ -429,8 +429,8 @@ export default function HomePage() {
       </section>
 
       {/* Short About */}
-      <section id="about" className="py-14 sm:py-16" style={{ background: 'var(--surface-warm)' }}>
-        <Container className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-16">
+      <section id="about" className="py-12 sm:py-14" style={{ background: 'var(--surface-warm)' }}>
+        <Container className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-7" data-reveal data-reveal-type="fade-up">
             <span className="eyebrow">About</span>
             <h2 className="mt-2 max-w-xl text-balance">
@@ -462,7 +462,7 @@ export default function HomePage() {
       </section>
 
       {/* Final CTA */}
-      <section id="contact" className="dark-grid-bg py-16 sm:py-20" style={{ background: 'var(--brand-dark)' }}>
+      <section id="contact" className="dark-grid-bg py-14 sm:py-16" style={{ background: 'var(--brand-dark)' }}>
         <Container className="flex flex-col items-start gap-6">
           <SectionHeading
             eyebrow="Contact"
@@ -471,10 +471,10 @@ export default function HomePage() {
             dark
           />
           <div className="flex flex-wrap gap-4" data-reveal>
-            <Button href="/contact" variant="primary">
+            <Button href="/contact" variant="primary" size="large">
               Discuss Your Project
             </Button>
-            <Button href="/portfolio" variant="secondary">
+            <Button href="/portfolio" variant="secondary" size="large">
               View WordPress Work
             </Button>
           </div>

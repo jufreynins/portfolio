@@ -5,8 +5,8 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t py-16 sm:py-20" style={{ borderColor: 'var(--border-color)' }}>
-      <Container className="flex flex-col gap-12 sm:flex-row sm:items-start sm:justify-between">
+    <footer className="border-t py-12 sm:py-14" style={{ borderColor: 'var(--border-color)' }}>
+      <Container className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
         <div className="flex flex-col gap-3">
           <span className="font-serif text-xl" style={{ color: 'var(--text-primary)' }}>
             {siteConfig.name}
@@ -44,7 +44,7 @@ export default function Footer() {
         </div>
       </Container>
 
-      <Container className="mt-12 flex flex-col gap-3 border-t pt-6 sm:flex-row sm:items-center sm:justify-between" style={{ borderColor: 'var(--border-color)' }}>
+      <Container className="mt-8 flex flex-col gap-3 border-t pt-6 sm:flex-row sm:items-center sm:justify-between" style={{ borderColor: 'var(--border-color)' }}>
         <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
           &copy; {year} {siteConfig.name}. All rights reserved.
         </p>
