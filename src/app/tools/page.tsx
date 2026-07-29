@@ -7,7 +7,7 @@ import { buildMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = buildMetadata({
   title: `Tools — ${siteConfig.name}`,
-  description: 'Free, privacy-focused browser tools — convert images between JPG, PNG, and WebP, build CSS gradients, and more, with no uploads, accounts, or permanent storage.',
+  description: 'Free, privacy-focused browser tools — convert images between JPG, PNG, and WebP, build CSS gradients, preview SEO meta tags, and more, with no uploads, accounts, or permanent storage.',
   canonical: `${siteConfig.url}/tools`,
 });
 
@@ -42,9 +42,10 @@ const tools: Tool[] = [
   },
   {
     title: 'SEO Meta Preview',
-    status: 'Planned',
-    purpose: 'Preview how a page title and meta description will appear in search results.',
-    detail: 'Will run entirely in your browser.',
+    status: 'Live',
+    purpose: 'Preview how a page title and meta description will appear in search results, on desktop and mobile, then copy ready-to-use meta tags.',
+    detail: 'No uploads — runs entirely in your browser.',
+    href: '/tools/seo-meta-preview',
   },
   {
     title: 'Favicon Generator',
