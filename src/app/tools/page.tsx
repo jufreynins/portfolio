@@ -7,7 +7,7 @@ import { buildMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = buildMetadata({
   title: `Tools — ${siteConfig.name}`,
-  description: 'Free, privacy-focused browser tools — convert images between JPG, PNG, and WebP, build CSS gradients, preview SEO meta tags, and more, with no uploads, accounts, or permanent storage.',
+  description: 'Free, privacy-focused browser tools — convert and compress images, build CSS gradients, preview SEO meta tags, generate favicons, format JSON, and more, with no uploads, accounts, or permanent storage.',
   canonical: `${siteConfig.url}/tools`,
 });
 
@@ -36,9 +36,10 @@ const tools: Tool[] = [
   },
   {
     title: 'Image Compressor',
-    status: 'Planned',
-    purpose: 'Reduce image file size while preserving visual quality, without converting format.',
-    detail: 'Will run entirely in your browser.',
+    status: 'Live',
+    purpose: 'Reduce image file size while preserving the original format, and compare before/after size.',
+    detail: 'No uploads — runs entirely in your browser.',
+    href: '/tools/image-compressor',
   },
   {
     title: 'SEO Meta Preview',
@@ -49,15 +50,17 @@ const tools: Tool[] = [
   },
   {
     title: 'Favicon Generator',
-    status: 'Planned',
-    purpose: 'Generate a full favicon set from a single source image.',
-    detail: 'Will run entirely in your browser.',
+    status: 'Live',
+    purpose: 'Generate a full favicon set — favicon.ico plus Apple touch and Android/PWA icons — from a single source image.',
+    detail: 'No uploads — runs entirely in your browser.',
+    href: '/tools/favicon-generator',
   },
   {
     title: 'JSON Formatter',
-    status: 'Planned',
-    purpose: 'Format, validate, and minify JSON directly in the browser.',
-    detail: 'Will run entirely in your browser.',
+    status: 'Live',
+    purpose: 'Format, validate, and minify JSON directly in the browser, with line/column error reporting.',
+    detail: 'No uploads — runs entirely in your browser.',
+    href: '/tools/json-formatter',
   },
 ];
 
