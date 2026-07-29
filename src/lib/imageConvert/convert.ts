@@ -1,9 +1,4 @@
-import {
-  ACCEPTED_EXTENSIONS,
-  ACCEPTED_MIME_TYPES,
-  MAX_DIMENSION,
-  MAX_FILE_SIZE,
-} from './types';
+import { ACCEPTED_EXTENSIONS, ACCEPTED_MIME_TYPES, MAX_DIMENSION, MAX_FILE_SIZE, formatMime, type OutputFormat } from './types';
 import { getExtension } from './format';
 
 export interface ValidationResult {
@@ -11,8 +6,8 @@ export interface ValidationResult {
   reason?: string;
 }
 
-/** Reads the first bytes of a file to confirm it is actually a JPEG or PNG, regardless of its extension or reported MIME type. */
-async function detectImageSignature(file: File): Promise<'jpeg' | 'png' | null> {
+/** Reads the first bytes of a file to confirm it is actually a JPEG, PNG, or WebP, regardless of its extension or reported MIME type. */
+async function detectImageSignature(file: File): Promise<'jpeg' | 'png' | 'webp' | null> {
   const head = new Uint8Array(await file.slice(0, 12).arrayBuffer());
   if (head[0] === 0xff && head[1] === 0xd8 && head[2] === 0xff) return 'jpeg';
   if (
@@ -27,13 +22,31 @@ async function detectImageSignature(file: File): Promise<'jpeg' | 'png' | null> 
   ) {
     return 'png';
   }
+  if (
+    head[0] === 0x52 &&
+    head[1] === 0x49 &&
+    head[2] === 0x46 &&
+    head[3] === 0x46 &&
+    head[8] === 0x57 &&
+    head[9] === 0x45 &&
+    head[10] === 0x42 &&
+    head[11] === 0x50
+  ) {
+    return 'webp';
+  }
   return null;
 }
 
-export async function validateFile(file: File): Promise<ValidationResult> {
+export function signatureLabel(signature: 'jpeg' | 'png' | 'webp'): string {
+  if (signature === 'jpeg') return 'JPG';
+  if (signature === 'png') return 'PNG';
+  return 'WEBP';
+}
+
+export async function validateFile(file: File): Promise<ValidationResult & { detectedType?: string }> {
   const ext = getExtension(file.name);
   if (!ACCEPTED_EXTENSIONS.includes(ext)) {
-    return { valid: false, reason: `"${file.name}" is not a JPG or PNG file.` };
+    return { valid: false, reason: `"${file.name}" is not a JPG, PNG, or WebP file.` };
   }
 
   if (file.type && !ACCEPTED_MIME_TYPES.includes(file.type)) {
@@ -50,10 +63,10 @@ export async function validateFile(file: File): Promise<ValidationResult> {
 
   const signature = await detectImageSignature(file);
   if (!signature) {
-    return { valid: false, reason: `"${file.name}" doesn't look like a valid JPG or PNG file.` };
+    return { valid: false, reason: `"${file.name}" doesn't look like a valid JPG, PNG, or WebP file.` };
   }
 
-  return { valid: true };
+  return { valid: true, detectedType: signatureLabel(signature) };
 }
 
 interface DecodedImage {
@@ -106,11 +119,13 @@ export function checkDimensions(width: number, height: number): ValidationResult
   return { valid: true };
 }
 
-export function convertToWebp(
+/** Draws the decoded image to a canvas and re-encodes it as the requested output format. PNG output ignores `quality` (lossless format). */
+export function convertToFormat(
   source: ImageBitmap | HTMLImageElement,
   width: number,
   height: number,
-  quality: number
+  quality: number,
+  format: OutputFormat
 ): Promise<Blob> {
   return new Promise((resolve, reject) => {
     const canvas = document.createElement('canvas');
@@ -121,36 +136,46 @@ export function convertToWebp(
       reject(new Error('Canvas is not supported in this browser.'));
       return;
     }
+    if (format === 'jpeg') {
+      // JPEG has no alpha channel — flatten onto white first so transparent PNGs/WebPs don't turn black.
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, width, height);
+    }
     try {
       ctx.drawImage(source, 0, 0, width, height);
     } catch {
       reject(new Error('This image could not be drawn to canvas.'));
       return;
     }
+    const mime = formatMime(format);
     canvas.toBlob(
       (blob) => {
         if (blob) resolve(blob);
-        else reject(new Error('WebP conversion failed.'));
+        else reject(new Error(`${mime.replace('image/', '').toUpperCase()} conversion failed.`));
       },
-      'image/webp',
-      quality
+      mime,
+      format === 'png' ? undefined : quality
     );
   });
 }
 
-let webpSupportCache: Promise<boolean> | null = null;
+const formatSupportCache = new Map<string, Promise<boolean>>();
 
-export function checkWebpSupport(): Promise<boolean> {
-  if (webpSupportCache) return webpSupportCache;
-  webpSupportCache = new Promise((resolve) => {
+export function checkFormatSupport(format: OutputFormat): Promise<boolean> {
+  const mime = formatMime(format);
+  const cached = formatSupportCache.get(mime);
+  if (cached) return cached;
+
+  const promise = new Promise<boolean>((resolve) => {
     try {
       const canvas = document.createElement('canvas');
       canvas.width = 1;
       canvas.height = 1;
-      canvas.toBlob((blob) => resolve(!!blob && blob.type === 'image/webp'), 'image/webp');
+      canvas.toBlob((blob) => resolve(!!blob && blob.type === mime), mime);
     } catch {
       resolve(false);
     }
   });
-  return webpSupportCache;
+  formatSupportCache.set(mime, promise);
+  return promise;
 }

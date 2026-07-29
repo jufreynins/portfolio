@@ -4,5 +4,8 @@ Redirect 301 /lab /personal-projects
 Redirect 301 /services/website-wordpress /services
 Redirect 301 /services/custom-web-apps /personal-projects
 
+# Image to WebP Converter was renamed/expanded into Image Format Converter (bidirectional JPG/PNG/WebP)
+Redirect 301 /tools/image-to-webp /tools/image-format-converter
+
 DirectoryIndex index.html
 ErrorDocument 404 /404.html

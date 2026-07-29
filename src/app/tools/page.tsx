@@ -7,7 +7,7 @@ import { buildMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = buildMetadata({
   title: `Tools — ${siteConfig.name}`,
-  description: 'Free, privacy-focused browser tools — convert images to WebP and more, with no uploads, accounts, or permanent storage.',
+  description: 'Free, privacy-focused browser tools — convert images between JPG, PNG, and WebP, build CSS gradients, and more, with no uploads, accounts, or permanent storage.',
   canonical: `${siteConfig.url}/tools`,
 });
 
@@ -21,11 +21,11 @@ interface Tool {
 
 const tools: Tool[] = [
   {
-    title: 'Image to WebP Converter',
+    title: 'Image Format Converter',
     status: 'Live',
-    purpose: 'Convert JPG and PNG files to WebP, compare size savings, and download individually or as a ZIP.',
+    purpose: 'Convert images between JPG, PNG, and WebP in either direction, compare size savings, and download individually or as a ZIP.',
     detail: 'No uploads — converted locally in your browser.',
-    href: '/tools/image-to-webp',
+    href: '/tools/image-format-converter',
   },
   {
     title: 'CSS Gradient Generator',

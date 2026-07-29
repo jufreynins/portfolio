@@ -1,3 +1,5 @@
+import { formatExtension, type OutputFormat } from './types';
+
 export function formatBytes(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;
   const kb = bytes / 1024;
@@ -11,11 +13,11 @@ export function sanitizeFilename(name: string): string {
   return cleaned || 'image';
 }
 
-export function toWebpFilename(originalName: string): string {
+export function toOutputFilename(originalName: string, format: OutputFormat): string {
   const sanitized = sanitizeFilename(originalName);
   const dot = sanitized.lastIndexOf('.');
   const base = dot > 0 ? sanitized.slice(0, dot) : sanitized;
-  return `${base || 'image'}.webp`;
+  return `${base || 'image'}${formatExtension(format)}`;
 }
 
 /** Returns a name unique against `used`, appending "-2", "-3", etc. before the extension. Mutates `used`. */

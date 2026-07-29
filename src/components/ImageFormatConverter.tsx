@@ -1,17 +1,18 @@
 'use client';
 
 import { useEffect } from 'react';
-import { DEFAULT_QUALITY, MAX_BATCH_SIZE, type ImageItem } from '@/lib/webp/types';
-import { dedupeFilename, formatBytes, percentSaved, qualityLabel, toWebpFilename } from '@/lib/webp/format';
-import { checkDimensions, checkWebpSupport, convertToWebp, decodeImage, validateFile } from '@/lib/webp/convert';
+import { DEFAULT_OUTPUT_FORMAT, DEFAULT_QUALITY, MAX_BATCH_SIZE, formatLabel, type ImageItem, type OutputFormat } from '@/lib/imageConvert/types';
+import { dedupeFilename, formatBytes, percentSaved, qualityLabel, toOutputFilename } from '@/lib/imageConvert/format';
+import { checkDimensions, checkFormatSupport, convertToFormat, decodeImage, validateFile } from '@/lib/imageConvert/convert';
 
 const CONCURRENCY = 2;
 
-export default function WebpConverter() {
+export default function ImageFormatConverter() {
   useEffect(() => {
     let items: ImageItem[] = [];
     const usedOutputNames = new Set<string>();
     let currentQuality = DEFAULT_QUALITY;
+    let currentFormat: OutputFormat = DEFAULT_OUTPUT_FORMAT;
     const queue: string[] = [];
     let activeCount = 0;
 
@@ -59,6 +60,8 @@ export default function WebpConverter() {
     const qualitySlider = document.querySelector<HTMLInputElement>('[data-quality-slider]');
     const qualityValueEl = document.querySelector<HTMLElement>('[data-quality-value]');
     const qualityLabelEl = document.querySelector<HTMLElement>('[data-quality-label]');
+    const qualityNoteEl = document.querySelector<HTMLElement>('[data-quality-note]');
+    const formatButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-format-btn]'));
     const listEl = document.querySelector<HTMLElement>('[data-list]');
     const emptyStateEl = document.querySelector<HTMLElement>('[data-empty-state]');
     const summaryEl = document.querySelector<HTMLElement>('[data-summary]');
@@ -95,7 +98,9 @@ export default function WebpConverter() {
     function renderItemHTML(item: ImageItem): string {
       const name = escapeHtml(item.originalName);
       const dims = item.width && item.height ? `${item.width}×${item.height}px` : 'Reading…';
-      const metaLine = `${item.originalType} · ${dims} · ${formatBytes(item.originalSize)} · ${Math.round(item.quality * 100)}% quality`;
+      const direction = `${item.originalType} &rarr; ${formatLabel(item.outputFormat).toUpperCase()}`;
+      const qualityPart = item.outputFormat === 'png' ? 'lossless' : `${Math.round(item.quality * 100)}% quality`;
+      const metaLine = `${direction} · ${dims} · ${formatBytes(item.originalSize)} · ${qualityPart}`;
 
       let statusHtml = '';
       let canDownload = false;
@@ -110,7 +115,7 @@ export default function WebpConverter() {
         if (saved >= 0) {
           statusHtml = `<p class="mt-2 text-xs font-semibold" style="color:var(--color-success)">Completed — ${formatBytes(item.convertedSize)} · Saved ${saved.toFixed(0)}%</p>`;
         } else {
-          statusHtml = `<p class="mt-2 text-xs font-semibold" style="color:var(--color-warning)">File size increased by ${Math.abs(saved).toFixed(0)}% — try a lower quality or keep the original.</p>`;
+          statusHtml = `<p class="mt-2 text-xs font-semibold" style="color:var(--color-warning)">File size increased by ${Math.abs(saved).toFixed(0)}% — try a lower quality or a different format.</p>`;
         }
       } else if (item.status === 'failed') {
         statusHtml = `<p class="mt-2 text-xs font-semibold" style="color:var(--color-error)">${escapeHtml(item.errorMessage ?? 'Conversion failed.')}</p>`;
@@ -133,7 +138,7 @@ export default function WebpConverter() {
               class="inline-flex min-h-[40px] items-center justify-center rounded-full px-4 py-2 text-xs font-bold text-white transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-40"
               style="background: var(--brand-primary);"
             >
-              Download WebP
+              Download ${formatLabel(item.outputFormat)}
             </button>
             <button
               type="button"
@@ -242,13 +247,13 @@ export default function WebpConverter() {
         item.width = decoded.width;
         item.height = decoded.height;
 
-        const blob = await convertToWebp(decoded.source, decoded.width, decoded.height, item.quality);
+        const blob = await convertToFormat(decoded.source, decoded.width, decoded.height, item.quality, item.outputFormat);
         if (decoded.isBitmap) (decoded.source as ImageBitmap).close();
 
         item.convertedBlob = blob;
         item.convertedSize = blob.size;
         item.status = 'completed';
-        announce(`${item.originalName} converted successfully.`);
+        announce(`${item.originalName} converted to ${formatLabel(item.outputFormat)} successfully.`);
       } catch (err) {
         item.status = 'failed';
         item.convertedBlob = null;
@@ -264,12 +269,12 @@ export default function WebpConverter() {
       pump();
     }
 
-    function addItem(file: File) {
+    function addItem(file: File, detectedType?: string) {
       const id = crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
       const originalUrl = URL.createObjectURL(file);
       const ext = file.name.slice(file.name.lastIndexOf('.')).toLowerCase();
-      const originalType = ext === '.png' ? 'PNG' : 'JPG';
-      const outputName = dedupeFilename(toWebpFilename(file.name), usedOutputNames);
+      const originalType = detectedType ?? (ext === '.png' ? 'PNG' : ext === '.webp' ? 'WEBP' : 'JPG');
+      const outputName = dedupeFilename(toOutputFilename(file.name, currentFormat), usedOutputNames);
 
       const item: ImageItem = {
         id,
@@ -282,6 +287,7 @@ export default function WebpConverter() {
         height: 0,
         status: 'queued',
         quality: currentQuality,
+        outputFormat: currentFormat,
         outputName,
         convertedBlob: null,
         convertedSize: null,
@@ -317,7 +323,7 @@ export default function WebpConverter() {
           errors.push(result.reason ?? `"${file.name}" could not be added.`);
           continue;
         }
-        addItem(file);
+        addItem(file, result.detectedType);
       }
 
       if (rejectedForBatch > 0) {
@@ -376,7 +382,7 @@ export default function WebpConverter() {
           zip.file(item.outputName, item.convertedBlob as Blob);
         }
         const blob = await zip.generateAsync({ type: 'blob' });
-        triggerDownload(blob, 'converted-webp-images.zip');
+        triggerDownload(blob, 'converted-images.zip');
         announce('ZIP download started.');
       } catch {
         showGlobalError('Could not generate the ZIP file. Please try downloading images individually.');
@@ -391,10 +397,28 @@ export default function WebpConverter() {
       if (qualityLabelEl) qualityLabelEl.textContent = qualityLabel(percent);
     }
 
+    function updateQualityAvailability() {
+      const isLossless = currentFormat === 'png';
+      if (qualitySlider) qualitySlider.disabled = isLossless;
+      qualityNoteEl?.classList.toggle('hidden', !isLossless);
+    }
+
+    function updateFormatButtons() {
+      formatButtons.forEach((btn) => {
+        const isActive = btn.dataset.format === currentFormat;
+        btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        btn.style.background = isActive ? 'var(--brand-primary)' : '';
+        btn.style.color = isActive ? '#ffffff' : '';
+      });
+    }
+
     function reconvertAll() {
       for (const item of items) {
         if (item.status === 'removed') continue;
         item.quality = currentQuality;
+        item.outputFormat = currentFormat;
+        usedOutputNames.delete(item.outputName);
+        item.outputName = dedupeFilename(toOutputFilename(item.originalName, currentFormat), usedOutputNames);
         item.status = 'queued';
         enqueueProcessing(item.id);
       }
@@ -468,6 +492,21 @@ export default function WebpConverter() {
       );
     }
 
+    formatButtons.forEach((btn) => {
+      btn.addEventListener(
+        'click',
+        () => {
+          const format = btn.dataset.format as OutputFormat | undefined;
+          if (!format || format === currentFormat) return;
+          currentFormat = format;
+          updateFormatButtons();
+          updateQualityAvailability();
+          if (items.length) debouncedReconvert();
+        },
+        { signal }
+      );
+    });
+
     listEl.addEventListener(
       'click',
       (e) => {
@@ -484,16 +523,22 @@ export default function WebpConverter() {
     clearAllBtn?.addEventListener('click', clearAll, { signal });
     downloadAllBtn?.addEventListener('click', downloadAllAsZip, { signal });
 
-    checkWebpSupport().then((supported) => {
+    checkFormatSupport('webp').then((supported) => {
       if (supported) return;
+      const webpBtn = formatButtons.find((btn) => btn.dataset.format === 'webp');
+      webpBtn?.setAttribute('disabled', 'true');
+      if (currentFormat === 'webp') {
+        currentFormat = 'jpeg';
+        updateFormatButtons();
+        updateQualityAvailability();
+      }
       unsupportedBannerEl?.classList.remove('hidden');
-      fileInput.disabled = true;
-      if (browseBtn) browseBtn.disabled = true;
-      if (qualitySlider) qualitySlider.disabled = true;
-      announce('Your browser does not support WebP conversion. Please use an updated version of Chrome, Edge, Firefox, or Safari.');
+      announce('Your browser does not support WebP output. JPG and PNG are still available.');
     });
 
     updateQualityDisplay(Math.round(currentQuality * 100));
+    updateFormatButtons();
+    updateQualityAvailability();
     render();
 
     return () => {
