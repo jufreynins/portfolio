@@ -5,7 +5,14 @@ Redirect 301 /services/website-wordpress /services
 Redirect 301 /services/custom-web-apps /personal-projects
 
 # Image to WebP Converter was renamed/expanded into Image Format Converter (bidirectional JPG/PNG/WebP)
-Redirect 301 /tools/image-to-webp /tools/image-format-converter
+Redirect 301 /tools/image-to-webp /tools/image-toolkit
+
+# Image Format Converter, Image Compressor, Image Resizer & Cropper, and Social Media Image Resizer
+# were consolidated into a single tabbed Image Toolkit workspace
+Redirect 301 /tools/image-format-converter /tools/image-toolkit
+Redirect 301 /tools/image-compressor /tools/image-toolkit
+Redirect 301 /tools/image-resizer /tools/image-toolkit
+Redirect 301 /tools/social-media-image-resizer /tools/image-toolkit
 
 DirectoryIndex index.html
 ErrorDocument 404 /404.html
