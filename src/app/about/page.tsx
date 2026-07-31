@@ -101,6 +101,11 @@ export default function AboutPage() {
                 </div>
               ))}
             </dl>
+            <div>
+              <Button href={siteConfig.cvPath} variant="secondary" target="_blank" rel="noopener noreferrer">
+                Download CV
+              </Button>
+            </div>
           </div>
         </Container>
       </section>
