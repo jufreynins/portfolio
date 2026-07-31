@@ -27,9 +27,9 @@ export default function PortfolioPage() {
             description="Real client work — the business need, my contribution, and the WordPress technology behind each site."
           />
           <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-            Every project below is completed client work. Looking for web systems instead? See{' '}
+            Every project below is completed client work. Looking for personal projects instead? See{' '}
             <a href="/personal-projects" className="font-medium underline" style={{ color: 'var(--brand-primary)' }}>
-              Web Systems
+              Personal Projects
             </a>
             .
           </p>
@@ -45,10 +45,10 @@ export default function PortfolioPage() {
         </section>
       </ProjectModalProvider>
 
-      {/* Web Systems & Tools cross-sell (after client work, visually distinct) */}
+      {/* Personal Projects & Tools cross-sell (after client work, visually distinct) */}
       <section className="border-t py-12 sm:py-14" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }}>
         <Container className="flex flex-col gap-8">
-          <SectionHeading eyebrow="Also Explore" title="Web Systems & Tools" description="Personal system concepts and browser-based tools — separate from the client work above." />
+          <SectionHeading eyebrow="Also Explore" title="Personal Projects & Tools" description="Personal system concepts and browser-based tools — separate from the client work above." />
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <a href="/personal-projects" className="lab-card flex flex-col gap-4 rounded-2xl border p-6" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-white)', boxShadow: 'var(--shadow-sm)' }} data-reveal>
               <div className="flex items-start justify-between gap-3">
@@ -61,11 +61,11 @@ export default function PortfolioPage() {
                   </svg>
                 </span>
                 <span className="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wide" style={{ borderColor: 'var(--border-color)', color: 'var(--text-secondary)' }}>
-                  Web Systems
+                  Personal Concept
                 </span>
               </div>
               <h3 className="text-lg font-bold" style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-heading)' }}>
-                Web Systems
+                Personal Projects
               </h3>
               <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                 Personal system concepts and prototypes for task management, inventory, and internal operations.

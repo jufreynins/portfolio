@@ -45,7 +45,7 @@ export default async function SystemCaseStudyPage({ params }: { params: Promise<
               <line x1="17" y1="7" x2="7" y2="17" />
               <polyline points="17 17 7 17 7 7" />
             </svg>
-            Back to Web Systems
+            Back to Personal Projects
           </a>
 
           <div className="flex flex-wrap items-center gap-3">

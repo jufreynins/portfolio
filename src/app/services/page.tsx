@@ -228,7 +228,7 @@ export default function ServicesPage() {
           <p className="max-w-xl leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
             I also build{' '}
             <a href="/personal-projects" className="underline" style={{ color: 'var(--brand-primary)' }}>
-              Web Systems
+              Personal Projects
             </a>{' '}
             and{' '}
             <a href="/tools" className="underline" style={{ color: 'var(--brand-primary)' }}>
@@ -238,7 +238,7 @@ export default function ServicesPage() {
           </p>
           <div className="flex flex-wrap gap-4">
             <Button href="/personal-projects" variant="secondary">
-              Web Systems
+              Personal Projects
             </Button>
             <Button href="/tools" variant="secondary">
               Tools

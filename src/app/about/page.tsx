@@ -32,7 +32,7 @@ const capabilityHighlights = [
   'Frontend customization',
   'Hosting, DNS & email setup',
   'Agency collaboration',
-  'Web Systems (secondary interest)',
+  'Personal Projects (secondary interest)',
 ];
 
 const technicalOpsGroups = [
@@ -73,7 +73,7 @@ export default function AboutPage() {
             <p className="leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
               As a secondary interest, I also build{' '}
               <a href="/personal-projects" className="underline" style={{ color: 'var(--brand-primary)' }}>
-                Web Systems
+                Personal Projects
               </a>{' '}
               and{' '}
               <a href="/tools" className="underline" style={{ color: 'var(--brand-primary)' }}>

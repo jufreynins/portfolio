@@ -37,7 +37,7 @@ const credibilityPoints = [
     icon: '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>',
   },
   {
-    label: 'Web Systems and Browser Tools',
+    label: 'Personal Projects and Browser Tools',
     icon: '<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>',
   },
   {
@@ -61,11 +61,11 @@ const capabilityCards = [
   },
   {
     id: 'systems',
-    eyebrow: 'Web Systems',
+    eyebrow: 'Personal Projects',
     title: 'Internal systems built around real workflows.',
     description: 'Admin dashboards and internal tools for task management, inventory, records, and reporting — designed around how a team actually works.',
     highlights: ['Admin dashboards', 'Task management', 'Inventory & records', 'User roles & reports'],
-    cta: { label: 'View Web Systems', href: '/personal-projects' },
+    cta: { label: 'View Personal Projects', href: '/personal-projects' },
   },
   {
     id: 'tools',
@@ -180,7 +180,7 @@ export default function HomePage() {
                 </a>{' '}
                 or see the systems I build in{' '}
                 <a href="/personal-projects" className="underline" style={{ color: 'var(--brand-primary)' }}>
-                  Web Systems
+                  Personal Projects
                 </a>
                 .
               </p>
@@ -284,7 +284,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Web Systems — dashboard mock preview */}
+            {/* Personal Projects — dashboard mock preview */}
             <div className="card-surface flex flex-col overflow-hidden rounded-2xl" style={{ background: 'var(--surface-white)' }} data-reveal>
               <div className="p-6 pb-0">
                 <SystemPreview routeLabel="app.system/admin/overview" activeNav={1} />
@@ -379,11 +379,11 @@ export default function HomePage() {
         </section>
       </ProjectModalProvider>
 
-      {/* Featured Web Systems */}
+      {/* Featured Personal Projects */}
       <section className="py-14 sm:py-16" style={{ background: 'var(--surface-warm)' }}>
         <Container className="flex flex-col gap-10">
           <SectionHeading
-            eyebrow="Featured Web Systems"
+            eyebrow="Featured Personal Projects"
             title="Internal systems built for real operations."
             description="Personal systems and prototypes — clearly labeled by status, not presented as client production work."
           />
@@ -433,7 +433,7 @@ export default function HomePage() {
 
           <div data-reveal>
             <Button href="/personal-projects" variant="secondary">
-              View All Web Systems
+              View All Personal Projects
             </Button>
           </div>
         </Container>

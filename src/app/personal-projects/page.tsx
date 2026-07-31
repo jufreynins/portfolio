@@ -9,8 +9,8 @@ import { buildMetadata } from '@/lib/seo';
 import { systems, systemStatusStyle } from '@/data/systems';
 
 export const metadata: Metadata = buildMetadata({
-  title: `Web Systems — ${siteConfig.name}`,
-  description: 'Personal web system concepts and live deployments — admin dashboards, task tracking, and internal tools, clearly labeled by status.',
+  title: `Personal Projects — ${siteConfig.name}`,
+  description: 'Personal web system concepts and live deployments — clearly labeled experiments outside client work, not existing production systems.',
   canonical: `${siteConfig.url}/personal-projects`,
 });
 
@@ -21,9 +21,9 @@ export default function WebSystemsPage() {
         <Container>
           <SectionHeading
             as="h1"
-            eyebrow="Web Systems"
-            title="Web systems designed around real workflows."
-            description="Admin dashboards, task tracking, and internal tools — a mix of live personal deployments and concept designs, clearly labeled by status, never presented as client production systems."
+            eyebrow="Personal Projects"
+            title="Personal systems, outside client work."
+            description="A mix of live personal deployments and concept designs for internal tools — clearly labeled, never existing client or production systems."
           />
         </Container>
       </section>
