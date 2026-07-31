@@ -65,24 +65,24 @@ export default function ProjectCard({ project, index, priority = false }: Projec
           ))}
         </ul>
 
-        <div className="mt-auto flex flex-wrap gap-3 pt-4">
+        <div className="mt-auto flex flex-wrap gap-2 pt-4">
           <button
             type="button"
             onClick={() => openProject(project)}
-            className="view-details-btn inline-flex min-h-[44px] items-center justify-center rounded-full border-2 px-5 text-sm font-bold transition-colors duration-300"
+            className="view-details-btn inline-flex min-h-[38px] items-center justify-center rounded-full border-2 px-3.5 text-xs font-bold transition-colors duration-300"
             style={{ borderColor: 'var(--brand-primary)', color: 'var(--brand-primary)' }}
           >
-            View Project Details
+            View Details
           </button>
           <a
             href={project.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-full px-5 text-sm font-bold transition-colors duration-300"
+            className="inline-flex min-h-[38px] items-center justify-center gap-1.5 rounded-full px-3.5 text-xs font-bold transition-colors duration-300"
             style={{ background: 'var(--brand-primary)', color: 'var(--text-on-dark)' }}
           >
-            Visit Live Website
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            Visit Site
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <line x1="7" y1="17" x2="17" y2="7" />
               <polyline points="7 7 17 7 17 17" />
             </svg>
