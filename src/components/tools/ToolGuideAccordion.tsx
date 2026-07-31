@@ -4,11 +4,12 @@ interface ToolGuideAccordionProps {
   title?: string;
   tips?: string[];
   children?: ReactNode;
+  defaultOpen?: boolean;
 }
 
-export default function ToolGuideAccordion({ title = 'How it works', tips, children }: ToolGuideAccordionProps) {
+export default function ToolGuideAccordion({ title = 'How it works', tips, children, defaultOpen = false }: ToolGuideAccordionProps) {
   return (
-    <details className="group rounded-2xl border" style={{ borderColor: 'var(--border-color)' }}>
+    <details className="group rounded-2xl border" style={{ borderColor: 'var(--border-color)' }} open={defaultOpen}>
       <summary
         className="flex cursor-pointer list-none items-center justify-between gap-3 rounded-2xl px-5 py-4 text-sm font-bold"
         style={{ color: 'var(--text-primary)' }}

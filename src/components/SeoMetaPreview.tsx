@@ -1,23 +1,44 @@
-﻿'use client';
+'use client';
 
-import { useId, useRef, useState } from 'react';
+import { useId, useMemo, useRef, useState } from 'react';
+import ToolGuideAccordion from '@/components/tools/ToolGuideAccordion';
 import {
   DESCRIPTION_RANGE,
   DEVICE_PREVIEW_LIMITS,
   EMPTY_FIELDS,
   EXAMPLE_FIELDS,
+  PIXEL_WIDTH_LIMITS,
   TITLE_RANGE,
   buildMetaTagsCode,
   extractDisplayUrl,
   getFieldStatus,
   getFieldStatusColor,
   getFieldStatusLabel,
+  measureTextWidth,
   truncateForPreview,
   type DeviceMode,
 } from '@/lib/seoPreview/utils';
 
 const secondaryActionClass =
   'inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border-2 px-5 py-2.5 text-sm font-bold transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-50';
+
+function PixelWidthBar({ label, px, limit }: { label: string; px: number; limit: number }) {
+  const ratio = Math.min(1, px / limit);
+  const color = ratio > 1 ? 'var(--color-error)' : ratio > 0.85 ? 'var(--color-warning)' : 'var(--color-success)';
+  return (
+    <div className="flex flex-col gap-1">
+      <div className="flex items-center justify-between text-[11px] font-medium" style={{ color: 'var(--text-secondary)' }}>
+        <span>{label} pixel width</span>
+        <span>
+          ~{Math.round(px)}px / {limit}px
+        </span>
+      </div>
+      <div className="h-1.5 w-full overflow-hidden rounded-full" style={{ background: 'var(--surface-warm)' }}>
+        <div className="h-full rounded-full transition-all duration-200" style={{ width: `${Math.min(100, ratio * 100)}%`, background: color }} />
+      </div>
+    </div>
+  );
+}
 
 export default function SeoMetaPreview() {
   const [title, setTitle] = useState(EXAMPLE_FIELDS.title);
@@ -36,10 +57,17 @@ export default function SeoMetaPreview() {
   const descriptionStatus = getFieldStatus(description.trim().length, DESCRIPTION_RANGE);
 
   const limits = DEVICE_PREVIEW_LIMITS[device];
+  const pixelLimits = PIXEL_WIDTH_LIMITS[device];
   const previewTitle = truncateForPreview(title.trim() || 'Untitled page', limits.title);
   const previewDescription = truncateForPreview(description.trim() || 'Add a meta description to see how it will appear here.', limits.description);
   const { host, breadcrumb } = extractDisplayUrl(url);
   const metaCode = buildMetaTagsCode({ title, description, url });
+
+  const titlePx = useMemo(() => measureTextWidth(title.trim(), '400 20px arial'), [title]);
+  const descriptionPx = useMemo(() => measureTextWidth(description.trim(), '400 14px arial'), [description]);
+
+  const canonicalReady = url.trim().length > 0;
+  const ogReady = title.trim().length > 0 && description.trim().length > 0;
 
   function announce(message: string) {
     setAnnouncement(message);
@@ -89,8 +117,8 @@ export default function SeoMetaPreview() {
       </p>
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-10">
-        {/* Left column: live preview + generated tags â€” pinned on desktop so it stays visible while you edit */}
-        <div className="flex flex-col gap-6 lg:sticky lg:top-28">
+        {/* Left column: live preview — pinned on desktop so it stays visible while you edit */}
+        <div className="flex flex-col gap-5 lg:sticky lg:top-28">
           <div className="flex flex-col gap-3">
             <span className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }} id="device-toggle-label">
               Preview device
@@ -134,10 +162,45 @@ export default function SeoMetaPreview() {
             </div>
           </div>
 
-          <div className="flex flex-col gap-3">
-            <h2 className="text-lg font-bold" style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-heading)' }}>
-              Meta tags
-            </h2>
+          {/* Pixel-width guidance */}
+          <div className="flex flex-col gap-3 rounded-2xl border p-4" style={{ borderColor: 'var(--border-color)' }}>
+            <PixelWidthBar label="Title" px={titlePx} limit={pixelLimits.title} />
+            <PixelWidthBar label="Description" px={descriptionPx} limit={pixelLimits.description} />
+            <p className="text-[11px] leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+              Pixel width is an approximation of Google&apos;s rendering — treat it as guidance, not a guarantee. The real cutoff varies by device and font rendering.
+            </p>
+          </div>
+
+          {/* Compact quality summary */}
+          <div className="flex flex-wrap gap-2" aria-label="Readiness summary">
+            <span
+              className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold"
+              style={{ borderColor: 'var(--border-color)', color: getFieldStatusColor(titleStatus) }}
+            >
+              Title: {getFieldStatusLabel(titleStatus, title.trim().length === 0)}
+            </span>
+            <span
+              className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold"
+              style={{ borderColor: 'var(--border-color)', color: getFieldStatusColor(descriptionStatus) }}
+            >
+              Description: {getFieldStatusLabel(descriptionStatus, description.trim().length === 0)}
+            </span>
+            <span
+              className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold"
+              style={{ borderColor: 'var(--border-color)', color: canonicalReady ? 'var(--color-success)' : 'var(--text-secondary)' }}
+            >
+              Canonical URL: {canonicalReady ? 'Set' : 'Not set'}
+            </span>
+            <span
+              className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold"
+              style={{ borderColor: 'var(--border-color)', color: ogReady ? 'var(--color-success)' : 'var(--text-secondary)' }}
+            >
+              Open Graph: {ogReady ? 'Ready' : 'Incomplete'}
+            </span>
+          </div>
+
+          {/* Generated HTML — collapsible so it doesn't compete with the preview */}
+          <ToolGuideAccordion title="Generated HTML">
             <div className="relative overflow-hidden rounded-2xl border" style={{ borderColor: 'var(--border-color)', background: 'var(--brand-ink)' }}>
               <pre className="overflow-x-auto p-4 pr-32 text-xs leading-relaxed sm:text-sm">
                 <code style={{ color: '#e5e7eb', fontFamily: 'var(--font-mono)' }}>{metaCode}</code>
@@ -151,7 +214,7 @@ export default function SeoMetaPreview() {
                 {copied ? 'Copied!' : 'Copy Tags'}
               </button>
             </div>
-          </div>
+          </ToolGuideAccordion>
         </div>
 
         {/* Right column: controls */}
@@ -225,7 +288,7 @@ export default function SeoMetaPreview() {
           <div className="rounded-2xl border p-5 text-sm leading-relaxed sm:p-6" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)', color: 'var(--text-secondary)' }}>
             <p>
               <strong style={{ color: 'var(--text-primary)' }}>Guidelines:</strong> aim for a title around 50&ndash;60 characters and a description around 70&ndash;160 characters. Search engines
-              may still rewrite either one, and the exact cutoff varies by device and pixel width &mdash; treat these ranges as a helpful target, not a hard rule.
+              may still rewrite either one, and the exact cutoff is based on pixel width, not character count &mdash; treat both this and the pixel-width bars above as helpful targets, not hard rules.
             </p>
           </div>
         </div>

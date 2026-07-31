@@ -17,6 +17,24 @@ export const DEVICE_PREVIEW_LIMITS: Record<DeviceMode, { title: number; descript
   mobile: { title: 50, description: 120 },
 };
 
+/** Approximate pixel-width truncation limits Google commonly applies (varies by actual rendering — a guideline, not a guarantee). */
+export const PIXEL_WIDTH_LIMITS: Record<DeviceMode, { title: number; description: number }> = {
+  desktop: { title: 600, description: 920 },
+  mobile: { title: 320, description: 400 },
+};
+
+let measureCanvas: HTMLCanvasElement | null = null;
+
+/** Approximates Google's Arial-based rendering width for a string, in CSS pixels. Returns 0 outside the browser. */
+export function measureTextWidth(text: string, font = '400 20px arial'): number {
+  if (typeof document === 'undefined') return 0;
+  if (!measureCanvas) measureCanvas = document.createElement('canvas');
+  const ctx = measureCanvas.getContext('2d');
+  if (!ctx) return 0;
+  ctx.font = font;
+  return ctx.measureText(text).width;
+}
+
 export function getFieldStatus(length: number, range: FieldRange): FieldStatus {
   if (length === 0) return 'short';
   if (length < range.min) return 'short';

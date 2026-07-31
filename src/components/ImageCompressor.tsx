@@ -21,6 +21,8 @@ export default function ImageCompressor() {
     let currentQuality = DEFAULT_QUALITY;
     const queue: string[] = [];
     let activeCount = 0;
+    let previewUrl: string | null = null;
+    let previewForId: string | null = null;
 
     const controller = new AbortController();
     const { signal } = controller;
@@ -79,6 +81,15 @@ export default function ImageCompressor() {
     const errorBannerEl = document.querySelector<HTMLElement>('[data-error-banner]');
     const unsupportedBannerEl = document.querySelector<HTMLElement>('[data-unsupported-banner]');
     const liveRegion = document.querySelector<HTMLElement>('[data-live-region]');
+    const previewEmptyEl = document.querySelector<HTMLElement>('[data-preview-empty]');
+    const previewContentEl = document.querySelector<HTMLElement>('[data-preview-content]');
+    const previewOriginalImgEl = document.querySelector<HTMLImageElement>('[data-preview-original-img]');
+    const previewOriginalLabelEl = document.querySelector<HTMLElement>('[data-preview-original-label]');
+    const previewConvertedImgEl = document.querySelector<HTMLImageElement>('[data-preview-converted-img]');
+    const previewConvertedPlaceholderEl = document.querySelector<HTMLElement>('[data-preview-converted-placeholder]');
+    const previewConvertedLabelEl = document.querySelector<HTMLElement>('[data-preview-converted-label]');
+    const previewSavedEl = document.querySelector<HTMLElement>('[data-preview-saved]');
+    const previewMultiNoteEl = document.querySelector<HTMLElement>('[data-preview-multi-note]');
 
     if (!dropzone || !fileInput || !listEl) return;
 
@@ -213,10 +224,64 @@ export default function ImageCompressor() {
       clearAllBtn?.classList.toggle('inline-flex', items.length > 0);
     }
 
+    function renderPreview() {
+      if (!previewEmptyEl || !previewContentEl) return;
+      const first = items[0];
+
+      if (!first) {
+        previewContentEl.classList.add('hidden');
+        previewContentEl.classList.remove('flex');
+        previewEmptyEl.classList.remove('hidden');
+        previewEmptyEl.classList.add('flex');
+        return;
+      }
+
+      previewEmptyEl.classList.add('hidden');
+      previewEmptyEl.classList.remove('flex');
+      previewContentEl.classList.remove('hidden');
+      previewContentEl.classList.add('flex');
+
+      if (previewOriginalImgEl) previewOriginalImgEl.src = first.originalUrl;
+      const originalDims = first.width && first.height ? `${first.width}×${first.height}px` : 'Reading…';
+      if (previewOriginalLabelEl) previewOriginalLabelEl.textContent = `${first.originalType} · ${originalDims} · ${formatBytes(first.originalSize)}`;
+
+      if (first.status === 'completed' && first.convertedBlob) {
+        if (previewForId !== first.id || !previewUrl) {
+          if (previewUrl) URL.revokeObjectURL(previewUrl);
+          previewUrl = URL.createObjectURL(first.convertedBlob);
+          previewForId = first.id;
+        }
+        if (previewConvertedImgEl) {
+          previewConvertedImgEl.src = previewUrl;
+          previewConvertedImgEl.classList.remove('hidden');
+        }
+        previewConvertedPlaceholderEl?.classList.add('hidden');
+
+        const saved = percentSaved(first.originalSize, first.convertedSize ?? first.originalSize);
+        if (previewConvertedLabelEl) previewConvertedLabelEl.textContent = `${formatBytes(first.convertedSize ?? 0)}`;
+        if (previewSavedEl) {
+          previewSavedEl.textContent = saved >= 0 ? `${saved.toFixed(0)}% smaller` : `${Math.abs(saved).toFixed(0)}% larger`;
+          previewSavedEl.style.color = saved >= 0 ? 'var(--color-success)' : 'var(--color-warning)';
+        }
+      } else {
+        previewConvertedImgEl?.classList.add('hidden');
+        previewConvertedPlaceholderEl?.classList.remove('hidden');
+        if (previewConvertedPlaceholderEl) {
+          previewConvertedPlaceholderEl.textContent = first.status === 'processing' ? 'Compressing…' : first.status === 'failed' ? 'Failed' : 'Queued…';
+        }
+        if (previewSavedEl) previewSavedEl.textContent = '';
+      }
+
+      if (previewMultiNoteEl) {
+        previewMultiNoteEl.textContent = items.length > 1 ? `Showing 1 of ${items.length} images — see the full list on the right.` : '';
+      }
+    }
+
     function render() {
       renderList();
       renderSummary();
       updateActionButtons();
+      renderPreview();
     }
 
     function pump() {
@@ -505,6 +570,7 @@ export default function ImageCompressor() {
     return () => {
       controller.abort();
       cleanupAllUrls();
+      if (previewUrl) URL.revokeObjectURL(previewUrl);
     };
   }, []);
 

@@ -1,6 +1,7 @@
-﻿'use client';
+'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import ToolGuideAccordion from '@/components/tools/ToolGuideAccordion';
 import { MAX_STOPS, MIN_STOPS, type ColorStop, type GradientState } from '@/lib/gradient/types';
 import {
   LINEAR_DIRECTIONS,
@@ -10,6 +11,7 @@ import {
   clampAngle,
   clampPosition,
   generateId,
+  interpolateHex,
   isValidHex,
   normalizeHex,
   randomGradientState,
@@ -35,13 +37,16 @@ const secondaryActionClass =
 
 export default function GradientGenerator() {
   const [state, setState] = useState<GradientState>(createDefaultState);
-  const [hexDrafts, setHexDrafts] = useState<Record<string, string>>({});
-  const [hexErrors, setHexErrors] = useState<Record<string, string>>({});
+  const [selectedStopId, setSelectedStopId] = useState<string | null>(null);
+  const [hexDraft, setHexDraft] = useState('');
+  const [hexError, setHexError] = useState('');
   const [copied, setCopied] = useState(false);
   const [announcement, setAnnouncement] = useState('');
   const [downloadError, setDownloadError] = useState('');
   const [isDownloading, setIsDownloading] = useState(false);
   const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const railRef = useRef<HTMLDivElement>(null);
+  const draggingIdRef = useRef<string | null>(null);
 
   useEffect(
     () => () => {
@@ -53,31 +58,65 @@ export default function GradientGenerator() {
   const cssValue = buildGradientValue(state);
   const cssCode = buildGradientCode(state);
   const sortedStops = [...state.stops].sort((a, b) => a.position - b.position);
+  const selectedStop = sortedStops.find((s) => s.id === selectedStopId) ?? sortedStops[0];
+  const selectedIndex = sortedStops.findIndex((s) => s.id === selectedStop?.id);
+  const railBackground = `linear-gradient(to right, ${sortedStops.map((s) => `${normalizeHex(s.hex)} ${s.position}%`).join(', ')})`;
+
+  useEffect(() => {
+    setHexDraft(selectedStop ? normalizeHex(selectedStop.hex) : '');
+    setHexError('');
+  }, [selectedStop?.id]);
 
   function announce(message: string) {
     setAnnouncement(message);
   }
 
-  function updateStopHexDraft(id: string, raw: string) {
-    setHexDrafts((prev) => ({ ...prev, [id]: raw }));
+  function positionFromClientX(clientX: number): number {
+    const rail = railRef.current;
+    if (!rail) return 0;
+    const rect = rail.getBoundingClientRect();
+    const t = rect.width ? (clientX - rect.left) / rect.width : 0;
+    return clampPosition(t * 100);
+  }
+
+  function updateStopHexDraft(raw: string) {
+    if (!selectedStop) return;
+    setHexDraft(raw);
     if (isValidHex(raw)) {
       const normalized = normalizeHex(raw);
-      setState((prev) => ({ ...prev, stops: prev.stops.map((s) => (s.id === id ? { ...s, hex: normalized } : s)) }));
-      setHexErrors((prev) => ({ ...prev, [id]: '' }));
+      setState((prev) => ({ ...prev, stops: prev.stops.map((s) => (s.id === selectedStop.id ? { ...s, hex: normalized } : s)) }));
+      setHexError('');
     } else {
-      setHexErrors((prev) => ({ ...prev, [id]: raw.trim() ? 'Enter a valid hex color, e.g. #3B82F6.' : '' }));
+      setHexError(raw.trim() ? 'Enter a valid hex color, e.g. #3B82F6.' : '');
     }
   }
 
-  function updateStopColorPicker(id: string, value: string) {
-    setState((prev) => ({ ...prev, stops: prev.stops.map((s) => (s.id === id ? { ...s, hex: value } : s)) }));
-    setHexDrafts((prev) => ({ ...prev, [id]: value }));
-    setHexErrors((prev) => ({ ...prev, [id]: '' }));
+  function updateStopColorPicker(value: string) {
+    if (!selectedStop) return;
+    setState((prev) => ({ ...prev, stops: prev.stops.map((s) => (s.id === selectedStop.id ? { ...s, hex: value } : s)) }));
+    setHexDraft(value);
+    setHexError('');
   }
 
   function updateStopPosition(id: string, value: number) {
     const clamped = clampPosition(value);
     setState((prev) => ({ ...prev, stops: prev.stops.map((s) => (s.id === id ? { ...s, position: clamped } : s)) }));
+  }
+
+  function addStopAt(position: number) {
+    setState((prev) => {
+      if (prev.stops.length >= MAX_STOPS) return prev;
+      const sorted = [...prev.stops].sort((a, b) => a.position - b.position);
+      const left = [...sorted].reverse().find((s) => s.position <= position) ?? sorted[0];
+      const right = sorted.find((s) => s.position >= position) ?? sorted[sorted.length - 1];
+      const span = right.position - left.position;
+      const t = span > 0 ? (position - left.position) / span : 0;
+      const hex = interpolateHex(left.hex, right.hex, t);
+      const id = generateId();
+      setSelectedStopId(id);
+      return { ...prev, stops: [...prev.stops, { id, hex, position }] };
+    });
+    announce('Color stop added.');
   }
 
   function addStop() {
@@ -87,7 +126,9 @@ export default function GradientGenerator() {
       const last = sorted[sorted.length - 1];
       const secondLast = sorted[sorted.length - 2];
       const position = secondLast ? Math.round((last.position + secondLast.position) / 2) : Math.min(100, last.position);
-      return { ...prev, stops: [...prev.stops, { id: generateId(), hex: '#ffffff', position }] };
+      const id = generateId();
+      setSelectedStopId(id);
+      return { ...prev, stops: [...prev.stops, { id, hex: '#ffffff', position }] };
     });
     announce('Color stop added.');
   }
@@ -102,8 +143,7 @@ export default function GradientGenerator() {
 
   function applyPreset(preset: (typeof GRADIENT_PRESETS)[number]) {
     setState({ ...preset.state, stops: stopsFromPreset(preset.state.stops) });
-    setHexDrafts({});
-    setHexErrors({});
+    setSelectedStopId(null);
     announce(`${preset.name} preset applied.`);
   }
 
@@ -114,15 +154,13 @@ export default function GradientGenerator() {
 
   function randomize() {
     setState((prev) => randomGradientState(prev));
-    setHexDrafts({});
-    setHexErrors({});
+    setSelectedStopId(null);
     announce('Random gradient generated.');
   }
 
   function resetAll() {
     setState(createDefaultState());
-    setHexDrafts({});
-    setHexErrors({});
+    setSelectedStopId(null);
     setDownloadError('');
     announce('Gradient reset to default.');
   }
@@ -167,6 +205,42 @@ export default function GradientGenerator() {
     }
   }
 
+  function handleRailClick(e: React.MouseEvent<HTMLDivElement>) {
+    if (state.stops.length >= MAX_STOPS) return;
+    const position = positionFromClientX(e.clientX);
+    addStopAt(position);
+  }
+
+  function handleMarkerPointerDown(e: React.PointerEvent<HTMLButtonElement>, id: string) {
+    e.stopPropagation();
+    e.currentTarget.setPointerCapture(e.pointerId);
+    draggingIdRef.current = id;
+    setSelectedStopId(id);
+  }
+
+  function handleMarkerPointerMove(e: React.PointerEvent<HTMLButtonElement>) {
+    if (draggingIdRef.current == null) return;
+    updateStopPosition(draggingIdRef.current, positionFromClientX(e.clientX));
+  }
+
+  function handleMarkerPointerUp() {
+    draggingIdRef.current = null;
+  }
+
+  function handleMarkerKeyDown(e: React.KeyboardEvent<HTMLButtonElement>, stop: ColorStop) {
+    const step = e.shiftKey ? 5 : 1;
+    if (e.key === 'ArrowLeft') {
+      updateStopPosition(stop.id, stop.position - step);
+      e.preventDefault();
+    } else if (e.key === 'ArrowRight') {
+      updateStopPosition(stop.id, stop.position + step);
+      e.preventDefault();
+    } else if ((e.key === 'Delete' || e.key === 'Backspace') && state.stops.length > MIN_STOPS) {
+      removeStop(stop.id);
+      e.preventDefault();
+    }
+  }
+
   return (
     <div className="flex flex-col gap-8">
       <p role="status" aria-live="polite" className="sr-only">
@@ -174,7 +248,7 @@ export default function GradientGenerator() {
       </p>
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-10">
-        {/* Left column: live preview + CSS output â€” pinned on desktop so it stays visible while you adjust controls on the right */}
+        {/* Left column: live preview + CSS output — pinned on desktop so it stays visible while you adjust controls on the right */}
         <div className="flex flex-col gap-6 lg:sticky lg:top-28">
           {/* Live preview */}
           <div className="gradient-checkerboard overflow-hidden rounded-2xl border" style={{ borderColor: 'var(--border-color)' }}>
@@ -203,339 +277,348 @@ export default function GradientGenerator() {
         </div>
 
         {/* Right column: all controls */}
-        <div className="flex flex-col gap-8">
-          {/* Gradient type */}
-      <div className="flex flex-col gap-3">
-        <span className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }} id="gradient-type-label">
-          Gradient type
-        </span>
-        <div className="inline-flex w-fit gap-1 rounded-full border p-1" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }} role="group" aria-labelledby="gradient-type-label">
-          {(['linear', 'radial', 'conic'] as const).map((type) => (
-            <button
-              key={type}
-              type="button"
-              aria-pressed={state.type === type}
-              onClick={() => setState((prev) => ({ ...prev, type }))}
-              className="min-h-[40px] rounded-full px-4 text-sm font-bold capitalize transition-all duration-200"
-              style={state.type === type ? { background: 'var(--tool-accent)', color: '#ffffff' } : { color: 'var(--text-secondary)' }}
-            >
-              {type}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Color stops */}
-      <div className="flex flex-col gap-4 rounded-2xl border p-5 sm:p-6" style={{ borderColor: 'var(--border-color)' }}>
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <h2 className="text-lg font-bold" style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-heading)' }}>
-            Colors
-          </h2>
-          <button
-            type="button"
-            onClick={addStop}
-            disabled={state.stops.length >= MAX_STOPS}
-            className={secondaryActionClass}
-            style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}
-          >
-            Add Color Stop
-          </button>
-        </div>
-        <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
-          {state.stops.length} of {MAX_STOPS} stops used &mdash; at least {MIN_STOPS} required.
-        </p>
-
-        <div className="flex flex-col gap-3">
-          {sortedStops.map((stop, index) => {
-            const draft = hexDrafts[stop.id] ?? stop.hex;
-            const error = hexErrors[stop.id];
-            return (
-              <div key={stop.id} className="flex flex-wrap items-center gap-3 rounded-xl border p-3" style={{ borderColor: 'var(--border-color)' }}>
-                <input
-                  type="color"
-                  value={isValidHex(stop.hex) ? normalizeHex(stop.hex) : '#000000'}
-                  onChange={(e) => updateStopColorPicker(stop.id, e.target.value)}
-                  aria-label={`Stop ${index + 1} color picker`}
-                  title={`Stop ${index + 1} color picker`}
-                  className="h-10 w-10 flex-shrink-0 cursor-pointer rounded-lg border p-0.5"
-                  style={{ borderColor: 'var(--border-color)' }}
-                />
-
-                <div className="flex min-w-0 flex-col gap-1">
-                  <label htmlFor={`hex-${stop.id}`} className="sr-only">
-                    Stop {index + 1} hex value
-                  </label>
-                  <input
-                    id={`hex-${stop.id}`}
-                    type="text"
-                    inputMode="text"
-                    spellCheck={false}
-                    value={draft}
-                    onChange={(e) => updateStopHexDraft(stop.id, e.target.value)}
-                    aria-invalid={!!error}
-                    aria-describedby={error ? `hex-error-${stop.id}` : undefined}
-                    className="w-24 rounded-lg border px-2.5 py-1.5 text-sm font-mono"
-                    style={{ borderColor: error ? 'var(--color-error)' : 'var(--border-color)', color: 'var(--text-primary)' }}
-                    placeholder="#000000"
-                  />
-                  {error && (
-                    <p id={`hex-error-${stop.id}`} className="text-[11px] leading-snug" style={{ color: 'var(--color-error)' }} role="alert">
-                      {error}
-                    </p>
-                  )}
-                </div>
-
-                <div className="flex min-w-[160px] flex-1 items-center gap-2">
-                  <label htmlFor={`pos-range-${stop.id}`} className="sr-only">
-                    Stop {index + 1} position percent
-                  </label>
-                  <input
-                    id={`pos-range-${stop.id}`}
-                    type="range"
-                    min={0}
-                    max={100}
-                    value={stop.position}
-                    onChange={(e) => updateStopPosition(stop.id, Number(e.target.value))}
-                    className="webp-range flex-1"
-                  />
-                  <label htmlFor={`pos-num-${stop.id}`} className="sr-only">
-                    Stop {index + 1} position number
-                  </label>
-                  <input
-                    id={`pos-num-${stop.id}`}
-                    type="number"
-                    min={0}
-                    max={100}
-                    value={stop.position}
-                    onChange={(e) => updateStopPosition(stop.id, Number(e.target.value))}
-                    className="w-14 flex-shrink-0 rounded-lg border px-1.5 py-1 text-center text-xs"
-                    style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}
-                    aria-label={`Stop ${index + 1} position percent`}
-                  />
-                  <span className="text-xs" style={{ color: 'var(--text-secondary)' }} aria-hidden="true">
-                    %
-                  </span>
-                </div>
-
+        <div className="flex flex-col gap-5">
+          {/* Gradient type — kept outside any collapsible section since it's the first decision to make */}
+          <div className="flex flex-col gap-3">
+            <span className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }} id="gradient-type-label">
+              Gradient type
+            </span>
+            <div className="inline-flex w-fit gap-1 rounded-full border p-1" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }} role="group" aria-labelledby="gradient-type-label">
+              {(['linear', 'radial', 'conic'] as const).map((type) => (
                 <button
+                  key={type}
                   type="button"
-                  onClick={() => removeStop(stop.id)}
-                  disabled={state.stops.length <= MIN_STOPS}
-                  aria-label={`Remove color stop ${index + 1}`}
-                  title="Remove this color stop"
-                  className="ml-auto flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border transition-colors disabled:cursor-not-allowed disabled:opacity-40"
-                  style={{ borderColor: 'var(--border-color)', color: 'var(--text-secondary)' }}
+                  aria-pressed={state.type === type}
+                  onClick={() => setState((prev) => ({ ...prev, type }))}
+                  className="min-h-[40px] rounded-full px-4 text-sm font-bold capitalize transition-all duration-200"
+                  style={state.type === type ? { background: 'var(--tool-accent)', color: '#ffffff' } : { color: 'var(--text-secondary)' }}
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <line x1="18" y1="6" x2="6" y2="18" />
-                    <line x1="6" y1="6" x2="18" y2="18" />
-                  </svg>
+                  {type}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Colors — the draggable stop rail, visually connected to the preview */}
+          <ToolGuideAccordion title="Colors" defaultOpen>
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
+                  Click the rail to add a stop, drag a marker to reposition it.
+                </p>
+                <button type="button" onClick={addStop} disabled={state.stops.length >= MAX_STOPS} className={secondaryActionClass} style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}>
+                  Add Stop
                 </button>
               </div>
-            );
-          })}
-        </div>
-      </div>
 
-      {/* Linear controls */}
-      {state.type === 'linear' && (
-        <div className="flex flex-col gap-4 rounded-2xl border p-5 sm:p-6" style={{ borderColor: 'var(--border-color)' }}>
-          <h2 className="text-lg font-bold" style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-heading)' }}>
-            Direction
-          </h2>
-
-          <div className="flex flex-wrap items-center gap-4">
-            <label htmlFor="linear-angle-range" className="sr-only">
-              Angle in degrees
-            </label>
-            <input
-              id="linear-angle-range"
-              type="range"
-              min={0}
-              max={360}
-              value={state.angle}
-              onChange={(e) => setState((prev) => ({ ...prev, angle: clampAngle(Number(e.target.value)) }))}
-              className="webp-range flex-1"
-            />
-            <div className="flex items-center gap-1.5">
-              <label htmlFor="linear-angle-number" className="sr-only">
-                Angle number, degrees
-              </label>
-              <input
-                id="linear-angle-number"
-                type="number"
-                min={0}
-                max={360}
-                value={state.angle}
-                onChange={(e) => setState((prev) => ({ ...prev, angle: clampAngle(Number(e.target.value)) }))}
-                className="w-16 rounded-lg border px-2 py-1.5 text-center text-sm"
-                style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}
-              />
-              <span className="text-sm" style={{ color: 'var(--text-secondary)' }} aria-hidden="true">
-                deg
-              </span>
-            </div>
-          </div>
-
-          <div>
-            <span className="text-xs font-semibold" style={{ color: 'var(--text-secondary)' }}>
-              Quick presets
-            </span>
-            <div className="mt-2 grid grid-cols-4 gap-2 sm:grid-cols-8">
-              {LINEAR_DIRECTIONS.map((dir) => (
-                <button
-                  key={dir.label}
-                  type="button"
-                  onClick={() => setState((prev) => ({ ...prev, angle: dir.angle }))}
-                  aria-pressed={state.angle === dir.angle}
-                  aria-label={dir.label}
-                  title={dir.label}
-                  className="flex h-10 items-center justify-center rounded-lg border text-sm transition-colors duration-200"
-                  style={
-                    state.angle === dir.angle
-                      ? { borderColor: 'var(--tool-accent)', background: 'var(--tool-accent-soft)', color: 'var(--tool-accent)' }
-                      : { borderColor: 'var(--border-color)', color: 'var(--text-secondary)' }
-                  }
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: `rotate(${dir.angle}deg)` }} aria-hidden="true">
-                    <line x1="12" y1="19" x2="12" y2="5" />
-                    <polyline points="6 11 12 5 18 11" />
-                  </svg>
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Radial controls */}
-      {state.type === 'radial' && (
-        <div className="flex flex-col gap-4 rounded-2xl border p-5 sm:p-6" style={{ borderColor: 'var(--border-color)' }}>
-          <h2 className="text-lg font-bold" style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-heading)' }}>
-            Shape &amp; position
-          </h2>
-
-          <div className="flex flex-col gap-2">
-            <span className="text-xs font-semibold" style={{ color: 'var(--text-secondary)' }} id="radial-shape-label">
-              Shape
-            </span>
-            <div className="inline-flex w-fit gap-1 rounded-full border p-1" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }} role="group" aria-labelledby="radial-shape-label">
-              {(['circle', 'ellipse'] as const).map((shape) => (
-                <button
-                  key={shape}
-                  type="button"
-                  aria-pressed={state.shape === shape}
-                  onClick={() => setState((prev) => ({ ...prev, shape }))}
-                  className="min-h-[40px] rounded-full px-4 text-sm font-bold capitalize transition-all duration-200"
-                  style={state.shape === shape ? { background: 'var(--tool-accent)', color: '#ffffff' } : { color: 'var(--text-secondary)' }}
-                >
-                  {shape}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <PositionGrid position={state.position} onChange={(position) => setState((prev) => ({ ...prev, position }))} />
-        </div>
-      )}
-
-      {/* Conic controls */}
-      {state.type === 'conic' && (
-        <div className="flex flex-col gap-4 rounded-2xl border p-5 sm:p-6" style={{ borderColor: 'var(--border-color)' }}>
-          <h2 className="text-lg font-bold" style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-heading)' }}>
-            Angle &amp; position
-          </h2>
-
-          <div className="flex flex-wrap items-center gap-4">
-            <label htmlFor="conic-angle-range" className="sr-only">
-              Starting angle in degrees
-            </label>
-            <input
-              id="conic-angle-range"
-              type="range"
-              min={0}
-              max={360}
-              value={state.conicAngle}
-              onChange={(e) => setState((prev) => ({ ...prev, conicAngle: clampAngle(Number(e.target.value)) }))}
-              className="webp-range flex-1"
-            />
-            <div className="flex items-center gap-1.5">
-              <label htmlFor="conic-angle-number" className="sr-only">
-                Starting angle number, degrees
-              </label>
-              <input
-                id="conic-angle-number"
-                type="number"
-                min={0}
-                max={360}
-                value={state.conicAngle}
-                onChange={(e) => setState((prev) => ({ ...prev, conicAngle: clampAngle(Number(e.target.value)) }))}
-                className="w-16 rounded-lg border px-2 py-1.5 text-center text-sm"
-                style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}
-              />
-              <span className="text-sm" style={{ color: 'var(--text-secondary)' }} aria-hidden="true">
-                deg
-              </span>
-            </div>
-          </div>
-
-          <PositionGrid position={state.position} onChange={(position) => setState((prev) => ({ ...prev, position }))} />
-        </div>
-      )}
-
-      {/* Actions */}
-      <div className="flex flex-col gap-3">
-        <div className="flex flex-wrap items-center gap-3">
-          <button type="button" onClick={copyCss} className={primaryActionClass} style={{ background: 'var(--tool-accent)' }}>
-            {copied ? 'Copied!' : 'Copy CSS'}
-          </button>
-          <button type="button" onClick={reverseColors} className={secondaryActionClass} style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}>
-            Reverse Colors
-          </button>
-          <button type="button" onClick={randomize} className={secondaryActionClass} style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}>
-            Random Gradient
-          </button>
-          <button type="button" onClick={resetAll} className={secondaryActionClass} style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}>
-            Reset
-          </button>
-          <button type="button" onClick={downloadPng} disabled={isDownloading} className={secondaryActionClass} style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}>
-            {isDownloading ? 'Generatingâ€¦' : 'Download PNG'}
-          </button>
-        </div>
-        {downloadError && (
-          <p role="alert" className="text-xs font-medium" style={{ color: 'var(--color-error)' }}>
-            {downloadError}
-          </p>
-        )}
-      </div>
-
-      {/* Presets */}
-      <div className="flex flex-col gap-3">
-        <h2 className="text-lg font-bold" style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-heading)' }}>
-          Presets
-        </h2>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          {GRADIENT_PRESETS.map((preset) => {
-            const previewValue = buildGradientValue({ ...preset.state, stops: stopsFromPreset(preset.state.stops) });
-            return (
-              <button
-                key={preset.name}
-                type="button"
-                onClick={() => applyPreset(preset)}
-                title={`Apply ${preset.name} preset`}
-                aria-label={`Apply ${preset.name} preset`}
-                className="flex flex-col gap-2 rounded-xl border p-2 text-left transition-all duration-200 hover:-translate-y-0.5"
-                style={{ borderColor: 'var(--border-color)' }}
+              {/* Rail */}
+              <div
+                ref={railRef}
+                onClick={handleRailClick}
+                role="presentation"
+                className="relative h-11 w-full cursor-copy rounded-full border"
+                style={{ background: railBackground, borderColor: 'var(--border-color)' }}
               >
-                <span className="block h-12 w-full rounded-lg" style={{ background: previewValue }} aria-hidden="true" />
-                <span className="truncate text-xs font-semibold" style={{ color: 'var(--text-primary)' }}>
-                  {preset.name}
+                {sortedStops.map((stop, index) => {
+                  const isSelected = stop.id === selectedStop?.id;
+                  return (
+                    <button
+                      key={stop.id}
+                      type="button"
+                      onPointerDown={(e) => handleMarkerPointerDown(e, stop.id)}
+                      onPointerMove={handleMarkerPointerMove}
+                      onPointerUp={handleMarkerPointerUp}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedStopId(stop.id);
+                      }}
+                      onKeyDown={(e) => handleMarkerKeyDown(e, stop)}
+                      aria-label={`Stop ${index + 1}: ${normalizeHex(stop.hex)} at ${stop.position}%. Use arrow keys to move, Delete to remove.`}
+                      title={`Stop ${index + 1}: ${normalizeHex(stop.hex)} at ${stop.position}%`}
+                      className="absolute top-1/2 h-6 w-6 -translate-x-1/2 -translate-y-1/2 cursor-grab touch-none rounded-full border-2 border-white shadow-md transition-transform active:cursor-grabbing"
+                      style={{
+                        left: `${stop.position}%`,
+                        background: normalizeHex(stop.hex),
+                        boxShadow: isSelected ? `0 0 0 3px var(--tool-accent), 0 2px 6px rgba(0,0,0,0.35)` : '0 2px 6px rgba(0,0,0,0.35)',
+                        zIndex: isSelected ? 2 : 1,
+                      }}
+                    />
+                  );
+                })}
+              </div>
+
+              {/* Selected-stop mini editor */}
+              {selectedStop && (
+                <div className="flex flex-wrap items-center gap-3 rounded-xl border p-3" style={{ borderColor: selectedStop.hex ? normalizeHex(selectedStop.hex) : 'var(--border-color)' }}>
+                  <span className="text-xs font-semibold" style={{ color: 'var(--text-secondary)' }}>
+                    Stop {selectedIndex + 1} of {sortedStops.length}
+                  </span>
+
+                  <input
+                    type="color"
+                    value={isValidHex(selectedStop.hex) ? normalizeHex(selectedStop.hex) : '#000000'}
+                    onChange={(e) => updateStopColorPicker(e.target.value)}
+                    aria-label={`Stop ${selectedIndex + 1} color picker`}
+                    className="h-9 w-9 flex-shrink-0 cursor-pointer rounded-lg border p-0.5"
+                    style={{ borderColor: 'var(--border-color)' }}
+                  />
+
+                  <div className="flex min-w-0 flex-col gap-1">
+                    <label htmlFor="selected-stop-hex" className="sr-only">
+                      Stop {selectedIndex + 1} hex value
+                    </label>
+                    <input
+                      id="selected-stop-hex"
+                      type="text"
+                      inputMode="text"
+                      spellCheck={false}
+                      value={hexDraft}
+                      onChange={(e) => updateStopHexDraft(e.target.value)}
+                      aria-invalid={!!hexError}
+                      className="w-24 rounded-lg border px-2.5 py-1.5 text-sm font-mono"
+                      style={{ borderColor: hexError ? 'var(--color-error)' : 'var(--border-color)', color: 'var(--text-primary)' }}
+                      placeholder="#000000"
+                    />
+                    {hexError && (
+                      <p className="text-[11px] leading-snug" style={{ color: 'var(--color-error)' }} role="alert">
+                        {hexError}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="flex min-w-[140px] flex-1 items-center gap-2">
+                    <label htmlFor="selected-stop-position" className="sr-only">
+                      Stop {selectedIndex + 1} position percent
+                    </label>
+                    <input
+                      id="selected-stop-position"
+                      type="number"
+                      min={0}
+                      max={100}
+                      value={selectedStop.position}
+                      onChange={(e) => updateStopPosition(selectedStop.id, Number(e.target.value))}
+                      className="w-16 flex-shrink-0 rounded-lg border px-1.5 py-1 text-center text-xs"
+                      style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}
+                    />
+                    <span className="text-xs" style={{ color: 'var(--text-secondary)' }} aria-hidden="true">
+                      %
+                    </span>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => removeStop(selectedStop.id)}
+                    disabled={state.stops.length <= MIN_STOPS}
+                    aria-label={`Remove stop ${selectedIndex + 1}`}
+                    title="Remove this color stop"
+                    className="ml-auto flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border transition-colors disabled:cursor-not-allowed disabled:opacity-40"
+                    style={{ borderColor: 'var(--border-color)', color: 'var(--text-secondary)' }}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <line x1="18" y1="6" x2="6" y2="18" />
+                      <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                  </button>
+                </div>
+              )}
+
+              <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
+                {state.stops.length} of {MAX_STOPS} stops used &mdash; at least {MIN_STOPS} required.
+              </p>
+            </div>
+          </ToolGuideAccordion>
+
+          {/* Direction / shape / position — grouped per type */}
+          {state.type === 'linear' && (
+            <ToolGuideAccordion title="Direction" defaultOpen>
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-wrap items-center gap-4">
+                  <label htmlFor="linear-angle-range" className="sr-only">
+                    Angle in degrees
+                  </label>
+                  <input
+                    id="linear-angle-range"
+                    type="range"
+                    min={0}
+                    max={360}
+                    value={state.angle}
+                    onChange={(e) => setState((prev) => ({ ...prev, angle: clampAngle(Number(e.target.value)) }))}
+                    className="webp-range flex-1"
+                  />
+                  <div className="flex items-center gap-1.5">
+                    <label htmlFor="linear-angle-number" className="sr-only">
+                      Angle number, degrees
+                    </label>
+                    <input
+                      id="linear-angle-number"
+                      type="number"
+                      min={0}
+                      max={360}
+                      value={state.angle}
+                      onChange={(e) => setState((prev) => ({ ...prev, angle: clampAngle(Number(e.target.value)) }))}
+                      className="w-16 rounded-lg border px-2 py-1.5 text-center text-sm"
+                      style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}
+                    />
+                    <span className="text-sm" style={{ color: 'var(--text-secondary)' }} aria-hidden="true">
+                      deg
+                    </span>
+                  </div>
+                </div>
+
+                <div>
+                  <span className="text-xs font-semibold" style={{ color: 'var(--text-secondary)' }}>
+                    Quick presets
+                  </span>
+                  <div className="mt-2 grid grid-cols-4 gap-2 sm:grid-cols-8">
+                    {LINEAR_DIRECTIONS.map((dir) => (
+                      <button
+                        key={dir.label}
+                        type="button"
+                        onClick={() => setState((prev) => ({ ...prev, angle: dir.angle }))}
+                        aria-pressed={state.angle === dir.angle}
+                        aria-label={dir.label}
+                        title={dir.label}
+                        className="flex h-10 items-center justify-center rounded-lg border text-sm transition-colors duration-200"
+                        style={
+                          state.angle === dir.angle
+                            ? { borderColor: 'var(--tool-accent)', background: 'var(--tool-accent-soft)', color: 'var(--tool-accent)' }
+                            : { borderColor: 'var(--border-color)', color: 'var(--text-secondary)' }
+                        }
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: `rotate(${dir.angle}deg)` }} aria-hidden="true">
+                          <line x1="12" y1="19" x2="12" y2="5" />
+                          <polyline points="6 11 12 5 18 11" />
+                        </svg>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </ToolGuideAccordion>
+          )}
+
+          {state.type === 'radial' && (
+            <ToolGuideAccordion title="Shape & Position" defaultOpen>
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-2">
+                  <span className="text-xs font-semibold" style={{ color: 'var(--text-secondary)' }} id="radial-shape-label">
+                    Shape
+                  </span>
+                  <div className="inline-flex w-fit gap-1 rounded-full border p-1" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }} role="group" aria-labelledby="radial-shape-label">
+                    {(['circle', 'ellipse'] as const).map((shape) => (
+                      <button
+                        key={shape}
+                        type="button"
+                        aria-pressed={state.shape === shape}
+                        onClick={() => setState((prev) => ({ ...prev, shape }))}
+                        className="min-h-[40px] rounded-full px-4 text-sm font-bold capitalize transition-all duration-200"
+                        style={state.shape === shape ? { background: 'var(--tool-accent)', color: '#ffffff' } : { color: 'var(--text-secondary)' }}
+                      >
+                        {shape}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <PositionGrid position={state.position} onChange={(position) => setState((prev) => ({ ...prev, position }))} />
+              </div>
+            </ToolGuideAccordion>
+          )}
+
+          {state.type === 'conic' && (
+            <ToolGuideAccordion title="Angle & Position" defaultOpen>
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-wrap items-center gap-4">
+                  <label htmlFor="conic-angle-range" className="sr-only">
+                    Starting angle in degrees
+                  </label>
+                  <input
+                    id="conic-angle-range"
+                    type="range"
+                    min={0}
+                    max={360}
+                    value={state.conicAngle}
+                    onChange={(e) => setState((prev) => ({ ...prev, conicAngle: clampAngle(Number(e.target.value)) }))}
+                    className="webp-range flex-1"
+                  />
+                  <div className="flex items-center gap-1.5">
+                    <label htmlFor="conic-angle-number" className="sr-only">
+                      Starting angle number, degrees
+                    </label>
+                    <input
+                      id="conic-angle-number"
+                      type="number"
+                      min={0}
+                      max={360}
+                      value={state.conicAngle}
+                      onChange={(e) => setState((prev) => ({ ...prev, conicAngle: clampAngle(Number(e.target.value)) }))}
+                      className="w-16 rounded-lg border px-2 py-1.5 text-center text-sm"
+                      style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}
+                    />
+                    <span className="text-sm" style={{ color: 'var(--text-secondary)' }} aria-hidden="true">
+                      deg
+                    </span>
+                  </div>
+                </div>
+
+                <PositionGrid position={state.position} onChange={(position) => setState((prev) => ({ ...prev, position }))} />
+              </div>
+            </ToolGuideAccordion>
+          )}
+
+          {/* Output settings */}
+          <ToolGuideAccordion title="Output & Presets">
+            <div className="flex flex-col gap-5">
+              <div className="flex flex-col gap-3">
+                <div className="flex flex-wrap items-center gap-3">
+                  <button type="button" onClick={reverseColors} className={secondaryActionClass} style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}>
+                    Reverse Colors
+                  </button>
+                  <button type="button" onClick={randomize} className={secondaryActionClass} style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}>
+                    Random Gradient
+                  </button>
+                  <button type="button" onClick={resetAll} className={secondaryActionClass} style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}>
+                    Reset
+                  </button>
+                  <button type="button" onClick={downloadPng} disabled={isDownloading} className={primaryActionClass} style={{ background: 'var(--tool-accent)' }}>
+                    {isDownloading ? 'Generating…' : 'Download PNG'}
+                  </button>
+                </div>
+                {downloadError && (
+                  <p role="alert" className="text-xs font-medium" style={{ color: 'var(--color-error)' }}>
+                    {downloadError}
+                  </p>
+                )}
+              </div>
+
+              <div className="flex flex-col gap-3">
+                <span className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
+                  Presets
                 </span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                  {GRADIENT_PRESETS.map((preset) => {
+                    const previewValue = buildGradientValue({ ...preset.state, stops: stopsFromPreset(preset.state.stops) });
+                    return (
+                      <button
+                        key={preset.name}
+                        type="button"
+                        onClick={() => applyPreset(preset)}
+                        title={`Apply ${preset.name} preset`}
+                        aria-label={`Apply ${preset.name} preset`}
+                        className="flex flex-col gap-2 rounded-xl border p-2 text-left transition-all duration-200 hover:-translate-y-0.5"
+                        style={{ borderColor: 'var(--border-color)' }}
+                      >
+                        <span className="block h-12 w-full rounded-lg" style={{ background: previewValue }} aria-hidden="true" />
+                        <span className="truncate text-xs font-semibold" style={{ color: 'var(--text-primary)' }}>
+                          {preset.name}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </ToolGuideAccordion>
         </div>
       </div>
     </div>

@@ -126,6 +126,7 @@ export default function ImageResizer({ defaultMode = 'custom' }: ImageResizerPro
     const cropHandles = Array.from(document.querySelectorAll<HTMLElement>('[data-crop-handle]'));
     const cropZoomLabelEl = document.querySelector<HTMLElement>('[data-crop-zoom-label]');
     const cropResetBtn = document.querySelector<HTMLButtonElement>('[data-crop-reset-btn]');
+    const dimsReadoutEl = document.querySelector<HTMLElement>('[data-dims-readout]');
     const listEl = document.querySelector<HTMLElement>('[data-list]');
     const emptyStateEl = document.querySelector<HTMLElement>('[data-empty-state]');
     const summaryEl = document.querySelector<HTMLElement>('[data-summary]');
@@ -168,6 +169,7 @@ export default function ImageResizer({ defaultMode = 'custom' }: ImageResizerPro
     }
 
     function renderCropOverlay() {
+      renderDimsReadout();
       if (!cropWrapperEl || !cropInteractiveEl || !cropPlaceholderEl || !cropImageEl || !cropBoxEl) return;
 
       if (mode === 'percentage') {
@@ -321,6 +323,27 @@ export default function ImageResizer({ defaultMode = 'custom' }: ImageResizerPro
       downloadAllBtn?.classList.toggle('inline-flex', completedCount >= 2);
       clearAllBtn?.classList.toggle('hidden', items.length === 0);
       clearAllBtn?.classList.toggle('inline-flex', items.length > 0);
+    }
+
+    function renderDimsReadout() {
+      if (!dimsReadoutEl) return;
+      const first = items[0];
+      if (!first || !first.sourceWidth || !first.sourceHeight) {
+        dimsReadoutEl.textContent = 'Add an image to see its dimensions.';
+        return;
+      }
+
+      const originalText = `${first.sourceWidth}×${first.sourceHeight}px`;
+      let outputText: string;
+      if (mode === 'percentage') {
+        const outW = Math.max(1, Math.round((first.sourceWidth * percentage) / 100));
+        const outH = Math.max(1, Math.round((first.sourceHeight * percentage) / 100));
+        outputText = `${outW}×${outH}px`;
+      } else {
+        const target = getTargetDims();
+        outputText = `${target.width}×${target.height}px`;
+      }
+      dimsReadoutEl.textContent = `Original ${originalText} → Output ${outputText}`;
     }
 
     function render() {

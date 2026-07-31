@@ -16,6 +16,18 @@ export function normalizeHex(value: string): string {
   return trimmed.toLowerCase();
 }
 
+/** Linearly interpolates between two normalized 6-digit hex colors at t (0-1). */
+export function interpolateHex(hexA: string, hexB: string, t: number): string {
+  const a = normalizeHex(hexA);
+  const b = normalizeHex(hexB);
+  const parse = (hex: string) => [hex.slice(1, 3), hex.slice(3, 5), hex.slice(5, 7)].map((h) => parseInt(h, 16));
+  const [ar, ag, ab] = parse(a);
+  const [br, bg, bb] = parse(b);
+  const mix = (x: number, y: number) => Math.round(x + (y - x) * t);
+  const toHex = (n: number) => n.toString(16).padStart(2, '0');
+  return `#${toHex(mix(ar, br))}${toHex(mix(ag, bg))}${toHex(mix(ab, bb))}`;
+}
+
 export function clampPosition(value: number): number {
   if (Number.isNaN(value)) return 0;
   return Math.min(100, Math.max(0, Math.round(value)));

@@ -34,8 +34,22 @@ export function validateSourceFile(file: File): ValidationResult {
   return { valid: true };
 }
 
-/** Draws the source image, center-cropped to a square, onto a canvas at the target size and returns a PNG blob. */
-export function renderSquarePng(source: CanvasImageSource, sourceWidth: number, sourceHeight: number, targetSize: number): Promise<Blob> {
+export type FitMode = 'cover' | 'contain';
+
+export interface RenderSquareOptions {
+  fitMode?: FitMode;
+  backgroundColor?: string | null;
+}
+
+/** Draws the source image onto a square canvas at the target size — center-cropped ("cover") or letterboxed ("contain") — and returns a PNG blob. */
+export function renderSquarePng(
+  source: CanvasImageSource,
+  sourceWidth: number,
+  sourceHeight: number,
+  targetSize: number,
+  options: RenderSquareOptions = {}
+): Promise<Blob> {
+  const { fitMode = 'cover', backgroundColor = null } = options;
   return new Promise((resolve, reject) => {
     const canvas = document.createElement('canvas');
     canvas.width = targetSize;
@@ -46,14 +60,28 @@ export function renderSquarePng(source: CanvasImageSource, sourceWidth: number, 
       return;
     }
 
-    const side = Math.min(sourceWidth, sourceHeight);
-    const sx = (sourceWidth - side) / 2;
-    const sy = (sourceHeight - side) / 2;
-
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = 'high';
+
+    if (backgroundColor) {
+      ctx.fillStyle = backgroundColor;
+      ctx.fillRect(0, 0, targetSize, targetSize);
+    }
+
     try {
-      ctx.drawImage(source, sx, sy, side, side, 0, 0, targetSize, targetSize);
+      if (fitMode === 'contain') {
+        const scale = Math.min(targetSize / sourceWidth, targetSize / sourceHeight);
+        const drawWidth = sourceWidth * scale;
+        const drawHeight = sourceHeight * scale;
+        const dx = (targetSize - drawWidth) / 2;
+        const dy = (targetSize - drawHeight) / 2;
+        ctx.drawImage(source, 0, 0, sourceWidth, sourceHeight, dx, dy, drawWidth, drawHeight);
+      } else {
+        const side = Math.min(sourceWidth, sourceHeight);
+        const sx = (sourceWidth - side) / 2;
+        const sy = (sourceHeight - side) / 2;
+        ctx.drawImage(source, sx, sy, side, side, 0, 0, targetSize, targetSize);
+      }
     } catch {
       reject(new Error('This image could not be drawn to canvas.'));
       return;
