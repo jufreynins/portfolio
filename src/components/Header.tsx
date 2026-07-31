@@ -190,6 +190,9 @@ export default function Header() {
         .nav-link.is-active {
           color: #18181b;
         }
+        header[data-header-variant='dark']:not(.is-scrolled) {
+          background: linear-gradient(to bottom, rgba(19, 11, 36, 0.65), rgba(19, 11, 36, 0));
+        }
         header[data-header-variant='dark']:not(.is-scrolled) .nav-link,
         header[data-header-variant='dark']:not(.is-scrolled) .site-logo-link,
         header[data-header-variant='dark']:not(.is-scrolled) .header-mobile-toggle {
