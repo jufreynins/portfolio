@@ -7,8 +7,8 @@ import { siteConfig } from '@/config/site';
 import { buildMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = buildMetadata({
-  title: `Start a WordPress Project | ${siteConfig.name}`,
-  description: 'Discuss a new WordPress website, redesign, Elementor build, dynamic-content setup, or maintenance support with Jufrey Niño Bayog.',
+  title: `Start a Project | ${siteConfig.name}`,
+  description: 'Discuss a new WordPress website, web system, browser tool, or technical support need — hosting, migrations, domain and DNS, or business email delivery.',
   canonical: `${siteConfig.url}/contact`,
 });
 
@@ -38,8 +38,8 @@ export default function ContactPage() {
             <SectionHeading
               as="h1"
               eyebrow="Contact"
-              title="Have a WordPress project in mind?"
-              description="Tell me whether you need a new website, redesign, Elementor build, dynamic-content setup, maintenance support, or custom WordPress improvement."
+              title="Need a Website, Web System, or Technical Web Support?"
+              description="Tell me whether you need a new website, a web system, a browser tool, or technical support — hosting, migrations, domain and DNS, or business email delivery."
               titleClass="max-w-none"
               dark
             />

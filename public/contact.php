@@ -30,6 +30,7 @@ $name = field('name');
 $email = field('email');
 $business = field('business');
 $currentWebsite = field('current_website');
+$currentProvider = field('current_provider');
 $projectType = field('project_type');
 $timeline = field('timeline');
 $budget = field('budget');
@@ -62,6 +63,7 @@ $body = "You have a new project inquiry from your website contact form.\n\n"
     . "Email: {$email}\n"
     . 'Company/Business: ' . ($business !== '' ? $business : '—') . "\n"
     . 'Current Website: ' . ($currentWebsite !== '' ? $currentWebsite : '—') . "\n"
+    . 'Current Provider/Platform: ' . ($currentProvider !== '' ? $currentProvider : '—') . "\n"
     . 'Project Type: ' . ($projectType !== '' ? $projectType : '—') . "\n"
     . 'Target Timeline: ' . ($timeline !== '' ? $timeline : '—') . "\n"
     . 'Estimated Budget: ' . ($budget !== '' ? $budget : '—') . "\n\n"

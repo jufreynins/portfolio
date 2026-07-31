@@ -174,6 +174,21 @@ export default function ContactForm({ dark = false }: ContactFormProps) {
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div className="flex flex-col gap-2">
+          <label htmlFor="current-provider" className={labelClass}>
+            Current Provider or Platform
+          </label>
+          <select id="current-provider" name="current_provider" className={fieldClass}>
+            <option value="Not sure">Not sure</option>
+            <option value="Cloudways">Cloudways</option>
+            <option value="Hostinger">Hostinger</option>
+            <option value="GoDaddy">GoDaddy</option>
+            <option value="cPanel or WHM">cPanel or WHM</option>
+            <option value="WordPress">WordPress</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div className="flex flex-col gap-2">
           <label htmlFor="project-type" className={labelClass}>
             Project Type
           </label>
@@ -184,12 +199,21 @@ export default function ContactForm({ dark = false }: ContactFormProps) {
             <option value="Landing Page">Landing Page</option>
             <option value="Dynamic Content / ACF / JetEngine">Dynamic Content / ACF / JetEngine</option>
             <option value="Custom WordPress Functionality">Custom WordPress Functionality</option>
+            <option value="Web System / Admin Dashboard">Web System / Admin Dashboard</option>
+            <option value="Web Tool or Calculator">Web Tool or Calculator</option>
+            <option value="Hosting or Website Migration">Hosting or Website Migration</option>
+            <option value="Domain and DNS Configuration">Domain and DNS Configuration</option>
+            <option value="Business Email or Form Delivery">Business Email or Form Delivery</option>
+            <option value="SSL or Website Connection Issue">SSL or Website Connection Issue</option>
             <option value="Maintenance or Support">Maintenance or Support</option>
-            <option value="Web System or Tool">Web System or Tool</option>
+            <option value="Agency Development Support">Agency Development Support</option>
             <option value="Other">Other</option>
           </select>
         </div>
 
+      </div>
+
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div className="flex flex-col gap-2">
           <label htmlFor="timeline" className={labelClass}>
             Target Timeline
@@ -201,19 +225,19 @@ export default function ContactForm({ dark = false }: ContactFormProps) {
             <option value="Flexible / not sure yet">Flexible / not sure yet</option>
           </select>
         </div>
-      </div>
 
-      <div className="flex flex-col gap-2">
-        <label htmlFor="budget" className={labelClass}>
-          Estimated Budget
-        </label>
-        <select id="budget" name="budget" className={fieldClass}>
-          <option value="Under $500">Under $500</option>
-          <option value="$500 - $1,500">$500 – $1,500</option>
-          <option value="$1,500 - $5,000">$1,500 – $5,000</option>
-          <option value="$5,000+">$5,000+</option>
-          <option value="Not sure yet">Not sure yet</option>
-        </select>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="budget" className={labelClass}>
+            Estimated Budget
+          </label>
+          <select id="budget" name="budget" className={fieldClass}>
+            <option value="Under $500">Under $500</option>
+            <option value="$500 - $1,500">$500 – $1,500</option>
+            <option value="$1,500 - $5,000">$1,500 – $5,000</option>
+            <option value="$5,000+">$5,000+</option>
+            <option value="Not sure yet">Not sure yet</option>
+          </select>
+        </div>
       </div>
 
       <div className="flex flex-col gap-2">

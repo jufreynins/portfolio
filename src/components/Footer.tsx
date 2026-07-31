@@ -11,8 +11,11 @@ export default function Footer() {
           <span className="font-serif text-xl" style={{ color: 'var(--text-primary)' }}>
             {siteConfig.name}
           </span>
-          <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-            {siteConfig.title}
+          <span className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
+            WordPress and Web Systems Developer
+          </span>
+          <span className="max-w-xs text-sm" style={{ color: 'var(--text-muted)' }}>
+            Websites, browser tools, hosting, DNS, and technical web support.
           </span>
           <span
             className="mt-1 inline-flex w-fit items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold"

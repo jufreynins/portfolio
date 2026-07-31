@@ -6,10 +6,13 @@ import pedalShack from '../assets/images/projects/pedal-shack.png';
 import daviessCountyRuralWater from '../assets/images/projects/daviess-county-rural-water.png';
 import heritageLuxCabinetry from '../assets/images/projects/heritage-lux-cabinetry.png';
 
+export type ProjectStatus = 'Live';
+
 export interface Project {
   slug: string;
   name: string;
   category: string;
+  status: ProjectStatus;
   role: string;
   business: string;
   goal: string;
@@ -26,6 +29,7 @@ export const projects: Project[] = [
     slug: 'medic-media',
     name: 'Medic Media',
     category: 'Marketing Agency',
+    status: 'Live',
     role: 'WordPress Developer',
     results:
       'A polished, conversion-focused site that gives the agency a professional online presence to support client acquisition.',
@@ -43,6 +47,7 @@ export const projects: Project[] = [
     slug: 'neighborhood-plumbing-drain',
     name: 'Neighborhood Plumbing & Drain',
     category: 'Local Service Business',
+    status: 'Live',
     role: 'WordPress Developer',
     results:
       'A fast, trustworthy local site that makes it easy for homeowners to find services and get in touch.',
@@ -60,6 +65,7 @@ export const projects: Project[] = [
     slug: 'martin-county-humane-society',
     name: 'Martin County Humane Society',
     category: 'Nonprofit / Animal Welfare',
+    status: 'Live',
     role: 'WordPress Developer',
     results:
       'An approachable, easy-to-browse site that puts adoptable pets front and center for the community.',
@@ -77,6 +83,7 @@ export const projects: Project[] = [
     slug: 'the-pedal-shack',
     name: 'The Pedal Shack',
     category: 'Retail / Bike Shop',
+    status: 'Live',
     role: 'WordPress Developer',
     results:
       'A clear, browsable showcase of bikes and services that makes it easy for riders to find what they need.',
@@ -94,6 +101,7 @@ export const projects: Project[] = [
     slug: 'daviess-county-rural-water',
     name: 'Daviess County Rural Water',
     category: 'Utility / Public Service',
+    status: 'Live',
     role: 'WordPress Developer',
     results:
       'A reliable, easy-to-navigate resource for residents to find service and water quality information.',
@@ -111,6 +119,7 @@ export const projects: Project[] = [
     slug: 'heritage-lux-cabinetry',
     name: 'Heritage Lux Cabinetry',
     category: 'Custom Furniture / Craftsmanship',
+    status: 'Live',
     role: 'WordPress Developer',
     results:
       "A refined showcase that reflects the brand's craftsmanship and quality from first impression onward.",
@@ -125,3 +134,7 @@ export const projects: Project[] = [
     image: heritageLuxCabinetry,
   },
 ];
+
+export function getProjectBySlug(slug: string): Project | undefined {
+  return projects.find((project) => project.slug === slug);
+}

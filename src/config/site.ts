@@ -3,9 +3,9 @@ const yearsExperience = new Date().getFullYear() - yearStarted;
 
 export const siteConfig = {
   name: 'Jufrey Niño Bayog',
-  title: 'WordPress Developer & Frontend Specialist',
+  title: 'WordPress and Web Systems Developer',
   shortTitle: 'WordPress developer',
-  description: `WordPress developer with ${yearsExperience}+ years of experience building polished, reliable business websites with Elementor, dynamic content, and custom functionality — plus personal web systems and browser tools.`,
+  description: `WordPress developer with ${yearsExperience}+ years of experience building business websites, practical web systems, and browser tools — plus the hosting, domain, DNS, and technical setup needed to launch and maintain them.`,
   url: 'https://jufreyninobayogportfolio.com',
   locale: 'en-US',
   yearStarted,
@@ -26,7 +26,7 @@ export const siteConfig = {
     { label: 'Services', href: '/services' },
     { label: 'Portfolio', href: '/portfolio' },
     { label: 'Tools', href: '/tools' },
-    { label: 'Personal Projects', href: '/personal-projects' },
+    { label: 'Web Systems', href: '/personal-projects' },
     { label: 'About', href: '/about' },
     { label: 'Contact', href: '/contact' },
   ],

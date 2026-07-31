@@ -95,7 +95,6 @@ export default function Header() {
       />
 
       <Container className="flex items-center justify-between py-4 transition-[padding] duration-300" data-header-inner>
-        {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- intentional plain <a>: this is a static export with full-page navigation, not next/link's client-side routing */}
         <a href="/" className="site-logo-link flex items-center gap-2.5 text-xl font-serif tracking-tight text-zinc-900" aria-label={`${siteConfig.name} — Home`}>
           <span
             className="flex h-9 w-9 items-center justify-center rounded-full border border-black/10 font-mono text-xs font-medium"
@@ -123,7 +122,7 @@ export default function Header() {
 
         <div className="hidden 2xl:flex items-center">
           <Button href="/contact" variant="primary">
-            Discuss Website
+            Start a Project
           </Button>
         </div>
 
@@ -167,7 +166,7 @@ export default function Header() {
             Download CV
           </Button>
           <Button href="/contact" variant="primary" className="w-full">
-            Discuss Your Website
+            Start a Project
           </Button>
         </div>
       </div>

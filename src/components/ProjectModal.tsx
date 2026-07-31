@@ -160,19 +160,28 @@ export default function ProjectModal() {
               ))}
             </div>
 
-            <a
-              href={activeProject.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-2 inline-flex w-fit min-h-[48px] items-center justify-center gap-1.5 rounded-full px-6 text-[0.9375rem] font-bold transition-colors duration-300"
-              style={{ background: 'var(--brand-primary)', color: 'var(--text-on-dark)' }}
-            >
-              Visit Live Website
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="7" y1="17" x2="17" y2="7" />
-                <polyline points="7 7 17 7 17 17" />
-              </svg>
-            </a>
+            <div className="mt-2 flex flex-wrap gap-3">
+              <a
+                href={`/portfolio/${activeProject.slug}`}
+                className="inline-flex w-fit min-h-[48px] items-center justify-center gap-1.5 rounded-full border-2 px-6 text-[0.9375rem] font-bold transition-colors duration-300"
+                style={{ borderColor: 'var(--brand-primary)', color: 'var(--brand-primary)' }}
+              >
+                View Full Case Study
+              </a>
+              <a
+                href={activeProject.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex w-fit min-h-[48px] items-center justify-center gap-1.5 rounded-full px-6 text-[0.9375rem] font-bold transition-colors duration-300"
+                style={{ background: 'var(--brand-primary)', color: 'var(--text-on-dark)' }}
+              >
+                Visit Live Website
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="7" y1="17" x2="17" y2="7" />
+                  <polyline points="7 7 17 7 17 17" />
+                </svg>
+              </a>
+            </div>
           </div>
         )}
       </div>

@@ -10,9 +10,9 @@ import { processSteps } from '@/data/process';
 import { buildMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = buildMetadata({
-  title: `About — WordPress Developer — ${siteConfig.name}`,
+  title: `About — WordPress & Web Systems Developer — ${siteConfig.name}`,
   description:
-    'A closer look at Jufrey Niño Bayog — WordPress specialization, agency collaboration, dynamic-content capabilities, and the AI-assisted, human-led process behind every project.',
+    'A closer look at Jufrey Niño Bayog — WordPress specialization, web systems, hosting and DNS support, agency collaboration, and the AI-assisted, human-led process behind every project.',
   canonical: `${siteConfig.url}/about`,
 });
 
@@ -20,7 +20,7 @@ const { yearsExperience } = siteConfig;
 
 const professionalFacts = [
   { label: 'Experience', value: `${yearsExperience}+ years building for the web` },
-  { label: 'Focus', value: 'WordPress development & frontend execution' },
+  { label: 'Focus', value: 'WordPress development, web systems & technical setup' },
   { label: 'Workflow', value: 'AI-assisted with Claude Code and Cursor, human-reviewed' },
   { label: 'Availability', value: 'Remote, working with clients worldwide' },
 ];
@@ -30,9 +30,28 @@ const capabilityHighlights = [
   'Elementor Pro',
   'Dynamic content (ACF, JetEngine)',
   'Frontend customization',
+  'Hosting, DNS & email setup',
   'Agency collaboration',
-  'Responsive UI/UX improvements',
-  'Personal Projects (secondary interest)',
+  'Web Systems (secondary interest)',
+];
+
+const technicalOpsGroups = [
+  {
+    label: 'Hosting & Migrations',
+    items: ['Hosting environment review', 'WordPress migrations', 'WPVivid backup & restore', 'Staging-to-production deployment'],
+  },
+  {
+    label: 'Domain & DNS',
+    items: ['Nameserver updates', 'A, CNAME, MX & TXT records', 'DNS propagation checks', 'Domain & subdomain connection'],
+  },
+  {
+    label: 'SSL & Email Delivery',
+    items: ['SSL installation & verification', 'SPF, DKIM & DMARC setup', 'WordPress form delivery testing', 'WP Mail SMTP / Post SMTP configuration'],
+  },
+  {
+    label: 'Launch & Operations',
+    items: ['Cloudways, Hostinger, GoDaddy', 'WHM & cPanel', 'Cache configuration', 'Launch checks & QA'],
+  },
 ];
 
 export default function AboutPage() {
@@ -42,18 +61,19 @@ export default function AboutPage() {
       <section className="pt-24 pb-12 sm:pt-28 sm:pb-14" style={{ background: 'var(--surface-warm)' }}>
         <Container className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-7" data-reveal data-reveal-type="fade-up">
-            <SectionHeading as="h1" eyebrow="About" title="WordPress developer focused on reliable, polished execution." />
+            <SectionHeading as="h1" eyebrow="About" title="A developer who understands both the interface and the technical setup behind it." />
           </div>
 
           <div className="flex flex-col gap-6 lg:col-span-5" data-reveal data-reveal-type="fade-up">
             <p className="leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
               I&apos;m {siteConfig.name}, a WordPress developer with {yearsExperience}+ years building business websites and dynamic-content sites with Elementor Pro, ACF, and
-              JetEngine — often alongside agencies and remote teams, following their existing design systems.
+              JetEngine — often alongside agencies and remote teams, following their existing design systems. My work also covers what happens after launch: hosting, domain and DNS
+              configuration, and business email delivery.
             </p>
             <p className="leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
               As a secondary interest, I also build{' '}
               <a href="/personal-projects" className="underline" style={{ color: 'var(--brand-primary)' }}>
-                Personal Projects
+                Web Systems
               </a>{' '}
               and{' '}
               <a href="/tools" className="underline" style={{ color: 'var(--brand-primary)' }}>
@@ -103,6 +123,34 @@ export default function AboutPage() {
         </Container>
       </section>
 
+      {/* Technical Web Operations */}
+      <section className="py-12 sm:py-14" style={{ background: 'var(--surface-warm)' }}>
+        <Container className="flex flex-col gap-8">
+          <SectionHeading
+            eyebrow="Technical Web Operations"
+            title="The setup behind the website."
+            description="My work also covers what comes after launch. I coordinate hosting environments, migrate WordPress installations, connect domains, configure DNS and email-authentication records, verify SSL, test form delivery, and support staging-to-production launches."
+          />
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {technicalOpsGroups.map((group) => (
+              <div key={group.label} className="flex flex-col gap-3" data-reveal>
+                <span className="eyebrow" style={{ color: 'var(--brand-primary)' }}>
+                  {group.label}
+                </span>
+                <ul className="flex flex-col gap-2">
+                  {group.items.map((item) => (
+                    <li key={item} className="flex items-start gap-2 text-sm" style={{ color: 'var(--text-primary)' }}>
+                      <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full" style={{ background: 'var(--brand-primary)' }} />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </section>
+
       {/* Process */}
       <section className="dark-grid-bg py-12 sm:py-14" style={{ background: '#25134f' }}>
         <Container className="grid grid-cols-1 gap-10 lg:grid-cols-[38fr_62fr] lg:gap-12">
@@ -135,7 +183,7 @@ export default function AboutPage() {
         <Container className="flex flex-col items-start gap-6">
           <SectionHeading eyebrow="Let's build something" title="Ready to start a project?" description="Tell me a bit about what you're building. I typically reply within one business day." dark />
           <Button href="/contact" variant="primary" size="large">
-            Discuss Your Website
+            Start a Project
           </Button>
         </Container>
       </section>

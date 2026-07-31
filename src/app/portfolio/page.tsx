@@ -2,15 +2,15 @@ import type { Metadata } from 'next';
 import Container from '@/components/Container';
 import Button from '@/components/Button';
 import SectionHeading from '@/components/SectionHeading';
-import ProjectCard from '@/components/ProjectCard';
 import ProjectModal from '@/components/ProjectModal';
 import { ProjectModalProvider } from '@/components/ProjectModalContext';
+import PortfolioFilterGrid from '@/components/PortfolioFilterGrid';
 import { siteConfig } from '@/config/site';
 import { projects } from '@/data/projects';
 import { buildMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = buildMetadata({
-  title: `WordPress Portfolio — ${siteConfig.name}`,
+  title: `Selected Websites & Client Work — ${siteConfig.name}`,
   description: 'Real WordPress websites built for businesses, agencies, and nonprofits — from marketing agencies to e-commerce and community organizations.',
   canonical: `${siteConfig.url}/portfolio`,
 });
@@ -27,9 +27,9 @@ export default function PortfolioPage() {
             description="Real client work — the business need, my contribution, and the WordPress technology behind each site."
           />
           <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-            Every project below is completed client work. Looking for personal projects instead? See{' '}
+            Every project below is completed client work. Looking for web systems instead? See{' '}
             <a href="/personal-projects" className="font-medium underline" style={{ color: 'var(--brand-primary)' }}>
-              Personal Projects
+              Web Systems
             </a>
             .
           </p>
@@ -39,20 +39,16 @@ export default function PortfolioPage() {
       <ProjectModalProvider>
         <section className="pb-14 sm:pb-16" style={{ background: 'var(--surface-white)' }}>
           <Container>
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              {projects.map((project, i) => (
-                <ProjectCard key={project.slug} project={project} index={i + 1} priority={i < 3} />
-              ))}
-            </div>
+            <PortfolioFilterGrid projects={projects} />
           </Container>
           <ProjectModal />
         </section>
       </ProjectModalProvider>
 
-      {/* Personal Projects (after client work, visually distinct) */}
+      {/* Web Systems & Tools cross-sell (after client work, visually distinct) */}
       <section className="border-t py-12 sm:py-14" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }}>
         <Container className="flex flex-col gap-8">
-          <SectionHeading eyebrow="Also Explore" title="Personal Projects" description="Personal system concepts and browser-based tools — separate from the client work above." />
+          <SectionHeading eyebrow="Also Explore" title="Web Systems & Tools" description="Personal system concepts and browser-based tools — separate from the client work above." />
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <a href="/personal-projects" className="lab-card flex flex-col gap-4 rounded-2xl border p-6" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-white)', boxShadow: 'var(--shadow-sm)' }} data-reveal>
               <div className="flex items-start justify-between gap-3">
@@ -65,14 +61,14 @@ export default function PortfolioPage() {
                   </svg>
                 </span>
                 <span className="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wide" style={{ borderColor: 'var(--border-color)', color: 'var(--text-secondary)' }}>
-                  Personal Concept
+                  Web Systems
                 </span>
               </div>
               <h3 className="text-lg font-bold" style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-heading)' }}>
-                Personal Projects
+                Web Systems
               </h3>
               <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                Web system concepts for task management, inventory, and internal operations.
+                Personal system concepts and prototypes for task management, inventory, and internal operations.
               </p>
             </a>
             <a href="/tools" className="lab-card flex flex-col gap-4 rounded-2xl border p-6" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-white)', boxShadow: 'var(--shadow-sm)' }} data-reveal>
@@ -104,7 +100,7 @@ export default function PortfolioPage() {
         <Container className="flex flex-col items-start gap-6">
           <SectionHeading eyebrow="Let's build something" title="Ready to start a project?" description="Tell me a bit about what you're building. I typically reply within one business day." dark />
           <Button href="/contact" variant="primary" size="large">
-            Discuss Your Website
+            Start a Project
           </Button>
         </Container>
       </section>

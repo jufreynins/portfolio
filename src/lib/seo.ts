@@ -8,7 +8,7 @@ interface PageMetaOptions {
   noindex?: boolean;
 }
 
-const ogImage = `${siteConfig.url}/favicon.svg`;
+const ogImage = `${siteConfig.url}/og-image.svg`;
 
 export function buildMetadata({ title, description, canonical, noindex = false }: PageMetaOptions = {}): Metadata {
   const resolvedTitle = title ?? `${siteConfig.name} — ${siteConfig.title}`;

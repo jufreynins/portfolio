@@ -1,20 +1,22 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Container from '@/components/Container';
 import Button from '@/components/Button';
 import SectionHeading from '@/components/SectionHeading';
+import SystemPreview from '@/components/SystemPreview';
 import { siteConfig } from '@/config/site';
 import { wordpressServices } from '@/data/services';
-import { projects } from '@/data/projects';
+import { getProjectBySlug } from '@/data/projects';
+import { getSystemBySlug } from '@/data/systems';
+import { TOOLS } from '@/data/tools';
 import { buildMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = buildMetadata({
-  title: `WordPress Services — ${siteConfig.name}`,
+  title: `Web Development & Technical Solutions — ${siteConfig.name}`,
   description:
-    'Professional WordPress development for business websites, landing pages, dynamic content, and ongoing improvements — Elementor Pro, ACF, JetEngine, and custom functionality.',
+    'WordPress websites, dynamic content, web systems, browser tools, and hosting/DNS/launch support — the full scope of what I build and maintain.',
   canonical: `${siteConfig.url}/services`,
 });
-
-const projectBySlug = Object.fromEntries(projects.map((p) => [p.slug, p]));
 
 const whyWorkWithMe = [
   'Comfortable working inside existing websites, not just building from scratch',
@@ -26,6 +28,86 @@ const whyWorkWithMe = [
   'Uses AI tools to move faster — every change is still human-reviewed',
 ];
 
+function WebsiteVisual({ slug }: { slug?: string }) {
+  const project = slug ? getProjectBySlug(slug) : undefined;
+  if (!project) return <ChecklistVisual items={['Homepage', 'Services', 'Contact']} />;
+  return (
+    <div className="relative aspect-[4/3] overflow-hidden rounded-xl border" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }}>
+      <Image src={project.image} alt={`${project.name} website preview`} width={480} height={360} className="h-full w-full object-cover" />
+    </div>
+  );
+}
+
+function ContentModelVisual() {
+  const chips = ['Post Type: Location', 'Taxonomy: Region', 'Field: Adoption Status', 'Listing: Filterable'];
+  return (
+    <div className="flex aspect-[4/3] flex-col justify-center gap-2 rounded-xl border p-4" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }}>
+      {chips.map((chip) => (
+        <span key={chip} className="rounded-lg border px-3 py-2 font-mono text-[10px]" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-white)', color: 'var(--text-secondary)' }}>
+          {chip}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function ToolVisual() {
+  return (
+    <div className="grid aspect-[4/3] grid-cols-2 gap-2 rounded-xl border p-4" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }}>
+      {TOOLS.slice(0, 4).map((tool) => (
+        <div key={tool.id} className="flex flex-col items-center justify-center gap-1 rounded-lg border" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-white)' }}>
+          <span className="h-2 w-2 rounded-full" style={{ background: tool.accent }} />
+          <span className="text-center text-[8px] font-bold leading-tight" style={{ color: 'var(--text-secondary)' }}>
+            {tool.title}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function ConnectionFlowVisual() {
+  const nodes = ['Domain', 'DNS Records', 'Hosting', 'Website Live'];
+  return (
+    <div className="flex aspect-[4/3] flex-col justify-center gap-2 rounded-xl border p-4" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }}>
+      {nodes.map((node, i) => (
+        <div key={node} className="flex items-center gap-2">
+          <span
+            className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full font-mono text-[9px] font-bold"
+            style={{ background: i === nodes.length - 1 ? 'var(--color-success)' : 'var(--brand-lavender)', color: i === nodes.length - 1 ? '#fff' : 'var(--brand-primary)' }}
+          >
+            {i + 1}
+          </span>
+          <span className="rounded-lg border px-2.5 py-1.5 text-[10px] font-medium" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-white)', color: 'var(--text-primary)' }}>
+            {node}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function ChecklistVisual({ items }: { items?: string[] }) {
+  const list = items ?? ['Updates applied', 'Performance checked', 'Backups verified'];
+  return (
+    <div className="flex aspect-[4/3] flex-col justify-center gap-2.5 rounded-xl border p-4" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }}>
+      {list.map((item) => (
+        <div key={item} className="flex items-center gap-2 text-xs font-medium" style={{ color: 'var(--text-primary)' }}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0 rounded-full" style={{ color: 'var(--color-success)', background: 'var(--color-success-soft)' }}>
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+          {item}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function DashboardVisual({ slug }: { slug?: string }) {
+  const system = slug ? getSystemBySlug(slug) : undefined;
+  return <SystemPreview routeLabel={system?.routeLabel ?? 'app.system/overview'} activeNav={1} />;
+}
+
 export default function ServicesPage() {
   return (
     <>
@@ -33,9 +115,9 @@ export default function ServicesPage() {
         <Container>
           <SectionHeading
             as="h1"
-            eyebrow="WordPress Services"
-            title="WordPress development for websites that need to perform."
-            description="Business websites, landing pages, dynamic content, and ongoing improvements."
+            eyebrow="Services"
+            title="Web Development and Technical Solutions"
+            description="WordPress websites, dynamic content, web systems, browser tools, and the hosting, domain, and DNS setup behind them."
           />
         </Container>
       </section>
@@ -43,9 +125,20 @@ export default function ServicesPage() {
       <section className="py-12 sm:py-14" style={{ background: 'var(--surface-white)' }}>
         <Container className="flex flex-col gap-10">
           {wordpressServices.map((service, i) => {
-            const project = service.relatedProjectSlug ? projectBySlug[service.relatedProjectSlug] : undefined;
+            const project = service.relatedProjectSlug ? getProjectBySlug(service.relatedProjectSlug) : undefined;
+            const system = service.relatedSystemSlug ? getSystemBySlug(service.relatedSystemSlug) : undefined;
+
             return (
-              <div key={service.title} className="grid grid-cols-1 gap-6 border-t pt-8 lg:grid-cols-12 lg:gap-10" style={{ borderColor: 'var(--border-color)' }} data-reveal>
+              <div key={service.title} className="grid grid-cols-1 gap-6 border-t pt-8 lg:grid-cols-12 lg:gap-8" style={{ borderColor: 'var(--border-color)' }} data-reveal>
+                <div className="lg:col-span-3">
+                  {service.visual === 'website' && <WebsiteVisual slug={service.relatedProjectSlug} />}
+                  {service.visual === 'content-model' && <ContentModelVisual />}
+                  {service.visual === 'dashboard' && <DashboardVisual slug={service.relatedSystemSlug} />}
+                  {service.visual === 'tool' && <ToolVisual />}
+                  {service.visual === 'connection-flow' && <ConnectionFlowVisual />}
+                  {service.visual === 'checklist' && <ChecklistVisual />}
+                </div>
+
                 <div className="flex items-start gap-4 lg:col-span-4">
                   <span className="font-mono text-sm" style={{ color: 'var(--brand-primary)' }}>
                     {String(i + 1).padStart(2, '0')}
@@ -58,7 +151,7 @@ export default function ServicesPage() {
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-4 lg:col-span-8">
+                <div className="flex flex-col gap-4 lg:col-span-5">
                   <p className="text-sm" style={{ color: 'var(--text-primary)' }}>
                     <span className="text-xs font-bold uppercase tracking-wide" style={{ color: 'var(--text-secondary)' }}>
                       Who it helps:
@@ -82,8 +175,17 @@ export default function ServicesPage() {
                       <span className="font-bold uppercase tracking-wide">Technology:</span> {service.technology}
                     </p>
                     {project && (
-                      <a href={project.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm font-bold" style={{ color: 'var(--brand-primary)' }}>
+                      <a href={`/portfolio/${project.slug}`} className="inline-flex items-center gap-1.5 text-sm font-bold" style={{ color: 'var(--brand-primary)' }}>
                         Related project: {project.name}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <line x1="7" y1="17" x2="17" y2="7" />
+                          <polyline points="7 7 17 7 17 17" />
+                        </svg>
+                      </a>
+                    )}
+                    {system && (
+                      <a href={`/personal-projects/${system.slug}`} className="inline-flex items-center gap-1.5 text-sm font-bold" style={{ color: 'var(--brand-primary)' }}>
+                        Related system: {system.name}
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                           <line x1="7" y1="17" x2="17" y2="7" />
                           <polyline points="7 7 17 7 17 17" />
@@ -119,21 +221,21 @@ export default function ServicesPage() {
 
       <section className="py-12 sm:py-14" style={{ background: 'var(--surface-warm)' }}>
         <Container className="flex flex-col items-start gap-5 border-t pt-10" style={{ borderColor: 'var(--border-color)' }}>
-          <span className="eyebrow">Beyond WordPress</span>
+          <span className="eyebrow">Beyond Client Work</span>
           <p className="max-w-xl leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
             I also build{' '}
             <a href="/personal-projects" className="underline" style={{ color: 'var(--brand-primary)' }}>
-              Personal Projects
+              Web Systems
             </a>{' '}
             and{' '}
             <a href="/tools" className="underline" style={{ color: 'var(--brand-primary)' }}>
               Tools
             </a>{' '}
-            as a secondary interest.
+            outside client projects.
           </p>
           <div className="flex flex-wrap gap-4">
             <Button href="/personal-projects" variant="secondary">
-              Personal Projects
+              Web Systems
             </Button>
             <Button href="/tools" variant="secondary">
               Tools
@@ -151,7 +253,7 @@ export default function ServicesPage() {
             dark
           />
           <Button href="/contact" variant="primary" size="large">
-            Discuss Your Website
+            Start a Project
           </Button>
         </Container>
       </section>

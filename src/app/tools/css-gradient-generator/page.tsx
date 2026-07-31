@@ -1,5 +1,10 @@
+import type { CSSProperties } from 'react';
 import type { Metadata } from 'next';
-import ToolWorkspaceShell from '@/components/tools/ToolWorkspaceShell';
+import Container from '@/components/Container';
+import Button from '@/components/Button';
+import ToolPrivacyIndicator from '@/components/tools/ToolPrivacyIndicator';
+import ToolGuideAccordion from '@/components/tools/ToolGuideAccordion';
+import RelatedTools from '@/components/tools/RelatedTools';
 import GradientGenerator from '@/components/GradientGenerator';
 import { siteConfig } from '@/config/site';
 import { buildMetadata } from '@/lib/seo';
@@ -22,26 +27,57 @@ const guideTips = [
 
 export default function CssGradientGeneratorPage() {
   return (
-    <ToolWorkspaceShell
-      toolId="css-visual-generator"
-      accent={TOOL_ACCENT}
-      accentSoft={TOOL_ACCENT_SOFT}
-      title="CSS Gradient Generator"
-      description="Design linear, radial, and conic gradients with a live preview, then copy the CSS or download it as an image."
-      icon={
-        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <circle cx="12" cy="12" r="9" />
-          <path d="M12 3a9 9 0 0 1 0 18" fill="currentColor" fillOpacity="0.25" stroke="none" />
-        </svg>
-      }
-      guideTitle="How it works"
-      guideTips={guideTips}
-      ctaEyebrow="Need a custom design system?"
-      ctaTitle="Need help building this into a real website?"
-      ctaDescription="I can turn gradients, color systems, and UI details like this into a fast, polished WordPress site — built with Elementor, custom CSS, and clean, maintainable code."
-      ctaButtonLabel="Discuss Your Website"
-    >
-      <GradientGenerator />
-    </ToolWorkspaceShell>
+    <div style={{ '--tool-accent': TOOL_ACCENT, '--tool-accent-soft': TOOL_ACCENT_SOFT } as CSSProperties}>
+      {/* Minimal single-line top bar — the gradient studio itself is the focus, not a big header band */}
+      <section className="pt-20 pb-4 sm:pt-24" style={{ background: 'var(--surface-white)' }}>
+        <Container className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex flex-wrap items-center gap-3">
+            <a href="/tools" className="inline-flex items-center gap-1.5 text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12" />
+                <polyline points="12 19 5 12 12 5" />
+              </svg>
+              Tools
+            </a>
+            <span style={{ color: 'var(--border-color)' }}>/</span>
+            <h1 className="text-lg font-bold" style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-heading)' }}>
+              CSS Gradient Generator
+            </h1>
+          </div>
+          <ToolPrivacyIndicator />
+        </Container>
+      </section>
+
+      <section className="pb-10 sm:pb-12" style={{ background: 'var(--surface-white)' }}>
+        <Container className="flex flex-col gap-6">
+          <GradientGenerator />
+        </Container>
+      </section>
+
+      <section className="py-10 sm:py-12" style={{ background: 'var(--surface-warm)' }}>
+        <Container className="flex flex-col gap-8">
+          <ToolGuideAccordion title="How it works" tips={guideTips} />
+          <RelatedTools currentId="css-visual-generator" />
+        </Container>
+      </section>
+
+      <section className="py-8 sm:py-10" style={{ background: 'var(--surface-white)' }}>
+        <Container>
+          <div className="flex flex-col items-start gap-4 rounded-2xl border-2 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8" style={{ borderColor: 'var(--tool-accent)', background: 'var(--tool-accent-soft)' }}>
+            <div className="flex flex-col gap-1">
+              <span className="eyebrow" style={{ color: 'var(--tool-accent)' }}>
+                Need a custom design system?
+              </span>
+              <p className="max-w-xl text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
+                I can turn gradients, color systems, and UI details like this into a fast, polished WordPress site — built with Elementor, custom CSS, and clean, maintainable code.
+              </p>
+            </div>
+            <Button href="/contact" variant="primary">
+              Start a Project
+            </Button>
+          </div>
+        </Container>
+      </section>
+    </div>
   );
 }
