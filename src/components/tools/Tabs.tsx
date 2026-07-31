@@ -28,7 +28,7 @@ export default function Tabs({ tabs, activeId, onChange, ariaLabel, className = 
   }
 
   return (
-    <div ref={listRef} role="tablist" aria-label={ariaLabel} className={`inline-flex w-fit gap-1 rounded-full border p-1 ${className}`} style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }}>
+    <div ref={listRef} role="tablist" aria-label={ariaLabel} className={`inline-flex w-fit flex-wrap gap-1 rounded-full border p-1 ${className}`} style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }}>
       {tabs.map((tab, i) => {
         const active = tab.id === activeId;
         return (
