@@ -88,7 +88,8 @@ export default function Header() {
       data-header
     >
       <div
-        className={`absolute inset-0 -z-10 transition-opacity duration-300 glass ${isHome ? 'opacity-0' : 'opacity-100'}`}
+        className={`absolute inset-0 -z-10 border-b transition-opacity duration-300 ${isHome ? 'opacity-0' : 'opacity-100'}`}
+        style={{ background: 'var(--surface-white)', borderColor: 'var(--border-color)', boxShadow: 'var(--shadow-sm)' }}
         data-header-bg
       />
       <div
