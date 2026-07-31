@@ -9,8 +9,6 @@ export default function ToolCard({ tool }: ToolCardProps) {
   return (
     <a
       href={tool.href}
-      data-tool-card
-      data-tool-id={tool.id}
       className={`card-surface group flex flex-col gap-3 p-4 transition-transform hover:-translate-y-0.5 ${tool.featured ? 'card-surface--featured sm:col-span-2' : ''}`}
       style={{ background: 'var(--surface-white)' }}
     >

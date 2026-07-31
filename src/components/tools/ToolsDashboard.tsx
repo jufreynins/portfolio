@@ -1,39 +1,12 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
-import { CATEGORIES, TOOLS, type Tool } from '@/data/tools';
+import { useMemo, useState } from 'react';
+import { CATEGORIES, TOOLS } from '@/data/tools';
 import ToolCard from '@/components/tools/ToolCard';
-
-const RECENT_KEY = 'tools-recently-used';
-const MAX_RECENT = 4;
 
 export default function ToolsDashboard() {
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState<(typeof CATEGORIES)[number]>('All');
-  const [recentIds, setRecentIds] = useState<string[]>([]);
-
-  useEffect(() => {
-    try {
-      const stored = JSON.parse(localStorage.getItem(RECENT_KEY) ?? '[]');
-      if (Array.isArray(stored)) setRecentIds(stored.filter((id): id is string => typeof id === 'string'));
-    } catch {
-      // ignore malformed/unavailable storage
-    }
-  }, []);
-
-  function handleCardClick(e: React.MouseEvent<HTMLDivElement>) {
-    const card = (e.target as HTMLElement).closest<HTMLElement>('[data-tool-card]');
-    const id = card?.dataset.toolId;
-    if (!id) return;
-    try {
-      const stored = JSON.parse(localStorage.getItem(RECENT_KEY) ?? '[]');
-      const existing = Array.isArray(stored) ? stored.filter((v): v is string => typeof v === 'string' && v !== id) : [];
-      const next = [id, ...existing].slice(0, MAX_RECENT);
-      localStorage.setItem(RECENT_KEY, JSON.stringify(next));
-    } catch {
-      // storage unavailable — recently-used is a nice-to-have, safe to skip
-    }
-  }
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -44,16 +17,11 @@ export default function ToolsDashboard() {
     });
   }, [query, category]);
 
-  const recentTools = useMemo(
-    () => recentIds.map((id) => TOOLS.find((t) => t.id === id)).filter((t): t is Tool => !!t),
-    [recentIds]
-  );
-
   const featured = filtered.find((t) => t.featured);
   const rest = filtered.filter((t) => !t.featured);
 
   return (
-    <div className="flex flex-col gap-6" onClick={handleCardClick}>
+    <div className="flex flex-col gap-6">
       {/* Search + category filters */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="relative w-full sm:max-w-xs">
@@ -106,20 +74,6 @@ export default function ToolsDashboard() {
           })}
         </div>
       </div>
-
-      {/* Recently used */}
-      {recentTools.length > 0 && (
-        <div className="flex flex-col gap-2">
-          <span className="text-xs font-bold uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
-            Recently used
-          </span>
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-            {recentTools.map((tool) => (
-              <ToolCard key={tool.id} tool={{ ...tool, featured: false }} />
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* Tool grid */}
       {filtered.length === 0 ? (
