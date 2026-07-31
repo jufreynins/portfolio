@@ -8,8 +8,9 @@ import Button from './Button';
 
 export default function Header() {
   const currentPath = usePathname();
-  // The contact page's first section has a dark background, so header text needs to stay legible before scrolling.
-  const dark = currentPath === '/contact';
+  // Only the homepage hero is designed to sit under a transparent header — every other
+  // page's header stays solid from the start so it never has to guess what's behind it.
+  const isHome = currentPath === '/';
 
   const isNavActive = (href: string) => {
     if (!currentPath) return false;
@@ -68,7 +69,7 @@ export default function Header() {
       const pct = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
 
       if (progress) progress.style.width = `${pct}%`;
-      if (headerBg) headerBg.style.opacity = scrollY > 24 ? '1' : '0';
+      if (headerBg) headerBg.style.opacity = isHome ? (scrollY > 24 ? '1' : '0') : '1';
       if (headerInner) headerInner.classList.toggle('py-2.5', scrollY > 24);
       if (headerInner) headerInner.classList.toggle('py-4', scrollY <= 24);
       header.classList.toggle('is-scrolled', scrollY > 24);
@@ -85,9 +86,11 @@ export default function Header() {
       id="site-header"
       className="fixed inset-x-0 top-0 z-50 transition-all duration-300"
       data-header
-      data-header-variant={dark ? 'dark' : 'light'}
     >
-      <div className="absolute inset-0 -z-10 opacity-0 transition-opacity duration-300 glass" data-header-bg />
+      <div
+        className={`absolute inset-0 -z-10 transition-opacity duration-300 glass ${isHome ? 'opacity-0' : 'opacity-100'}`}
+        data-header-bg
+      />
       <div
         className="absolute bottom-0 left-0 h-px bg-white/0 transition-[width] duration-150 ease-out"
         data-scroll-progress
@@ -189,21 +192,6 @@ export default function Header() {
         }
         .nav-link.is-active {
           color: #18181b;
-        }
-        header[data-header-variant='dark']:not(.is-scrolled) {
-          background: linear-gradient(to bottom, rgba(19, 11, 36, 0.65), rgba(19, 11, 36, 0));
-        }
-        header[data-header-variant='dark']:not(.is-scrolled) .nav-link,
-        header[data-header-variant='dark']:not(.is-scrolled) .site-logo-link,
-        header[data-header-variant='dark']:not(.is-scrolled) .header-mobile-toggle {
-          color: rgba(255, 255, 255, 0.85);
-        }
-        header[data-header-variant='dark']:not(.is-scrolled) .nav-link:hover,
-        header[data-header-variant='dark']:not(.is-scrolled) .nav-link.is-active {
-          color: #fff;
-        }
-        header[data-header-variant='dark']:not(.is-scrolled) .header-mobile-toggle {
-          border-color: rgba(255, 255, 255, 0.25);
         }
       `}</style>
     </header>
