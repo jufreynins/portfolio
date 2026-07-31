@@ -6,7 +6,12 @@ interface RelatedToolsProps {
 }
 
 export default function RelatedTools({ currentId, limit = 3 }: RelatedToolsProps) {
-  const related = TOOLS.filter((tool) => tool.id !== currentId).slice(0, limit);
+  const current = TOOLS.find((tool) => tool.id === currentId);
+  const others = TOOLS.filter((tool) => tool.id !== currentId && tool.status !== 'Planned' && tool.status !== 'In Development');
+  // Prefer tools in the same category so "related" is actually related, then fill any remaining slots.
+  const sameCategory = current ? others.filter((tool) => tool.category === current.category) : [];
+  const rest = others.filter((tool) => !sameCategory.includes(tool));
+  const related = [...sameCategory, ...rest].slice(0, limit);
   if (!related.length) return null;
 
   return (

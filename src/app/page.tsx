@@ -105,6 +105,9 @@ const aboutProofPoints = [
 ];
 
 const [firstProject, secondProject, thirdProject] = projects;
+
+// A representative spread across categories, not just the first N tools alphabetically/by-insertion-order.
+const FEATURED_TOOL_IDS = ['dns-email-record-checker', 'website-launch-checklist', 'schema-markup-builder', 'image-toolkit', 'qr-code-generator'];
 const featuredSystems = systems.filter((s) => s.screenshot).slice(0, 2);
 
 export default function HomePage() {
@@ -310,7 +313,10 @@ export default function HomePage() {
             {/* Web Tools — compact launcher grid preview */}
             <div className="card-surface flex flex-col overflow-hidden rounded-2xl" style={{ background: 'var(--surface-white)' }} data-reveal>
               <div className="grid grid-cols-3 gap-2 p-6 pb-0">
-                {TOOLS.slice(0, 3).map((tool) => (
+                {['image-toolkit', 'qr-code-generator', 'developer-data-toolkit']
+                  .map((id) => TOOLS.find((t) => t.id === id))
+                  .filter((tool): tool is (typeof TOOLS)[number] => !!tool)
+                  .map((tool) => (
                   <div
                     key={tool.id}
                     className="flex aspect-square flex-col items-center justify-center gap-1.5 rounded-xl border"
@@ -443,7 +449,9 @@ export default function HomePage() {
           />
 
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-5">
-            {TOOLS.map((tool) => (
+            {FEATURED_TOOL_IDS.map((id) => TOOLS.find((t) => t.id === id))
+              .filter((tool): tool is (typeof TOOLS)[number] => !!tool)
+              .map((tool) => (
               <a
                 key={tool.id}
                 href={tool.href}

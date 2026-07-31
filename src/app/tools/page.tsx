@@ -7,8 +7,8 @@ import { siteConfig } from '@/config/site';
 import { buildMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = buildMetadata({
-  title: `Tools — ${siteConfig.name}`,
-  description: 'Free, privacy-focused browser tools — an image toolkit, favicon generator, SEO preview, CSS gradient generator, and JSON formatter. No uploads, accounts, or permanent storage.',
+  title: `Web Tools — ${siteConfig.name}`,
+  description: 'Practical tools for building, launching, auditing, and maintaining websites — DNS checks, launch checklists, schema markup, redirects, accessibility, and more.',
   canonical: `${siteConfig.url}/tools`,
 });
 
@@ -17,12 +17,12 @@ export default function ToolsPage() {
     <>
       <section className="pt-20 pb-6 sm:pt-24 sm:pb-8" style={{ background: 'var(--surface-warm)' }}>
         <Container className="flex flex-col gap-2">
-          <span className="eyebrow">Browser Tools</span>
+          <span className="eyebrow">Web Tools</span>
           <h1 className="text-2xl font-bold sm:text-3xl" style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-heading)' }}>
-            Fast, private utilities for everyday web tasks.
+            Practical tools for building, launching, auditing, and maintaining websites.
           </h1>
           <p className="text-sm sm:text-base" style={{ color: 'var(--text-secondary)' }}>
-            Everything runs in your browser &mdash; no account, uploads, or permanent storage.
+            Free, focused utilities — most run entirely in your browser with no account or upload required.
           </p>
         </Container>
       </section>

@@ -54,7 +54,10 @@ function ContentModelVisual() {
 function ToolVisual() {
   return (
     <div className="grid aspect-[4/3] grid-cols-2 gap-2 rounded-xl border p-4" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }}>
-      {TOOLS.slice(0, 4).map((tool) => (
+      {['image-toolkit', 'qr-code-generator', 'developer-data-toolkit', 'css-visual-generator']
+        .map((id) => TOOLS.find((t) => t.id === id))
+        .filter((tool): tool is (typeof TOOLS)[number] => !!tool)
+        .map((tool) => (
         <div key={tool.id} className="flex flex-col items-center justify-center gap-1 rounded-lg border" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-white)' }}>
           <span className="h-2 w-2 rounded-full" style={{ background: tool.accent }} />
           <span className="text-center text-[8px] font-bold leading-tight" style={{ color: 'var(--text-secondary)' }}>
