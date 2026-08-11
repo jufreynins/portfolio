@@ -52,6 +52,12 @@ const experience: ExperienceEntry[] = [
       'Working independently with agencies and direct clients on fixed-scope WordPress projects — site builds, ongoing maintenance, hosting & DNS support, and migrations.',
     projects: [
       {
+        client: 'Spirit Media (United States) — AI Agency',
+        period: 'Jan – Feb 2026',
+        detail:
+          'Returned as an AI-Assisted Developer after the agency’s pivot from WordPress web design to AI-driven books and websites; contributed to AI-generated book production and platform workflows.',
+      },
+      {
         client: 'Business Registry Corporation (Canada)',
         period: 'May – Nov 2025',
         detail: 'WordPress development for business registration services; custom Gravity Forms workflows for government filings, including logic, validation, and secure submission handling.',
