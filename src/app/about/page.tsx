@@ -35,6 +35,65 @@ const capabilityHighlights = [
   'Personal Projects (secondary interest)',
 ];
 
+type ExperienceEntry = {
+  period: string;
+  role: string;
+  org: string;
+  summary: string;
+  projects?: { client: string; period: string; detail: string }[];
+};
+
+const experience: ExperienceEntry[] = [
+  {
+    period: 'Jan 2024 — Present',
+    role: 'Freelance / Contract WordPress Developer',
+    org: 'Independent — Philippines, United States, Canada',
+    summary:
+      'Working independently with agencies and direct clients on fixed-scope WordPress projects — site builds, ongoing maintenance, hosting & DNS support, and migrations.',
+    projects: [
+      {
+        client: 'Business Registry Corporation (Canada)',
+        period: 'May – Nov 2025',
+        detail: 'WordPress development for business registration services; custom Gravity Forms workflows for government filings, including logic, validation, and secure submission handling.',
+      },
+      {
+        client: 'Neighborhood Plumbing and Drain',
+        period: 'Aug – Sep 2025',
+        detail: 'Ongoing maintenance, service pages, and conversion-focused landing pages; content and blog management.',
+      },
+      {
+        client: 'Whitehead Agency Group (Canada)',
+        period: 'Jul 2024 – Apr 2025',
+        detail: 'Led development across multiple client sites with Elementor, Bricks, WPBakery, and Divi; managed hosting, domains, DNS, backups, and migrations.',
+      },
+      {
+        client: 'Rava Digital (Philippines)',
+        period: 'Apr – Jun 2024',
+        detail: 'Agency-client WordPress development, layout updates, responsive fixes, and performance improvements.',
+      },
+      {
+        client: 'Spirit Media (United States)',
+        period: 'Jan – Apr 2024',
+        detail: 'Converted Figma designs into fully functional WordPress builds; WP Rocket optimization and responsive testing.',
+      },
+    ],
+  },
+  {
+    period: '2021 — 2023',
+    role: 'Website Developer',
+    org: 'National Meat Inspection Service — Philippines',
+    summary:
+      'Built and customized WordPress websites alongside internal system development; backend customization, updates, maintenance, and bug fixing.',
+  },
+  {
+    period: '2019 — 2020',
+    role: 'Freelance WordPress CMS Designer',
+    org: 'Independent — Philippines',
+    summary:
+      'Designed user-friendly WordPress themes and templates, implemented plugins and widgets, and optimized for mobile responsiveness and on-page SEO. Clients: Meler Production, Elopement Wedding Planner, United Realty Group, Randell Tiongson Personal Finance.',
+  },
+];
+
 const technicalOpsGroups = [
   {
     label: 'Hosting & Migrations',
@@ -106,6 +165,60 @@ export default function AboutPage() {
                 Download CV
               </Button>
             </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* Experience */}
+      <section className="py-12 sm:py-14" style={{ background: 'var(--surface-white)' }}>
+        <Container className="flex flex-col gap-8">
+          <SectionHeading
+            eyebrow="Experience"
+            title="How the work has been organized."
+            description="A run of freelance and contract engagements with agencies and direct clients, bracketing a multi-year in-house role."
+          />
+          <div className="flex flex-col divide-y" style={{ borderColor: 'var(--border-color)' }}>
+            {experience.map((entry) => (
+              <div key={`${entry.role}-${entry.period}`} className="grid grid-cols-1 gap-4 py-8 first:pt-0 lg:grid-cols-12 lg:gap-8" data-reveal>
+                <div className="lg:col-span-3">
+                  <span className="eyebrow" style={{ color: 'var(--brand-primary)' }}>
+                    {entry.period}
+                  </span>
+                </div>
+                <div className="flex flex-col gap-3 lg:col-span-9">
+                  <div>
+                    <h3 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
+                      {entry.role}
+                    </h3>
+                    <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                      {entry.org}
+                    </p>
+                  </div>
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                    {entry.summary}
+                  </p>
+                  {entry.projects && (
+                    <ul className="mt-2 flex flex-col gap-3">
+                      {entry.projects.map((project) => (
+                        <li key={project.client} className="flex flex-col gap-1 border-l-2 pl-4" style={{ borderColor: 'var(--border-color)' }}>
+                          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                            <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
+                              {project.client}
+                            </span>
+                            <span className="text-xs" style={{ color: 'var(--text-secondary)' }}>
+                              {project.period}
+                            </span>
+                          </div>
+                          <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                            {project.detail}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </div>
+            ))}
           </div>
         </Container>
       </section>
