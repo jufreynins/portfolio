@@ -53,7 +53,7 @@ const experience: ExperienceEntry[] = [
     projects: [
       {
         client: 'Spirit Media (United States) — AI Agency',
-        period: 'Jan – Feb 2026',
+        period: 'Jan – Jun 2026',
         detail:
           'Returned as an AI-Assisted Developer after the agency’s pivot from WordPress web design to AI-driven books and websites; contributed to AI-generated book production and platform workflows.',
       },
