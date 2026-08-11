@@ -74,7 +74,8 @@ const experience: ExperienceEntry[] = [
       {
         client: 'Spirit Media (United States)',
         period: 'Jan – Apr 2024',
-        detail: 'Converted Figma designs into fully functional WordPress builds; WP Rocket optimization and responsive testing.',
+        detail:
+          'Converted Figma designs into fully functional WordPress builds; WP Rocket optimization and responsive testing. Engagement concluded as the agency shifted its model from WordPress web design to AI-driven books and websites.',
       },
     ],
   },
@@ -93,6 +94,25 @@ const experience: ExperienceEntry[] = [
       'Designed user-friendly WordPress themes and templates, implemented plugins and widgets, and optimized for mobile responsiveness and on-page SEO. Clients: Meler Production, Elopement Wedding Planner, United Realty Group, Randell Tiongson Personal Finance.',
   },
 ];
+
+const aiCapabilities = [
+  'Website & landing page development',
+  'WordPress development & troubleshooting',
+  'Frontend development',
+  'Web application & system development',
+  'Code generation & refactoring',
+  'Debugging',
+  'UI/UX implementation',
+  'Responsive & performance optimization',
+  'API integration',
+  'Deployment automation',
+  'Technical documentation',
+  'Code & security review',
+  'Testing & QA',
+  'Legacy code & existing codebase auditing',
+];
+
+const aiTools = ['Claude', 'Claude Code', 'ChatGPT', 'Cursor', 'GitHub'];
 
 const technicalOpsGroups = [
   {
@@ -289,10 +309,49 @@ export default function AboutPage() {
         <Container className="flex flex-col gap-8">
           <SectionHeading
             eyebrow="Workflow"
-            title="AI-assisted development. Human-led execution."
-            description="I use Claude Code and Cursor for planning and scaffolding — architecture, design judgment, and final review stay human-led."
+            title="AI-assisted software & web development. Human-led execution."
+            description="AI helps accelerate implementation, analysis, debugging, and repetitive development tasks — architecture, validation, testing, security decisions, deployment, and final quality control stay developer-driven."
           />
           <AIWorkflowVisual />
+
+          <div className="grid grid-cols-1 gap-8 pt-4 lg:grid-cols-2">
+            <div className="flex flex-col gap-3">
+              <span className="eyebrow" style={{ color: 'var(--brand-primary)' }}>
+                Where AI fits in
+              </span>
+              <div className="flex flex-wrap gap-2">
+                {aiCapabilities.map((item) => (
+                  <span
+                    key={item}
+                    className="rounded-full border px-3 py-1.5 text-xs font-medium"
+                    style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className="flex flex-col gap-3">
+              <span className="eyebrow" style={{ color: 'var(--brand-primary)' }}>
+                Tools
+              </span>
+              <div className="flex flex-wrap gap-2">
+                {aiTools.map((item) => (
+                  <span
+                    key={item}
+                    className="rounded-full border px-3 py-1.5 text-xs font-medium"
+                    style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+              <p className="pt-2 text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                Stack is chosen per project, not applied uniformly — Astro or WordPress for marketing sites, Next.js and Supabase for web applications, and AI tools throughout to speed up
+                implementation without skipping human review.
+              </p>
+            </div>
+          </div>
         </Container>
       </section>
 
