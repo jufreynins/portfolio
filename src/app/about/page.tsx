@@ -63,7 +63,7 @@ const experience: ExperienceEntry[] = [
         detail: 'WordPress development for business registration services; custom Gravity Forms workflows for government filings, including logic, validation, and secure submission handling.',
       },
       {
-        client: 'Neighborhood Plumbing and Drain',
+        client: 'Neighborhood Plumbing and Drain (United States)',
         period: 'Aug – Sep 2025',
         detail: 'Ongoing maintenance, service pages, and conversion-focused landing pages; content and blog management.',
       },
