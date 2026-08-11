@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 // Where project inquiries get sent. Update this if the recipient email ever changes.
-$recipientEmail = 'jufreyninobayog@gmail.com';
+$recipientEmail = 'jufreyninsbayog@gmail.com';
 
 header('Content-Type: application/json; charset=utf-8');
 

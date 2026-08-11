@@ -78,7 +78,7 @@ export default function HandoffBuilder() {
   function loadExample() {
     setValues(EXAMPLE_VALUES);
     setContacts([
-      { id: genId(), name: 'Jufrey Niño Bayog', role: 'Developer', info: 'jufreyninobayog@gmail.com' },
+      { id: genId(), name: 'Jufrey Niño Bayog', role: 'Developer', info: 'jufreyninsbayog@gmail.com' },
       { id: genId(), name: 'Client contact', role: 'Site owner', info: 'Primary point of contact for content updates.' },
     ]);
   }

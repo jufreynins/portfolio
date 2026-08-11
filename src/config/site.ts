@@ -11,7 +11,7 @@ export const siteConfig = {
   yearStarted,
   yearsExperience,
 
-  email: 'jufreyninobayog@gmail.com',
+  email: 'jufreyninsbayog@gmail.com',
   phone: '+639652100539',
   phoneDisplay: '+63 965 210 0539',
 

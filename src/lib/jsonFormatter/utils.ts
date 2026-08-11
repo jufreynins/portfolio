@@ -121,7 +121,7 @@ export const EXAMPLE_JSON = `{
   "skills": ["WordPress", "Elementor Pro", "ACF", "JetEngine"],
   "availableForWork": true,
   "contact": {
-    "email": "jufreyninobayog@gmail.com",
+    "email": "jufreyninsbayog@gmail.com",
     "location": "Remote"
   }
 }`;
