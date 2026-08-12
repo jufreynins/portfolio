@@ -124,7 +124,10 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="hidden 2xl:flex items-center">
+        <div className="hidden 2xl:flex items-center gap-2">
+          <Button href={siteConfig.cvPath} variant="ghost" target="_blank" rel="noopener noreferrer">
+            Download CV
+          </Button>
           <Button href="/contact" variant="primary">
             Start a Project
           </Button>

@@ -175,6 +175,10 @@ export default function HomePage() {
                 <span>WordPress &bull; Elementor Pro &bull; Web Systems &bull; Hosting &bull; DNS &bull; Technical Support</span>
               </div>
               <p className="text-xs" style={{ color: 'var(--text-muted)' }} data-hero-support>
+                <a href={siteConfig.cvPath} className="underline" style={{ color: 'var(--brand-primary)' }} target="_blank" rel="noopener noreferrer">
+                  Download CV
+                </a>{' '}
+                &middot;{' '}
                 <a href="/tools" className="underline" style={{ color: 'var(--brand-primary)' }}>
                   Explore Web Tools
                 </a>{' '}
@@ -537,6 +541,9 @@ export default function HomePage() {
             <p className="leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
               I build and improve WordPress websites, then handle what comes after: hosting setup, domain and DNS configuration, SSL, and business email delivery. Alongside client work, I also build personal web systems and browser tools. Every project is planned with AI-assisted tools, reviewed and finished by hand.
             </p>
+            <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+              {yearsExperience}+ years of experience spanning an in-house role and freelance/contract work with agencies and direct clients across the United States, Canada, and the Philippines.
+            </p>
             <ul className="flex flex-wrap gap-x-4 gap-y-2">
               {aboutProofPoints.map((item) => (
                 <li key={item} className="flex items-center gap-1.5 text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
@@ -547,9 +554,12 @@ export default function HomePage() {
                 </li>
               ))}
             </ul>
-            <div>
+            <div className="flex flex-wrap gap-3">
               <Button href="/about" variant="secondary">
                 More About Me
+              </Button>
+              <Button href={siteConfig.cvPath} variant="ghost" target="_blank" rel="noopener noreferrer">
+                Download CV
               </Button>
             </div>
           </div>
