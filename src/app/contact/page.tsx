@@ -32,7 +32,7 @@ const nextSteps = [
 export default function ContactPage() {
   return (
     <>
-      <section className="dark-grid-bg pt-24 pb-12 sm:pt-28 sm:pb-16" style={{ background: 'var(--brand-dark)' }}>
+      <section className="dark-grid-bg pt-28 pb-14 sm:pt-32 sm:pb-16" style={{ background: 'var(--ink-canvas)' }}>
         <Container className="grid grid-cols-1 gap-10 lg:grid-cols-[2fr_3fr] lg:gap-12">
           <div className="flex flex-col gap-6">
             <SectionHeading
@@ -44,8 +44,8 @@ export default function ContactPage() {
               dark
             />
             <Reveal className="flex flex-col gap-4">
-              <a href={`mailto:${siteConfig.email}`} className="flex items-center gap-3 transition-colors" style={{ color: 'rgba(255,255,255,0.85)' }}>
-                <span className="flex h-10 w-10 items-center justify-center rounded-full border" style={{ borderColor: 'rgba(255,255,255,0.2)' }}>
+              <a href={`mailto:${siteConfig.email}`} className="flex items-center gap-3 transition-colors" style={{ color: 'rgba(247,245,242,0.85)' }}>
+                <span className="flex h-10 w-10 items-center justify-center rounded-[var(--radius-sm)] border" style={{ borderColor: 'rgba(247,245,242,0.2)' }}>
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <rect x="2" y="4" width="20" height="16" rx="2" />
                     <path d="M2 7l10 6 10-6" />
@@ -53,8 +53,8 @@ export default function ContactPage() {
                 </span>
                 {siteConfig.email}
               </a>
-              <a href={siteConfig.cvPath} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 transition-colors" style={{ color: 'rgba(255,255,255,0.85)' }}>
-                <span className="flex h-10 w-10 items-center justify-center rounded-full border" style={{ borderColor: 'rgba(255,255,255,0.2)' }}>
+              <a href={siteConfig.cvPath} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 transition-colors" style={{ color: 'rgba(247,245,242,0.85)' }}>
+                <span className="flex h-10 w-10 items-center justify-center rounded-[var(--radius-sm)] border" style={{ borderColor: 'rgba(247,245,242,0.2)' }}>
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
                     <polyline points="7 10 12 15 17 10" />
@@ -65,10 +65,10 @@ export default function ContactPage() {
               </a>
             </Reveal>
             <Reveal>
-              <ul className="flex flex-col gap-2.5 border-t pt-6" style={{ borderColor: 'rgba(255,255,255,0.15)' }}>
+              <ul className="flex flex-col gap-2.5 border-t pt-6" style={{ borderColor: 'rgba(247,245,242,0.15)' }}>
                 {trustIndicators.map((item) => (
-                  <li key={item} className="flex items-center gap-2.5 text-sm" style={{ color: 'rgba(255,255,255,0.75)' }}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0" style={{ color: 'var(--brand-lavender)' }}>
+                  <li key={item} className="flex items-center gap-2.5 text-sm" style={{ color: 'rgba(247,245,242,0.75)' }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0" style={{ color: 'var(--accent)' }}>
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
                     {item}
@@ -78,26 +78,26 @@ export default function ContactPage() {
             </Reveal>
           </div>
 
-          <div className="reveal rounded-3xl p-6 sm:p-8" style={{ background: 'var(--surface-white)' }} data-reveal>
+          <div className="reveal rounded-[var(--radius-md)] p-6 sm:p-8" style={{ background: 'var(--paper-000)' }} data-reveal>
             <ContactForm />
           </div>
         </Container>
       </section>
 
       {/* What Happens Next */}
-      <section className="py-12 sm:py-14" style={{ background: 'var(--surface-warm)' }}>
+      <section className="py-14 sm:py-16" style={{ background: 'var(--paper-050)' }}>
         <Container className="flex flex-col gap-8">
           <SectionHeading eyebrow="What Happens Next" title="A simple, no-pressure process" description="Here's what happens after you send your project details." />
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-3" data-reveal data-reveal-type="stagger">
             {nextSteps.map((step, i) => (
               <div key={step.title} className="flex flex-col gap-3">
-                <span className="flex h-11 w-11 items-center justify-center rounded-full font-mono text-sm font-bold" style={{ background: 'var(--brand-lavender)', color: 'var(--brand-primary)' }}>
+                <span className="font-mono text-sm" style={{ color: 'var(--line-strong)' }}>
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <h3 className="text-lg font-bold" style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-heading)' }}>
+                <h3 className="text-lg" style={{ color: 'var(--ink-950)' }}>
                   {step.title}
                 </h3>
-                <p className="leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                <p className="leading-relaxed" style={{ color: 'var(--ink-700)' }}>
                   {step.description}
                 </p>
               </div>

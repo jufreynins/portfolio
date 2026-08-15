@@ -32,7 +32,7 @@ function WebsiteVisual({ slug }: { slug?: string }) {
   const project = slug ? getProjectBySlug(slug) : undefined;
   if (!project) return <ChecklistVisual items={['Homepage', 'Services', 'Contact']} />;
   return (
-    <div className="relative aspect-[4/3] overflow-hidden rounded-xl border" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }}>
+    <div className="relative aspect-[4/3] overflow-hidden rounded-[var(--radius-sm)] border" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }}>
       <Image src={project.image} alt={`${project.name} website preview`} width={480} height={360} className="h-full w-full object-cover" />
     </div>
   );
@@ -41,7 +41,7 @@ function WebsiteVisual({ slug }: { slug?: string }) {
 function ContentModelVisual() {
   const chips = ['Post Type: Location', 'Taxonomy: Region', 'Field: Adoption Status', 'Listing: Filterable'];
   return (
-    <div className="flex aspect-[4/3] flex-col justify-center gap-2 rounded-xl border p-4" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }}>
+    <div className="flex aspect-[4/3] flex-col justify-center gap-2 rounded-[var(--radius-sm)] border p-4" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }}>
       {chips.map((chip) => (
         <span key={chip} className="rounded-lg border px-3 py-2 font-mono text-[10px]" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-white)', color: 'var(--text-secondary)' }}>
           {chip}
@@ -53,7 +53,7 @@ function ContentModelVisual() {
 
 function ToolVisual() {
   return (
-    <div className="grid aspect-[4/3] grid-cols-2 gap-2 rounded-xl border p-4" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }}>
+    <div className="grid aspect-[4/3] grid-cols-2 gap-2 rounded-[var(--radius-sm)] border p-4" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }}>
       {['image-toolkit', 'qr-code-generator', 'developer-data-toolkit', 'css-visual-generator']
         .map((id) => TOOLS.find((t) => t.id === id))
         .filter((tool): tool is (typeof TOOLS)[number] => !!tool)
@@ -72,7 +72,7 @@ function ToolVisual() {
 function ConnectionFlowVisual() {
   const nodes = ['Domain', 'DNS Records', 'Hosting', 'Website Live'];
   return (
-    <div className="flex aspect-[4/3] flex-col justify-center gap-2 rounded-xl border p-4" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }}>
+    <div className="flex aspect-[4/3] flex-col justify-center gap-2 rounded-[var(--radius-sm)] border p-4" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }}>
       {nodes.map((node, i) => (
         <div key={node} className="flex items-center gap-2">
           <span
@@ -93,7 +93,7 @@ function ConnectionFlowVisual() {
 function ChecklistVisual({ items }: { items?: string[] }) {
   const list = items ?? ['Updates applied', 'Performance checked', 'Backups verified'];
   return (
-    <div className="flex aspect-[4/3] flex-col justify-center gap-2.5 rounded-xl border p-4" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }}>
+    <div className="flex aspect-[4/3] flex-col justify-center gap-2.5 rounded-[var(--radius-sm)] border p-4" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }}>
       {list.map((item) => (
         <div key={item} className="flex items-center gap-2 text-xs font-medium" style={{ color: 'var(--text-primary)' }}>
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0 rounded-full" style={{ color: 'var(--color-success)', background: 'var(--color-success-soft)' }}>
@@ -114,7 +114,7 @@ function DashboardVisual({ slug }: { slug?: string }) {
 export default function ServicesPage() {
   return (
     <>
-      <section className="pt-24 pb-10 sm:pt-28 sm:pb-12" style={{ background: 'var(--surface-warm)' }}>
+      <section className="pt-28 pb-12 sm:pt-32 sm:pb-14" style={{ background: 'var(--surface-warm)' }}>
         <Container>
           <SectionHeading
             as="h1"
@@ -164,7 +164,7 @@ export default function ServicesPage() {
 
                   <div className="flex flex-wrap gap-x-4 gap-y-2">
                     {service.deliverables.map((item) => (
-                      <span key={item} className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium" style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}>
+                      <span key={item} className="inline-flex items-center gap-1.5 rounded-[var(--radius-sm)] border px-3 py-1.5 text-xs font-medium" style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--brand-primary)' }}>
                           <polyline points="20 6 9 17 4 12" />
                         </svg>
@@ -209,7 +209,7 @@ export default function ServicesPage() {
           <SectionHeading eyebrow="Why Work With Me" title="A developer who fits into how you already work" description="Truthful differentiators, not sales language." />
           <ul className="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
             {whyWorkWithMe.map((item) => (
-              <li key={item} className="flex items-start gap-3 rounded-2xl border p-5" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-white)', boxShadow: 'var(--shadow-sm)' }}>
+              <li key={item} className="flex items-start gap-3 rounded-[var(--radius-md)] border p-5" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-white)', boxShadow: 'var(--shadow-sm)' }}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 flex-shrink-0" style={{ color: 'var(--brand-primary)' }}>
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
@@ -247,7 +247,7 @@ export default function ServicesPage() {
         </Container>
       </section>
 
-      <section className="dark-grid-bg py-14 sm:py-16" style={{ background: 'var(--brand-dark)' }}>
+      <section className="dark-grid-bg py-16 sm:py-20" style={{ background: 'var(--ink-canvas)' }}>
         <Container className="flex flex-col items-start gap-6">
           <SectionHeading
             eyebrow="Not sure which one you need?"
@@ -255,7 +255,7 @@ export default function ServicesPage() {
             description="Tell me what you're building and I'll point you in the right direction — no pressure, no obligation."
             dark
           />
-          <Button href="/contact" variant="primary" size="large">
+          <Button href="/contact" variant="primary" size="large" tone="dark">
             Start a Project
           </Button>
         </Container>

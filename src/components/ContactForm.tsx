@@ -7,12 +7,12 @@ interface ContactFormProps {
 }
 
 export default function ContactForm({ dark = false }: ContactFormProps) {
-  const labelClass = dark ? 'text-sm font-semibold text-white/90' : 'text-sm font-semibold text-zinc-900/90';
+  const labelClass = dark ? 'text-sm font-semibold text-white/90' : 'text-sm font-semibold text-[var(--ink-950)]';
   const fieldClass = dark
-    ? 'rounded-xl border border-white/20 bg-white/[0.06] px-4 py-2.5 text-sm text-white placeholder:text-white/45 transition-all focus:border-[var(--color-accent)] focus:bg-white/[0.08] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)]/30'
-    : 'rounded-xl border border-black/15 bg-black/[0.025] px-4 py-2.5 text-sm text-zinc-900 placeholder:text-zinc-900/40 transition-all focus:border-[var(--color-accent)] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)]/20';
+    ? 'rounded-[var(--radius-sm)] border border-white/20 bg-white/[0.06] px-4 py-2.5 text-sm text-white placeholder:text-white/45 transition-all focus:border-[var(--accent)] focus:bg-white/[0.08] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/30'
+    : 'rounded-[var(--radius-sm)] border border-[var(--line-strong)] bg-[var(--paper-050)] px-4 py-2.5 text-sm text-[var(--ink-950)] placeholder:text-[var(--ink-400)] transition-all focus:border-[var(--accent)] focus:bg-[var(--paper-000)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20';
   const submitClass =
-    'inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-[var(--brand-primary)] px-7 py-3 text-[0.9375rem] font-bold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[var(--brand-hover)] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0';
+    'inline-flex min-h-[48px] items-center justify-center gap-2 rounded-[var(--radius-sm)] bg-[var(--ink-950)] px-7 py-3 text-[0.9375rem] font-bold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[var(--accent)] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0';
   const errorColor = dark ? 'var(--color-error-dark)' : 'var(--color-error)';
   const successColor = dark ? 'var(--color-success-dark)' : 'var(--color-success)';
 

@@ -143,44 +143,44 @@ export default function AboutPage() {
   return (
     <>
       {/* Intro */}
-      <section className="pt-24 pb-12 sm:pt-28 sm:pb-14" style={{ background: 'var(--surface-warm)' }}>
+      <section className="pt-28 pb-14 sm:pt-32 sm:pb-16" style={{ background: 'var(--paper-000)' }}>
         <Container className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-7" data-reveal data-reveal-type="fade-up">
             <SectionHeading as="h1" eyebrow="About" title="A developer who understands both the interface and the technical setup behind it." />
           </div>
 
           <div className="flex flex-col gap-6 lg:col-span-5" data-reveal data-reveal-type="fade-up">
-            <p className="leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+            <p className="leading-relaxed" style={{ color: 'var(--ink-700)' }}>
               I&apos;m {siteConfig.name}, a WordPress developer with {yearsExperience}+ years building business websites and dynamic-content sites with Elementor Pro, ACF, and
               JetEngine — often alongside agencies and remote teams, following their existing design systems. My work also covers what happens after launch: hosting, domain and DNS
               configuration, and business email delivery.
             </p>
-            <p className="leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+            <p className="leading-relaxed" style={{ color: 'var(--ink-700)' }}>
               As a secondary interest, I also build{' '}
-              <a href="/personal-projects" className="underline" style={{ color: 'var(--brand-primary)' }}>
+              <a href="/personal-projects" className="underline" style={{ color: 'var(--accent)' }}>
                 Personal Projects
               </a>{' '}
               and{' '}
-              <a href="/tools" className="underline" style={{ color: 'var(--brand-primary)' }}>
+              <a href="/tools" className="underline" style={{ color: 'var(--accent)' }}>
                 Tools
               </a>{' '}
               — a way to explore problems beyond page-builder work.
             </p>
             <ul className="flex flex-wrap gap-x-4 gap-y-2">
               {capabilityHighlights.map((item) => (
-                <li key={item} className="flex items-center gap-1.5 text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--brand-primary)' }}>
+                <li key={item} className="flex items-center gap-1.5 text-sm font-medium" style={{ color: 'var(--ink-950)' }}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--accent)' }}>
                     <polyline points="20 6 9 17 4 12" />
                   </svg>
                   {item}
                 </li>
               ))}
             </ul>
-            <dl className="flex flex-col divide-y" style={{ borderColor: 'var(--border-color)' }}>
+            <dl className="flex flex-col divide-y" style={{ borderColor: 'var(--line)' }}>
               {professionalFacts.map((fact) => (
                 <div key={fact.label} className="grid grid-cols-3 gap-4 py-4">
                   <dt className="eyebrow col-span-1">{fact.label}</dt>
-                  <dd className="col-span-2 text-sm" style={{ color: 'var(--text-primary)' }}>
+                  <dd className="col-span-2 text-sm" style={{ color: 'var(--ink-950)' }}>
                     {fact.value}
                   </dd>
                 </div>
@@ -196,46 +196,42 @@ export default function AboutPage() {
       </section>
 
       {/* Experience */}
-      <section className="py-12 sm:py-14" style={{ background: 'var(--surface-white)' }}>
+      <section className="py-14 sm:py-16" style={{ background: 'var(--paper-000)' }}>
         <Container className="flex flex-col gap-8">
           <SectionHeading
             eyebrow="Experience"
             title="How the work has been organized."
             description="A run of freelance and contract engagements with agencies and direct clients, bracketing a multi-year in-house role."
           />
-          <div className="flex flex-col divide-y" style={{ borderColor: 'var(--border-color)' }}>
+          <div className="flex flex-col divide-y" style={{ borderColor: 'var(--line)' }}>
             {experience.map((entry) => (
               <div key={`${entry.role}-${entry.period}`} className="grid grid-cols-1 gap-4 py-8 first:pt-0 lg:grid-cols-12 lg:gap-8" data-reveal>
                 <div className="lg:col-span-3">
-                  <span className="eyebrow" style={{ color: 'var(--brand-primary)' }}>
-                    {entry.period}
-                  </span>
+                  <span className="eyebrow">{entry.period}</span>
                 </div>
                 <div className="flex flex-col gap-3 lg:col-span-9">
                   <div>
-                    <h3 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
+                    <h3 className="text-lg font-semibold" style={{ color: 'var(--ink-950)' }}>
                       {entry.role}
                     </h3>
-                    <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                    <p className="text-sm" style={{ color: 'var(--ink-700)' }}>
                       {entry.org}
                     </p>
                   </div>
-                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--ink-700)' }}>
                     {entry.summary}
                   </p>
                   {entry.projects && (
                     <ul className="mt-2 flex flex-col gap-3">
                       {entry.projects.map((project) => (
-                        <li key={project.client} className="flex flex-col gap-1 border-l-2 pl-4" style={{ borderColor: 'var(--border-color)' }}>
+                        <li key={project.client} className="flex flex-col gap-1 border-l-2 pl-4" style={{ borderColor: 'var(--line)' }}>
                           <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                            <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
+                            <span className="text-sm font-medium" style={{ color: 'var(--ink-950)' }}>
                               {project.client}
                             </span>
-                            <span className="text-xs" style={{ color: 'var(--text-secondary)' }}>
-                              {project.period}
-                            </span>
+                            <span className="meta-index">{project.period}</span>
                           </div>
-                          <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                          <span className="text-sm" style={{ color: 'var(--ink-700)' }}>
                             {project.detail}
                           </span>
                         </li>
@@ -250,7 +246,7 @@ export default function AboutPage() {
       </section>
 
       {/* Skills */}
-      <section className="py-12 sm:py-14" style={{ background: 'var(--surface-white)' }}>
+      <section className="py-14 sm:py-16" style={{ background: 'var(--paper-000)' }}>
         <Container className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-4">
             <div className="relative overflow-hidden lg:sticky lg:top-32">
@@ -268,7 +264,7 @@ export default function AboutPage() {
       </section>
 
       {/* Technical Web Operations */}
-      <section className="py-12 sm:py-14" style={{ background: 'var(--surface-warm)' }}>
+      <section className="py-14 sm:py-16" style={{ background: 'var(--paper-050)' }}>
         <Container className="flex flex-col gap-8">
           <SectionHeading
             eyebrow="Technical Web Operations"
@@ -278,13 +274,11 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {technicalOpsGroups.map((group) => (
               <div key={group.label} className="flex flex-col gap-3" data-reveal>
-                <span className="eyebrow" style={{ color: 'var(--brand-primary)' }}>
-                  {group.label}
-                </span>
+                <span className="eyebrow">{group.label}</span>
                 <ul className="flex flex-col gap-2">
                   {group.items.map((item) => (
-                    <li key={item} className="flex items-start gap-2 text-sm" style={{ color: 'var(--text-primary)' }}>
-                      <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full" style={{ background: 'var(--brand-primary)' }} />
+                    <li key={item} className="flex items-start gap-2 text-sm" style={{ color: 'var(--ink-950)' }}>
+                      <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full" style={{ background: 'var(--accent)' }} />
                       {item}
                     </li>
                   ))}
@@ -296,7 +290,7 @@ export default function AboutPage() {
       </section>
 
       {/* Process */}
-      <section className="dark-grid-bg py-12 sm:py-14" style={{ background: '#25134f' }}>
+      <section className="dark-grid-bg py-14 sm:py-16" style={{ background: 'var(--ink-canvas)' }}>
         <Container className="grid grid-cols-1 gap-10 lg:grid-cols-[38fr_62fr] lg:gap-12">
           <div className="min-w-0">
             <div className="lg:sticky lg:top-32">
@@ -311,7 +305,7 @@ export default function AboutPage() {
       </section>
 
       {/* AI-assisted development */}
-      <section className="py-12 sm:py-14" style={{ background: 'var(--surface-white)' }}>
+      <section className="py-14 sm:py-16" style={{ background: 'var(--paper-000)' }}>
         <Container className="flex flex-col gap-8">
           <SectionHeading
             eyebrow="Workflow"
@@ -322,37 +316,25 @@ export default function AboutPage() {
 
           <div className="grid grid-cols-1 gap-8 pt-4 lg:grid-cols-2">
             <div className="flex flex-col gap-3">
-              <span className="eyebrow" style={{ color: 'var(--brand-primary)' }}>
-                Where AI fits in
-              </span>
+              <span className="eyebrow">Where AI fits in</span>
               <div className="flex flex-wrap gap-2">
                 {aiCapabilities.map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full border px-3 py-1.5 text-xs font-medium"
-                    style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}
-                  >
+                  <span key={item} className="rounded-[var(--radius-sm)] border px-3 py-1.5 text-xs font-medium" style={{ borderColor: 'var(--line)', color: 'var(--ink-950)' }}>
                     {item}
                   </span>
                 ))}
               </div>
             </div>
             <div className="flex flex-col gap-3">
-              <span className="eyebrow" style={{ color: 'var(--brand-primary)' }}>
-                Tools
-              </span>
+              <span className="eyebrow">Tools</span>
               <div className="flex flex-wrap gap-2">
                 {aiTools.map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full border px-3 py-1.5 text-xs font-medium"
-                    style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}
-                  >
+                  <span key={item} className="rounded-[var(--radius-sm)] border px-3 py-1.5 text-xs font-medium" style={{ borderColor: 'var(--line)', color: 'var(--ink-950)' }}>
                     {item}
                   </span>
                 ))}
               </div>
-              <p className="pt-2 text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+              <p className="pt-2 text-sm leading-relaxed" style={{ color: 'var(--ink-700)' }}>
                 Stack is chosen per project, not applied uniformly — Astro or WordPress for marketing sites, Next.js and Supabase for web applications, and AI tools throughout to speed up
                 implementation without skipping human review.
               </p>
@@ -362,10 +344,10 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="dark-grid-bg py-14 sm:py-16" style={{ background: 'var(--brand-dark)' }}>
+      <section className="dark-grid-bg py-16 sm:py-20" style={{ background: 'var(--ink-canvas)' }}>
         <Container className="flex flex-col items-start gap-6">
           <SectionHeading eyebrow="Let's build something" title="Ready to start a project?" description="Tell me a bit about what you're building. I typically reply within one business day." dark />
-          <Button href="/contact" variant="primary" size="large">
+          <Button href="/contact" variant="primary" size="large" tone="dark">
             Start a Project
           </Button>
         </Container>

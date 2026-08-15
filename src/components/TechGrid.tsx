@@ -6,11 +6,10 @@ export default function TechGrid() {
       {techCategories.map((cat, i) => (
         <div
           key={cat.category}
-          className="capability-row reveal grid grid-cols-1 gap-6 rounded-2xl border p-6 transition-all duration-300 sm:grid-cols-12 sm:items-start sm:p-7"
+          className="capability-row reveal grid grid-cols-1 gap-6 rounded-[var(--radius-md)] border p-6 transition-all duration-300 sm:grid-cols-12 sm:items-start sm:p-7"
           data-reveal
           data-reveal-type="fade-up"
           style={{
-            animationDelay: `${i * 60}ms`,
             borderColor: 'var(--border-color)',
             background: 'var(--surface-white)',
             boxShadow: 'var(--shadow-sm)',
