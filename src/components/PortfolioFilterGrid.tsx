@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import type { Project } from '@/data/projects';
-import ProjectCard from './ProjectCard';
+import ProjectSpread from './ProjectSpread';
 
 const FILTERS = ['All', 'Dynamic WordPress', 'E-Commerce'] as const;
 type Filter = (typeof FILTERS)[number];
@@ -23,20 +23,16 @@ export default function PortfolioFilterGrid({ projects }: { projects: Project[] 
   }, [active, projects]);
 
   return (
-    <div className="flex flex-col gap-8">
-      <div className="flex flex-wrap gap-2" role="group" aria-label="Filter projects by type">
+    <div className="flex flex-col gap-14 sm:gap-16">
+      <div className="flex flex-wrap gap-x-7 gap-y-2 border-b pb-5" style={{ borderColor: 'var(--line)' }} role="group" aria-label="Filter projects by type">
         {FILTERS.map((filter) => (
           <button
             key={filter}
             type="button"
             aria-pressed={active === filter}
             onClick={() => setActive(filter)}
-            className="min-h-[44px] rounded-full border px-4 text-sm font-semibold transition-colors duration-200"
-            style={
-              active === filter
-                ? { background: 'var(--brand-primary)', borderColor: 'var(--brand-primary)', color: 'var(--text-on-dark)' }
-                : { background: 'var(--surface-white)', borderColor: 'var(--border-color)', color: 'var(--text-secondary)' }
-            }
+            className="min-h-[32px] text-sm font-bold transition-colors duration-200"
+            style={{ color: active === filter ? 'var(--ink-950)' : 'var(--ink-400)' }}
           >
             {filter}
           </button>
@@ -44,13 +40,13 @@ export default function PortfolioFilterGrid({ projects }: { projects: Project[] 
       </div>
 
       {filtered.length === 0 ? (
-        <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+        <p className="text-sm" style={{ color: 'var(--ink-700)' }}>
           No projects match this filter yet.
         </p>
       ) : (
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="flex flex-col gap-20 sm:gap-24">
           {filtered.map((project, i) => (
-            <ProjectCard key={project.slug} project={project} index={i + 1} priority={i < 3} />
+            <ProjectSpread key={project.slug} project={project} index={i + 1} reversed={i % 2 === 1} priority={i < 2} />
           ))}
         </div>
       )}

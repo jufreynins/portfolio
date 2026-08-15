@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Container from '@/components/Container';
+import Bleed from '@/components/Bleed';
 import Button from '@/components/Button';
 import SectionHeading from '@/components/SectionHeading';
 import { siteConfig } from '@/config/site';
@@ -36,9 +37,9 @@ export default async function ProjectCaseStudyPage({ params }: { params: Promise
 
   return (
     <>
-      <section className="pt-24 pb-10 sm:pt-28 sm:pb-12" style={{ background: 'var(--surface-warm)' }}>
+      <section className="pt-28 pb-10 sm:pt-32 sm:pb-12" style={{ background: 'var(--paper-000)' }}>
         <Container className="flex flex-col gap-5">
-          <a href="/portfolio" className="inline-flex w-fit items-center gap-1.5 text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
+          <a href="/portfolio" className="inline-flex w-fit items-center gap-1.5 text-sm font-medium transition-colors hover:text-[var(--accent)]" style={{ color: 'var(--ink-700)' }}>
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <line x1="17" y1="7" x2="7" y2="17" />
               <polyline points="17 17 7 17 7 7" />
@@ -46,98 +47,135 @@ export default async function ProjectCaseStudyPage({ params }: { params: Promise
             Back to Portfolio
           </a>
 
-          <div className="flex flex-wrap items-center gap-3">
-            <span className="eyebrow">{project.category}</span>
+          <p className="meta-index">
+            {String(index + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')} — {project.category.toUpperCase()}
+          </p>
+
+          <div className="flex flex-wrap items-center gap-4">
+            <h1 style={{ color: 'var(--ink-950)' }}>{project.name}</h1>
             <span
-              className="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wide"
-              style={{ borderColor: 'color-mix(in srgb, var(--color-success) 35%, white)', color: 'var(--color-success)', background: 'var(--color-success-soft)' }}
+              className="meta-index inline-flex items-center gap-1.5 rounded-full border px-3 py-1"
+              style={{ borderColor: 'color-mix(in srgb, var(--status-success) 35%, white)', color: 'var(--status-success)', background: 'var(--status-success-soft)' }}
             >
-              <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'var(--color-success)' }} />
+              <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'var(--status-success)' }} />
               {project.status}
             </span>
           </div>
 
-          <h1 style={{ color: 'var(--text-primary)' }}>{project.name}</h1>
-          <p className="max-w-2xl leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+          <p className="max-w-2xl leading-relaxed" style={{ color: 'var(--ink-700)', fontSize: 'var(--text-lead)' }}>
             {project.description}
           </p>
 
-          <div className="flex flex-wrap gap-3 pt-1">
+          <div className="flex flex-wrap items-center gap-6 pt-1">
             <Button href={project.url} target="_blank" rel="noopener noreferrer" variant="primary">
               Visit Live Website
             </Button>
-            <Button href="/contact" variant="secondary">
+            <Button href="/contact" variant="ghost">
               Start a Similar Project
             </Button>
           </div>
         </Container>
       </section>
 
-      <section className="py-10 sm:py-12" style={{ background: 'var(--surface-white)' }}>
-        <Container>
-          <div className="relative aspect-[16/9] overflow-hidden rounded-2xl border" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }}>
-            <Image src={project.image} alt={`Screenshot of the ${project.name} website`} width={1600} height={900} className="h-full w-full object-cover" priority />
+      <section className="py-10 sm:py-12" style={{ background: 'var(--paper-000)' }}>
+        <Bleed>
+          <div className="corner-marks overflow-hidden rounded-[var(--radius-md)]" style={{ color: 'var(--ink-950)' }}>
+            <Image
+              src={project.image}
+              alt={`Screenshot of the ${project.name} website`}
+              width={1920}
+              height={1080}
+              priority
+              className="aspect-[16/9] w-full object-cover object-top"
+              style={{ background: 'var(--paper-050)' }}
+            />
           </div>
-        </Container>
+        </Bleed>
       </section>
 
-      <section className="py-10 sm:py-12" style={{ background: 'var(--surface-white)' }}>
-        <Container>
-          <dl className="grid grid-cols-1 gap-8 border-t pt-10 sm:grid-cols-2" style={{ borderColor: 'var(--border-color)' }}>
-            <div className="flex flex-col gap-2">
-              <dt className="eyebrow">The Business</dt>
-              <dd className="leading-relaxed" style={{ color: 'var(--text-primary)' }}>
+      <section className="py-10 sm:py-14" style={{ background: 'var(--paper-000)' }}>
+        <Container className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
+          <div className="flex flex-col gap-10 lg:col-span-8">
+            <div className="flex flex-col gap-3">
+              <span className="eyebrow">The Business</span>
+              <p className="leading-relaxed" style={{ color: 'var(--ink-950)' }}>
                 {project.business}
-              </dd>
+              </p>
             </div>
-            <div className="flex flex-col gap-2">
-              <dt className="eyebrow">The Goal</dt>
-              <dd className="leading-relaxed" style={{ color: 'var(--text-primary)' }}>
+            <div className="flex flex-col gap-3">
+              <span className="eyebrow">The Goal</span>
+              <p className="leading-relaxed" style={{ color: 'var(--ink-950)' }}>
                 {project.goal}
-              </dd>
+              </p>
             </div>
-            <div className="flex flex-col gap-2">
-              <dt className="eyebrow">My Role &amp; Contribution</dt>
-              <dd className="leading-relaxed" style={{ color: 'var(--text-primary)' }}>
+            <div className="flex flex-col gap-3">
+              <span className="eyebrow">What I Delivered</span>
+              <p className="leading-relaxed" style={{ color: 'var(--ink-950)' }}>
                 {project.contribution}
-              </dd>
-              <span className="mt-1 text-sm" style={{ color: 'var(--text-muted)' }}>
-                Role: {project.role}
-              </span>
+              </p>
             </div>
-            <div className="flex flex-col gap-2">
-              <dt className="eyebrow">Practical Outcome</dt>
-              <dd className="leading-relaxed" style={{ color: 'var(--text-primary)' }}>
+            <div className="flex flex-col gap-3">
+              <span className="eyebrow">The Outcome</span>
+              <p className="leading-relaxed" style={{ color: 'var(--ink-950)' }}>
                 {project.results}
-              </dd>
+              </p>
             </div>
-          </dl>
-
-          <div className="mt-10 flex flex-col gap-3 border-t pt-10" style={{ borderColor: 'var(--border-color)' }}>
-            <span className="eyebrow">Technologies Used</span>
-            <ul className="flex flex-wrap gap-2" aria-label="Technologies used">
-              {project.technologies.map((tech) => (
-                <li
-                  key={tech}
-                  className="rounded-full px-3 py-1 font-mono text-xs font-medium"
-                  style={{ background: 'var(--surface-warm)', border: '1px solid var(--border-color)', color: 'var(--text-secondary)' }}
-                >
-                  {tech}
-                </li>
-              ))}
-            </ul>
           </div>
+
+          <aside className="lg:col-span-4">
+            <div
+              className="flex flex-col gap-8 border-t pt-8 lg:sticky lg:top-32 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0"
+              style={{ borderColor: 'var(--line)' }}
+            >
+              <div className="flex flex-col gap-1.5">
+                <span className="meta-index" style={{ color: 'var(--ink-400)' }}>
+                  Role
+                </span>
+                <p className="text-sm font-medium" style={{ color: 'var(--ink-950)' }}>
+                  {project.role}
+                </p>
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <span className="meta-index" style={{ color: 'var(--ink-400)' }}>
+                  Category
+                </span>
+                <p className="text-sm font-medium" style={{ color: 'var(--ink-950)' }}>
+                  {project.category}
+                </p>
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <span className="meta-index" style={{ color: 'var(--ink-400)' }}>
+                  Status
+                </span>
+                <p className="text-sm font-medium" style={{ color: 'var(--ink-950)' }}>
+                  {project.status}
+                </p>
+              </div>
+              <div className="flex flex-col gap-2">
+                <span className="meta-index" style={{ color: 'var(--ink-400)' }}>
+                  Technologies
+                </span>
+                <ul className="flex flex-col gap-1" aria-label="Technologies used">
+                  {project.technologies.map((tech) => (
+                    <li key={tech} className="text-sm font-medium" style={{ color: 'var(--ink-950)' }}>
+                      {tech}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </aside>
         </Container>
       </section>
 
-      <section className="border-t py-12 sm:py-14" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }}>
+      <section className="border-t py-14 sm:py-16" style={{ borderColor: 'var(--line)', background: 'var(--paper-050)' }}>
         <Container className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-col gap-1">
             <span className="eyebrow">Related Project</span>
-            <a href={`/portfolio/${related.slug}`} className="text-xl font-bold underline-offset-4 hover:underline" style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-heading)' }}>
+            <a href={`/portfolio/${related.slug}`} className="text-xl transition-colors hover:text-[var(--accent)]" style={{ color: 'var(--ink-950)' }}>
               {related.name}
             </a>
-            <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+            <span className="text-sm" style={{ color: 'var(--ink-700)' }}>
               {related.category}
             </span>
           </div>
@@ -147,7 +185,7 @@ export default async function ProjectCaseStudyPage({ params }: { params: Promise
         </Container>
       </section>
 
-      <section className="dark-grid-bg py-14 sm:py-16" style={{ background: 'var(--brand-dark)' }}>
+      <section className="dark-grid-bg py-16 sm:py-20" style={{ background: 'var(--ink-canvas)' }}>
         <Container className="flex flex-col items-start gap-6">
           <SectionHeading
             eyebrow="Let's build something"
@@ -155,7 +193,7 @@ export default async function ProjectCaseStudyPage({ params }: { params: Promise
             description="Tell me a bit about your business and goals. I'll recommend a practical next step within one business day."
             dark
           />
-          <Button href="/contact" variant="primary" size="large">
+          <Button href="/contact" variant="primary" size="large" tone="dark">
             Start a Project
           </Button>
         </Container>

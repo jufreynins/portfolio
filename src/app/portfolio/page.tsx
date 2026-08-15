@@ -1,9 +1,8 @@
 import type { Metadata } from 'next';
 import Container from '@/components/Container';
+import Bleed from '@/components/Bleed';
 import Button from '@/components/Button';
 import SectionHeading from '@/components/SectionHeading';
-import ProjectModal from '@/components/ProjectModal';
-import { ProjectModalProvider } from '@/components/ProjectModalContext';
 import PortfolioFilterGrid from '@/components/PortfolioFilterGrid';
 import { siteConfig } from '@/config/site';
 import { projects } from '@/data/projects';
@@ -18,7 +17,7 @@ export const metadata: Metadata = buildMetadata({
 export default function PortfolioPage() {
   return (
     <>
-      <section className="pt-24 pb-10 sm:pt-28 sm:pb-12" style={{ background: 'var(--surface-warm)' }}>
+      <section className="pt-28 pb-12 sm:pt-32 sm:pb-14" style={{ background: 'var(--paper-000)' }}>
         <Container className="flex flex-col gap-4">
           <SectionHeading
             as="h1"
@@ -26,9 +25,9 @@ export default function PortfolioPage() {
             title="Selected WordPress projects."
             description="Real client work — the business need, my contribution, and the WordPress technology behind each site."
           />
-          <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+          <p className="text-sm" style={{ color: 'var(--ink-700)' }}>
             Every project below is completed client work. Looking for personal projects instead? See{' '}
-            <a href="/personal-projects" className="font-medium underline" style={{ color: 'var(--brand-primary)' }}>
+            <a href="/personal-projects" className="font-medium underline" style={{ color: 'var(--accent)' }}>
               Personal Projects
             </a>
             .
@@ -36,59 +35,46 @@ export default function PortfolioPage() {
         </Container>
       </section>
 
-      <ProjectModalProvider>
-        <section className="pb-14 sm:pb-16" style={{ background: 'var(--surface-white)' }}>
-          <Container>
-            <PortfolioFilterGrid projects={projects} />
-          </Container>
-          <ProjectModal />
-        </section>
-      </ProjectModalProvider>
+      <section className="pb-16 sm:pb-20" style={{ background: 'var(--paper-000)' }}>
+        <Bleed>
+          <PortfolioFilterGrid projects={projects} />
+        </Bleed>
+      </section>
 
       {/* Personal Projects & Tools cross-sell (after client work, visually distinct) */}
-      <section className="border-t py-12 sm:py-14" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }}>
+      <section className="border-t py-14 sm:py-16" style={{ borderColor: 'var(--line)', background: 'var(--paper-050)' }}>
         <Container className="flex flex-col gap-8">
           <SectionHeading eyebrow="Also Explore" title="Personal Projects & Tools" description="Personal system concepts and browser-based tools — separate from the client work above." />
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-            <a href="/personal-projects" className="lab-card flex flex-col gap-4 rounded-2xl border p-6" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-white)', boxShadow: 'var(--shadow-sm)' }} data-reveal>
+            <a
+              href="/personal-projects"
+              className="flex flex-col gap-4 rounded-[var(--radius-md)] border p-6 transition-colors duration-300 hover:border-[var(--line-strong)]"
+              style={{ borderColor: 'var(--line)', background: 'var(--paper-000)' }}
+              data-reveal
+            >
               <div className="flex items-start justify-between gap-3">
-                <span className="flex h-11 w-11 items-center justify-center rounded-full" style={{ background: 'var(--brand-lavender)', color: 'var(--brand-primary)' }}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="3" y="3" width="7" height="9" rx="1" />
-                    <rect x="14" y="3" width="7" height="5" rx="1" />
-                    <rect x="14" y="12" width="7" height="9" rx="1" />
-                    <rect x="3" y="16" width="7" height="5" rx="1" />
-                  </svg>
-                </span>
-                <span className="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wide" style={{ borderColor: 'var(--border-color)', color: 'var(--text-secondary)' }}>
-                  Personal Concept
-                </span>
+                <span className="eyebrow">Personal Concept</span>
               </div>
-              <h3 className="text-lg font-bold" style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-heading)' }}>
+              <h3 className="text-lg" style={{ color: 'var(--ink-950)' }}>
                 Personal Projects
               </h3>
-              <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+              <p className="text-sm leading-relaxed" style={{ color: 'var(--ink-700)' }}>
                 Personal system concepts and prototypes for task management, inventory, and internal operations.
               </p>
             </a>
-            <a href="/tools" className="lab-card flex flex-col gap-4 rounded-2xl border p-6" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-white)', boxShadow: 'var(--shadow-sm)' }} data-reveal>
+            <a
+              href="/tools"
+              className="flex flex-col gap-4 rounded-[var(--radius-md)] border p-6 transition-colors duration-300 hover:border-[var(--line-strong)]"
+              style={{ borderColor: 'var(--line)', background: 'var(--paper-000)' }}
+              data-reveal
+            >
               <div className="flex items-start justify-between gap-3">
-                <span className="flex h-11 w-11 items-center justify-center rounded-full" style={{ background: 'var(--brand-lavender)', color: 'var(--brand-primary)' }}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M14.7 6.3a4 4 0 0 0-5.4 5.4l-6 6a2 2 0 0 0 3 3l6-6a4 4 0 0 0 5.4-5.4l-3 3-2-2 3-3Z" />
-                  </svg>
-                </span>
-                <span
-                  className="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wide"
-                  style={{ borderColor: 'color-mix(in srgb, var(--color-success) 35%, white)', color: 'var(--color-success)', background: 'var(--color-success-soft)' }}
-                >
-                  Free Tool
-                </span>
+                <span className="eyebrow">Free Tool</span>
               </div>
-              <h3 className="text-lg font-bold" style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-heading)' }}>
+              <h3 className="text-lg" style={{ color: 'var(--ink-950)' }}>
                 Tools
               </h3>
-              <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+              <p className="text-sm leading-relaxed" style={{ color: 'var(--ink-700)' }}>
                 Small privacy-focused utilities such as image conversion, with more planned.
               </p>
             </a>
@@ -96,10 +82,10 @@ export default function PortfolioPage() {
         </Container>
       </section>
 
-      <section className="dark-grid-bg py-14 sm:py-16" style={{ background: 'var(--brand-dark)' }}>
+      <section className="dark-grid-bg py-16 sm:py-20" style={{ background: 'var(--ink-canvas)' }}>
         <Container className="flex flex-col items-start gap-6">
           <SectionHeading eyebrow="Let's build something" title="Ready to start a project?" description="Tell me a bit about what you're building. I typically reply within one business day." dark />
-          <Button href="/contact" variant="primary" size="large">
+          <Button href="/contact" variant="primary" size="large" tone="dark">
             Start a Project
           </Button>
         </Container>
