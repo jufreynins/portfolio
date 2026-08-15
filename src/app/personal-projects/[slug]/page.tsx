@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Container from '@/components/Container';
+import Bleed from '@/components/Bleed';
 import Button from '@/components/Button';
 import SectionHeading from '@/components/SectionHeading';
 import SystemPreview from '@/components/SystemPreview';
@@ -27,6 +28,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   });
 }
 
+const CASE_STUDY_LABELS = {
+  scope: 'Scope',
+  implementation: 'Implementation',
+  technicalChallenges: 'Technical Notes',
+  outcome: 'Outcome',
+} as const;
+
 export default async function SystemCaseStudyPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const system = getSystemBySlug(slug);
@@ -38,9 +46,9 @@ export default async function SystemCaseStudyPage({ params }: { params: Promise<
 
   return (
     <>
-      <section className="pt-24 pb-10 sm:pt-28 sm:pb-12" style={{ background: 'var(--surface-warm)' }}>
+      <section className="pt-28 pb-10 sm:pt-32 sm:pb-12" style={{ background: 'var(--paper-000)' }}>
         <Container className="flex flex-col gap-5">
-          <a href="/personal-projects" className="inline-flex w-fit items-center gap-1.5 text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
+          <a href="/personal-projects" className="inline-flex w-fit items-center gap-1.5 text-sm font-medium transition-colors hover:text-[var(--accent)]" style={{ color: 'var(--ink-700)' }}>
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <line x1="17" y1="7" x2="7" y2="17" />
               <polyline points="17 17 7 17 7 7" />
@@ -48,126 +56,155 @@ export default async function SystemCaseStudyPage({ params }: { params: Promise<
             Back to Personal Projects
           </a>
 
-          <div className="flex flex-wrap items-center gap-3">
-            <span className="eyebrow">{system.category}</span>
-            <span
-              className="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wide"
-              style={{ borderColor: status.border, color: status.color, background: status.bg }}
-            >
+          <p className="meta-index">
+            {String(index + 1).padStart(2, '0')} / {String(systems.length).padStart(2, '0')} — {system.category.toUpperCase()}
+          </p>
+
+          <div className="flex flex-wrap items-center gap-4">
+            <h1 style={{ color: 'var(--ink-950)' }}>{system.name}</h1>
+            <span className="meta-index inline-flex items-center gap-1.5 rounded-full border px-3 py-1" style={{ borderColor: status.border, color: status.color, background: status.bg }}>
               <span className="h-1.5 w-1.5 rounded-full" style={{ background: status.color }} />
               {system.status}
             </span>
           </div>
 
-          <h1 style={{ color: 'var(--text-primary)' }}>{system.name}</h1>
-          <p className="max-w-2xl leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+          <p className="max-w-2xl leading-relaxed" style={{ color: 'var(--ink-700)', fontSize: 'var(--text-lead)' }}>
             {system.users}
           </p>
 
-          <div className="flex flex-wrap gap-3 pt-1">
+          <div className="flex flex-wrap items-center gap-6 pt-1">
             {system.href && (
               <Button href={system.href} target="_blank" rel="noopener noreferrer" variant="primary">
                 Visit Live Demo
               </Button>
             )}
-            <Button href="/contact" variant={system.href ? 'secondary' : 'primary'}>
+            <Button href="/contact" variant={system.href ? 'ghost' : 'primary'}>
               Request a Similar System
             </Button>
           </div>
         </Container>
       </section>
 
-      <section className="py-10 sm:py-12" style={{ background: 'var(--surface-white)' }}>
-        <Container>
-          {system.screenshot ? (
-            <div className="relative aspect-[16/9] overflow-hidden rounded-2xl border" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }}>
-              <Image src={system.screenshot} alt={`${system.name} dashboard screenshot`} width={1600} height={900} className="h-full w-full object-cover object-top" priority />
+      <section className="py-10 sm:py-12" style={{ background: 'var(--paper-000)' }}>
+        {system.screenshot ? (
+          <Bleed>
+            <div className="corner-marks overflow-hidden rounded-[var(--radius-md)]" style={{ color: 'var(--ink-950)' }}>
+              <Image
+                src={system.screenshot}
+                alt={`${system.name} dashboard screenshot`}
+                width={1920}
+                height={1080}
+                priority
+                className="aspect-[16/9] w-full object-cover object-top"
+                style={{ background: 'var(--paper-050)' }}
+              />
             </div>
-          ) : (
+          </Bleed>
+        ) : (
+          <Container>
             <div className="mx-auto max-w-2xl">
               <SystemPreview routeLabel={system.routeLabel} activeNav={index % 4} />
             </div>
-          )}
+          </Container>
+        )}
+      </section>
+
+      <section className="py-10 sm:py-14" style={{ background: 'var(--paper-000)' }}>
+        <Container className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
+          <div className="flex flex-col gap-10 lg:col-span-8">
+            <div className="flex flex-col gap-3">
+              <span className="eyebrow">The Business Problem</span>
+              <p className="leading-relaxed" style={{ color: 'var(--ink-950)' }}>
+                {system.problem}
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <span className="eyebrow">Core Modules</span>
+              <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                {system.modules.map((feature) => (
+                  <li key={feature} className="flex items-center gap-2 text-sm" style={{ color: 'var(--ink-950)' }}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="flex-shrink-0"
+                      style={{ color: 'var(--accent)' }}
+                    >
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {system.caseStudy &&
+              (Object.keys(CASE_STUDY_LABELS) as (keyof typeof CASE_STUDY_LABELS)[])
+                .filter((key) => system.caseStudy?.[key])
+                .map((key) => (
+                  <div key={key} className="flex flex-col gap-3">
+                    <span className="eyebrow">{CASE_STUDY_LABELS[key]}</span>
+                    <p className="leading-relaxed" style={{ color: 'var(--ink-950)' }}>
+                      {system.caseStudy?.[key]}
+                    </p>
+                  </div>
+                ))}
+          </div>
+
+          <aside className="lg:col-span-4">
+            <div className="flex flex-col gap-8 border-t pt-8 lg:sticky lg:top-32 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0" style={{ borderColor: 'var(--line)' }}>
+              <div className="flex flex-col gap-1.5">
+                <span className="meta-index" style={{ color: 'var(--ink-400)' }}>
+                  Category
+                </span>
+                <p className="text-sm font-medium" style={{ color: 'var(--ink-950)' }}>
+                  {system.category}
+                </p>
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <span className="meta-index" style={{ color: 'var(--ink-400)' }}>
+                  Status
+                </span>
+                <p className="text-sm font-medium" style={{ color: 'var(--ink-950)' }}>
+                  {system.status}
+                </p>
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <span className="meta-index" style={{ color: 'var(--ink-400)' }}>
+                  Built For
+                </span>
+                <p className="text-sm font-medium" style={{ color: 'var(--ink-950)' }}>
+                  {system.users}
+                </p>
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <span className="meta-index" style={{ color: 'var(--ink-400)' }}>
+                  Technology Direction
+                </span>
+                <p className="text-sm font-medium" style={{ color: 'var(--ink-950)' }}>
+                  {system.techDirection}
+                </p>
+              </div>
+            </div>
+          </aside>
         </Container>
       </section>
 
-      <section className="py-10 sm:py-12" style={{ background: 'var(--surface-white)' }}>
-        <Container>
-          <div className="flex flex-col gap-2 border-t pt-10" style={{ borderColor: 'var(--border-color)' }}>
-            <span className="eyebrow">The Business Problem</span>
-            <p className="max-w-2xl leading-relaxed" style={{ color: 'var(--text-primary)' }}>
-              {system.problem}
-            </p>
-          </div>
-
-          <div className="mt-10 flex flex-col gap-3 border-t pt-10" style={{ borderColor: 'var(--border-color)' }}>
-            <span className="eyebrow">Core Modules</span>
-            <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-              {system.modules.map((feature) => (
-                <li key={feature} className="flex items-center gap-2 text-sm" style={{ color: 'var(--text-primary)' }}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0" style={{ color: 'var(--brand-primary)' }}>
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                  {feature}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {system.caseStudy && (
-            <dl className="mt-10 grid grid-cols-1 gap-8 border-t pt-10 sm:grid-cols-2" style={{ borderColor: 'var(--border-color)' }}>
-              {system.caseStudy.scope && (
-                <div className="flex flex-col gap-2">
-                  <dt className="eyebrow">Scope</dt>
-                  <dd className="leading-relaxed" style={{ color: 'var(--text-primary)' }}>
-                    {system.caseStudy.scope}
-                  </dd>
-                </div>
-              )}
-              {system.caseStudy.implementation && (
-                <div className="flex flex-col gap-2">
-                  <dt className="eyebrow">Implementation</dt>
-                  <dd className="leading-relaxed" style={{ color: 'var(--text-primary)' }}>
-                    {system.caseStudy.implementation}
-                  </dd>
-                </div>
-              )}
-              {system.caseStudy.technicalChallenges && (
-                <div className="flex flex-col gap-2">
-                  <dt className="eyebrow">Technical Notes</dt>
-                  <dd className="leading-relaxed" style={{ color: 'var(--text-primary)' }}>
-                    {system.caseStudy.technicalChallenges}
-                  </dd>
-                </div>
-              )}
-              {system.caseStudy.outcome && (
-                <div className="flex flex-col gap-2">
-                  <dt className="eyebrow">Outcome</dt>
-                  <dd className="leading-relaxed" style={{ color: 'var(--text-primary)' }}>
-                    {system.caseStudy.outcome}
-                  </dd>
-                </div>
-              )}
-            </dl>
-          )}
-
-          <div className="mt-10 flex flex-col gap-3 border-t pt-10" style={{ borderColor: 'var(--border-color)' }}>
-            <span className="eyebrow">Technology Direction</span>
-            <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-              {system.techDirection}
-            </p>
-          </div>
-        </Container>
-      </section>
-
-      <section className="border-t py-12 sm:py-14" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }}>
+      <section className="border-t py-14 sm:py-16" style={{ borderColor: 'var(--line)', background: 'var(--paper-050)' }}>
         <Container className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-col gap-1">
             <span className="eyebrow">Related System</span>
-            <a href={`/personal-projects/${related.slug}`} className="text-xl font-bold underline-offset-4 hover:underline" style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-heading)' }}>
+            <a href={`/personal-projects/${related.slug}`} className="text-xl transition-colors hover:text-[var(--accent)]" style={{ color: 'var(--ink-950)' }}>
               {related.name}
             </a>
-            <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+            <span className="text-sm" style={{ color: 'var(--ink-700)' }}>
               {related.category}
             </span>
           </div>
@@ -177,7 +214,7 @@ export default async function SystemCaseStudyPage({ params }: { params: Promise<
         </Container>
       </section>
 
-      <section className="dark-grid-bg py-14 sm:py-16" style={{ background: 'var(--brand-dark)' }}>
+      <section className="dark-grid-bg py-16 sm:py-20" style={{ background: 'var(--ink-canvas)' }}>
         <Container className="flex flex-col items-start gap-6">
           <SectionHeading
             eyebrow="Let's build something"
@@ -185,7 +222,7 @@ export default async function SystemCaseStudyPage({ params }: { params: Promise<
             description="Tell me about your workflow and I'll recommend a practical next step within one business day."
             dark
           />
-          <Button href="/contact" variant="primary" size="large">
+          <Button href="/contact" variant="primary" size="large" tone="dark">
             Start a Project
           </Button>
         </Container>
