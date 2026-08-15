@@ -1,16 +1,15 @@
 import Image from 'next/image';
 import type { Metadata } from 'next';
 import Container from '@/components/Container';
+import Bleed from '@/components/Bleed';
 import Button from '@/components/Button';
 import SectionHeading from '@/components/SectionHeading';
-import ProjectCard from '@/components/ProjectCard';
-import ProjectModal from '@/components/ProjectModal';
-import { ProjectModalProvider } from '@/components/ProjectModalContext';
+import ProjectSpread from '@/components/ProjectSpread';
 import SystemPreview from '@/components/SystemPreview';
 import ProcessTimeline from '@/components/ProcessTimeline';
 import { siteConfig } from '@/config/site';
 import { projects } from '@/data/projects';
-import { systems } from '@/data/systems';
+import { systems, systemStatusStyle } from '@/data/systems';
 import { TOOLS } from '@/data/tools';
 import { processSteps } from '@/data/process';
 import { buildMetadata } from '@/lib/seo';
@@ -24,57 +23,12 @@ export const metadata: Metadata = buildMetadata({
 const { yearsExperience } = siteConfig;
 
 const credibilityPoints = [
-  {
-    label: `${yearsExperience}+ Years of Web Development`,
-    icon: '<circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/>',
-  },
-  {
-    label: 'WordPress and Elementor Specialist',
-    icon: '<path d="M4 5h16v11H4z"/><path d="M2 20h20"/><path d="M9 20l1-4h4l1 4"/>',
-  },
-  {
-    label: 'Dynamic Content and Frontend Development',
-    icon: '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>',
-  },
-  {
-    label: 'Personal Projects and Browser Tools',
-    icon: '<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>',
-  },
-  {
-    label: 'Hosting, Domain, DNS and Email Support',
-    icon: '<path d="M12 2 3 7l9 5 9-5-9-5Z"/><path d="M3 12l9 5 9-5"/><path d="M3 17l9 5 9-5"/>',
-  },
-  {
-    label: 'Agency and Remote Collaboration',
-    icon: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a13 13 0 0 1 0 18a13 13 0 0 1 0-18Z"/>',
-  },
-];
-
-const capabilityCards = [
-  {
-    id: 'wordpress',
-    eyebrow: 'WordPress Websites',
-    title: 'Professional websites built to manage.',
-    description: 'Responsive, manageable WordPress websites for businesses, agencies, nonprofits, and service providers — built on Elementor Pro and dynamic content.',
-    highlights: ['New website builds', 'Elementor Pro', 'Dynamic WordPress', 'Redesigns & maintenance'],
-    cta: { label: 'Explore Services', href: '/services' },
-  },
-  {
-    id: 'systems',
-    eyebrow: 'Personal Projects',
-    title: 'Internal systems built around real workflows.',
-    description: 'Admin dashboards and internal tools for task management, inventory, records, and reporting — designed around how a team actually works.',
-    highlights: ['Admin dashboards', 'Task management', 'Inventory & records', 'User roles & reports'],
-    cta: { label: 'View Personal Projects', href: '/personal-projects' },
-  },
-  {
-    id: 'tools',
-    eyebrow: 'Web Tools',
-    title: 'Free browser tools for everyday tasks.',
-    description: 'Focused browser utilities for common technical tasks — image conversion, SEO previews, favicons, and JSON formatting, processed locally.',
-    highlights: ['Image tools', 'SEO tools', 'Favicon tools', 'CSS & JSON tools'],
-    cta: { label: 'Explore Web Tools', href: '/tools' },
-  },
+  `${yearsExperience}+ Years of Web Development`,
+  'WordPress and Elementor Specialist',
+  'Dynamic Content and Frontend Development',
+  'Personal Projects and Browser Tools',
+  'Hosting, Domain, DNS and Email Support',
+  'Agency and Remote Collaboration',
 ];
 
 const technicalGroups = [
@@ -109,34 +63,29 @@ const [firstProject, secondProject, thirdProject] = projects;
 // A representative spread across categories, not just the first N tools alphabetically/by-insertion-order.
 const FEATURED_TOOL_IDS = ['dns-email-record-checker', 'website-launch-checklist', 'schema-markup-builder', 'image-toolkit', 'qr-code-generator'];
 const featuredSystems = systems.filter((s) => s.screenshot).slice(0, 2);
+const featuredTools = FEATURED_TOOL_IDS.map((id) => TOOLS.find((t) => t.id === id)).filter((tool): tool is (typeof TOOLS)[number] => !!tool);
+
+const Check = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0" style={{ color: 'var(--accent)' }}>
+    <polyline points="20 6 9 17 4 12" />
+  </svg>
+);
 
 export default function HomePage() {
   return (
     <>
       {/* Hero */}
-      <section id="home" className="relative flex items-center overflow-hidden pt-24 pb-12 sm:pt-28" style={{ background: 'var(--brand-lavender)' }} data-hero-section>
-        <div className="pointer-events-none absolute inset-0 -z-10" data-hero-bg>
-          <div
-            className="absolute inset-0 opacity-[0.06]"
-            style={{
-              backgroundImage:
-                'linear-gradient(rgba(19,11,36,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(19,11,36,0.6) 1px, transparent 1px)',
-              backgroundSize: '64px 64px',
-              maskImage: 'radial-gradient(ellipse 70% 60% at 50% 30%, black, transparent)',
-            }}
-          />
-          <div className="absolute left-[8%] top-[12%] h-[520px] w-[520px] rounded-full opacity-[0.16] blur-3xl" style={{ background: 'radial-gradient(circle, var(--brand-primary), transparent 70%)' }} />
-          <div className="absolute right-[-8%] bottom-[-10%] h-[480px] w-[480px] rounded-full opacity-[0.12] blur-3xl" style={{ background: 'radial-gradient(circle, var(--brand-primary), transparent 70%)' }} />
-        </div>
+      <section id="home" className="grid-overlay relative flex items-center overflow-hidden pt-28 pb-16 sm:pt-32 sm:pb-20" style={{ background: 'var(--paper-000)' }} data-hero-section>
+        <div className="pointer-events-none absolute inset-0 -z-10" data-hero-bg />
 
         <Container>
-          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-8" data-hero-content>
-            <div className="flex flex-col items-start gap-5 lg:col-span-7">
+          <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-12 lg:gap-10" data-hero-content>
+            <div className="flex flex-col items-start gap-6 lg:col-span-7">
               <span className="eyebrow" data-hero-eyebrow>
-                WordPress &middot; Web Systems &middot; Digital Tools
+                WordPress · Web Systems · Digital Tools
               </span>
 
-              <h1 className="max-w-2xl text-balance text-[clamp(2.25rem,4vw,3.75rem)] leading-[1.1]" style={{ color: 'var(--text-primary)' }}>
+              <h1 className="max-w-2xl text-balance" style={{ fontSize: 'var(--text-display)', lineHeight: 1.02, letterSpacing: '-0.03em' }}>
                 <span className="block overflow-hidden">
                   <span className="block" data-hero-line>
                     Web Solutions
@@ -154,80 +103,44 @@ export default function HomePage() {
                 </span>
               </h1>
 
-              <p className="max-w-lg leading-relaxed" style={{ color: 'var(--text-secondary)' }} data-hero-support>
+              <p className="max-w-lg leading-relaxed" style={{ color: 'var(--ink-700)', fontSize: 'var(--text-lead)' }} data-hero-support>
                 I build professional WordPress websites, practical web systems, and browser-based tools — with the frontend, hosting, domain, DNS, and technical configuration needed to launch and maintain them reliably.
               </p>
 
-              <div className="mt-2 flex flex-col gap-4 sm:flex-row" data-hero-support>
+              <div className="mt-2 flex flex-wrap items-center gap-x-7 gap-y-4" data-hero-support>
                 <Button href="/portfolio" variant="primary" size="large" data-magnetic="">
                   View Selected Work
                 </Button>
-                <Button href="/contact" variant="secondary" size="large" data-magnetic="">
+                <Button href="/contact" variant="ghost">
                   Start a Project
                 </Button>
               </div>
 
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-2 pt-1 text-sm" style={{ color: 'var(--text-secondary)' }} data-hero-support>
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60" style={{ background: 'var(--brand-primary)' }} />
-                  <span className="relative inline-flex h-2 w-2 rounded-full" style={{ background: 'var(--brand-primary)' }} />
-                </span>
-                <span>WordPress &bull; Elementor Pro &bull; Web Systems &bull; Hosting &bull; DNS &bull; Technical Support</span>
+              <div className="meta-index flex flex-wrap items-center gap-x-3 gap-y-2 pt-1" style={{ color: 'var(--ink-400)' }} data-hero-support>
+                <span className="inline-flex h-1.5 w-1.5 rounded-full" style={{ background: 'var(--accent)' }} />
+                WordPress · Elementor Pro · Web Systems · Hosting · DNS · Technical Support
               </div>
-              <p className="text-xs" style={{ color: 'var(--text-muted)' }} data-hero-support>
-                <a href={siteConfig.cvPath} className="underline" style={{ color: 'var(--brand-primary)' }} target="_blank" rel="noopener noreferrer">
-                  Download CV
-                </a>{' '}
-                &middot;{' '}
-                <a href="/tools" className="underline" style={{ color: 'var(--brand-primary)' }}>
-                  Explore Web Tools
-                </a>{' '}
-                or see the systems I build in{' '}
-                <a href="/personal-projects" className="underline" style={{ color: 'var(--brand-primary)' }}>
-                  Personal Projects
-                </a>
-                .
-              </p>
             </div>
 
-            <div className="relative lg:col-span-5" data-hero-support>
-              <div className="pointer-events-none absolute -inset-8 -z-10 hidden rounded-full opacity-40 blur-3xl lg:block" style={{ background: 'radial-gradient(circle, var(--brand-primary), transparent 70%)' }} />
-              <Image
-                src={firstProject.image}
-                alt={`${firstProject.name} website shown on desktop and mobile`}
-                width={900}
-                height={900}
-                className="mx-auto h-auto w-full max-w-[420px] drop-shadow-2xl lg:max-w-none"
-              />
-              <div className="hero-badge absolute left-0 top-4 flex items-center gap-2 rounded-2xl border px-3.5 py-2.5 sm:-left-4" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-white)', boxShadow: 'var(--shadow-md)' }}>
-                <span className="flex h-8 w-8 items-center justify-center rounded-full" style={{ background: 'var(--brand-lavender)', color: 'var(--brand-primary)' }}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M20 6L9 17l-5-5" />
-                  </svg>
-                </span>
-                <div className="flex flex-col">
-                  <span className="text-[11px] font-bold" style={{ color: 'var(--brand-ink)', fontFamily: 'var(--font-heading)' }}>
-                    Elementor Pro
-                  </span>
-                  <span className="text-[10px]" style={{ color: 'var(--text-secondary)' }}>
-                    Live client build
-                  </span>
-                </div>
+            <div className="lg:col-span-5" data-hero-support>
+              <div className="corner-marks overflow-hidden rounded-[var(--radius-md)]" style={{ color: 'var(--ink-950)' }}>
+                <Image
+                  src={firstProject.image}
+                  alt={`${firstProject.name} website shown on desktop and mobile`}
+                  width={900}
+                  height={720}
+                  priority
+                  className="aspect-[5/4] w-full object-cover object-top"
+                  style={{ background: 'var(--paper-050)' }}
+                />
               </div>
-              <div className="hero-badge absolute bottom-6 right-0 flex items-center gap-2 rounded-full border px-4 py-2 sm:-right-3" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-white)', boxShadow: 'var(--shadow-md)' }}>
-                <span className="h-2 w-2 rounded-full" style={{ background: 'var(--color-success)' }} />
-                <span className="text-xs font-bold" style={{ color: 'var(--brand-ink)' }}>
-                  Responsive Layout
-                </span>
-              </div>
+              <p className="meta-index mt-3">FIG.01 — {firstProject.name.toUpperCase()} · LIVE CLIENT BUILD</p>
             </div>
           </div>
         </Container>
 
-        <div className="pointer-events-none absolute inset-x-0 bottom-6 hidden flex-col items-center gap-2 lg:flex" style={{ color: 'var(--text-secondary)' }} data-scroll-cue>
-          <span className="eyebrow text-[10px]" style={{ color: 'inherit' }}>
-            Scroll
-          </span>
+        <div className="meta-index pointer-events-none absolute inset-x-0 bottom-6 hidden flex-col items-center gap-2 lg:flex" style={{ color: 'var(--ink-400)' }} data-scroll-cue>
+          <span>Scroll</span>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="6 9 12 15 18 9" />
           </svg>
@@ -235,157 +148,128 @@ export default function HomePage() {
       </section>
 
       {/* Credibility strip */}
-      <section className="py-8 sm:py-10" style={{ background: 'var(--surface-white)' }}>
+      <section className="py-7 sm:py-8" style={{ background: 'var(--paper-000)', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
         <Container>
-          <div className="grid grid-cols-2 divide-y divide-x sm:grid-cols-3 sm:divide-y-0 lg:grid-cols-6" style={{ borderColor: 'var(--border-color)' }} data-reveal data-reveal-type="stagger">
+          <div className="meta-index flex flex-wrap items-center justify-center gap-x-8 gap-y-3 sm:justify-between" style={{ color: 'var(--ink-700)' }} data-reveal>
             {credibilityPoints.map((point) => (
-              <div key={point.label} className="flex flex-col items-center gap-2.5 px-3 py-5 text-center" style={{ borderColor: 'var(--border-color)' }}>
-                <span className="flex h-9 w-9 items-center justify-center rounded-full" style={{ background: 'var(--brand-lavender)', color: 'var(--brand-primary)' }}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" dangerouslySetInnerHTML={{ __html: point.icon }} />
-                </span>
-                <p className="max-w-[10rem] text-xs font-medium leading-snug" style={{ color: 'var(--text-primary)' }}>
-                  {point.label}
-                </p>
-              </div>
+              <span key={point}>{point}</span>
             ))}
           </div>
         </Container>
       </section>
 
       {/* Core Capabilities */}
-      <section className="py-14 sm:py-16" style={{ background: 'var(--surface-warm)' }}>
-        <Container className="flex flex-col gap-10">
+      <section className="py-16 sm:py-20" style={{ background: 'var(--paper-050)' }}>
+        <Container className="flex flex-col gap-14">
           <SectionHeading
             eyebrow="Core Capabilities"
             title="Web Solutions for Business, Operations, and Growth"
             description="Three ways I help businesses get more from their website — professional WordPress builds, internal systems for real workflows, and free tools for common web tasks."
           />
 
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-            {/* WordPress Websites — real project preview */}
-            <div className="card-surface flex flex-col overflow-hidden rounded-2xl" style={{ background: 'var(--surface-white)' }} data-reveal>
-              <div className="relative aspect-[16/10] overflow-hidden" style={{ background: 'var(--surface-warm)' }}>
-                <Image src={firstProject.image} alt={`${firstProject.name} website preview`} width={640} height={400} className="h-full w-full object-cover" />
-              </div>
-              <div className="flex flex-1 flex-col gap-3 p-6">
-                <span className="eyebrow">{capabilityCards[0].eyebrow}</span>
-                <h3 className="text-xl">{capabilityCards[0].title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)', maxWidth: 'none' }}>
-                  {capabilityCards[0].description}
-                </p>
-                <ul className="flex flex-wrap gap-1.5 pt-1">
-                  {capabilityCards[0].highlights.map((h) => (
-                    <li key={h} className="rounded-full px-2.5 py-1 text-[11px] font-medium" style={{ background: 'var(--surface-warm)', border: '1px solid var(--border-color)', color: 'var(--text-secondary)' }}>
-                      {h}
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-auto pt-3">
-                  <Button href={capabilityCards[0].cta.href} variant="secondary">
-                    {capabilityCards[0].cta.label}
-                  </Button>
-                </div>
+          {/* WordPress Websites — full-width, image-led */}
+          <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-14" data-reveal>
+            <div className="lg:col-span-6">
+              <div className="corner-marks overflow-hidden rounded-[var(--radius-md)]" style={{ color: 'var(--ink-950)' }}>
+                <Image
+                  src={firstProject.image}
+                  alt={`${firstProject.name} website preview`}
+                  width={900}
+                  height={620}
+                  className="aspect-[16/11] w-full object-cover object-top"
+                  style={{ background: 'var(--paper-000)' }}
+                />
               </div>
             </div>
+            <div className="flex flex-col gap-4 lg:col-span-6">
+              <span className="eyebrow">WordPress Websites</span>
+              <h3 className="text-2xl" style={{ color: 'var(--ink-950)' }}>
+                Professional websites built to manage.
+              </h3>
+              <p className="max-w-md leading-relaxed" style={{ color: 'var(--ink-700)' }}>
+                Responsive, manageable WordPress websites for businesses, agencies, nonprofits, and service providers — built on Elementor Pro and dynamic content.
+              </p>
+              <p className="meta-index" style={{ color: 'var(--ink-400)' }}>
+                New builds · Elementor Pro · Dynamic WordPress · Redesigns &amp; maintenance
+              </p>
+              <Button href="/services" variant="ghost" className="mt-1 w-fit">
+                Explore Services
+              </Button>
+            </div>
+          </div>
 
-            {/* Personal Projects — dashboard mock preview */}
-            <div className="card-surface flex flex-col overflow-hidden rounded-2xl" style={{ background: 'var(--surface-white)' }} data-reveal>
-              <div className="p-6 pb-0">
-                <SystemPreview routeLabel="app.system/admin/overview" activeNav={1} />
-              </div>
-              <div className="flex flex-1 flex-col gap-3 p-6">
-                <span className="eyebrow">{capabilityCards[1].eyebrow}</span>
-                <h3 className="text-xl">{capabilityCards[1].title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)', maxWidth: 'none' }}>
-                  {capabilityCards[1].description}
-                </p>
-                <ul className="flex flex-wrap gap-1.5 pt-1">
-                  {capabilityCards[1].highlights.map((h) => (
-                    <li key={h} className="rounded-full px-2.5 py-1 text-[11px] font-medium" style={{ background: 'var(--surface-warm)', border: '1px solid var(--border-color)', color: 'var(--text-secondary)' }}>
-                      {h}
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-auto pt-3">
-                  <Button href={capabilityCards[1].cta.href} variant="secondary">
-                    {capabilityCards[1].cta.label}
-                  </Button>
-                </div>
-              </div>
+          {/* Personal Projects + Web Tools — lighter, paired */}
+          <div className="grid grid-cols-1 gap-10 border-t pt-12 sm:grid-cols-2 lg:gap-16" style={{ borderColor: 'var(--line)' }}>
+            <div className="flex flex-col gap-4" data-reveal>
+              <SystemPreview routeLabel="app.system/admin/overview" activeNav={1} />
+              <span className="eyebrow mt-2">Personal Projects</span>
+              <h3 className="text-xl" style={{ color: 'var(--ink-950)' }}>
+                Internal systems built around real workflows.
+              </h3>
+              <p className="text-sm leading-relaxed" style={{ color: 'var(--ink-700)' }}>
+                Admin dashboards and internal tools for task management, inventory, records, and reporting — designed around how a team actually works.
+              </p>
+              <Button href="/personal-projects" variant="ghost" className="mt-1 w-fit">
+                View Personal Projects
+              </Button>
             </div>
 
-            {/* Web Tools — compact launcher grid preview */}
-            <div className="card-surface flex flex-col overflow-hidden rounded-2xl" style={{ background: 'var(--surface-white)' }} data-reveal>
-              <div className="grid grid-cols-3 gap-2 p-6 pb-0">
+            <div className="flex flex-col gap-4" data-reveal>
+              <div className="grid grid-cols-3 gap-2">
                 {['image-toolkit', 'qr-code-generator', 'developer-data-toolkit']
                   .map((id) => TOOLS.find((t) => t.id === id))
                   .filter((tool): tool is (typeof TOOLS)[number] => !!tool)
                   .map((tool) => (
-                  <div
-                    key={tool.id}
-                    className="flex aspect-square flex-col items-center justify-center gap-1.5 rounded-xl border"
-                    style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }}
-                  >
-                    <span className="h-2 w-2 rounded-full" style={{ background: tool.accent }} />
-                    <span className="px-1 text-center text-[9px] font-bold leading-tight" style={{ color: 'var(--text-secondary)' }}>
-                      {tool.title}
-                    </span>
-                  </div>
-                ))}
-              </div>
-              <div className="flex flex-1 flex-col gap-3 p-6">
-                <span className="eyebrow">{capabilityCards[2].eyebrow}</span>
-                <h3 className="text-xl">{capabilityCards[2].title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)', maxWidth: 'none' }}>
-                  {capabilityCards[2].description}
-                </p>
-                <ul className="flex flex-wrap gap-1.5 pt-1">
-                  {capabilityCards[2].highlights.map((h) => (
-                    <li key={h} className="rounded-full px-2.5 py-1 text-[11px] font-medium" style={{ background: 'var(--surface-warm)', border: '1px solid var(--border-color)', color: 'var(--text-secondary)' }}>
-                      {h}
-                    </li>
+                    <div
+                      key={tool.id}
+                      className="flex aspect-square flex-col items-center justify-center gap-1.5 rounded-[var(--radius-sm)] border px-1"
+                      style={{ borderColor: 'var(--line)', background: 'var(--paper-000)' }}
+                    >
+                      <span className="meta-index text-center leading-tight">{tool.title}</span>
+                    </div>
                   ))}
-                </ul>
-                <div className="mt-auto pt-3">
-                  <Button href={capabilityCards[2].cta.href} variant="secondary">
-                    {capabilityCards[2].cta.label}
-                  </Button>
-                </div>
               </div>
+              <span className="eyebrow mt-2">Web Tools</span>
+              <h3 className="text-xl" style={{ color: 'var(--ink-950)' }}>
+                Free browser tools for everyday tasks.
+              </h3>
+              <p className="text-sm leading-relaxed" style={{ color: 'var(--ink-700)' }}>
+                Focused browser utilities for common technical tasks — image conversion, SEO previews, favicons, and JSON formatting, processed locally.
+              </p>
+              <Button href="/tools" variant="ghost" className="mt-1 w-fit">
+                Explore Web Tools
+              </Button>
             </div>
           </div>
         </Container>
       </section>
 
       {/* Selected Client Work */}
-      <ProjectModalProvider>
-        <section id="work" className="py-14 sm:py-16" style={{ background: 'var(--surface-white)' }}>
-          <Container className="flex flex-col gap-10 sm:gap-12">
-            <SectionHeading
-              eyebrow="Selected Client Work"
-              title="Websites built for real businesses."
-              description="Recent WordPress projects — the client, the goal, and what I delivered."
-            />
+      <section id="work" className="py-16 sm:py-20" style={{ background: 'var(--paper-000)' }}>
+        <Container>
+          <SectionHeading
+            eyebrow="Selected Client Work"
+            title="Websites built for real businesses."
+            description="Recent WordPress projects — the client, the goal, and what I delivered."
+          />
+        </Container>
 
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              <ProjectCard project={firstProject} index={1} priority />
-              <ProjectCard project={secondProject} index={2} priority />
-              <ProjectCard project={thirdProject} index={3} priority />
-            </div>
+        <Bleed className="mt-14 flex flex-col gap-20 sm:mt-16 sm:gap-24">
+          <ProjectSpread project={firstProject} index={1} priority />
+          <ProjectSpread project={secondProject} index={2} reversed />
+          <ProjectSpread project={thirdProject} index={3} />
+        </Bleed>
 
-            <div data-reveal>
-              <Button href="/portfolio" variant="secondary">
-                View All Client Work
-              </Button>
-            </div>
-          </Container>
-          <ProjectModal />
-        </section>
-      </ProjectModalProvider>
+        <Container className="mt-14 sm:mt-16">
+          <Button href="/portfolio" variant="secondary" data-reveal>
+            View All Client Work
+          </Button>
+        </Container>
+      </section>
 
       {/* Featured Personal Projects */}
-      <section className="py-14 sm:py-16" style={{ background: 'var(--surface-warm)' }}>
-        <Container className="flex flex-col gap-10">
+      <section className="py-16 sm:py-20" style={{ background: 'var(--paper-050)' }}>
+        <Container className="flex flex-col gap-12">
           <SectionHeading
             eyebrow="Featured Personal Projects"
             title="Internal systems built for real operations."
@@ -393,99 +277,88 @@ export default function HomePage() {
           />
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-            {featuredSystems.map((system) => (
-              <a
-                key={system.slug}
-                href={`/personal-projects/${system.slug}`}
-                className="card-surface flex flex-col gap-4 overflow-hidden rounded-2xl p-6"
-                style={{ background: 'var(--surface-white)' }}
-                data-reveal
-              >
-                <div className="flex flex-wrap items-start justify-between gap-3">
-                  <div className="flex flex-col gap-1">
-                    <span className="eyebrow">{system.category}</span>
-                    <h3 className="text-xl">{system.name}</h3>
+            {featuredSystems.map((system) => {
+              const statusStyle = systemStatusStyle[system.status];
+              return (
+                <a
+                  key={system.slug}
+                  href={`/personal-projects/${system.slug}`}
+                  className="flex flex-col gap-4 overflow-hidden rounded-[var(--radius-md)] border p-6 transition-colors duration-300 hover:border-[var(--line-strong)]"
+                  style={{ borderColor: 'var(--line)', background: 'var(--paper-000)' }}
+                  data-reveal
+                >
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <div className="flex flex-col gap-1">
+                      <span className="eyebrow">{system.category}</span>
+                      <h3 className="text-xl" style={{ color: 'var(--ink-950)' }}>
+                        {system.name}
+                      </h3>
+                    </div>
+                    <span
+                      className="meta-index inline-flex flex-shrink-0 items-center gap-1.5 rounded-full border px-3 py-1"
+                      style={{ borderColor: statusStyle.border, color: statusStyle.color, background: statusStyle.bg }}
+                    >
+                      {system.status}
+                    </span>
                   </div>
-                  <span
-                    className="inline-flex flex-shrink-0 items-center gap-1.5 rounded-full border px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wide"
-                    style={{ borderColor: 'color-mix(in srgb, var(--color-success) 35%, white)', color: 'var(--color-success)', background: 'var(--color-success-soft)' }}
-                  >
-                    {system.status}
-                  </span>
-                </div>
-                {system.screenshot && (
-                  <div className="relative aspect-[16/10] overflow-hidden rounded-xl border" style={{ borderColor: 'var(--border-color)' }}>
-                    <Image src={system.screenshot} alt={`${system.name} dashboard screenshot`} className="h-full w-full object-cover object-top" />
-                  </div>
-                )}
-                <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                  {system.problem}
-                </p>
-                <ul className="flex flex-wrap gap-x-4 gap-y-1.5">
-                  {system.modules.slice(0, 3).map((feature) => (
-                    <li key={feature} className="flex items-center gap-1.5 text-xs" style={{ color: 'var(--text-primary)' }}>
-                      <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0" style={{ color: 'var(--brand-primary)' }}>
-                        <polyline points="20 6 9 17 4 12" />
-                      </svg>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </a>
-            ))}
+                  {system.screenshot && (
+                    <div className="relative aspect-[16/10] overflow-hidden rounded-[var(--radius-sm)] border" style={{ borderColor: 'var(--line)' }}>
+                      <Image src={system.screenshot} alt={`${system.name} dashboard screenshot`} className="h-full w-full object-cover object-top" />
+                    </div>
+                  )}
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--ink-700)' }}>
+                    {system.problem}
+                  </p>
+                  <ul className="flex flex-wrap gap-x-4 gap-y-1.5">
+                    {system.modules.slice(0, 3).map((feature) => (
+                      <li key={feature} className="flex items-center gap-1.5 text-xs" style={{ color: 'var(--ink-950)' }}>
+                        <Check />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </a>
+              );
+            })}
           </div>
 
-          <div data-reveal>
-            <Button href="/personal-projects" variant="secondary">
-              View All Personal Projects
-            </Button>
-          </div>
+          <Button href="/personal-projects" variant="secondary" data-reveal>
+            View All Personal Projects
+          </Button>
         </Container>
       </section>
 
       {/* Featured Tools */}
-      <section className="py-14 sm:py-16" style={{ background: 'var(--surface-white)' }}>
-        <Container className="flex flex-col gap-10">
+      <section className="py-16 sm:py-20" style={{ background: 'var(--paper-000)' }}>
+        <Container className="flex flex-col gap-12">
           <SectionHeading
             eyebrow="Featured Tools"
             title="Free browser tools, ready to use."
             description="No account, uploads, or permanent storage — everything runs in your browser."
           />
 
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-5">
-            {FEATURED_TOOL_IDS.map((id) => TOOLS.find((t) => t.id === id))
-              .filter((tool): tool is (typeof TOOLS)[number] => !!tool)
-              .map((tool) => (
-              <a
-                key={tool.id}
-                href={tool.href}
-                className="card-surface flex flex-col gap-3 rounded-2xl p-5"
-                style={{ background: 'var(--surface-white)', borderTop: `3px solid ${tool.accent}` }}
-                data-reveal
-              >
-                <span className="flex h-9 w-9 items-center justify-center rounded-full text-xs font-bold" style={{ background: tool.accentSoft, color: tool.accent }}>
-                  {tool.title.charAt(0)}
-                </span>
-                <h3 className="text-base font-bold" style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-heading)' }}>
+          <div className="grid grid-cols-1 divide-y sm:grid-cols-2 sm:divide-y-0 sm:divide-x lg:grid-cols-5" style={{ borderColor: 'var(--line)' }} data-reveal data-reveal-type="stagger">
+            {featuredTools.map((tool) => (
+              <a key={tool.id} href={tool.href} className="group flex flex-col gap-2 py-5 transition-colors duration-300 sm:px-5">
+                <span className="meta-index">{tool.category}</span>
+                <h3 className="text-base font-bold transition-colors duration-300 group-hover:text-[var(--accent)]" style={{ color: 'var(--ink-950)' }}>
                   {tool.title}
                 </h3>
-                <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                <p className="text-xs leading-relaxed" style={{ color: 'var(--ink-700)' }}>
                   {tool.purpose}
                 </p>
               </a>
             ))}
           </div>
 
-          <div data-reveal>
-            <Button href="/tools" variant="secondary">
-              Explore All Tools
-            </Button>
-          </div>
+          <Button href="/tools" variant="secondary" data-reveal>
+            Explore All Tools
+          </Button>
         </Container>
       </section>
 
       {/* Technical Capabilities */}
-      <section className="py-12 sm:py-14" style={{ background: 'var(--surface-warm)' }}>
+      <section className="py-14 sm:py-16" style={{ background: 'var(--paper-050)' }}>
         <Container className="flex flex-col gap-8">
           <SectionHeading
             eyebrow="Technical Capabilities"
@@ -495,13 +368,11 @@ export default function HomePage() {
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {technicalGroups.map((group) => (
               <div key={group.label} className="flex flex-col gap-3" data-reveal>
-                <span className="eyebrow" style={{ color: 'var(--brand-primary)' }}>
-                  {group.label}
-                </span>
+                <span className="eyebrow">{group.label}</span>
                 <ul className="flex flex-col gap-2">
                   {group.items.map((item) => (
-                    <li key={item} className="flex items-start gap-2 text-sm" style={{ color: 'var(--text-primary)' }}>
-                      <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full" style={{ background: 'var(--brand-primary)' }} />
+                    <li key={item} className="flex items-start gap-2 text-sm" style={{ color: 'var(--ink-950)' }}>
+                      <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full" style={{ background: 'var(--accent)' }} />
                       {item}
                     </li>
                   ))}
@@ -513,7 +384,7 @@ export default function HomePage() {
       </section>
 
       {/* Process */}
-      <section className="dark-grid-bg py-12 sm:py-14" style={{ background: '#25134f' }}>
+      <section className="dark-grid-bg py-14 sm:py-16" style={{ background: 'var(--ink-canvas)' }}>
         <Container className="grid grid-cols-1 gap-10 lg:grid-cols-[38fr_62fr] lg:gap-12">
           <div className="min-w-0">
             <div className="lg:sticky lg:top-32">
@@ -528,33 +399,31 @@ export default function HomePage() {
       </section>
 
       {/* Short About */}
-      <section id="about" className="py-12 sm:py-14" style={{ background: 'var(--surface-warm)' }}>
+      <section id="about" className="py-14 sm:py-16" style={{ background: 'var(--paper-050)' }}>
         <Container className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-7" data-reveal data-reveal-type="fade-up">
             <span className="eyebrow">About</span>
             <h2 className="mt-2 max-w-xl text-balance">
-              A <span style={{ color: 'var(--brand-primary)' }}>WordPress developer</span> who also handles the technical side.
+              A <span style={{ color: 'var(--accent)' }}>WordPress developer</span> who also handles the technical side.
             </h2>
           </div>
 
           <div className="flex flex-col gap-6 lg:col-span-5" data-reveal data-reveal-type="fade-up">
-            <p className="leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+            <p className="leading-relaxed" style={{ color: 'var(--ink-700)' }}>
               I build and improve WordPress websites, then handle what comes after: hosting setup, domain and DNS configuration, SSL, and business email delivery. Alongside client work, I also build personal web systems and browser tools. Every project is planned with AI-assisted tools, reviewed and finished by hand.
             </p>
-            <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+            <p className="text-sm leading-relaxed" style={{ color: 'var(--ink-700)' }}>
               {yearsExperience}+ years of experience spanning an in-house role and freelance/contract work with agencies and direct clients across the United States, Canada, and the Philippines.
             </p>
             <ul className="flex flex-wrap gap-x-4 gap-y-2">
               {aboutProofPoints.map((item) => (
-                <li key={item} className="flex items-center gap-1.5 text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--brand-primary)' }}>
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
+                <li key={item} className="flex items-center gap-1.5 text-sm font-medium" style={{ color: 'var(--ink-950)' }}>
+                  <Check />
                   {item}
                 </li>
               ))}
             </ul>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap items-center gap-6">
               <Button href="/about" variant="secondary">
                 More About Me
               </Button>
@@ -567,7 +436,7 @@ export default function HomePage() {
       </section>
 
       {/* Final CTA */}
-      <section id="contact" className="dark-grid-bg py-14 sm:py-16" style={{ background: 'var(--brand-dark)' }}>
+      <section id="contact" className="dark-grid-bg py-16 sm:py-20" style={{ background: 'var(--ink-canvas)' }}>
         <Container className="flex flex-col items-start gap-6">
           <SectionHeading
             eyebrow="Contact"
@@ -575,11 +444,11 @@ export default function HomePage() {
             description="Tell me what you're building — a website, an internal system, or technical setup like hosting and DNS. I'll recommend a practical next step."
             dark
           />
-          <div className="flex flex-wrap gap-4" data-reveal>
-            <Button href="/contact" variant="primary" size="large">
+          <div className="flex flex-wrap items-center gap-6" data-reveal>
+            <Button href="/contact" variant="primary" size="large" tone="dark">
               Start a Project
             </Button>
-            <Button href="/portfolio" variant="secondary" size="large">
+            <Button href="/portfolio" variant="ghost" tone="dark">
               View Selected Work
             </Button>
           </div>

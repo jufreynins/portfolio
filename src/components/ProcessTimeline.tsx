@@ -94,30 +94,30 @@ export default function ProcessTimeline({ steps }: ProcessTimelineProps) {
 
   return (
     <div className="relative" data-process-timeline>
-      <div className="absolute w-0.5" data-process-track style={{ left: '27px', background: 'rgba(255,255,255,0.12)' }} />
-      <div className="absolute w-0.5 origin-top" data-process-fill style={{ left: '27px', background: 'var(--brand-primary)', transform: 'scaleY(0)' }} />
+      <div className="absolute w-0.5" data-process-track style={{ left: '27px', background: 'rgba(247,245,242,0.14)' }} />
+      <div className="absolute w-0.5 origin-top" data-process-fill style={{ left: '27px', background: 'var(--accent)', transform: 'scaleY(0)' }} />
 
       <div className="flex flex-col">
         {steps.map((step, i) => (
           <div
             key={step.title}
             className="process-row relative flex flex-col gap-5 border-b py-9 transition-colors duration-500 sm:flex-row sm:items-center sm:gap-8"
-            style={{ borderColor: 'rgba(255,255,255,0.12)' }}
+            style={{ borderColor: 'rgba(247,245,242,0.14)' }}
             data-process-row
           >
             <span
-              className="process-node relative z-10 flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full border font-mono text-sm transition-all duration-500"
+              className="process-node relative z-10 flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-[var(--radius-sm)] border font-mono text-sm transition-all duration-500"
               data-process-node
-              style={{ borderColor: 'rgba(255,255,255,0.35)', color: 'rgba(255,255,255,0.8)' }}
+              style={{ borderColor: 'rgba(247,245,242,0.3)', color: 'rgba(247,245,242,0.75)' }}
             >
               {String(i + 1).padStart(2, '0')}
             </span>
 
             <div className="flex flex-1 flex-col gap-2.5">
-              <h3 className="process-title text-xl transition-colors duration-500 sm:text-2xl" style={{ color: 'rgba(255,255,255,0.82)' }}>
+              <h3 className="process-title text-xl transition-colors duration-500 sm:text-2xl" style={{ color: 'rgba(247,245,242,0.85)' }}>
                 {step.title}
               </h3>
-              <p className="process-desc max-w-sm text-sm leading-relaxed transition-colors duration-500" style={{ color: 'rgba(224,218,240,0.85)' }}>
+              <p className="process-desc max-w-sm text-sm leading-relaxed transition-colors duration-500" style={{ color: 'rgba(247,245,242,0.6)' }}>
                 {step.description}
               </p>
             </div>
@@ -134,19 +134,19 @@ export default function ProcessTimeline({ steps }: ProcessTimelineProps) {
           border-bottom: none;
         }
         .process-row.is-active {
-          background: rgba(67, 39, 128, 0.18);
+          background: rgba(103, 61, 230, 0.1);
         }
         .process-row.is-active .process-node {
-          background: var(--brand-primary);
-          border-color: var(--brand-primary);
+          background: var(--accent);
+          border-color: var(--accent);
           color: #ffffff;
         }
         .process-row.is-active .process-title {
           color: #ffffff;
         }
         .process-row.is-active .process-desc {
-          color: #ffffff;
-          opacity: 0.85;
+          color: rgba(247, 245, 242, 0.85);
+          opacity: 1;
         }
         .process-row.is-active .process-visual {
           opacity: 1;

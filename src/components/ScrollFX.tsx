@@ -19,7 +19,7 @@ function initReveals(reduced: boolean) {
 
   const fadeUp = byType('fade-up');
   if (fadeUp.length) {
-    gsap.set(fadeUp, { opacity: 0, y: 28 });
+    gsap.set(fadeUp, { opacity: 0, y: 18 });
     ScrollTrigger.batch(fadeUp, {
       start: 'top 88%',
       once: true,
@@ -66,10 +66,9 @@ function initHero(reduced: boolean) {
   const eyebrow = document.querySelector<HTMLElement>('[data-hero-eyebrow]');
   const lines = gsap.utils.toArray<HTMLElement>('[data-hero-line]');
   const support = gsap.utils.toArray<HTMLElement>('[data-hero-support]');
-  const indicators = document.querySelector<HTMLElement>('[data-hero-indicators]');
   const scrollCue = document.querySelector<HTMLElement>('[data-scroll-cue]');
 
-  const targets = [eyebrow, ...lines, ...support, indicators].filter(Boolean) as HTMLElement[];
+  const targets = [eyebrow, ...lines, ...support].filter(Boolean) as HTMLElement[];
   if (!targets.length) return;
 
   if (reduced) {
@@ -79,13 +78,12 @@ function initHero(reduced: boolean) {
   }
 
   gsap.set(lines, { yPercent: 100 });
-  gsap.set([eyebrow, ...support, indicators, scrollCue].filter(Boolean), { opacity: 0, y: 16 });
+  gsap.set([eyebrow, ...support, scrollCue].filter(Boolean), { opacity: 0, y: 16 });
 
   const tl = gsap.timeline({ delay: 0.1 });
   if (eyebrow) tl.to(eyebrow, { opacity: 1, y: 0, duration: 0.6, ease: EASE });
   tl.to(lines, { yPercent: 0, duration: 0.9, ease: EASE, stagger: 0.1 }, '-=0.2');
   if (support.length) tl.to(support, { opacity: 1, y: 0, duration: 0.7, ease: EASE, stagger: 0.08 }, '-=0.4');
-  if (indicators) tl.to(indicators, { opacity: 1, y: 0, duration: 0.7, ease: EASE }, '-=0.3');
   if (scrollCue) tl.to(scrollCue, { opacity: 1, y: 0, duration: 0.6, ease: EASE }, '-=0.2');
 
   // Depth + fade as visitor scrolls away from hero
@@ -135,75 +133,6 @@ function initSequentialProgress(trackSelector: string, lineSelector: string, ste
   });
 }
 
-function initProcessImageSwap() {
-  const steps = gsap.utils.toArray<HTMLElement>('[data-process-step]');
-  const images = gsap.utils.toArray<HTMLElement>('[data-process-image]');
-  if (!steps.length || !images.length) return;
-
-  gsap.set(images, { scale: 1.04 });
-  gsap.set(images[0], { scale: 1 });
-
-  let current = 0;
-  const setActive = (index: number) => {
-    if (index === current || !images[index]) return;
-    gsap.to(images[current], { opacity: 0, scale: 1.04, duration: 0.6, ease: 'power2.inOut' });
-    gsap.fromTo(images[index], { scale: 0.97 }, { opacity: 1, scale: 1, duration: 0.6, ease: 'power2.out' });
-    current = index;
-  };
-
-  steps.forEach((step, i) => {
-    ScrollTrigger.create({
-      trigger: step,
-      start: 'top center',
-      end: 'bottom center',
-      onEnter: () => setActive(i),
-      onEnterBack: () => setActive(i),
-    });
-  });
-}
-
-function initTypewriter(reduced: boolean) {
-  const el = document.querySelector<HTMLElement>('[data-typewriter]');
-  if (!el) return;
-  const lines = JSON.parse(el.dataset.typewriter || '[]') as string[];
-  if (!lines.length) return;
-
-  if (reduced) {
-    el.innerHTML = lines.map((l) => `<div>${l}</div>`).join('');
-    return;
-  }
-
-  el.innerHTML = '';
-  ScrollTrigger.create({
-    trigger: el,
-    start: 'top 80%',
-    once: true,
-    onEnter: () => {
-      const state = { i: 0 };
-      const lineEls = lines.map(() => {
-        const div = document.createElement('div');
-        div.className = 'whitespace-pre';
-        el.appendChild(div);
-        return div;
-      });
-      const full = lines.join('\n');
-      gsap.to(state, {
-        i: full.length,
-        duration: Math.min(2.2, full.length * 0.035),
-        ease: 'none',
-        onUpdate: () => {
-          let remaining = Math.round(state.i);
-          lines.forEach((line, idx) => {
-            const take = Math.max(0, Math.min(line.length, remaining));
-            lineEls[idx].textContent = line.slice(0, take);
-            remaining -= line.length + 1;
-          });
-        },
-      });
-    },
-  });
-}
-
 export default function ScrollFX() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -216,47 +145,13 @@ export default function ScrollFX() {
       initHero(reduced);
       initReveals(reduced);
 
-      // Hero count-up
-      document.querySelectorAll<HTMLElement>('[data-gsap-count]').forEach((el) => {
-        const target = Number(el.dataset.gsapCount ?? '0');
-        if (reduced) {
-          el.textContent = String(target);
-          return;
-        }
-        const counter = { value: 0 };
-        gsap.to(counter, {
-          value: target,
-          duration: 1.2,
-          delay: 0.9,
-          ease: 'power2.out',
-          onUpdate: () => {
-            el.textContent = String(Math.round(counter.value));
-          },
-        });
-      });
-
-      // Process progress line + sequential step activation
-      initSequentialProgress('[data-gsap-progress-track]', '[data-gsap-progress]', '[data-process-step]', reduced);
-
       // AI workflow progress line + sequential icon activation
       initSequentialProgress('[data-ai-progress-track]', '[data-ai-progress]', '[data-ai-step]', reduced);
-
-      initTypewriter(reduced);
 
       if (reduced) return;
 
       ScrollTrigger.matchMedia({
         '(min-width: 1024px)': () => {
-          initProcessImageSwap();
-
-          document.querySelectorAll<HTMLElement>('[data-gsap-parallax]').forEach((el) => {
-            gsap.to(el, {
-              yPercent: -10,
-              ease: 'none',
-              scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true },
-            });
-          });
-
           rawListenerController = new AbortController();
           const { signal } = rawListenerController;
           document.querySelectorAll<HTMLElement>('[data-magnetic]').forEach((btn) => {

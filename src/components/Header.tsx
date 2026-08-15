@@ -99,10 +99,10 @@ export default function Header() {
       />
 
       <Container className="flex items-center justify-between py-4 transition-[padding] duration-300" data-header-inner>
-        <a href="/" className="site-logo-link flex items-center gap-2.5 text-xl font-serif tracking-tight text-zinc-900" aria-label={`${siteConfig.name} — Home`}>
+        <a href="/" className="site-logo-link flex items-center gap-2.5 text-xl font-serif tracking-tight" style={{ color: 'var(--ink-950)' }} aria-label={`${siteConfig.name} — Home`}>
           <span
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-black/10 font-mono text-xs font-medium"
-            style={{ background: 'var(--brand-lavender)', color: 'var(--brand-primary)' }}
+            className="flex h-9 w-9 items-center justify-center rounded-[var(--radius-sm)] border font-mono text-xs font-medium"
+            style={{ background: 'var(--accent-soft)', color: 'var(--accent)', borderColor: 'var(--line)' }}
           >
             {siteConfig.initials}
           </span>
@@ -114,9 +114,10 @@ export default function Header() {
             <a
               key={item.href}
               href={item.href}
-              className={`nav-link relative whitespace-nowrap text-sm font-medium text-zinc-900/70 transition-colors hover:text-zinc-900 py-1 ${
+              className={`nav-link relative whitespace-nowrap py-1 text-sm font-medium transition-colors ${
                 isNavActive(item.href) ? 'is-active' : ''
               }`}
+              style={{ color: isNavActive(item.href) ? 'var(--ink-950)' : 'var(--ink-700)' }}
               aria-current={isNavActive(item.href) ? 'page' : undefined}
             >
               {item.label}
@@ -124,7 +125,7 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="hidden 2xl:flex items-center gap-2">
+        <div className="hidden 2xl:flex items-center gap-5">
           <Button href={siteConfig.cvPath} variant="ghost" target="_blank" rel="noopener noreferrer">
             Download CV
           </Button>
@@ -135,7 +136,8 @@ export default function Header() {
 
         <button
           type="button"
-          className="header-mobile-toggle 2xl:hidden inline-flex h-11 w-11 items-center justify-center rounded-full border border-black/10 text-zinc-900"
+          className="header-mobile-toggle 2xl:hidden inline-flex h-11 w-11 items-center justify-center rounded-[var(--radius-sm)] border"
+          style={{ borderColor: 'var(--line)', color: 'var(--ink-950)' }}
           aria-expanded="false"
           aria-controls="mobile-menu"
           aria-label="Toggle menu"
@@ -153,22 +155,24 @@ export default function Header() {
         </button>
       </Container>
 
-      <div id="mobile-menu" className="2xl:hidden hidden glass mx-4 mb-4 rounded-2xl px-6 py-6" data-mobile-menu>
+      <div id="mobile-menu" className="2xl:hidden hidden glass mx-4 mb-4 rounded-[var(--radius-md)] px-6 py-6" data-mobile-menu>
         <nav className="flex flex-col gap-1" aria-label="Mobile">
           {siteConfig.nav.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className={`rounded-lg px-3 py-3 text-base font-medium hover:bg-black/5 ${
-                isNavActive(item.href) ? 'text-zinc-900 bg-black/5' : 'text-zinc-900/85 hover:text-zinc-900'
-              }`}
+              className="rounded-[var(--radius-sm)] px-3 py-3 text-base font-medium transition-colors"
+              style={{
+                color: isNavActive(item.href) ? 'var(--ink-950)' : 'var(--ink-700)',
+                background: isNavActive(item.href) ? 'var(--paper-100)' : 'transparent',
+              }}
               aria-current={isNavActive(item.href) ? 'page' : undefined}
             >
               {item.label}
             </a>
           ))}
         </nav>
-        <div className="mt-4 flex flex-col gap-3 border-t border-black/10 pt-4">
+        <div className="mt-4 flex flex-col gap-3 border-t pt-4" style={{ borderColor: 'var(--line)' }}>
           <Button href={siteConfig.cvPath} variant="secondary" className="w-full" target="_blank" rel="noopener noreferrer">
             Download CV
           </Button>
@@ -184,18 +188,15 @@ export default function Header() {
           position: absolute;
           left: 0;
           bottom: -2px;
-          height: 2px;
+          height: 1.5px;
           width: 0;
-          background: var(--color-accent);
+          background: var(--accent);
           transition: width 0.25s ease;
         }
         .nav-link:hover::after,
         .nav-link:focus-visible::after,
         .nav-link.is-active::after {
           width: 100%;
-        }
-        .nav-link.is-active {
-          color: #18181b;
         }
       `}</style>
     </header>

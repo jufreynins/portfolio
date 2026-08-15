@@ -1,33 +1,76 @@
 @import "tailwindcss";
 
+/*
+  Monospace rule (enforced sitewide): --font-mono (JetBrains Mono) is reserved for
+  metadata only — eyebrows, index/counter numerals, captions, tech pills, dates,
+  status badges, breadcrumbs, form hints. Never body copy, headings, or button labels.
+*/
+
 @theme {
-  /* Global typography system */
+  /* Typography */
+  --font-display: 'Fraunces', ui-serif, Georgia, serif;
   --font-heading: 'Sora', ui-sans-serif, system-ui, sans-serif;
   --font-body: 'DM Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-sans: var(--font-body);
-  --font-serif: var(--font-heading);
+  --font-serif: var(--font-display);
   --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
 
-  /* Global brand color system (purple) */
-  --brand-primary: #432780;
-  --brand-hover: #361f66;
-  --brand-dark: #1d123f;
-  --brand-ink: #130b24;
-  --brand-lavender: #ebf0fa;
-  --brand-soft: #f5f7fc;
+  /* Neutral palette — carries the "premium editorial" weight. Color is not the point. */
+  --ink-950: #15121c;
+  --ink-700: #4a4556;
+  --ink-400: #8c8695;
 
-  --surface-white: #ffffff;
-  --surface-warm: #f7f6fa;
+  --paper-000: #faf8f4;
+  --paper-050: #f2eee6;
+  --paper-100: #e9e3d8;
 
-  --text-primary: #17131f;
-  --text-secondary: #4b4658;
-  --text-muted: #8b8495;
-  --border-color: rgba(23, 19, 31, 0.12);
-  --border-strong: rgba(67, 39, 128, 0.28);
+  --line: rgba(21, 18, 28, 0.12);
+  --line-strong: rgba(21, 18, 28, 0.28);
 
-  --text-on-dark: #ffffff;
+  --ink-canvas: #100e16;
+  --ink-canvas-raised: #1a1722;
 
-  /* Legacy tokens kept as aliases so untouched markup stays on-brand */
+  /* The one brand color — a sharp accent, never a dominant background wash. */
+  --accent: #673de6;
+  --accent-ink: #4f2ec2;
+  --accent-soft: #efe9fc;
+
+  --on-accent: #ffffff;
+  --on-dark: #f7f5f2;
+
+  --status-success: #1b7a45;
+  --status-success-dark: #86efac;
+  --status-success-soft: #f0fdf4;
+  --status-warning: #a1590a;
+  --status-warning-dark: #fbbf24;
+  --status-warning-soft: #fffbeb;
+  --status-error: #b8331f;
+  --status-error-dark: #fca5a5;
+  --status-error-soft: #fef2f2;
+
+  /* Legacy aliases — pre-rebuild components read colors through these names via
+     inline style="var(--x)" across ~80 files. Repointing them here is what lets
+     untouched pages inherit the new palette automatically before their own rebuild
+     phase, instead of breaking. Drop this block once every component has migrated
+     to the tokens above directly (final cleanup phase). */
+  --brand-primary: var(--accent);
+  --brand-hover: var(--accent-ink);
+  --brand-dark: var(--ink-canvas);
+  --brand-ink: var(--ink-950);
+  --brand-lavender: var(--accent-soft);
+  --brand-soft: var(--paper-050);
+
+  --surface-white: var(--paper-000);
+  --surface-warm: var(--paper-050);
+
+  --text-primary: var(--ink-950);
+  --text-secondary: var(--ink-700);
+  --text-muted: var(--ink-400);
+  --border-color: var(--line);
+  --border-strong: var(--line-strong);
+
+  --text-on-dark: var(--on-dark);
+
   --color-ink: var(--surface-white);
   --color-surface: var(--surface-warm);
   --color-surface-raised: var(--brand-lavender);
@@ -39,30 +82,36 @@
   --color-ink-dark: var(--brand-ink);
   --color-surface-dark: var(--brand-dark);
 
-  /* Status colors */
-  --color-success: #16a34a;
-  --color-success-dark: #86efac;
-  --color-success-soft: #f0fdf4;
-  --color-warning: #b45309;
-  --color-warning-dark: #fbbf24;
-  --color-warning-soft: #fffbeb;
-  --color-error: #dc2626;
-  --color-error-dark: #fca5a5;
-  --color-error-soft: #fef2f2;
+  --color-success: var(--status-success);
+  --color-success-dark: var(--status-success-dark);
+  --color-success-soft: var(--status-success-soft);
+  --color-warning: var(--status-warning);
+  --color-warning-dark: var(--status-warning-dark);
+  --color-warning-soft: var(--status-warning-soft);
+  --color-error: var(--status-error);
+  --color-error-dark: var(--status-error-dark);
+  --color-error-soft: var(--status-error-soft);
 }
 
 :root {
   /* Reusable, non-Tailwind-reserved tokens — referenced via var(), not utility classes */
-  --radius-sm: 0.625rem;
-  --radius-md: 1rem;
+  --radius-xs: 2px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  /* --radius-lg kept at its old value: it's the one radius token an existing rule
+     (.card-surface below) depends on, and every untouched card on the site uses it
+     until its own rebuild phase — changing the value here would flatten those cards
+     today instead of leaving them "old system, new colors" as intended. */
   --radius-lg: 1.5rem;
   --radius-xl: 2rem;
+  /* Full pills are reserved for true status/availability badges only going forward —
+     not the default shape for buttons or cards. */
   --radius-full: 9999px;
 
-  --shadow-sm: 0 1px 2px rgba(19, 11, 36, 0.04), 0 4px 12px -6px rgba(19, 11, 36, 0.1);
-  --shadow-md: 0 8px 24px -12px rgba(19, 11, 36, 0.22);
-  --shadow-lg: 0 20px 44px -18px rgba(19, 11, 36, 0.32);
-  --shadow-brand: 0 12px 28px -14px rgba(67, 39, 128, 0.38);
+  --shadow-sm: 0 1px 2px rgba(21, 18, 28, 0.04), 0 4px 12px -6px rgba(21, 18, 28, 0.1);
+  --shadow-md: 0 8px 24px -12px rgba(21, 18, 28, 0.22);
+  --shadow-lg: 0 20px 44px -18px rgba(21, 18, 28, 0.32);
+  --shadow-brand: 0 12px 28px -14px rgba(103, 61, 230, 0.38);
 
   --space-xs: 0.5rem;
   --space-sm: 1rem;
@@ -70,21 +119,34 @@
   --space-lg: 2.5rem;
   --space-xl: 4rem;
 
-  --container-max: 74rem;
-  --gutter: clamp(20px, 4vw, 48px);
+  --container-max: 71rem;
+  --canvas-max: 96rem;
+  --gutter: clamp(20px, 4vw, 56px);
 
-  /* Section spacing scale — reserve --section-spacing-lg for the homepage hero, a featured
-     system, or a major CTA; use -md/-sm everywhere else so listing pages stay dense/scannable. */
-  --section-spacing-lg: clamp(72px, 8vw, 104px);
-  --section-spacing-md: clamp(52px, 6vw, 80px);
-  --section-spacing-sm: clamp(38px, 5vw, 60px);
+  /* Section spacing scale — reserve -xl for the homepage hero, -lg for a featured
+     system or major CTA, -md/-sm everywhere else so listing pages stay dense/scannable. */
+  --section-spacing-xl: clamp(96px, 9vw, 160px);
+  --section-spacing-lg: clamp(80px, 7vw, 120px);
+  --section-spacing-md: clamp(56px, 5vw, 88px);
+  --section-spacing-sm: clamp(40px, 4vw, 60px);
 
   --card-padding-normal: clamp(18px, 2.2vw, 28px);
   --card-padding-featured: clamp(24px, 3vw, 38px);
 
-  /* Per-tool accent override (set inline per /tools/* page); falls back to the site brand color everywhere else */
-  --tool-accent: var(--brand-primary);
-  --tool-accent-soft: var(--brand-lavender);
+  /* Per-tool accent override (set inline per /tools/* page); falls back to the site accent */
+  --tool-accent: var(--accent);
+  --tool-accent-soft: var(--accent-soft);
+
+  /* Type scale */
+  --text-display: clamp(2.75rem, 2vw + 2.25rem, 5.5rem);
+  --text-h1: clamp(2.25rem, 1.6vw + 1.75rem, 3.5rem);
+  --text-h2: clamp(1.75rem, 1vw + 1.4rem, 2.5rem);
+  --text-h3: clamp(1.25rem, 0.5vw + 1.05rem, 1.5rem);
+  --text-h4: clamp(1.0625rem, 0.15vw + 1.02rem, 1.1875rem);
+  --text-lead: clamp(1.125rem, 0.3vw + 1.05rem, 1.3125rem);
+  --text-body: 1.0625rem;
+  --text-small: 0.875rem;
+  --text-meta: 0.75rem;
 }
 
 @layer base {
@@ -96,8 +158,8 @@
 
   body {
     position: relative;
-    background-color: var(--surface-white);
-    color: var(--text-primary);
+    background-color: var(--paper-000);
+    color: var(--ink-950);
     font-family: var(--font-body);
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
@@ -119,56 +181,57 @@
     font-family: var(--font-heading);
     font-weight: 600;
     text-wrap: balance;
-    color: var(--text-primary);
+    color: var(--ink-950);
   }
 
-  /* Homepage hero sets its own explicit size; this governs every inner-page hero (h1) by default. */
+  /* Display face reserved for H1 only — Sora stays on everything smaller. */
   h1 {
-    font-size: clamp(2rem, 3.4vw, 2.75rem);
-    line-height: 1.15;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--text-h1);
+    line-height: 1.08;
     letter-spacing: -0.025em;
   }
 
-  /* Primary section heading, used sitewide via SectionHeading's default <h2>. */
   h2 {
-    font-size: clamp(1.625rem, 2.2vw, 2.125rem);
-    line-height: 1.2;
+    font-size: var(--text-h2);
+    line-height: 1.15;
     letter-spacing: -0.02em;
   }
 
   h3 {
-    font-size: clamp(1.125rem, 1.4vw, 1.375rem);
-    line-height: 1.3;
+    font-size: var(--text-h3);
+    line-height: 1.25;
     letter-spacing: -0.012em;
   }
 
   h4 {
-    font-size: clamp(1.0625rem, 1.15vw, 1.1875rem);
-    line-height: 1.35;
+    font-size: var(--text-h4);
+    line-height: 1.3;
     letter-spacing: -0.008em;
   }
 
   h5 {
-    font-size: clamp(0.9375rem, 1.05vw, 1.0625rem);
+    font-size: 0.9375rem;
     line-height: 1.4;
     letter-spacing: -0.005em;
   }
 
   p {
-    font-size: clamp(1rem, 1.1vw, 1.125rem);
+    font-size: var(--text-body);
     font-weight: 400;
-    line-height: 1.6;
+    line-height: 1.65;
     letter-spacing: -0.01em;
     max-width: 58ch;
   }
 
   ::selection {
-    background-color: var(--brand-primary);
-    color: var(--text-on-dark);
+    background-color: var(--accent);
+    color: var(--on-accent);
   }
 
   :focus-visible {
-    outline: 2px solid var(--brand-primary);
+    outline: 2px solid var(--accent);
     outline-offset: 3px;
     border-radius: 2px;
   }
@@ -200,14 +263,26 @@
     border: 1px solid var(--border-color);
   }
 
+  /* Mono, wide-tracked label — the eyebrow is the single biggest carrier of the
+     "technical precision" 30% since it appears on nearly every section sitewide. */
   .eyebrow {
-    font-family: var(--font-body);
-    font-size: 0.75rem;
-    font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: 0.14em;
+    font-family: var(--font-mono);
+    font-size: var(--text-meta);
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--brand-primary);
+    color: var(--accent);
+  }
+
+  /* Small mono caption for numbered/indexed entries — "FIG.01 — MEDIC MEDIA", "03 / 06" */
+  .meta-index {
+    font-family: var(--font-mono);
+    font-size: var(--text-meta);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-400);
   }
 
   .hairline {
@@ -252,6 +327,54 @@
     pointer-events: none;
   }
 
+  /* Light-mode counterpart to .dark-grid-bg — a near-invisible hairline grid behind the
+     hero/section headers. Replaces blurred-orb decoration with a more restrained,
+     "studio" device. */
+  .grid-overlay {
+    position: relative;
+  }
+  .grid-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    opacity: 0.05;
+    background-image:
+      linear-gradient(var(--line-strong) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-strong) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 20%, black, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 20%, black, transparent 75%);
+    pointer-events: none;
+  }
+
+  /* Print-register-mark corner brackets for large project imagery — restrained "studio"
+     framing device, pure CSS, no JS. */
+  .corner-marks {
+    position: relative;
+  }
+  .corner-marks::before,
+  .corner-marks::after {
+    content: '';
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    pointer-events: none;
+    opacity: 0.55;
+  }
+  .corner-marks::before {
+    top: -1px;
+    left: -1px;
+    border-top: 1.5px solid currentColor;
+    border-left: 1.5px solid currentColor;
+  }
+  .corner-marks::after {
+    bottom: -1px;
+    right: -1px;
+    border-bottom: 1.5px solid currentColor;
+    border-right: 1.5px solid currentColor;
+  }
+
   /* AIWorkflowVisual */
   .ai-node {
     background: var(--surface-white);
@@ -272,19 +395,9 @@
     border-color: var(--brand-primary);
   }
 
-  /* Homepage services list + hero badge float */
+  /* Homepage services list hover */
   .service-row:hover {
     background: var(--brand-lavender);
-  }
-  .hero-badge {
-    animation: hero-badge-float 6s ease-in-out infinite;
-  }
-  @keyframes hero-badge-float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .hero-badge { animation: none; }
   }
 
   /* Tools/Personal Projects preview + concept cards */

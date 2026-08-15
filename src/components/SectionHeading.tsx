@@ -5,6 +5,7 @@ interface SectionHeadingProps {
   align?: 'left' | 'center';
   as?: 'h1' | 'h2';
   dark?: boolean;
+  /** @deprecated no longer rendered — kept so pre-rebuild call sites keep compiling. */
   watermark?: string;
   /** Override the default clamp() size for long headlines. */
   titleClass?: string;
@@ -17,47 +18,38 @@ export default function SectionHeading({
   align = 'left',
   as: Tag = 'h2',
   dark = false,
-  watermark,
   titleClass = '',
 }: SectionHeadingProps) {
-  const alignClass = align === 'center' ? 'text-center items-center mx-auto' : 'text-left items-start';
-  const widthClass = Tag === 'h1' ? 'max-w-3xl' : 'max-w-2xl';
+  const isCenter = align === 'center';
+  const hairlineColor = dark ? 'rgba(247, 245, 242, 0.3)' : 'var(--line-strong)';
 
   return (
-    <div className={`reveal relative flex flex-col gap-3 ${widthClass} ${alignClass}`} data-reveal>
-      {watermark && (
-        <span
-          className={`pointer-events-none absolute -top-5 left-0 -z-0 select-none whitespace-nowrap font-serif text-[3.5rem] leading-none tracking-tight opacity-[0.07] sm:text-[5rem] lg:-top-8 lg:text-[6rem] ${
-            align === 'center' ? 'inset-x-0 text-center' : ''
-          }`}
-          style={{ color: dark ? 'var(--text-on-dark)' : 'var(--text-primary)' }}
-          aria-hidden="true"
-        >
-          {watermark}
-        </span>
-      )}
+    <div
+      className={`relative flex flex-col gap-5 ${
+        isCenter ? 'mx-auto max-w-2xl items-center text-center' : 'lg:grid lg:grid-cols-12 lg:items-baseline lg:gap-8'
+      }`}
+      data-reveal
+    >
       {eyebrow && (
-        <div className={`relative flex items-center gap-3 ${align === 'center' ? 'justify-center' : ''}`}>
-          <span className="h-px w-8" style={{ background: dark ? 'var(--brand-lavender)' : 'var(--brand-primary)' }} />
-          <span className="eyebrow" style={dark ? { color: 'var(--brand-lavender)' } : undefined}>
-            {eyebrow}
-          </span>
+        <div className={`flex items-center gap-3 ${isCenter ? 'justify-center' : 'lg:col-span-3'}`}>
+          <span className="h-px w-8 flex-shrink-0" style={{ background: hairlineColor }} />
+          <span className="eyebrow">{eyebrow}</span>
         </div>
       )}
-      <Tag
-        className={`relative text-balance break-words ${titleClass}`}
-        style={{ color: dark ? 'var(--text-on-dark)' : 'var(--text-primary)' }}
+      <div
+        className={`flex flex-col gap-3 ${eyebrow && !isCenter ? 'lg:col-span-9' : !isCenter ? 'lg:col-span-12' : ''} ${
+          Tag === 'h1' ? 'max-w-3xl' : 'max-w-2xl'
+        } ${isCenter ? 'mx-auto' : ''}`}
       >
-        {title}
-      </Tag>
-      {description && (
-        <p
-          className="relative mt-2 leading-relaxed"
-          style={{ color: dark ? 'var(--text-on-dark)' : 'var(--text-secondary)', opacity: dark ? 0.75 : 1 }}
-        >
-          {description}
-        </p>
-      )}
+        <Tag className={`relative text-balance break-words ${titleClass}`} style={{ color: dark ? 'var(--on-dark)' : 'var(--ink-950)' }}>
+          {title}
+        </Tag>
+        {description && (
+          <p className="relative leading-relaxed" style={{ color: dark ? 'var(--on-dark)' : 'var(--ink-700)', opacity: dark ? 0.75 : 1 }}>
+            {description}
+          </p>
+        )}
+      </div>
     </div>
   );
 }
