@@ -9,9 +9,9 @@ interface ToolGuideAccordionProps {
 
 export default function ToolGuideAccordion({ title = 'How it works', tips, children, defaultOpen = false }: ToolGuideAccordionProps) {
   return (
-    <details className="group rounded-2xl border" style={{ borderColor: 'var(--border-color)' }} open={defaultOpen}>
+    <details className="group rounded-[var(--radius-md)] border" style={{ borderColor: 'var(--border-color)' }} open={defaultOpen}>
       <summary
-        className="flex cursor-pointer list-none items-center justify-between gap-3 rounded-2xl px-5 py-4 text-sm font-bold"
+        className="flex cursor-pointer list-none items-center justify-between gap-3 rounded-[var(--radius-md)] px-5 py-4 text-sm font-bold"
         style={{ color: 'var(--text-primary)' }}
       >
         {title}

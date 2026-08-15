@@ -53,7 +53,7 @@ export default function ToolsDashboard() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search tools…"
-            className="w-full min-h-[44px] rounded-full border py-2 pl-9 pr-4 text-sm"
+            className="w-full min-h-[44px] rounded-[var(--radius-sm)] border py-2 pl-9 pr-4 text-sm"
             style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)', background: 'var(--surface-white)' }}
           />
         </div>
@@ -75,7 +75,7 @@ export default function ToolsDashboard() {
               type="button"
               onClick={() => setStatus(s)}
               aria-pressed={isActive}
-              className="min-h-[36px] rounded-full px-3.5 text-xs font-bold transition-colors"
+              className="min-h-[36px] rounded-[var(--radius-sm)] px-3.5 text-xs font-bold transition-colors"
               style={isActive ? { background: 'var(--brand-primary)', color: '#ffffff' } : { color: 'var(--text-secondary)', border: '1px solid var(--border-color)' }}
             >
               {s}

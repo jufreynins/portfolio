@@ -24,7 +24,7 @@ export default function RelatedTools({ currentId, limit = 3 }: RelatedToolsProps
           <a
             key={tool.id}
             href={tool.href}
-            className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition-colors hover:border-[var(--tool-accent)]"
+            className="inline-flex items-center gap-2 rounded-[var(--radius-sm)] border px-4 py-2 text-sm font-semibold transition-colors hover:border-[var(--tool-accent)]"
             style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)', background: 'var(--surface-white)' }}
           >
             {tool.title}

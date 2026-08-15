@@ -9,7 +9,7 @@ interface ToolMiniPreviewProps {
 /** Small preview keyed off the tool's card variant (not a bespoke preview per tool) — keeps 17+ tools maintainable. */
 export default function ToolMiniPreview({ variant, accent, accentSoft }: ToolMiniPreviewProps) {
   return (
-    <div className="flex h-20 items-center justify-center overflow-hidden rounded-xl" style={{ background: accentSoft }} aria-hidden="true">
+    <div className="flex h-20 items-center justify-center overflow-hidden rounded-[var(--radius-sm)]" style={{ background: accentSoft }} aria-hidden="true">
       {variant === 'diagnostic' && (
         <div className="flex items-center gap-2 px-4 font-mono text-[10px] font-bold" style={{ color: accent }}>
           {['A', 'MX', 'TXT', 'SPF'].map((label, i) => (

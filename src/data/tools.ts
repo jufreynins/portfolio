@@ -244,6 +244,10 @@ export const TOOLS: Tool[] = [
   },
 ];
 
+export function getToolById(id: string): Tool | undefined {
+  return TOOLS.find((tool) => tool.id === id);
+}
+
 export function getToolByHrefPrefix(pathname: string): Tool | undefined {
   return TOOLS.find((tool) => pathname === tool.href || pathname.startsWith(`${tool.href}/`));
 }
