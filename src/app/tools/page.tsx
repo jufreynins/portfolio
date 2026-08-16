@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Container from '@/components/Container';
 import Button from '@/components/Button';
-import ToolsDashboard from '@/components/tools/ToolsDashboard';
+import ToolCategoryGrid from '@/components/tools/ToolCategoryGrid';
 import ToolPrivacyIndicator from '@/components/tools/ToolPrivacyIndicator';
 import { siteConfig } from '@/config/site';
 import { buildMetadata } from '@/lib/seo';
@@ -29,7 +29,7 @@ export default function ToolsPage() {
 
       <section className="py-10 sm:py-12" style={{ background: 'var(--paper-000)' }}>
         <Container>
-          <ToolsDashboard />
+          <ToolCategoryGrid />
         </Container>
       </section>
 
