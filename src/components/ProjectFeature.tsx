@@ -31,23 +31,23 @@ const Arrow = () => (
 function ProjectText({ project, index }: { project: Project; index: number }) {
   const indexLabel = String(index).padStart(2, '0');
   return (
-    <div className="flex flex-col gap-5">
-      <span className="font-mono text-4xl" style={{ color: 'var(--line-strong)' }}>
+    <div className="flex flex-col gap-3">
+      <span className="font-mono text-xl" style={{ color: 'var(--line-strong)' }}>
         {indexLabel}
       </span>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-1.5">
         <span className="eyebrow">{project.category}</span>
-        <h3 className="text-2xl transition-colors duration-300 group-hover:text-[var(--accent)]" style={{ color: 'var(--ink-950)' }}>
+        <h3 className="text-lg transition-colors duration-300 group-hover:text-[var(--accent)]" style={{ color: 'var(--ink-950)' }}>
           {project.name}
         </h3>
       </div>
-      <p className="max-w-md text-base leading-relaxed" style={{ color: 'var(--ink-700)' }}>
+      <p className="max-w-md text-sm leading-relaxed" style={{ color: 'var(--ink-700)' }}>
         {project.results}
       </p>
       <p className="meta-index" style={{ color: 'var(--ink-400)' }}>
         {project.technologies.join(' · ')}
       </p>
-      <span className="mt-1 inline-flex w-fit items-center gap-1.5 text-sm font-bold" style={{ color: 'var(--ink-950)' }}>
+      <span className="mt-0.5 inline-flex w-fit items-center gap-1.5 text-sm font-bold" style={{ color: 'var(--ink-950)' }}>
         View Case Study
         <Arrow />
       </span>
@@ -67,11 +67,11 @@ export default function ProjectFeature({ project, index, variant = 'image-left',
           width={1200}
           height={750}
           priority={priority}
-          className="aspect-[16/10] w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+          className="aspect-[16/9] w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.02]"
           style={{ background: 'var(--paper-050)' }}
         />
       </BrowserFrame>
-      <p className="meta-index mt-3">
+      <p className="meta-index mt-2">
         FIG.{indexLabel} — {project.name.toUpperCase()}
       </p>
     </div>
@@ -79,7 +79,7 @@ export default function ProjectFeature({ project, index, variant = 'image-left',
 
   if (variant === 'full-bleed') {
     return (
-      <a href={`/work/${project.slug}`} className="group flex flex-col gap-8" data-reveal data-reveal-type="fade-up">
+      <a href={`/work/${project.slug}`} className="group mx-auto flex max-w-3xl flex-col gap-5" data-reveal data-reveal-type="fade-up">
         {image}
         <ProjectText project={project} index={index} />
       </a>
@@ -89,9 +89,9 @@ export default function ProjectFeature({ project, index, variant = 'image-left',
   const reversed = variant === 'image-right';
 
   return (
-    <a href={`/work/${project.slug}`} className="group grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-14" data-reveal data-reveal-type="fade-up">
-      <div className={`lg:col-span-7 ${reversed ? 'lg:order-2' : ''}`}>{image}</div>
-      <div className={`lg:col-span-5 ${reversed ? 'lg:order-1' : ''}`}>
+    <a href={`/work/${project.slug}`} className="group grid grid-cols-1 items-center gap-6 lg:grid-cols-12 lg:gap-10" data-reveal data-reveal-type="fade-up">
+      <div className={`lg:col-span-6 ${reversed ? 'lg:order-2' : ''}`}>{image}</div>
+      <div className={`lg:col-span-6 ${reversed ? 'lg:order-1' : ''}`}>
         <ProjectText project={project} index={index} />
       </div>
     </a>

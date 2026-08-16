@@ -44,7 +44,7 @@ export default function WorkList({ projects }: { projects: Project[] }) {
           No projects match this filter yet.
         </p>
       ) : (
-        <div className="flex flex-col gap-20 sm:gap-24">
+        <div className="flex flex-col gap-14 sm:gap-16">
           {filtered.map((project, i) => (
             <ProjectFeature key={project.slug} project={project} index={i + 1} variant={i % 2 === 1 ? 'image-right' : 'image-left'} priority={i < 2} />
           ))}

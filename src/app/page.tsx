@@ -148,7 +148,7 @@ export default function HomePage() {
           <SectionHeading eyebrow="Selected Work" title="Websites built for real businesses." description="Recent WordPress projects — the client, the goal, and what I delivered." />
         </Container>
 
-        <Bleed className="mt-14 flex flex-col gap-20 sm:mt-16 sm:gap-24">
+        <Bleed className="mt-10 flex flex-col gap-12 sm:mt-12 sm:gap-16">
           {featuredProjects.map((project, i) => (
             <ProjectFeature
               key={project.slug}
