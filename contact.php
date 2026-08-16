@@ -4,6 +4,14 @@ declare(strict_types=1);
 // Where project inquiries get sent. Update this if the recipient email ever changes.
 $recipientEmail = 'jufreyninsbayog@gmail.com';
 
+// reCAPTCHA v3 secret key — gitignored, lives only on the server. See
+// contact-config.example.php for the expected format if this file is missing.
+$recaptchaSecretKey = null;
+$recaptchaConfigPath = __DIR__ . '/contact-config.php';
+if (is_file($recaptchaConfigPath)) {
+    require $recaptchaConfigPath;
+}
+
 header('Content-Type: application/json; charset=utf-8');
 
 function respond(int $status, array $payload): never {
@@ -30,6 +38,7 @@ $name = field('name');
 $email = field('email');
 $phone = field('phone');
 $message = field('message');
+$recaptchaToken = field('recaptcha_token');
 
 $errors = [];
 if ($name === '') {
@@ -44,6 +53,43 @@ if ($message === '') {
 
 if ($errors) {
     respond(400, ['ok' => false, 'error' => implode(' ', $errors)]);
+}
+
+/** @return array{success: bool, score: float} */
+function verifyRecaptcha(string $secret, string $token, string $remoteIp): array {
+    if ($token === '') {
+        return ['success' => false, 'score' => 0.0];
+    }
+
+    $context = stream_context_create([
+        'http' => [
+            'method' => 'POST',
+            'header' => "Content-Type: application/x-www-form-urlencoded\r\n",
+            'content' => http_build_query(['secret' => $secret, 'response' => $token, 'remoteip' => $remoteIp]),
+            'timeout' => 5,
+            'ignore_errors' => true,
+        ],
+    ]);
+
+    $result = @file_get_contents('https://www.google.com/recaptcha/api/siteverify', false, $context);
+    if ($result === false) {
+        return ['success' => false, 'score' => 0.0];
+    }
+
+    $decoded = json_decode($result, true);
+    return [
+        'success' => (bool) ($decoded['success'] ?? false),
+        'score' => (float) ($decoded['score'] ?? 0.0),
+    ];
+}
+
+// Skip the check only if no secret key is configured yet (local dev without
+// contact-config.php) — fail closed on the live server once it's uploaded.
+if ($recaptchaSecretKey !== null) {
+    $recaptcha = verifyRecaptcha($recaptchaSecretKey, $recaptchaToken, $_SERVER['REMOTE_ADDR'] ?? '');
+    if (!$recaptcha['success'] || $recaptcha['score'] < 0.5) {
+        respond(400, ['ok' => false, 'error' => 'Spam check failed. Please try again.']);
+    }
 }
 
 function clean(string $value): string {
