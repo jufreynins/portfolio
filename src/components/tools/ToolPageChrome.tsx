@@ -88,7 +88,7 @@ export default function ToolPageChrome({ tool, header, subtitle, children, guide
               </p>
             </div>
             <Button href="/contact" variant="primary" tone="dark">
-              {cta.buttonLabel ?? 'Start a Project'}
+              {cta.buttonLabel ?? 'Contact Me'}
             </Button>
           </Container>
         </section>
@@ -106,7 +106,7 @@ export default function ToolPageChrome({ tool, header, subtitle, children, guide
                 </p>
               </div>
               <Button href="/contact" variant="primary">
-                {cta.buttonLabel ?? 'Start a Project'}
+                {cta.buttonLabel ?? 'Contact Me'}
               </Button>
             </div>
           </Container>

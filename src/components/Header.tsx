@@ -99,7 +99,7 @@ export default function Header() {
       />
 
       <Container className="flex items-center justify-between py-4 transition-[padding] duration-300" data-header-inner>
-        <a href="/" className="site-logo-link flex items-center gap-2.5 text-xl font-serif tracking-tight" style={{ color: 'var(--ink-950)' }} aria-label={`${siteConfig.name} — Home`}>
+        <a href="/" className="site-logo-link flex items-center gap-2.5 text-xl font-heading tracking-tight" style={{ color: 'var(--ink-950)' }} aria-label={`${siteConfig.name} — Home`}>
           <span
             className="flex h-9 w-9 items-center justify-center rounded-[var(--radius-sm)] border font-mono text-xs font-medium"
             style={{ background: 'var(--accent-soft)', color: 'var(--accent)', borderColor: 'var(--line)' }}
@@ -126,11 +126,8 @@ export default function Header() {
         </nav>
 
         <div className="hidden 2xl:flex items-center gap-5">
-          <Button href={siteConfig.cvPath} variant="ghost" target="_blank" rel="noopener noreferrer">
+          <Button href={siteConfig.cvPath} variant="primary" target="_blank" rel="noopener noreferrer">
             Download CV
-          </Button>
-          <Button href="/contact" variant="primary">
-            Start a Project
           </Button>
         </div>
 
@@ -173,11 +170,8 @@ export default function Header() {
           ))}
         </nav>
         <div className="mt-4 flex flex-col gap-3 border-t pt-4" style={{ borderColor: 'var(--line)' }}>
-          <Button href={siteConfig.cvPath} variant="secondary" className="w-full" target="_blank" rel="noopener noreferrer">
+          <Button href={siteConfig.cvPath} variant="primary" className="w-full" target="_blank" rel="noopener noreferrer">
             Download CV
-          </Button>
-          <Button href="/contact" variant="primary" className="w-full">
-            Start a Project
           </Button>
         </div>
       </div>

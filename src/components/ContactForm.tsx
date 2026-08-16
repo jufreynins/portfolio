@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { siteConfig } from '@/config/site';
 
 interface ContactFormProps {
   dark?: boolean;
@@ -86,10 +87,24 @@ export default function ContactForm({ dark = false }: ContactFormProps) {
 
       try {
         const formData = new FormData(form);
+        const body = new URLSearchParams(formData as unknown as Record<string, string>).toString();
+
+        // Best-effort log to the Google Sheet — fire-and-forget. `no-cors` makes the
+        // response opaque (Apps Script doesn't send CORS headers), so we can't tell if it
+        // succeeded; that's fine, the email below is the source of truth for delivery.
+        if (siteConfig.sheetsWebhookUrl) {
+          fetch(siteConfig.sheetsWebhookUrl, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body,
+          }).catch(() => {});
+        }
+
         const response = await fetch('/contact.php', {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(formData as unknown as Record<string, string>).toString(),
+          body,
         });
 
         if (!response.ok) {
@@ -97,7 +112,7 @@ export default function ContactForm({ dark = false }: ContactFormProps) {
         }
 
         if (status) {
-          status.textContent = "Thank you—your project details have been received. I'll review your inquiry and respond within one business day.";
+          status.textContent = "Thank you — your message has been received. I'll respond within one business day.";
           status.style.color = formSuccessColor;
         }
         form.reset();
@@ -156,102 +171,25 @@ export default function ContactForm({ dark = false }: ContactFormProps) {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <div className="flex flex-col gap-2">
-          <label htmlFor="business" className={labelClass}>
-            Company or Business
-          </label>
-          <input id="business" name="business" type="text" autoComplete="organization" className={fieldClass} placeholder="Your company (optional)" />
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <label htmlFor="current-website" className={labelClass}>
-            Current Website
-          </label>
-          <input id="current-website" name="current_website" type="text" autoComplete="url" className={fieldClass} placeholder="https://yourwebsite.com (if any)" />
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <div className="flex flex-col gap-2">
-          <label htmlFor="current-provider" className={labelClass}>
-            Current Provider or Platform
-          </label>
-          <select id="current-provider" name="current_provider" className={fieldClass}>
-            <option value="Not sure">Not sure</option>
-            <option value="Cloudways">Cloudways</option>
-            <option value="Hostinger">Hostinger</option>
-            <option value="GoDaddy">GoDaddy</option>
-            <option value="cPanel or WHM">cPanel or WHM</option>
-            <option value="WordPress">WordPress</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <label htmlFor="project-type" className={labelClass}>
-            Project Type
-          </label>
-          <select id="project-type" name="project_type" className={fieldClass}>
-            <option value="New WordPress Website">New WordPress Website</option>
-            <option value="Website Redesign">Website Redesign</option>
-            <option value="Elementor Development">Elementor Development</option>
-            <option value="Landing Page">Landing Page</option>
-            <option value="Dynamic Content / ACF / JetEngine">Dynamic Content / ACF / JetEngine</option>
-            <option value="Custom WordPress Functionality">Custom WordPress Functionality</option>
-            <option value="Web System / Admin Dashboard">Web System / Admin Dashboard</option>
-            <option value="Web Tool or Calculator">Web Tool or Calculator</option>
-            <option value="Hosting or Website Migration">Hosting or Website Migration</option>
-            <option value="Domain and DNS Configuration">Domain and DNS Configuration</option>
-            <option value="Business Email or Form Delivery">Business Email or Form Delivery</option>
-            <option value="SSL or Website Connection Issue">SSL or Website Connection Issue</option>
-            <option value="Maintenance or Support">Maintenance or Support</option>
-            <option value="Agency Development Support">Agency Development Support</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-
-      </div>
-
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <div className="flex flex-col gap-2">
-          <label htmlFor="timeline" className={labelClass}>
-            Target Timeline
-          </label>
-          <select id="timeline" name="timeline" className={fieldClass}>
-            <option value="As soon as possible">As soon as possible</option>
-            <option value="Within 1 month">Within 1 month</option>
-            <option value="1-3 months">1–3 months</option>
-            <option value="Flexible / not sure yet">Flexible / not sure yet</option>
-          </select>
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <label htmlFor="budget" className={labelClass}>
-            Estimated Budget
-          </label>
-          <select id="budget" name="budget" className={fieldClass}>
-            <option value="Under $500">Under $500</option>
-            <option value="$500 - $1,500">$500 – $1,500</option>
-            <option value="$1,500 - $5,000">$1,500 – $5,000</option>
-            <option value="$5,000+">$5,000+</option>
-            <option value="Not sure yet">Not sure yet</option>
-          </select>
-        </div>
+      <div className="flex flex-col gap-2">
+        <label htmlFor="phone" className={labelClass}>
+          Phone Number
+        </label>
+        <input id="phone" name="phone" type="tel" autoComplete="tel" className={fieldClass} placeholder="Optional" />
       </div>
 
       <div className="flex flex-col gap-2">
         <label htmlFor="message" className={labelClass}>
-          Project Description <span aria-hidden="true">*</span>
+          Message <span aria-hidden="true">*</span>
         </label>
         <textarea
           id="message"
           name="message"
-          rows={4}
+          rows={5}
           required
           aria-describedby="message-error"
           className={`resize-none ${fieldClass}`}
-          placeholder="Briefly describe what you need, the problem you are trying to solve, important features, and any existing website or system involved."
+          placeholder="Tell me a bit about the role or project, and how I can help."
         />
         <p id="message-error" className="hidden text-xs" style={{ color: errorColor }} data-error-for="message" role="alert">
           Please enter a project description.
@@ -260,13 +198,13 @@ export default function ContactForm({ dark = false }: ContactFormProps) {
 
       <div className="flex flex-col items-start gap-3 pt-2 sm:flex-row sm:items-center sm:gap-4">
         <button type="submit" className={`${submitClass} w-full sm:w-auto`} data-submit-btn>
-          Send Project Details
+          Send Message
         </button>
         <p className="text-sm" role="status" aria-live="polite" data-form-status style={dark ? { color: 'rgba(255,255,255,0.6)' } : undefined} />
       </div>
 
       <p className="text-xs" style={dark ? { color: 'rgba(255,255,255,0.5)' } : { color: 'var(--text-secondary)' }}>
-        Your information will only be used to review and respond to your project inquiry.
+        Your information will only be used to review and respond to your message.
       </p>
     </form>
   );

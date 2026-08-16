@@ -26,6 +26,8 @@ export interface System {
     technicalChallenges?: string;
     outcome?: string;
   };
+  /** Homepage "Beyond WordPress" picks — real screenshots only. */
+  featured?: boolean;
 }
 
 export const systems: System[] = [
@@ -41,6 +43,7 @@ export const systems: System[] = [
     routeLabel: 'revisiondesk.jufreyninobayogportfolio.com',
     href: 'https://revisiondesk.jufreyninobayogportfolio.com/',
     screenshot: revisiondeskScreenshot,
+    featured: true,
     caseStudy: {
       scope: 'A role-based revision tracker: clients submit requests, PMs assign and prioritize them, developers update status, and everyone can see history in one place instead of scattered email threads.',
       implementation: 'Built on Laravel with an Inertia.js + React + TypeScript frontend and a MySQL data model for tasks, roles, and activity logs. Role-based access controls what each of Admin/PM/Developer/Client can see and do.',
@@ -59,6 +62,7 @@ export const systems: System[] = [
     routeLabel: 'inventory-system.jufreyninobayogportfolio.com',
     href: 'https://inventory-system.jufreyninobayogportfolio.com/',
     screenshot: stockflowScreenshot,
+    featured: true,
     caseStudy: {
       scope: 'A structured inventory system: a searchable product catalog, stock counts that update with orders, low-stock alerts, and basic reporting — replacing a spreadsheet-based process.',
       implementation: 'Built on Laravel with a React + TypeScript frontend and a MySQL schema for products, stock movements, and orders.',

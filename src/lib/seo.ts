@@ -39,15 +39,11 @@ export function buildMetadata({ title, description, canonical, noindex = false }
 
 export const personSchema = {
   '@context': 'https://schema.org',
-  '@type': 'ProfessionalService',
+  '@type': 'Person',
   name: siteConfig.name,
   description: siteConfig.description,
   url: siteConfig.url,
   email: siteConfig.email,
   telephone: siteConfig.phone,
-  founder: {
-    '@type': 'Person',
-    name: siteConfig.name,
-    jobTitle: siteConfig.title,
-  },
+  jobTitle: siteConfig.title,
 };

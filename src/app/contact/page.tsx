@@ -7,25 +7,25 @@ import { siteConfig } from '@/config/site';
 import { buildMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = buildMetadata({
-  title: `Start a Project | ${siteConfig.name}`,
-  description: 'Discuss a new WordPress website, web system, browser tool, or technical support need — hosting, migrations, domain and DNS, or business email delivery.',
+  title: `Contact — ${siteConfig.name}`,
+  description: 'Get in touch about a remote web development role, agency collaboration, or a technical web project.',
   canonical: `${siteConfig.url}/contact`,
 });
 
-const trustIndicators = ['Replies within one business day', 'Available for project-based and agency support', 'Remote collaboration', 'Clear scope and next-step recommendations'];
+const trustIndicators = ['Replies within one business day', 'Open to remote roles and contract work', 'Remote collaboration', 'Clear, honest next steps'];
 
 const nextSteps = [
   {
-    title: 'Send Your Requirements',
-    description: 'Fill out the project form with what you need, your goals, and any existing website or system involved.',
+    title: 'Send a Message',
+    description: 'Fill out the form with a bit about the role or project, and how I can help.',
   },
   {
-    title: 'Project Review',
-    description: 'I review the details and assess scope, feasibility, and the right approach for your situation.',
+    title: 'Review',
+    description: 'I review the details and get back to you with any follow-up questions.',
   },
   {
-    title: 'Next-Step Recommendation',
-    description: "You'll get a clear, honest recommendation for the most practical next step — no pressure, no obligation.",
+    title: 'Next Step',
+    description: "You'll get a clear response — whether that's a call, a resume request, or a project scope.",
   },
 ];
 
@@ -38,8 +38,8 @@ export default function ContactPage() {
             <SectionHeading
               as="h1"
               eyebrow="Contact"
-              title="Need a Website, Web System, or Technical Web Support?"
-              description="Tell me whether you need a new website, a web system, a browser tool, or technical support — hosting, migrations, domain and DNS, or business email delivery."
+              title="Let's connect."
+              description="I'm currently open to remote web development opportunities, agency collaborations, and selected technical projects."
               titleClass="max-w-none"
               dark
             />
@@ -87,7 +87,7 @@ export default function ContactPage() {
       {/* What Happens Next */}
       <section className="py-14 sm:py-16" style={{ background: 'var(--paper-050)' }}>
         <Container className="flex flex-col gap-8">
-          <SectionHeading eyebrow="What Happens Next" title="A simple, no-pressure process" description="Here's what happens after you send your project details." />
+          <SectionHeading eyebrow="What Happens Next" title="A simple, no-pressure process" description="Here's what happens after you send a message." />
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-3" data-reveal data-reveal-type="stagger">
             {nextSteps.map((step, i) => (
               <div key={step.title} className="flex flex-col gap-3">

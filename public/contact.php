@@ -28,12 +28,7 @@ function field(string $key): string {
 
 $name = field('name');
 $email = field('email');
-$business = field('business');
-$currentWebsite = field('current_website');
-$currentProvider = field('current_provider');
-$projectType = field('project_type');
-$timeline = field('timeline');
-$budget = field('budget');
+$phone = field('phone');
 $message = field('message');
 
 $errors = [];
@@ -44,7 +39,7 @@ if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $errors[] = 'A valid email address is required.';
 }
 if ($message === '') {
-    $errors[] = 'Project description is required.';
+    $errors[] = 'Message is required.';
 }
 
 if ($errors) {
@@ -56,18 +51,13 @@ function clean(string $value): string {
     return str_replace(["\r", "\n"], ' ', $value);
 }
 
-$subject = 'New project inquiry from ' . clean($name);
+$subject = 'New contact form message from ' . clean($name);
 
-$body = "You have a new project inquiry from your website contact form.\n\n"
+$body = "You have a new message from your website contact form.\n\n"
     . "Name: {$name}\n"
     . "Email: {$email}\n"
-    . 'Company/Business: ' . ($business !== '' ? $business : '—') . "\n"
-    . 'Current Website: ' . ($currentWebsite !== '' ? $currentWebsite : '—') . "\n"
-    . 'Current Provider/Platform: ' . ($currentProvider !== '' ? $currentProvider : '—') . "\n"
-    . 'Project Type: ' . ($projectType !== '' ? $projectType : '—') . "\n"
-    . 'Target Timeline: ' . ($timeline !== '' ? $timeline : '—') . "\n"
-    . 'Estimated Budget: ' . ($budget !== '' ? $budget : '—') . "\n\n"
-    . "Project Description:\n{$message}\n";
+    . 'Phone: ' . ($phone !== '' ? $phone : '—') . "\n\n"
+    . "Message:\n{$message}\n";
 
 $host = clean($_SERVER['HTTP_HOST'] ?? 'localhost');
 $fromAddress = 'noreply@' . preg_replace('/^www\./', '', $host);

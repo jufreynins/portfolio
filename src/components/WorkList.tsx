@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import type { Project } from '@/data/projects';
-import ProjectSpread from './ProjectSpread';
+import ProjectFeature from './ProjectFeature';
 
 const FILTERS = ['All', 'Dynamic WordPress', 'E-Commerce'] as const;
 type Filter = (typeof FILTERS)[number];
@@ -14,7 +14,7 @@ function projectTags(project: Project): Filter[] {
   return tags;
 }
 
-export default function PortfolioFilterGrid({ projects }: { projects: Project[] }) {
+export default function WorkList({ projects }: { projects: Project[] }) {
   const [active, setActive] = useState<Filter>('All');
 
   const filtered = useMemo(() => {
@@ -46,7 +46,7 @@ export default function PortfolioFilterGrid({ projects }: { projects: Project[] 
       ) : (
         <div className="flex flex-col gap-20 sm:gap-24">
           {filtered.map((project, i) => (
-            <ProjectSpread key={project.slug} project={project} index={i + 1} reversed={i % 2 === 1} priority={i < 2} />
+            <ProjectFeature key={project.slug} project={project} index={i + 1} variant={i % 2 === 1 ? 'image-right' : 'image-left'} priority={i < 2} />
           ))}
         </div>
       )}

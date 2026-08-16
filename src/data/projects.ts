@@ -22,6 +22,8 @@ export interface Project {
   technologies: string[];
   url: string;
   image: StaticImageData;
+  /** Homepage "Selected Work" picks — curated for breadth, not just insertion order. */
+  featured?: boolean;
 }
 
 export const projects: Project[] = [
@@ -42,6 +44,7 @@ export const projects: Project[] = [
     technologies: ['WordPress', 'Elementor Pro', 'JetEngine'],
     url: 'https://www.medic-media.com/',
     image: medicMedia,
+    featured: true,
   },
   {
     slug: 'neighborhood-plumbing-drain',
@@ -78,6 +81,7 @@ export const projects: Project[] = [
     technologies: ['WordPress', 'Elementor Pro', 'Custom Post Types'],
     url: 'https://martincountyhumane.org/',
     image: martinCountyHumane,
+    featured: true,
   },
   {
     slug: 'the-pedal-shack',
@@ -96,6 +100,7 @@ export const projects: Project[] = [
     technologies: ['WordPress', 'Elementor Pro', 'WooCommerce'],
     url: 'https://thepedalshackodon.com/',
     image: pedalShack,
+    featured: true,
   },
   {
     slug: 'daviess-county-rural-water',
@@ -132,6 +137,7 @@ export const projects: Project[] = [
     technologies: ['WordPress', 'Elementor Pro'],
     url: 'https://heritageluxcabinetry.com/',
     image: heritageLuxCabinetry,
+    featured: true,
   },
 ];
 

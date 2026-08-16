@@ -44,15 +44,15 @@ export default function ToolsPage() {
           <div className="flex flex-col gap-1">
             <span className="eyebrow">Looking for WordPress work instead?</span>
             <p className="max-w-xl text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-              This page is a look at what I build outside of client projects. For professional WordPress websites, see Services and Portfolio.
+              This page is a look at what I build outside of client projects. For professional WordPress websites, see Capabilities and Selected Work.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
             <Button href="/services" variant="secondary">
-              Services
+              Capabilities
             </Button>
-            <Button href="/portfolio" variant="primary">
-              Portfolio
+            <Button href="/work" variant="primary">
+              Selected Work
             </Button>
           </div>
         </Container>

@@ -4,8 +4,8 @@ import Image from 'next/image';
 import Container from '@/components/Container';
 import Bleed from '@/components/Bleed';
 import Button from '@/components/Button';
-import SectionHeading from '@/components/SectionHeading';
-import SystemPreview from '@/components/SystemPreview';
+import ConceptPlaceholder from '@/components/ConceptPlaceholder';
+import ContactCTA from '@/components/ContactCTA';
 import { siteConfig } from '@/config/site';
 import { systems, getSystemBySlug, systemStatusStyle } from '@/data/systems';
 import { buildMetadata } from '@/lib/seo';
@@ -22,9 +22,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!system) return buildMetadata({ noindex: true });
 
   return buildMetadata({
-    title: `${system.name} — Web System — ${siteConfig.name}`,
+    title: `${system.name} — Personal System — ${siteConfig.name}`,
     description: system.problem,
-    canonical: `${siteConfig.url}/personal-projects/${system.slug}`,
+    canonical: `${siteConfig.url}/systems/${system.slug}`,
   });
 }
 
@@ -43,21 +43,22 @@ export default async function SystemCaseStudyPage({ params }: { params: Promise<
   const index = systems.findIndex((s) => s.slug === system.slug);
   const related = systems[(index + 1) % systems.length];
   const status = systemStatusStyle[system.status];
+  const label = system.status === 'Concept' ? 'SYSTEM CONCEPT' : 'PERSONAL SYSTEM';
 
   return (
     <>
       <section className="pt-28 pb-10 sm:pt-32 sm:pb-12" style={{ background: 'var(--paper-000)' }}>
         <Container className="flex flex-col gap-5">
-          <a href="/personal-projects" className="inline-flex w-fit items-center gap-1.5 text-sm font-medium transition-colors hover:text-[var(--accent)]" style={{ color: 'var(--ink-700)' }}>
+          <a href="/systems" className="inline-flex w-fit items-center gap-1.5 text-sm font-medium transition-colors hover:text-[var(--accent)]" style={{ color: 'var(--ink-700)' }}>
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <line x1="17" y1="7" x2="7" y2="17" />
               <polyline points="17 17 7 17 7 7" />
             </svg>
-            Back to Personal Projects
+            Back to Systems
           </a>
 
           <p className="meta-index">
-            {String(index + 1).padStart(2, '0')} / {String(systems.length).padStart(2, '0')} — {system.category.toUpperCase()}
+            {label} / {String(index + 1).padStart(2, '0')} — {system.category.toUpperCase()}
           </p>
 
           <div className="flex flex-wrap items-center gap-4">
@@ -78,9 +79,6 @@ export default async function SystemCaseStudyPage({ params }: { params: Promise<
                 Visit Live Demo
               </Button>
             )}
-            <Button href="/contact" variant={system.href ? 'ghost' : 'primary'}>
-              Request a Similar System
-            </Button>
           </div>
         </Container>
       </section>
@@ -91,7 +89,7 @@ export default async function SystemCaseStudyPage({ params }: { params: Promise<
             <div className="corner-marks overflow-hidden rounded-[var(--radius-md)]" style={{ color: 'var(--ink-950)' }}>
               <Image
                 src={system.screenshot}
-                alt={`${system.name} dashboard screenshot`}
+                alt={`${system.name} screenshot`}
                 width={1920}
                 height={1080}
                 priority
@@ -103,7 +101,7 @@ export default async function SystemCaseStudyPage({ params }: { params: Promise<
         ) : (
           <Container>
             <div className="mx-auto max-w-2xl">
-              <SystemPreview routeLabel={system.routeLabel} activeNav={index % 4} />
+              <ConceptPlaceholder routeLabel={system.routeLabel} isConcept={system.status === 'Concept'} />
             </div>
           </Container>
         )}
@@ -201,32 +199,20 @@ export default async function SystemCaseStudyPage({ params }: { params: Promise<
         <Container className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-col gap-1">
             <span className="eyebrow">Related System</span>
-            <a href={`/personal-projects/${related.slug}`} className="text-xl transition-colors hover:text-[var(--accent)]" style={{ color: 'var(--ink-950)' }}>
+            <a href={`/systems/${related.slug}`} className="text-xl transition-colors hover:text-[var(--accent)]" style={{ color: 'var(--ink-950)' }}>
               {related.name}
             </a>
             <span className="text-sm" style={{ color: 'var(--ink-700)' }}>
               {related.category}
             </span>
           </div>
-          <Button href={`/personal-projects/${related.slug}`} variant="secondary">
+          <Button href={`/systems/${related.slug}`} variant="secondary">
             View System
           </Button>
         </Container>
       </section>
 
-      <section className="dark-grid-bg py-16 sm:py-20" style={{ background: 'var(--ink-canvas)' }}>
-        <Container className="flex flex-col items-start gap-6">
-          <SectionHeading
-            eyebrow="Let's build something"
-            title="Need a system like this one?"
-            description="Tell me about your workflow and I'll recommend a practical next step within one business day."
-            dark
-          />
-          <Button href="/contact" variant="primary" size="large" tone="dark">
-            Start a Project
-          </Button>
-        </Container>
-      </section>
+      <ContactCTA title="Need a system like this one?" description="Tell me about your workflow and I'll recommend a practical next step." />
     </>
   );
 }

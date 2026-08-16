@@ -7,13 +7,12 @@
 */
 
 @theme {
-  /* Typography */
-  --font-display: 'Fraunces', ui-serif, Georgia, serif;
-  --font-heading: 'Sora', ui-sans-serif, system-ui, sans-serif;
-  --font-body: 'DM Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  /* Typography — one confident sans carries the identity (display + heading); mono is
+     reserved for technical micro-labels only (see rule above); no serif display face. */
+  --font-heading: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-dm-sans), ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-sans: var(--font-body);
-  --font-serif: var(--font-display);
-  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, 'SF Mono', monospace;
 
   /* Neutral palette — carries the "premium editorial" weight. Color is not the point. */
   --ink-950: #15121c;
@@ -184,10 +183,7 @@
     color: var(--ink-950);
   }
 
-  /* Display face reserved for H1 only — Sora stays on everything smaller. */
   h1 {
-    font-family: var(--font-display);
-    font-weight: 600;
     font-size: var(--text-h1);
     line-height: 1.08;
     letter-spacing: -0.025em;
@@ -373,43 +369,6 @@
     right: -1px;
     border-bottom: 1.5px solid currentColor;
     border-right: 1.5px solid currentColor;
-  }
-
-  /* AIWorkflowVisual */
-  .ai-node {
-    background: var(--surface-white);
-    border: 2px dashed var(--border-color);
-    color: var(--text-secondary);
-  }
-  [data-human='true'] .ai-node {
-    border-style: solid;
-  }
-  .ai-step.is-active .ai-node {
-    border-color: var(--brand-primary);
-    color: var(--brand-primary);
-    background: var(--brand-lavender);
-  }
-  .ai-step.is-active[data-human='true'] .ai-node {
-    background: var(--brand-primary);
-    color: var(--text-on-dark);
-    border-color: var(--brand-primary);
-  }
-
-  /* Homepage services list hover */
-  .service-row:hover {
-    background: var(--brand-lavender);
-  }
-
-  /* Tools/Personal Projects preview + concept cards */
-  .lab-card,
-  .concept-card {
-    transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
-  }
-  .lab-card:hover,
-  .concept-card:hover {
-    box-shadow: var(--shadow-md);
-    border-color: var(--border-strong);
-    transform: translateY(-2px);
   }
 
   /* Gradient generator live-preview backdrop, shown behind semi-transparent colors */

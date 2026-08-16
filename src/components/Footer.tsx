@@ -8,7 +8,7 @@ export default function Footer() {
     <footer className="border-t py-12 sm:py-14" style={{ borderColor: 'var(--line)' }}>
       <Container className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
         <div className="flex flex-col gap-3">
-          <span className="font-serif text-xl" style={{ color: 'var(--ink-950)' }}>
+          <span className="font-heading text-xl" style={{ color: 'var(--ink-950)' }}>
             {siteConfig.name}
           </span>
           <span className="text-sm font-medium" style={{ color: 'var(--ink-700)' }}>
@@ -19,7 +19,7 @@ export default function Footer() {
           </span>
           <span className="meta-index mt-1 flex items-center gap-2">
             <span className="inline-flex h-1.5 w-1.5 rounded-full" style={{ background: 'var(--accent)' }} />
-            Available for new projects
+            Open to remote opportunities
           </span>
         </div>
 
@@ -29,6 +29,9 @@ export default function Footer() {
               {item.label}
             </a>
           ))}
+          <a href="/services" className="text-sm font-medium transition-colors" style={{ color: 'var(--ink-700)' }}>
+            Capabilities
+          </a>
         </nav>
 
         <div className="flex flex-col gap-2.5 text-sm" style={{ color: 'var(--ink-700)' }}>

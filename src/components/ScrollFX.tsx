@@ -107,37 +107,9 @@ function initHero(reduced: boolean) {
   }
 }
 
-function initSequentialProgress(trackSelector: string, lineSelector: string, stepSelector: string, reduced: boolean) {
-  const track = document.querySelector<HTMLElement>(trackSelector);
-  const line = document.querySelector<HTMLElement>(lineSelector);
-  const steps = gsap.utils.toArray<HTMLElement>(stepSelector);
-  if (!track || !line) return;
-
-  if (reduced) {
-    gsap.set(line, { scaleX: 1, scaleY: 1 });
-    steps.forEach((s) => s.classList.add('is-active'));
-    return;
-  }
-
-  gsap.set(line, { transformOrigin: 'top left', scaleX: 0, scaleY: 0 });
-  ScrollTrigger.create({
-    trigger: track,
-    start: 'top 70%',
-    end: 'bottom 60%',
-    scrub: 0.6,
-    onUpdate: (self) => {
-      gsap.set(line, { scaleY: self.progress, scaleX: self.progress });
-      const activeCount = Math.round(self.progress * steps.length);
-      steps.forEach((step, i) => step.classList.toggle('is-active', i < activeCount));
-    },
-  });
-}
-
 export default function ScrollFX() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-
-    let rawListenerController: AbortController | null = null;
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -145,31 +117,7 @@ export default function ScrollFX() {
       initHero(reduced);
       initReveals(reduced);
 
-      // AI workflow progress line + sequential icon activation
-      initSequentialProgress('[data-ai-progress-track]', '[data-ai-progress]', '[data-ai-step]', reduced);
-
       if (reduced) return;
-
-      ScrollTrigger.matchMedia({
-        '(min-width: 1024px)': () => {
-          rawListenerController = new AbortController();
-          const { signal } = rawListenerController;
-          document.querySelectorAll<HTMLElement>('[data-magnetic]').forEach((btn) => {
-            const strength = 0.25;
-            btn.addEventListener(
-              'mousemove',
-              (e) => {
-                const rect = btn.getBoundingClientRect();
-                const x = (e as MouseEvent).clientX - rect.left - rect.width / 2;
-                const y = (e as MouseEvent).clientY - rect.top - rect.height / 2;
-                gsap.to(btn, { x: x * strength, y: y * strength, duration: 0.4, ease: EASE });
-              },
-              { signal }
-            );
-            btn.addEventListener('mouseleave', () => gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.4)' }), { signal });
-          });
-        },
-      });
 
       ScrollTrigger.refresh();
     });
@@ -181,7 +129,6 @@ export default function ScrollFX() {
     return () => {
       ctx.revert();
       ScrollTrigger.getAll().forEach((t) => t.kill());
-      rawListenerController?.abort();
       window.removeEventListener('load', onFontsReady);
     };
   }, []);

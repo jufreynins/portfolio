@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Container from '@/components/Container';
 import Bleed from '@/components/Bleed';
 import Button from '@/components/Button';
-import SectionHeading from '@/components/SectionHeading';
+import ContactCTA from '@/components/ContactCTA';
 import { siteConfig } from '@/config/site';
 import { projects, getProjectBySlug } from '@/data/projects';
 import { buildMetadata } from '@/lib/seo';
@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return buildMetadata({
     title: `${project.name} — WordPress Case Study — ${siteConfig.name}`,
     description: project.description,
-    canonical: `${siteConfig.url}/portfolio/${project.slug}`,
+    canonical: `${siteConfig.url}/work/${project.slug}`,
   });
 }
 
@@ -39,12 +39,12 @@ export default async function ProjectCaseStudyPage({ params }: { params: Promise
     <>
       <section className="pt-28 pb-10 sm:pt-32 sm:pb-12" style={{ background: 'var(--paper-000)' }}>
         <Container className="flex flex-col gap-5">
-          <a href="/portfolio" className="inline-flex w-fit items-center gap-1.5 text-sm font-medium transition-colors hover:text-[var(--accent)]" style={{ color: 'var(--ink-700)' }}>
+          <a href="/work" className="inline-flex w-fit items-center gap-1.5 text-sm font-medium transition-colors hover:text-[var(--accent)]" style={{ color: 'var(--ink-700)' }}>
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <line x1="17" y1="7" x2="7" y2="17" />
               <polyline points="17 17 7 17 7 7" />
             </svg>
-            Back to Portfolio
+            Back to Selected Work
           </a>
 
           <p className="meta-index">
@@ -70,9 +70,6 @@ export default async function ProjectCaseStudyPage({ params }: { params: Promise
             <Button href={project.url} target="_blank" rel="noopener noreferrer" variant="primary">
               Visit Live Website
             </Button>
-            <Button href="/contact" variant="ghost">
-              Start a Similar Project
-            </Button>
           </div>
         </Container>
       </section>
@@ -97,25 +94,31 @@ export default async function ProjectCaseStudyPage({ params }: { params: Promise
         <Container className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="flex flex-col gap-10 lg:col-span-8">
             <div className="flex flex-col gap-3">
-              <span className="eyebrow">The Business</span>
+              <span className="eyebrow">Overview</span>
               <p className="leading-relaxed" style={{ color: 'var(--ink-950)' }}>
-                {project.business}
+                {project.description}
               </p>
             </div>
             <div className="flex flex-col gap-3">
-              <span className="eyebrow">The Goal</span>
+              <span className="eyebrow">Requirement</span>
               <p className="leading-relaxed" style={{ color: 'var(--ink-950)' }}>
                 {project.goal}
               </p>
             </div>
             <div className="flex flex-col gap-3">
-              <span className="eyebrow">What I Delivered</span>
+              <span className="eyebrow">My Contribution</span>
               <p className="leading-relaxed" style={{ color: 'var(--ink-950)' }}>
                 {project.contribution}
               </p>
             </div>
             <div className="flex flex-col gap-3">
-              <span className="eyebrow">The Outcome</span>
+              <span className="eyebrow">Technical Implementation</span>
+              <p className="leading-relaxed" style={{ color: 'var(--ink-950)' }}>
+                Built on {project.technologies.join(', ')}, following the business&apos;s existing brand and content requirements end to end.
+              </p>
+            </div>
+            <div className="flex flex-col gap-3">
+              <span className="eyebrow">Result</span>
               <p className="leading-relaxed" style={{ color: 'var(--ink-950)' }}>
                 {project.results}
               </p>
@@ -123,10 +126,7 @@ export default async function ProjectCaseStudyPage({ params }: { params: Promise
           </div>
 
           <aside className="lg:col-span-4">
-            <div
-              className="flex flex-col gap-8 border-t pt-8 lg:sticky lg:top-32 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0"
-              style={{ borderColor: 'var(--line)' }}
-            >
+            <div className="flex flex-col gap-8 border-t pt-8 lg:sticky lg:top-32 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0" style={{ borderColor: 'var(--line)' }}>
               <div className="flex flex-col gap-1.5">
                 <span className="meta-index" style={{ color: 'var(--ink-400)' }}>
                   Role
@@ -143,17 +143,9 @@ export default async function ProjectCaseStudyPage({ params }: { params: Promise
                   {project.category}
                 </p>
               </div>
-              <div className="flex flex-col gap-1.5">
-                <span className="meta-index" style={{ color: 'var(--ink-400)' }}>
-                  Status
-                </span>
-                <p className="text-sm font-medium" style={{ color: 'var(--ink-950)' }}>
-                  {project.status}
-                </p>
-              </div>
               <div className="flex flex-col gap-2">
                 <span className="meta-index" style={{ color: 'var(--ink-400)' }}>
-                  Technologies
+                  Stack
                 </span>
                 <ul className="flex flex-col gap-1" aria-label="Technologies used">
                   {project.technologies.map((tech) => (
@@ -172,32 +164,20 @@ export default async function ProjectCaseStudyPage({ params }: { params: Promise
         <Container className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-col gap-1">
             <span className="eyebrow">Related Project</span>
-            <a href={`/portfolio/${related.slug}`} className="text-xl transition-colors hover:text-[var(--accent)]" style={{ color: 'var(--ink-950)' }}>
+            <a href={`/work/${related.slug}`} className="text-xl transition-colors hover:text-[var(--accent)]" style={{ color: 'var(--ink-950)' }}>
               {related.name}
             </a>
             <span className="text-sm" style={{ color: 'var(--ink-700)' }}>
               {related.category}
             </span>
           </div>
-          <Button href={`/portfolio/${related.slug}`} variant="secondary">
+          <Button href={`/work/${related.slug}`} variant="secondary">
             View Case Study
           </Button>
         </Container>
       </section>
 
-      <section className="dark-grid-bg py-16 sm:py-20" style={{ background: 'var(--ink-canvas)' }}>
-        <Container className="flex flex-col items-start gap-6">
-          <SectionHeading
-            eyebrow="Let's build something"
-            title="Need a website like this one?"
-            description="Tell me a bit about your business and goals. I'll recommend a practical next step within one business day."
-            dark
-          />
-          <Button href="/contact" variant="primary" size="large" tone="dark">
-            Start a Project
-          </Button>
-        </Container>
-      </section>
+      <ContactCTA title="Need a website like this one?" description="Tell me a bit about your business and goals." />
     </>
   );
 }

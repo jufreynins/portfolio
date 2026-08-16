@@ -88,6 +88,7 @@ export const TOOLS: Tool[] = [
     processing: 'Runs locally in your browser',
     accent: '#7c3aed',
     accentSoft: '#efe7fb',
+    featured: true,
   },
   {
     id: 'utm-builder',
