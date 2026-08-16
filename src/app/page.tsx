@@ -150,13 +150,7 @@ export default function HomePage() {
 
         <Bleed className="mt-10 flex flex-col gap-12 sm:mt-12 sm:gap-16">
           {featuredProjects.map((project, i) => (
-            <ProjectFeature
-              key={project.slug}
-              project={project}
-              index={i + 1}
-              variant={i === 0 ? 'image-left' : i === 1 ? 'image-right' : i === 2 ? 'full-bleed' : 'image-left'}
-              priority={i === 0}
-            />
+            <ProjectFeature key={project.slug} project={project} index={i + 1} priority={i === 0} />
           ))}
         </Bleed>
 
