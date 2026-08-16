@@ -94,25 +94,22 @@ export default async function ProjectCaseStudyPage({ params }: { params: Promise
         <Container className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="flex flex-col gap-10 lg:col-span-8">
             <div className="flex flex-col gap-3">
-              <span className="eyebrow">Overview</span>
+              <span className="eyebrow">Project Overview</span>
               <p className="leading-relaxed" style={{ color: 'var(--ink-950)' }}>
                 {project.description}
               </p>
-            </div>
-            <div className="flex flex-col gap-3">
-              <span className="eyebrow">Requirement</span>
               <p className="leading-relaxed" style={{ color: 'var(--ink-950)' }}>
                 {project.goal}
               </p>
             </div>
             <div className="flex flex-col gap-3">
-              <span className="eyebrow">My Contribution</span>
+              <span className="eyebrow">My Role</span>
               <p className="leading-relaxed" style={{ color: 'var(--ink-950)' }}>
                 {project.contribution}
               </p>
             </div>
             <div className="flex flex-col gap-3">
-              <span className="eyebrow">Technical Implementation</span>
+              <span className="eyebrow">WordPress Implementation</span>
               <p className="leading-relaxed" style={{ color: 'var(--ink-950)' }}>
                 Built on {project.technologies.join(', ')}, following the business&apos;s existing brand and content requirements end to end.
               </p>

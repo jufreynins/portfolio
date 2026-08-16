@@ -3,24 +3,29 @@ export interface TechSummaryGroup {
   items: string[];
 }
 
-/** Compact, curated technical summary — reused on the homepage hero strip, the homepage
- *  capabilities section, and the About page's Technology section. Deliberately not a full
- *  logo wall; every item here is drawn directly from the CV's skills list. */
+/** WordPress-dominant technical stack — reused on the homepage's WordPress Tech Stack
+ *  section and the About/Expertise pages. WordPress leads; AI workflow tools stay last,
+ *  positioned as workflow support rather than a competing identity. Every item here is
+ *  drawn directly from the CV's skills list — nothing invented. */
 export const techGroups: TechSummaryGroup[] = [
   {
     label: 'WordPress',
-    items: ['WordPress', 'Elementor Pro', 'ACF', 'JetEngine', 'PHP'],
+    items: ['WordPress', 'Elementor Pro', 'ACF / ACF Pro', 'JetEngine', 'Gutenberg', 'WooCommerce'],
   },
   {
-    label: 'Modern Web',
-    items: ['Next.js', 'React', 'TypeScript', 'Astro', 'Laravel'],
+    label: 'Development',
+    items: ['PHP', 'HTML', 'CSS', 'JavaScript', 'jQuery', 'MySQL'],
   },
   {
-    label: 'Web Operations',
-    items: ['GitHub', 'Vercel', 'Hostinger', 'Cloudflare', 'DNS'],
+    label: 'Hosting & Operations',
+    items: ['Cloudways', 'Hostinger', 'cPanel', 'WHM', 'Cloudflare'],
   },
   {
-    label: 'AI Workflow',
-    items: ['Claude Code', 'ChatGPT', 'Cursor'],
+    label: 'Analytics & SEO',
+    items: ['GA4', 'Google Search Console'],
+  },
+  {
+    label: 'Workflow',
+    items: ['GitHub', 'Claude Code', 'ChatGPT', 'Cursor'],
   },
 ];

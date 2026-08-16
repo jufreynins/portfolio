@@ -9,7 +9,7 @@ import { projects } from '@/data/projects';
 import { buildMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = buildMetadata({
-  title: `Selected Work — ${siteConfig.name}`,
+  title: `Selected WordPress Work — ${siteConfig.name}`,
   description: 'Real WordPress websites built for businesses, agencies, and nonprofits — from marketing agencies to e-commerce and community organizations.',
   canonical: `${siteConfig.url}/work`,
 });
@@ -19,7 +19,7 @@ export default function WorkPage() {
     <>
       <section className="pt-28 pb-12 sm:pt-32 sm:pb-14" style={{ background: 'var(--paper-000)' }}>
         <Container className="flex flex-col gap-4">
-          <SectionHeading as="h1" eyebrow="Selected Work" title="Real client work." description="The business need, my contribution, and the WordPress technology behind each site." />
+          <SectionHeading as="h1" eyebrow="Selected WordPress Work" title="Real WordPress client work." description="The business need, my role, and the WordPress technology behind each site." />
           <p className="text-sm" style={{ color: 'var(--ink-700)' }}>
             Every project below is completed client work. Looking for personal systems instead? See{' '}
             <a href="/systems" className="font-medium underline" style={{ color: 'var(--accent)' }}>

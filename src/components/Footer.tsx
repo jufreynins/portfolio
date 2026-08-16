@@ -12,14 +12,14 @@ export default function Footer() {
             {siteConfig.name}
           </span>
           <span className="text-sm font-medium" style={{ color: 'var(--ink-700)' }}>
-            WordPress and Web Systems Developer
+            WordPress Developer &amp; Website Technical Specialist
           </span>
           <span className="max-w-xs text-sm" style={{ color: 'var(--ink-400)' }}>
-            Websites, browser tools, hosting, DNS, and technical web support.
+            WordPress websites, hosting, DNS, and technical web support.
           </span>
           <span className="meta-index mt-1 flex items-center gap-2">
             <span className="inline-flex h-1.5 w-1.5 rounded-full" style={{ background: 'var(--accent)' }} />
-            Open to remote opportunities
+            Open to remote WordPress opportunities
           </span>
         </div>
 
@@ -29,8 +29,8 @@ export default function Footer() {
               {item.label}
             </a>
           ))}
-          <a href="/services" className="text-sm font-medium transition-colors" style={{ color: 'var(--ink-700)' }}>
-            Capabilities
+          <a href="/systems" className="text-sm font-medium transition-colors" style={{ color: 'var(--ink-700)' }}>
+            Systems
           </a>
         </nav>
 

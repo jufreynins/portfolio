@@ -56,7 +56,9 @@ export default function ProjectFeature({ project, index, priority = false }: Pro
             {indexLabel}
           </span>
           <div className="flex flex-col gap-1.5">
-            <span className="eyebrow">{project.category}</span>
+            <span className="eyebrow" style={{ color: 'var(--accent)' }}>
+              Client Project / WordPress
+            </span>
             <h3 className="text-lg transition-colors duration-300 group-hover:text-[var(--accent)]" style={{ color: 'var(--ink-950)' }}>
               {project.name}
             </h3>
@@ -64,9 +66,24 @@ export default function ProjectFeature({ project, index, priority = false }: Pro
           <p className="max-w-md text-sm leading-relaxed" style={{ color: 'var(--ink-700)' }}>
             {project.results}
           </p>
-          <p className="meta-index" style={{ color: 'var(--ink-400)' }}>
-            {project.technologies.join(' · ')}
-          </p>
+          <dl className="flex flex-col gap-1">
+            <div className="flex items-baseline gap-2">
+              <dt className="meta-index flex-shrink-0" style={{ color: 'var(--ink-400)' }}>
+                Role
+              </dt>
+              <dd className="text-xs font-medium" style={{ color: 'var(--ink-950)' }}>
+                {project.role}
+              </dd>
+            </div>
+            <div className="flex items-baseline gap-2">
+              <dt className="meta-index flex-shrink-0" style={{ color: 'var(--ink-400)' }}>
+                Focus
+              </dt>
+              <dd className="text-xs font-medium" style={{ color: 'var(--ink-950)' }}>
+                {project.technologies.join(' · ')}
+              </dd>
+            </div>
+          </dl>
           <span className="mt-0.5 inline-flex w-fit items-center gap-1.5 text-sm font-bold" style={{ color: 'var(--ink-950)' }}>
             View Case Study
             <Arrow />

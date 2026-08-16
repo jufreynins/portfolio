@@ -2,9 +2,9 @@ const yearsExperience = 5;
 
 export const siteConfig = {
   name: 'Jufrey Niño Bayog',
-  title: 'WordPress and Web Systems Developer',
-  shortTitle: 'WordPress developer',
-  description: `WordPress developer with ${yearsExperience}+ years of experience building business websites, practical web systems, and browser tools — plus the hosting, domain, DNS, and technical setup needed to launch and maintain them.`,
+  title: 'WordPress Developer & Website Technical Specialist',
+  shortTitle: 'WordPress Developer',
+  description: `WordPress Developer with ${yearsExperience}+ years of experience building, managing, and troubleshooting production WordPress websites — plus the hosting, domain, DNS, and technical operations needed to keep them running.`,
   url: 'https://jufreyninobayogportfolio.com',
   locale: 'en-US',
   yearsExperience,
@@ -31,7 +31,7 @@ export const siteConfig = {
 
   nav: [
     { label: 'Work', href: '/work' },
-    { label: 'Systems', href: '/systems' },
+    { label: 'Expertise', href: '/services' },
     { label: 'About', href: '/about' },
     { label: 'Tools', href: '/tools' },
     { label: 'Contact', href: '/contact' },

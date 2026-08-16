@@ -5,7 +5,6 @@ import Bleed from '@/components/Bleed';
 import Button from '@/components/Button';
 import SectionHeading from '@/components/SectionHeading';
 import ProjectFeature from '@/components/ProjectFeature';
-import SystemFeature from '@/components/SystemFeature';
 import ExperienceTimeline from '@/components/ExperienceTimeline';
 import TechGroup from '@/components/TechGroup';
 import BrowserFrame from '@/components/BrowserFrame';
@@ -19,7 +18,7 @@ import { techGroups } from '@/data/techSummary';
 import { buildMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = buildMetadata({
-  title: `${siteConfig.name} | WordPress and Web Systems Developer`,
+  title: `${siteConfig.name} | WordPress Developer & Website Technical Specialist`,
   description: siteConfig.description,
   canonical: siteConfig.url,
 });
@@ -33,22 +32,57 @@ const featuredSystems = systems.filter(
 );
 const featuredTools = TOOLS.filter((t) => t.featured);
 
-const capabilityGroups = [
+const wordpressCapabilities = [
   {
     title: 'WordPress Development',
-    description: 'Dynamic WordPress websites, Elementor Pro, ACF, JetEngine, custom frontend work, troubleshooting and maintenance.',
+    description: 'Custom layouts, Elementor Pro, Gutenberg, dynamic content with ACF and JetEngine, responsive implementation and frontend customization.',
   },
   {
-    title: 'Web Systems',
-    description: 'React, Next.js, TypeScript, Laravel and custom internal workflows.',
+    title: 'Website Management',
+    description: 'Ongoing updates, content management, plugin and theme maintenance, backups, and production support for live sites.',
   },
   {
-    title: 'Web Operations',
-    description: 'Hosting, DNS, SSL, migrations, deployments, GitHub, Cloudflare and production troubleshooting.',
+    title: 'Troubleshooting',
+    description: 'Plugin conflicts, theme issues, PHP errors, frontend bugs, and form issues — reproduced and resolved.',
   },
   {
-    title: 'AI-Assisted Development',
-    description: 'Claude Code, ChatGPT and Cursor integrated into the development workflow — human review and validation stay central to every change.',
+    title: 'Hosting & Deployment',
+    description: 'Cloudways, Hostinger, GoDaddy, WHM/cPanel, staging environments, migrations, and deployment.',
+  },
+  {
+    title: 'Domains, DNS & SSL',
+    description: 'Domain configuration, A/CNAME/MX/TXT records, DNS troubleshooting, SSL setup, and email-authentication records.',
+  },
+  {
+    title: 'Performance & Technical SEO',
+    description: 'Caching, image optimization, redirects, GA4 and Search Console setup, and core technical SEO basics.',
+  },
+];
+
+const websiteOperationsGroups = [
+  {
+    label: 'Hosting',
+    items: ['Cloudways', 'Hostinger', 'GoDaddy', 'WHM & cPanel'],
+  },
+  {
+    label: 'Domains & DNS',
+    items: ['Nameserver updates', 'A, CNAME, MX & TXT records', 'DNS propagation checks', 'Domain & subdomain connection'],
+  },
+  {
+    label: 'SSL & Security',
+    items: ['SSL installation & verification', 'SPF, DKIM & DMARC setup', 'Form-delivery testing', 'Plugin/theme update management'],
+  },
+  {
+    label: 'Migrations & Deployment',
+    items: ['WordPress migrations', 'WPVivid backup & restore', 'Staging-to-production deployment', 'GitHub-based deployment workflows'],
+  },
+  {
+    label: 'Monitoring & Maintenance',
+    items: ['Ongoing updates', 'Content management', 'Performance monitoring', 'Broken link & form checks'],
+  },
+  {
+    label: 'Troubleshooting & Support',
+    items: ['WP_DEBUG & error logs', 'Plugin/theme conflict resolution', 'Frontend CSS/JS bugs', 'FTP/cPanel access & fixes'],
   },
 ];
 
@@ -74,7 +108,7 @@ export default function HomePage() {
                 </span>
                 <span className="block overflow-hidden">
                   <span className="block" data-hero-line>
-                    &amp; Web Systems Developer
+                    &amp; Website Technical Specialist
                   </span>
                 </span>
               </h1>
@@ -84,13 +118,13 @@ export default function HomePage() {
               </p>
 
               <p className="max-w-lg leading-relaxed" style={{ color: 'var(--ink-700)', fontSize: 'var(--text-lead)' }} data-hero-support>
-                I build and maintain production websites, web systems, and the infrastructure behind them — from WordPress and dynamic content to deployments, DNS, integrations, and AI-assisted
-                development workflows.
+                I build, maintain, troubleshoot, and manage production WordPress websites — from custom layouts and dynamic content to hosting, DNS, migrations, integrations, performance, and
+                ongoing technical support.
               </p>
 
               <div className="mt-2 flex flex-wrap items-center gap-x-7 gap-y-4" data-hero-support>
                 <Button href="/work" variant="primary" size="large">
-                  View Selected Work
+                  View WordPress Work
                 </Button>
                 <Button href={siteConfig.cvPath} variant="ghost" target="_blank" rel="noopener noreferrer">
                   Download CV
@@ -103,7 +137,7 @@ export default function HomePage() {
                 </a>
                 <span className="meta-index flex items-center gap-2" style={{ color: 'var(--ink-400)' }}>
                   <span className="inline-flex h-1.5 w-1.5 rounded-full" style={{ background: 'var(--accent)' }} />
-                  Open to remote opportunities
+                  Open to remote WordPress opportunities
                 </span>
               </div>
             </div>
@@ -121,7 +155,7 @@ export default function HomePage() {
                     style={{ background: 'var(--paper-050)' }}
                   />
                 </BrowserFrame>
-                <p className="meta-index mt-3">{heroProject.name.toUpperCase()} · LIVE CLIENT BUILD</p>
+                <p className="meta-index mt-3">{heroProject.name.toUpperCase()} · LIVE WORDPRESS BUILD</p>
               </div>
             )}
           </div>
@@ -135,17 +169,29 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Technical Summary strip */}
-      <section className="py-8 sm:py-10" style={{ background: 'var(--paper-000)', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
-        <Container>
-          <TechGroup groups={techGroups} />
+      {/* What I Handle in WordPress */}
+      <section className="py-16 sm:py-20" style={{ background: 'var(--paper-050)' }}>
+        <Container className="flex flex-col gap-10">
+          <SectionHeading eyebrow="What I Handle" title="More than page building." description="A WordPress website's lifecycle doesn't end at launch — here's what I cover across it." />
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {wordpressCapabilities.map((item) => (
+              <div key={item.title} className="flex flex-col gap-2.5" data-reveal>
+                <h3 className="text-base font-semibold" style={{ color: 'var(--ink-950)' }}>
+                  {item.title}
+                </h3>
+                <p className="text-sm leading-relaxed" style={{ color: 'var(--ink-700)' }}>
+                  {item.description}
+                </p>
+              </div>
+            ))}
+          </div>
         </Container>
       </section>
 
-      {/* Selected Work */}
+      {/* Selected WordPress Work */}
       <section id="work" className="py-16 sm:py-20" style={{ background: 'var(--paper-000)' }}>
         <Container>
-          <SectionHeading eyebrow="Selected Work" title="Websites built for real businesses." description="Recent WordPress projects — the client, the goal, and what I delivered." />
+          <SectionHeading eyebrow="Selected WordPress Work" title="Websites built for real businesses." description="Real WordPress client projects — the business, my role, and what I delivered." />
         </Container>
 
         <Bleed className="mt-10 flex flex-col gap-12 sm:mt-12 sm:gap-16">
@@ -156,13 +202,39 @@ export default function HomePage() {
 
         <Container className="mt-14 sm:mt-16">
           <Button href="/work" variant="secondary" data-reveal>
-            View All Client Work
+            View All WordPress Work
           </Button>
         </Container>
       </section>
 
-      {/* Experience */}
+      {/* Website Operations & Support */}
       <section className="py-16 sm:py-20" style={{ background: 'var(--paper-050)' }}>
+        <Container className="flex flex-col gap-10">
+          <SectionHeading
+            eyebrow="Website Operations"
+            title="I also handle what happens after the build."
+            description="Hosting, domains, DNS, SSL, migrations, monitoring, and troubleshooting — the operational side that keeps a WordPress site running, not just launched."
+          />
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {websiteOperationsGroups.map((group) => (
+              <div key={group.label} className="flex flex-col gap-3" data-reveal>
+                <span className="eyebrow">{group.label}</span>
+                <ul className="flex flex-col gap-2">
+                  {group.items.map((item) => (
+                    <li key={item} className="flex items-start gap-2 text-sm" style={{ color: 'var(--ink-950)' }}>
+                      <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full" style={{ background: 'var(--accent)' }} />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* Experience */}
+      <section className="py-16 sm:py-20" style={{ background: 'var(--paper-000)' }}>
         <Container className="flex flex-col gap-10">
           <SectionHeading eyebrow="Experience" title={`${yearsExperience}+ Years of Web Development Experience`} />
           <ExperienceTimeline entries={experience} compact />
@@ -177,65 +249,70 @@ export default function HomePage() {
         </Container>
       </section>
 
-      {/* Beyond WordPress */}
-      {featuredSystems.length > 0 && (
-        <section className="py-16 sm:py-20" style={{ background: 'var(--paper-000)' }}>
-          <Container className="flex flex-col gap-12">
-            <SectionHeading eyebrow="Beyond WordPress" title="Beyond WordPress." description="Personal systems built outside client work — clearly labeled, never presented as production or paid work." />
-            <div className="grid grid-cols-1 gap-10 sm:grid-cols-2">
-              {featuredSystems.map((system, i) => (
-                <SystemFeature key={system.slug} system={system} index={i + 1} />
-              ))}
-            </div>
-            <Button href="/systems" variant="secondary" data-reveal>
-              View All Systems
-            </Button>
-          </Container>
-        </section>
-      )}
-
-      {/* What I Work With */}
+      {/* WordPress Tech Stack */}
       <section className="py-16 sm:py-20" style={{ background: 'var(--paper-050)' }}>
         <Container className="flex flex-col gap-10">
-          <SectionHeading eyebrow="Capabilities" title="What I work with." />
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {capabilityGroups.map((group) => (
-              <div key={group.title} className="flex flex-col gap-2.5" data-reveal>
-                <h3 className="text-base font-semibold" style={{ color: 'var(--ink-950)' }}>
-                  {group.title}
-                </h3>
-                <p className="text-sm leading-relaxed" style={{ color: 'var(--ink-700)' }}>
-                  {group.description}
-                </p>
-              </div>
-            ))}
-          </div>
-          <a href="/services" className="w-fit text-sm font-bold transition-colors hover:text-[var(--accent)]" style={{ color: 'var(--ink-950)' }} data-reveal>
-            View Full Capabilities →
-          </a>
+          <SectionHeading eyebrow="Technical Stack" title="WordPress-first, with the tools to support it." />
+          <TechGroup groups={techGroups} />
         </Container>
       </section>
 
-      {/* Developer Tools */}
-      <section className="py-16 sm:py-20" style={{ background: 'var(--paper-000)' }}>
+      {/* Personal Projects + Developer Tools (combined, compact) */}
+      <section className="py-14 sm:py-16" style={{ background: 'var(--paper-000)' }}>
         <Container className="flex flex-col gap-10">
-          <SectionHeading eyebrow="Developer Tools" title="Free browser tools, ready to use." description="No account, uploads, or permanent storage — everything runs in your browser." />
-          <div className="grid grid-cols-1 divide-y sm:grid-cols-3 sm:divide-y-0 sm:divide-x" style={{ borderColor: 'var(--line)' }} data-reveal data-reveal-type="stagger">
-            {featuredTools.map((tool) => (
-              <a key={tool.id} href={tool.href} className="group flex flex-col gap-2 py-5 transition-colors duration-300 sm:px-5">
-                <span className="meta-index">{tool.category}</span>
-                <h3 className="text-base font-bold transition-colors duration-300 group-hover:text-[var(--accent)]" style={{ color: 'var(--ink-950)' }}>
-                  {tool.title}
-                </h3>
-                <p className="text-xs leading-relaxed" style={{ color: 'var(--ink-700)' }}>
-                  {tool.purpose}
-                </p>
+          <SectionHeading
+            eyebrow="Beyond Client Work"
+            title="Beyond client work."
+            description="I also build internal tools, web systems, and small developer utilities to explore workflows beyond traditional WordPress development."
+          />
+          <div className="grid grid-cols-1 gap-10 sm:grid-cols-2">
+            <div className="flex flex-col gap-4">
+              <span className="eyebrow">Personal Projects</span>
+              <ul className="flex flex-col divide-y" style={{ borderColor: 'var(--line)' }}>
+                {featuredSystems.map((system) => (
+                  <li key={system.slug}>
+                    <a href={`/systems/${system.slug}`} className="group flex items-center gap-3 py-3">
+                      <span className="relative h-12 w-16 flex-shrink-0 overflow-hidden rounded-[var(--radius-sm)] border" style={{ borderColor: 'var(--line)' }}>
+                        <Image src={system.screenshot} alt={`${system.name} screenshot`} fill className="object-cover object-top" />
+                      </span>
+                      <span className="flex flex-col gap-0.5">
+                        <span className="text-sm font-bold transition-colors duration-300 group-hover:text-[var(--accent)]" style={{ color: 'var(--ink-950)' }}>
+                          {system.name}
+                        </span>
+                        <span className="text-xs" style={{ color: 'var(--ink-700)' }}>
+                          {system.techDirection}
+                        </span>
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              <a href="/systems" className="w-fit text-sm font-bold transition-colors hover:text-[var(--accent)]" style={{ color: 'var(--ink-950)' }} data-reveal>
+                View All Personal Projects →
               </a>
-            ))}
+            </div>
+
+            <div className="flex flex-col gap-4">
+              <span className="eyebrow">Developer Tools</span>
+              <ul className="flex flex-col divide-y" style={{ borderColor: 'var(--line)' }}>
+                {featuredTools.map((tool) => (
+                  <li key={tool.id}>
+                    <a href={tool.href} className="group flex flex-col gap-0.5 py-3">
+                      <span className="text-sm font-bold transition-colors duration-300 group-hover:text-[var(--accent)]" style={{ color: 'var(--ink-950)' }}>
+                        {tool.title}
+                      </span>
+                      <span className="text-xs" style={{ color: 'var(--ink-700)' }}>
+                        {tool.purpose}
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              <a href="/tools" className="w-fit text-sm font-bold transition-colors hover:text-[var(--accent)]" style={{ color: 'var(--ink-950)' }} data-reveal>
+                View All Tools →
+              </a>
+            </div>
           </div>
-          <Button href="/tools" variant="secondary" data-reveal>
-            View All Tools
-          </Button>
         </Container>
       </section>
 
@@ -244,17 +321,17 @@ export default function HomePage() {
         <Container className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-5" data-reveal data-reveal-type="fade-up">
             <span className="eyebrow">About</span>
-            <h2 className="mt-2 max-w-md text-balance">Developer behind the work.</h2>
+            <h2 className="mt-2 max-w-md text-balance">WordPress developer behind the work.</h2>
           </div>
 
           <div className="flex flex-col gap-5 lg:col-span-7" data-reveal data-reveal-type="fade-up">
             <p className="leading-relaxed" style={{ color: 'var(--ink-700)' }}>
-              I&apos;m {siteConfig.name}, a WordPress developer with {yearsExperience}+ years building business websites, dynamic content, and web systems — through both a stable in-house role and
+              I&apos;m {siteConfig.name}, a WordPress developer with {yearsExperience}+ years building, maintaining, and troubleshooting business websites — through both a stable in-house role and
               an ongoing freelance/contract practice with agencies and direct clients across the United States, Canada, and the Philippines.
             </p>
             <p className="leading-relaxed" style={{ color: 'var(--ink-700)' }}>
-              Alongside client work, I handle hosting, domain, and DNS setup, build personal web systems, and use AI tools like Claude Code to move faster — with every change still reviewed and
-              finished by hand.
+              Alongside builds, I handle hosting, domain, and DNS setup, ongoing website management, and production troubleshooting — with AI tools like Claude Code helping me move faster, while
+              every change is still reviewed and finished by hand.
             </p>
             <a href="/about" className="w-fit text-sm font-bold transition-colors hover:text-[var(--accent)]" style={{ color: 'var(--ink-950)' }}>
               More About Me →
@@ -266,7 +343,7 @@ export default function HomePage() {
       {/* Contact */}
       <ContactCTA
         title="Let's connect."
-        description="I'm currently open to remote web development opportunities, agency collaborations, and selected technical projects."
+        description="I'm currently open to remote WordPress development, WordPress support, website management, and technical web opportunities. I'm also open to selected development collaborations."
         primaryLabel="Contact Me"
         primaryHref="/contact"
         secondaryLabel="Download CV"

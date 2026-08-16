@@ -8,11 +8,11 @@ import { buildMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = buildMetadata({
   title: `Contact — ${siteConfig.name}`,
-  description: 'Get in touch about a remote web development role, agency collaboration, or a technical web project.',
+  description: 'Get in touch about a remote WordPress development role, WordPress support position, website management opportunity, or a technical web project.',
   canonical: `${siteConfig.url}/contact`,
 });
 
-const trustIndicators = ['Replies within one business day', 'Open to remote roles and contract work', 'Remote collaboration', 'Clear, honest next steps'];
+const trustIndicators = ['Replies within one business day', 'Open to remote WordPress roles and contract work', 'Remote collaboration', 'Clear, honest next steps'];
 
 const nextSteps = [
   {
@@ -39,7 +39,7 @@ export default function ContactPage() {
               as="h1"
               eyebrow="Contact"
               title="Let's connect."
-              description="I'm currently open to remote web development opportunities, agency collaborations, and selected technical projects."
+              description="I'm currently open to remote WordPress development, WordPress support, website management, and technical web opportunities. I'm also open to selected development collaborations."
               titleClass="max-w-none"
               dark
             />

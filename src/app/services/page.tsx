@@ -8,8 +8,8 @@ import { techGroups } from '@/data/techSummary';
 import { buildMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = buildMetadata({
-  title: `What I Work With — ${siteConfig.name}`,
-  description: 'WordPress development, web systems, web operations, and AI-assisted development — the full scope of what I build and maintain.',
+  title: `Expertise — WordPress Development & Website Operations — ${siteConfig.name}`,
+  description: 'WordPress development, website operations, web systems, and AI-assisted development — the full scope of what I build and maintain.',
   canonical: `${siteConfig.url}/services`,
 });
 
@@ -20,12 +20,12 @@ const capabilities = [
       'Custom WordPress builds and dynamic content with Elementor Pro, ACF, and JetEngine — plus the custom frontend work, troubleshooting, and maintenance that keeps a site reliable after launch.',
   },
   {
-    title: 'Web Systems',
-    description: 'React, Next.js, TypeScript, and Laravel for internal tools and workflows that go beyond what a page builder can deliver on its own.',
+    title: 'Website Operations',
+    description: 'Hosting coordination, domain and DNS configuration, SSL verification, migrations, deployments, and production troubleshooting across Cloudways, Hostinger, and common hosting providers.',
   },
   {
-    title: 'Web Operations',
-    description: 'Hosting coordination, domain and DNS configuration, SSL verification, migrations, deployments, and production troubleshooting across GitHub, Cloudflare, and common hosting providers.',
+    title: 'Web Systems',
+    description: 'React, Next.js, TypeScript, and Laravel for internal tools and workflows that go beyond what a page builder can deliver on its own.',
   },
   {
     title: 'AI-Assisted Development',
@@ -41,9 +41,9 @@ export default function ServicesPage() {
         <Container>
           <SectionHeading
             as="h1"
-            eyebrow="Capabilities"
-            title="What I work with."
-            description="WordPress development, web systems, web operations, and AI-assisted development — the full scope of what I build and maintain."
+            eyebrow="Expertise"
+            title="WordPress first, with the range to go further."
+            description="WordPress development and website operations are the core of what I do — with web systems and AI-assisted workflows supporting it."
           />
         </Container>
       </section>
