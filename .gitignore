@@ -23,6 +23,15 @@ pnpm-debug.log*
 .env
 .env.production
 
+# reCAPTCHA secret key for contact.php — never commit this. Upload it directly to the
+# Hostinger server once via File Manager/FTP; it survives future `git pull` deploys since
+# it's untracked. See public/contact-config.example.php for the expected format.
+# Two entries: `next build` copies public/ into out/, and the deploy workflow then copies
+# out/ contents to the repo root — so the file must be ignored at BOTH paths, or the CI
+# step's `git add -A` would leak the secret into the root-level commit.
+public/contact-config.php
+/contact-config.php
+
 # macOS-specific files
 .DS_Store
 

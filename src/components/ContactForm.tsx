@@ -3,8 +3,38 @@
 import { useEffect } from 'react';
 import { siteConfig } from '@/config/site';
 
+declare global {
+  interface Window {
+    grecaptcha?: {
+      ready: (callback: () => void) => void;
+      execute: (siteKey: string, options: { action: string }) => Promise<string>;
+    };
+  }
+}
+
 interface ContactFormProps {
   dark?: boolean;
+}
+
+function loadRecaptchaScript(siteKey: string): void {
+  if (document.querySelector('script[data-recaptcha-v3]')) return;
+  const script = document.createElement('script');
+  script.src = `https://www.google.com/recaptcha/api.js?render=${siteKey}`;
+  script.async = true;
+  script.dataset.recaptchaV3 = 'true';
+  document.head.appendChild(script);
+}
+
+function getRecaptchaToken(siteKey: string): Promise<string> {
+  return new Promise((resolve, reject) => {
+    if (!window.grecaptcha) {
+      reject(new Error('reCAPTCHA did not load.'));
+      return;
+    }
+    window.grecaptcha.ready(() => {
+      window.grecaptcha!.execute(siteKey, { action: 'contact' }).then(resolve).catch(reject);
+    });
+  });
 }
 
 export default function ContactForm({ dark = false }: ContactFormProps) {
@@ -20,6 +50,10 @@ export default function ContactForm({ dark = false }: ContactFormProps) {
   useEffect(() => {
     const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
     if (!form) return;
+
+    if (siteConfig.recaptchaSiteKey) {
+      loadRecaptchaScript(siteConfig.recaptchaSiteKey);
+    }
 
     const status = form.querySelector<HTMLElement>('[data-form-status]');
     const submitBtn = form.querySelector<HTMLButtonElement>('[data-submit-btn]');
@@ -87,6 +121,12 @@ export default function ContactForm({ dark = false }: ContactFormProps) {
 
       try {
         const formData = new FormData(form);
+
+        if (siteConfig.recaptchaSiteKey) {
+          const token = await getRecaptchaToken(siteConfig.recaptchaSiteKey);
+          formData.set('recaptcha_token', token);
+        }
+
         const body = new URLSearchParams(formData as unknown as Record<string, string>).toString();
 
         // Best-effort log to the Google Sheet — fire-and-forget. `no-cors` makes the

@@ -20,6 +20,11 @@ export const siteConfig = {
   // expose client-side, since there's no way to read the sheet's contents back through it.
   sheetsWebhookUrl: 'https://script.google.com/macros/s/AKfycbwmbNGKav9VNBtbabGY1a2TfR8iVdrw0QKmX-8h6WvWhPi-kUMqgx_moN0Z2CMqWVRM/exec',
 
+  // reCAPTCHA v3 (invisible) site key — public by design, safe to ship client-side. The
+  // matching secret key lives only in the gitignored public/contact-config.php on the
+  // server; see that file's .example template.
+  recaptchaSiteKey: '6LfJV4gtAAAAACbCXDhWEay-Ol9zJtxlh9kG3DOo',
+
   social: {
     // Add links here when available
   },
