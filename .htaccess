@@ -1,8 +1,13 @@
 # Legacy URL redirects (carried over from the old Astro site's astro.config.mjs)
-Redirect 301 /systems /personal-projects
-Redirect 301 /lab /personal-projects
 Redirect 301 /services/website-wordpress /services
-Redirect 301 /services/custom-web-apps /personal-projects
+
+# 2026-08 redesign: Portfolio -> Work, Personal Projects -> Systems (nav simplified to
+# Work / Systems / About / Tools / Contact). /systems previously redirected to
+# /personal-projects — it's now a real route, so that rule is gone.
+Redirect 301 /portfolio /work
+Redirect 301 /personal-projects /systems
+Redirect 301 /lab /systems
+Redirect 301 /services/custom-web-apps /systems
 
 # Image to WebP Converter was renamed/expanded into Image Format Converter (bidirectional JPG/PNG/WebP)
 Redirect 301 /tools/image-to-webp /tools/image-toolkit
