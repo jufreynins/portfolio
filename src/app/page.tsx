@@ -164,8 +164,9 @@ export default function HomePage() {
       {/* Hero */}
       <section id="home" className="grid-overlay relative overflow-hidden pt-28 pb-16 sm:pt-32 sm:pb-20" style={{ background: 'var(--paper-000)' }} data-hero-section>
         <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden" data-hero-bg>
-          <div className="absolute -top-24 -right-24 h-72 w-72 rounded-full blur-3xl" style={{ background: 'var(--accent)', opacity: 0.12 }} />
+          <div className="absolute -top-24 -right-24 h-72 w-72 rounded-full blur-3xl" style={{ background: 'var(--accent)', opacity: 0.14 }} />
           <div className="absolute top-1/3 -left-20 h-64 w-64 rounded-full blur-3xl" style={{ background: 'var(--accent-2)', opacity: 0.1 }} />
+          <div className="absolute bottom-0 left-1/3 h-48 w-48 rounded-full blur-3xl" style={{ background: 'var(--accent-3)', opacity: 0.08 }} />
         </div>
 
         <Container>
@@ -173,7 +174,7 @@ export default function HomePage() {
             <h1 className="text-balance">
               <span className="block overflow-hidden">
                 <span className="block" data-hero-line>
-                  I build and support WordPress websites that businesses can rely on.
+                  I build and support <span className="text-gradient-accent">WordPress websites</span> that businesses can rely on.
                 </span>
               </span>
             </h1>
@@ -223,9 +224,12 @@ export default function HomePage() {
           <SectionHeading title="How I work." />
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {process.map((step, i) => (
-              <div key={step.title} className="flex flex-col gap-2" data-reveal>
-                <span className="font-mono text-sm" style={{ color: 'var(--accent)' }}>
-                  {String(i + 1).padStart(2, '0')}
+              <div key={step.title} className="flex flex-col gap-3" data-reveal>
+                <span
+                  className="flex h-8 w-8 items-center justify-center rounded-full font-mono text-xs font-semibold"
+                  style={{ background: 'var(--accent)', color: 'var(--on-accent)', boxShadow: 'var(--shadow-brand)' }}
+                >
+                  {i + 1}
                 </span>
                 <h3 className="text-base" style={{ color: 'var(--ink-950)' }}>
                   {step.title}

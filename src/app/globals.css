@@ -290,20 +290,46 @@
 
   /* Shared card treatment: a visible neutral border + a resting shadow so cards read as
      distinct surfaces against the page instead of disappearing into it. Hover deepens the
-     shadow and swaps to the branded border for a clear, purposeful interaction cue. */
+     shadow, lifts the card slightly, and reveals a top accent bar for a premium,
+     purposeful interaction cue instead of a flat color swap. */
   .card-surface {
+    position: relative;
+    overflow: hidden;
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-sm);
     transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
   }
+  .card-surface::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s ease;
+  }
   .card-surface:hover {
     box-shadow: var(--shadow-md);
     border-color: var(--border-strong);
+    transform: translateY(-3px);
+  }
+  .card-surface:hover::before {
+    transform: scaleX(1);
   }
   .card-surface.card-surface--featured {
     border-color: var(--border-strong);
     box-shadow: var(--shadow-brand);
+  }
+
+  /* Premium gradient-text accent — used sparingly, one phrase per page at most, so it
+     stays a deliberate highlight rather than a decorative gimmick. */
+  .text-gradient-accent {
+    background: linear-gradient(90deg, var(--accent), var(--accent-ink));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
   /* Subtle technical grid texture for dark sections — keeps "technology studio" sections

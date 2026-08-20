@@ -27,14 +27,14 @@ const ghostDark =
 const variantsByTone: Record<Tone, Record<Variant, string>> = {
   light: {
     primary:
-      'rounded-[var(--radius-md)] bg-[var(--accent)] text-[var(--on-accent)] hover:bg-[var(--accent-ink)] hover:-translate-y-0.5 active:translate-y-0 shadow-[var(--shadow-sm)]',
+      'overflow-hidden rounded-[var(--radius-md)] bg-[var(--accent)] text-[var(--on-accent)] hover:bg-[var(--accent-ink)] hover:-translate-y-0.5 active:translate-y-0 shadow-[var(--shadow-sm)]',
     secondary:
       'rounded-[var(--radius-md)] bg-transparent border border-[var(--line-strong)] text-[var(--ink-950)] hover:border-[var(--accent)] hover:text-[var(--accent)] active:translate-y-0',
     ghost: `${ghostBase} text-[var(--ink-700)] hover:text-[var(--ink-950)]`,
   },
   dark: {
     primary:
-      'rounded-[var(--radius-md)] bg-[var(--accent)] text-[var(--on-accent)] hover:bg-[var(--accent-ink)] hover:-translate-y-0.5 active:translate-y-0 shadow-[var(--shadow-brand)]',
+      'overflow-hidden rounded-[var(--radius-md)] bg-[var(--accent)] text-[var(--on-accent)] hover:bg-[var(--accent-ink)] hover:-translate-y-0.5 active:translate-y-0 shadow-[var(--shadow-brand)]',
     secondary:
       'rounded-[var(--radius-md)] bg-transparent border border-[rgba(247,245,242,0.3)] text-[var(--on-dark)] hover:border-[var(--accent)] hover:text-[var(--accent)] active:translate-y-0',
     ghost: ghostDark,
@@ -53,6 +53,15 @@ interface CommonProps {
 type ButtonProps =
   | (CommonProps & { href: string } & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'className'>)
   | (CommonProps & { href?: undefined } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className'>);
+
+// Diagonal light sweep on hover, primary variant only — a subtle premium micro-interaction
+// rather than a decorative default, since it only reads clearly against a solid fill.
+const Shine = () => (
+  <span
+    aria-hidden="true"
+    className="pointer-events-none absolute inset-0 -translate-x-full skew-x-[-20deg] bg-[linear-gradient(115deg,transparent_40%,rgba(255,255,255,0.35)_50%,transparent_60%)] transition-transform duration-700 ease-out group-hover:translate-x-full"
+  />
+);
 
 const Arrow = () => (
   <svg
@@ -79,6 +88,7 @@ export default function Button({ href, variant = 'primary', size = 'default', to
   if (href) {
     return (
       <a href={href} className={classes} {...(rest as AnchorHTMLAttributes<HTMLAnchorElement>)}>
+        {variant === 'primary' && <Shine />}
         {children}
         <Arrow />
       </a>
@@ -87,6 +97,7 @@ export default function Button({ href, variant = 'primary', size = 'default', to
 
   return (
     <button type="button" className={classes} {...(rest as ButtonHTMLAttributes<HTMLButtonElement>)}>
+      {variant === 'primary' && <Shine />}
       {children}
       <Arrow />
     </button>
