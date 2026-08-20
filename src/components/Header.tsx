@@ -8,9 +8,6 @@ import Button from './Button';
 
 export default function Header() {
   const currentPath = usePathname();
-  // Only the homepage hero is designed to sit under a transparent header — every other
-  // page's header stays solid from the start so it never has to guess what's behind it.
-  const isHome = currentPath === '/';
 
   const isNavActive = (href: string) => {
     if (!currentPath) return false;
@@ -23,9 +20,7 @@ export default function Header() {
     const { signal } = controller;
 
     const header = document.querySelector<HTMLElement>('[data-header]');
-    const headerBg = document.querySelector<HTMLElement>('[data-header-bg]');
     const headerInner = document.querySelector<HTMLElement>('[data-header-inner]');
-    const progress = document.querySelector<HTMLElement>('[data-scroll-progress]');
     const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
     const menu = document.querySelector<HTMLElement>('[data-mobile-menu]');
     const iconOpen = toggle?.querySelector('[data-icon-open]');
@@ -65,11 +60,6 @@ export default function Header() {
 
     const onScroll = () => {
       const scrollY = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const pct = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
-
-      if (progress) progress.style.width = `${pct}%`;
-      if (headerBg) headerBg.style.opacity = isHome ? (scrollY > 24 ? '1' : '0') : '1';
       if (headerInner) headerInner.classList.toggle('py-2.5', scrollY > 24);
       if (headerInner) headerInner.classList.toggle('py-4', scrollY <= 24);
       header.classList.toggle('is-scrolled', scrollY > 24);
@@ -88,14 +78,8 @@ export default function Header() {
       data-header
     >
       <div
-        className={`absolute inset-0 -z-10 border-b transition-opacity duration-300 ${isHome ? 'opacity-0' : 'opacity-100'}`}
+        className="absolute inset-0 -z-10 border-b"
         style={{ background: 'var(--surface-white)', borderColor: 'var(--border-color)', boxShadow: 'var(--shadow-sm)' }}
-        data-header-bg
-      />
-      <div
-        className="absolute bottom-0 left-0 h-px bg-white/0 transition-[width] duration-150 ease-out"
-        data-scroll-progress
-        style={{ background: 'var(--color-accent)', width: '0%' }}
       />
 
       <Container className="flex items-center justify-between py-4 transition-[padding] duration-300" data-header-inner>
