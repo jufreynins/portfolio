@@ -10,7 +10,7 @@ export interface TechSummaryGroup {
 export const techGroups: TechSummaryGroup[] = [
   {
     label: 'WordPress',
-    items: ['WordPress', 'Elementor Pro', 'ACF / ACF Pro', 'JetEngine', 'Gutenberg', 'WooCommerce'],
+    items: ['WordPress', 'Elementor Pro', 'Bricks', 'WPBakery', 'Divi', 'ACF / ACF Pro', 'JetEngine', 'Gutenberg', 'WooCommerce'],
   },
   {
     label: 'Development',
