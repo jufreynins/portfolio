@@ -10,7 +10,7 @@ interface SkillCardProps {
  *  comma-joined run-on text) so every instance of this pattern reads the same way. */
 export default function SkillCard({ title, description, items, icon }: SkillCardProps) {
   return (
-    <div className="card-surface group flex h-full flex-col gap-3 p-5" style={{ background: 'var(--paper-000)' }} data-reveal>
+    <div className="card-surface group flex h-full flex-col gap-3 p-5" style={{ background: 'var(--paper-050)' }} data-reveal>
       {icon && (
         <span
           className="flex h-10 w-10 items-center justify-center rounded-[var(--radius-md)] border transition-transform duration-300 group-hover:scale-105"

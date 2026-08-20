@@ -14,28 +14,28 @@
   --font-sans: var(--font-body);
   --font-mono: var(--font-jetbrains-mono), ui-monospace, 'SF Mono', monospace;
 
-  /* Neutral palette — carries the "premium editorial" weight. Color is not the point. */
-  --ink-950: #15121c;
-  --ink-700: #4a4556;
-  --ink-400: #8c8695;
+  /* Neutral palette — cool-neutral, purple-tinted. Main Background (--paper-000) carries
+     ~70% of the page, White Surface (--paper-050) is used for cards and elevated surfaces
+     (~20%), purple is reserved for accents only (~10%). */
+  --ink-950: #17151f;
+  --ink-700: #66616f;
+  --ink-400: #9a96a3;
 
-  --paper-000: #ffffff;
+  --paper-000: #faf9fc;
   --paper-050: #ffffff;
-  --paper-100: #f1f1f1;
+  --paper-100: #f0eef5;
 
-  --line: rgba(21, 18, 28, 0.12);
-  --line-strong: rgba(21, 18, 28, 0.28);
+  --line: #e8e5ec;
+  --line-strong: rgba(23, 21, 31, 0.28);
 
-  --ink-canvas: #100e16;
-  --ink-canvas-raised: #1a1722;
+  --ink-canvas: #17151f;
+  --ink-canvas-raised: #211e2b;
 
-  /* Primary brand color, cloned from the devoperands-website-v4 reference. */
-  --accent: #2563eb;
-  --accent-ink: #1d4ed8;
-  --accent-soft: #eff6ff;
-  /* Secondary reference accents — small highlights only, never a dominant background. */
-  --accent-2: #f59e0b;
-  --accent-3: #34d399;
+  /* Primary brand color — purple, used carefully (buttons, small icons, active nav,
+     eyebrows, small decorative accents) and never as a full-section background. */
+  --accent: #673de6;
+  --accent-ink: #4c2bbf;
+  --accent-soft: #f4f0ff;
 
   --on-accent: #ffffff;
   --on-dark: #f7f5f2;
@@ -113,7 +113,7 @@
   --shadow-sm: 0 2px 8px -2px rgba(15, 23, 42, 0.06), 0 8px 24px -8px rgba(15, 23, 42, 0.08);
   --shadow-md: 0 8px 24px -12px rgba(15, 23, 42, 0.16);
   --shadow-lg: 0 20px 44px -18px rgba(15, 23, 42, 0.24);
-  --shadow-brand: 0 12px 28px -14px rgba(37, 99, 235, 0.38);
+  --shadow-brand: 0 12px 28px -14px rgba(103, 61, 230, 0.38);
 
   --space-xs: 0.5rem;
   --space-sm: 1rem;
@@ -142,7 +142,7 @@
   /* Type scale */
   --text-display: clamp(3rem, 2vw + 2.5rem, 5.5rem);
   --text-h1: clamp(2.25rem, 1.6vw + 1.75rem, 3.5rem);
-  --text-h2: clamp(1.75rem, 1vw + 1.4rem, 2.5rem);
+  --text-h2: clamp(2rem, 1.4vw + 1.6rem, 2.875rem);
   --text-h3: clamp(1.25rem, 0.5vw + 1.05rem, 1.5rem);
   --text-h4: clamp(1.0625rem, 0.15vw + 1.02rem, 1.1875rem);
   --text-lead: clamp(1.125rem, 0.3vw + 1.05rem, 1.3125rem);
@@ -288,16 +288,15 @@
     border-color: var(--border-color);
   }
 
-  /* Shared card treatment: a visible neutral border + a resting shadow so cards read as
-     distinct surfaces against the page instead of disappearing into it. Hover deepens the
-     shadow, lifts the card slightly, and reveals a top accent bar for a premium,
-     purposeful interaction cue instead of a flat color swap. */
+  /* Shared card treatment: a visible neutral border, no resting shadow — cards read as
+     distinct white surfaces through the border alone. Hover adds a subtle shadow, a max
+     3px lift, and reveals a solid purple top accent bar as the interaction cue. */
   .card-surface {
     position: relative;
     overflow: hidden;
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
+    box-shadow: none;
     transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
   }
   .card-surface::before {
@@ -305,13 +304,13 @@
     position: absolute;
     inset: 0 0 auto 0;
     height: 3px;
-    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    background: var(--accent);
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.35s ease;
   }
   .card-surface:hover {
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-sm);
     border-color: var(--border-strong);
     transform: translateY(-3px);
   }

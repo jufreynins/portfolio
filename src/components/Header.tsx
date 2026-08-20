@@ -110,8 +110,8 @@ export default function Header() {
         </nav>
 
         <div className="hidden lg:flex items-center gap-5">
-          <Button href={siteConfig.cvPath} variant="primary" target="_blank" rel="noopener noreferrer">
-            Download CV
+          <Button href="/contact" variant="primary">
+            Let&apos;s Talk
           </Button>
         </div>
 
@@ -154,8 +154,8 @@ export default function Header() {
           ))}
         </nav>
         <div className="mt-4 flex flex-col gap-3 border-t pt-4" style={{ borderColor: 'var(--line)' }}>
-          <Button href={siteConfig.cvPath} variant="primary" className="w-full" target="_blank" rel="noopener noreferrer">
-            Download CV
+          <Button href="/contact" variant="primary" className="w-full">
+            Let&apos;s Talk
           </Button>
         </div>
       </div>

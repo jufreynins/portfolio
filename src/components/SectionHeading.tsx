@@ -1,6 +1,4 @@
 interface SectionHeadingProps {
-  /** @deprecated no longer rendered — the eyebrow-above-heading pattern was dropped
-   *  sitewide for shorter, more consistent headings. Kept so call sites keep compiling. */
   eyebrow?: string;
   title: string;
   description?: string;
@@ -14,6 +12,7 @@ interface SectionHeadingProps {
 }
 
 export default function SectionHeading({
+  eyebrow,
   title,
   description,
   align = 'left',
@@ -25,9 +24,14 @@ export default function SectionHeading({
 
   return (
     <div
-      className={`relative flex flex-col gap-5 ${isCenter ? 'mx-auto max-w-2xl items-center text-center' : ''}`}
+      className={`relative flex flex-col gap-4 ${isCenter ? 'mx-auto max-w-2xl items-center text-center' : ''}`}
       data-reveal
     >
+      {eyebrow && (
+        <span className="eyebrow" style={dark ? { color: 'var(--on-dark)', opacity: 0.7 } : undefined}>
+          {eyebrow}
+        </span>
+      )}
       <div
         className={`flex flex-col gap-3 ${Tag === 'h1' ? 'max-w-3xl' : 'max-w-2xl'} ${isCenter ? 'mx-auto' : ''}`}
       >

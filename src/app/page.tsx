@@ -110,50 +110,23 @@ const expertise = [
   },
 ];
 
-const process = [
-  {
-    title: 'Discover',
-    description: 'Understand the business, the existing site if there is one, and what the project actually needs before writing anything.',
-  },
-  {
-    title: 'Plan',
-    description: 'Scope the build or fix, choose the right tools — Elementor Pro, ACF, JetEngine — and set a clear timeline.',
-  },
-  {
-    title: 'Build',
-    description: 'Develop, test, and refine. Clean implementation, responsive by default, reviewed before it ships.',
-  },
-  {
-    title: 'Support',
-    description: 'Stay available after launch for updates, fixes, hosting, and anything else the site needs to keep running.',
-  },
-];
-
-const aboutPillars = [
-  { title: 'WordPress-first', description: 'Specialized, not spread thin across every framework.' },
-  { title: 'Full website support', description: 'Hosting, DNS, and troubleshooting — not just builds.' },
-  { title: 'Direct communication', description: 'Clear updates and honest timelines, start to finish.' },
-];
+const capabilityStrip = ['WordPress Development', 'Website Management', 'Hosting & Deployment', 'DNS & SSL', 'Troubleshooting', 'Performance'];
 
 const toolGroups = [
   {
     title: 'WordPress',
-    description: 'Page building and dynamic content.',
     items: ['WordPress', 'Elementor Pro', 'Bricks', 'WPBakery', 'Divi', 'ACF Pro', 'JetEngine', 'Gutenberg', 'WooCommerce'],
   },
   {
     title: 'Development',
-    description: 'Core languages behind every build.',
     items: ['PHP', 'HTML', 'CSS', 'JavaScript', 'jQuery', 'MySQL'],
   },
   {
     title: 'Hosting & Operations',
-    description: "Where sites run and how they're managed.",
-    items: ['Cloudways', 'Hostinger', 'cPanel', 'WHM', 'Cloudflare'],
+    items: ['Cloudways', 'Hostinger', 'Cloudflare', 'cPanel', 'WHM'],
   },
   {
     title: 'Workflow',
-    description: 'Day-to-day development workflow.',
     items: ['GitHub', 'Claude Code', 'ChatGPT', 'Cursor'],
   },
 ];
@@ -163,41 +136,68 @@ export default function HomePage() {
     <>
       {/* Hero */}
       <section id="home" className="grid-overlay relative overflow-hidden pt-28 pb-16 sm:pt-32 sm:pb-20" style={{ background: 'var(--paper-000)' }} data-hero-section>
-        <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden" data-hero-bg>
-          <div className="absolute -top-24 -right-24 h-72 w-72 rounded-full blur-3xl" style={{ background: 'var(--accent)', opacity: 0.14 }} />
-          <div className="absolute top-1/3 -left-20 h-64 w-64 rounded-full blur-3xl" style={{ background: 'var(--accent-2)', opacity: 0.1 }} />
-          <div className="absolute bottom-0 left-1/3 h-48 w-48 rounded-full blur-3xl" style={{ background: 'var(--accent-3)', opacity: 0.08 }} />
-        </div>
-
         <Container>
-          <div className="flex max-w-2xl flex-col items-start gap-5" data-hero-content>
-            <h1 className="text-balance">
-              <span className="block overflow-hidden">
-                <span className="block" data-hero-line>
-                  I build and support <span className="text-gradient-accent">WordPress websites</span> that businesses can rely on.
-                </span>
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-10" data-hero-content>
+            <div className="flex flex-col items-start gap-5 lg:col-span-7">
+              <span className="eyebrow" data-hero-eyebrow>
+                WordPress Developer &amp; Website Technical Specialist
               </span>
-            </h1>
 
-            <p className="leading-relaxed" style={{ color: 'var(--ink-700)', fontSize: 'var(--text-lead)' }} data-hero-support>
-              I help agencies and businesses build, manage, troubleshoot, and maintain production WordPress websites—including hosting, domains, DNS, migrations, performance, and ongoing technical
-              support.
-            </p>
+              <h1 className="max-w-2xl text-balance">
+                <span className="block overflow-hidden">
+                  <span className="block" data-hero-line>
+                    I build and support <span className="text-gradient-accent">WordPress websites</span> businesses can rely on.
+                  </span>
+                </span>
+              </h1>
 
-            <p className="meta-index" style={{ color: 'var(--accent)' }} data-hero-support>
-              {yearsExperience}+ Years of Web Development Experience
-            </p>
+              <p className="max-w-lg leading-relaxed" style={{ color: 'var(--ink-700)', fontSize: 'var(--text-lead)' }} data-hero-support>
+                I help agencies and businesses build, manage, troubleshoot, and maintain production WordPress websites—from custom development and ongoing updates to hosting, domains, DNS,
+                migrations, and technical support.
+              </p>
 
-            <div className="mt-1 flex flex-wrap items-center gap-x-7 gap-y-4" data-hero-support>
-              <Button href="/services" variant="primary" size="large">
-                View My Expertise
-              </Button>
-              <Button href="/contact" variant="secondary">
-                Contact Me
-              </Button>
-              <Button href={siteConfig.cvPath} variant="ghost" target="_blank" rel="noopener noreferrer">
-                Download CV
-              </Button>
+              <div className="flex flex-col gap-2" data-hero-support>
+                <span className="meta-index" style={{ color: 'var(--accent)' }}>
+                  {yearsExperience}+ Years of Web Development Experience
+                </span>
+                <span className="meta-index flex items-center gap-2" style={{ color: 'var(--ink-400)' }}>
+                  <span className="inline-flex h-1.5 w-1.5 rounded-full" style={{ background: 'var(--accent)' }} />
+                  Open to remote WordPress opportunities
+                </span>
+              </div>
+
+              <div className="mt-1 flex flex-wrap items-center gap-x-7 gap-y-4" data-hero-support>
+                <Button href="/services" variant="primary" size="large">
+                  View My Expertise
+                </Button>
+                <Button href="/contact" variant="secondary">
+                  Contact Me
+                </Button>
+                <Button href={siteConfig.cvPath} variant="ghost" target="_blank" rel="noopener noreferrer">
+                  Download CV
+                </Button>
+              </div>
+            </div>
+
+            {/* Placeholder hero visual — swap for public/images/home/hero-web-operations.png
+                (next/image, object-contain) once that asset is provided. */}
+            <div className="lg:col-span-5" data-hero-support>
+              <div className="relative mx-auto aspect-square w-full max-w-[280px] sm:max-w-xs lg:max-w-none">
+                <div className="pointer-events-none absolute inset-0 -z-10 rounded-full blur-3xl" style={{ background: 'var(--accent)', opacity: 0.14 }} />
+                <div className="flex h-full w-full flex-col items-center justify-center gap-6 rounded-[var(--radius-xl)]" style={{ background: 'var(--paper-050)', border: '1px solid var(--line)' }}>
+                  <span
+                    className="flex h-20 w-20 items-center justify-center rounded-[var(--radius-lg)] font-mono text-xl font-semibold sm:h-24 sm:w-24 sm:text-2xl"
+                    style={{ background: 'var(--accent-soft)', color: 'var(--accent)' }}
+                  >
+                    {siteConfig.initials}
+                  </span>
+                  <div className="flex flex-col items-center gap-2">
+                    <span className="h-1.5 w-28 rounded-full sm:w-32" style={{ background: 'var(--line)' }} />
+                    <span className="h-1.5 w-20 rounded-full sm:w-24" style={{ background: 'var(--line)' }} />
+                    <span className="h-1.5 w-16 rounded-full sm:w-20" style={{ background: 'var(--accent-soft)' }} />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </Container>
@@ -207,86 +207,96 @@ export default function HomePage() {
       <section className="py-16 sm:py-20 lg:py-28" style={{ background: 'var(--paper-050)' }}>
         <Container className="flex flex-col gap-8">
           <SectionHeading
-            title="WordPress development and complete website support."
-            description="From building responsive WordPress websites to resolving technical issues and managing the infrastructure behind them, I support the complete website lifecycle."
+            eyebrow="Core Expertise"
+            title="Complete WordPress development and website support."
+            description="I handle both the website build and the technical work required to keep it stable, updated, and ready for production."
           />
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {expertise.map((item) => (
               <SkillCard key={item.title} icon={item.icon} title={item.title} description={item.description} items={item.items} />
             ))}
           </div>
-        </Container>
-      </section>
 
-      {/* How I Work */}
-      <section className="py-16 sm:py-20 lg:py-28" style={{ background: 'var(--paper-000)' }}>
-        <Container className="flex flex-col gap-8">
-          <SectionHeading title="How I work." />
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {process.map((step, i) => (
-              <div key={step.title} className="flex flex-col gap-3" data-reveal>
-                <span
-                  className="flex h-8 w-8 items-center justify-center rounded-full font-mono text-xs font-semibold"
-                  style={{ background: 'var(--accent)', color: 'var(--on-accent)', boxShadow: 'var(--shadow-brand)' }}
-                >
-                  {i + 1}
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border-t pt-6" style={{ borderColor: 'var(--line)' }} data-reveal>
+            {capabilityStrip.map((item, i) => (
+              <span key={item} className="flex items-center gap-3">
+                <span className="text-sm font-medium" style={{ color: 'var(--ink-700)' }}>
+                  {item}
                 </span>
-                <h3 className="text-base" style={{ color: 'var(--ink-950)' }}>
-                  {step.title}
-                </h3>
-                <p className="text-sm leading-relaxed" style={{ color: 'var(--ink-700)' }}>
-                  {step.description}
-                </p>
-              </div>
+                {i < capabilityStrip.length - 1 && (
+                  <span className="inline-flex h-1 w-1 flex-shrink-0 rounded-full" style={{ background: 'var(--line-strong)' }} />
+                )}
+              </span>
             ))}
           </div>
         </Container>
       </section>
 
-      {/* Tools & Platforms */}
-      <section className="py-16 sm:py-20 lg:py-28" style={{ background: 'var(--paper-050)' }}>
-        <Container className="flex flex-col gap-8">
-          <SectionHeading title="Tools I work with." />
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {/* Tools & Technology */}
+      <section className="py-16 sm:py-20 lg:py-28" style={{ background: 'var(--paper-000)' }}>
+        <Container className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-5" data-reveal>
+            <span className="eyebrow">Stack</span>
+            <h2 className="mt-3 max-w-sm">Tools and technologies.</h2>
+            <p className="mt-4 max-w-sm leading-relaxed" style={{ color: 'var(--ink-700)' }}>
+              WordPress is my primary focus — these are the supporting development and infrastructure tools I use alongside it.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:col-span-7">
             {toolGroups.map((group) => (
-              <SkillCard key={group.title} title={group.title} description={group.description} items={group.items} />
+              <div key={group.title} className="flex flex-col gap-2.5" data-reveal>
+                <h3 className="text-sm font-semibold" style={{ color: 'var(--ink-950)' }}>
+                  {group.title}
+                </h3>
+                <div className="flex flex-wrap gap-1.5">
+                  {group.items.map((tool) => (
+                    <span key={tool} className="rounded-full border px-2.5 py-1 text-xs" style={{ borderColor: 'var(--line)', color: 'var(--ink-700)' }}>
+                      {tool}
+                    </span>
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         </Container>
       </section>
 
       {/* Short About */}
-      <section id="about" className="py-16 sm:py-20 lg:py-28" style={{ background: 'var(--paper-000)' }}>
-        <Container className="flex flex-col gap-8">
-          <SectionHeading title="A developer who handles more than the build." />
-          <p className="max-w-2xl leading-relaxed" style={{ color: 'var(--ink-700)' }} data-reveal>
-            I&apos;m {siteConfig.name}, a WordPress developer with {yearsExperience}+ years of experience working with agencies and businesses across the United States, Canada, and the Philippines.
-            Beyond page building, I handle the technical work required to keep websites stable, secure, updated, and ready for production.
-          </p>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3" data-reveal data-reveal-type="stagger">
-            {aboutPillars.map((pillar) => (
-              <div key={pillar.title} className="flex flex-col gap-1.5 border-l-2 pl-4" style={{ borderColor: 'var(--accent)' }}>
-                <h3 className="text-sm font-semibold" style={{ color: 'var(--ink-950)' }}>
-                  {pillar.title}
-                </h3>
-                <p className="text-sm leading-relaxed" style={{ color: 'var(--ink-700)' }}>
-                  {pillar.description}
-                </p>
-              </div>
-            ))}
+      <section id="about" className="py-16 sm:py-20 lg:py-28" style={{ background: 'var(--paper-050)' }}>
+        <Container className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-center lg:gap-16">
+          <div className="lg:col-span-5" data-reveal data-reveal-type="fade-up">
+            <div
+              className="relative mx-auto flex aspect-square max-w-[240px] items-center justify-center rounded-[var(--radius-xl)] lg:max-w-none"
+              style={{ background: 'var(--paper-000)', border: '1px solid var(--line)' }}
+            >
+              <span
+                className="flex h-24 w-24 items-center justify-center rounded-full font-mono text-2xl font-semibold"
+                style={{ background: 'var(--accent-soft)', color: 'var(--accent)' }}
+              >
+                {siteConfig.initials}
+              </span>
+            </div>
           </div>
-          <div data-reveal>
-            <Button href="/about" variant="secondary">
-              More About Me
-            </Button>
+
+          <div className="flex flex-col gap-5 lg:col-span-7" data-reveal data-reveal-type="fade-up">
+            <SectionHeading eyebrow="About Me" title="More than a WordPress page builder." />
+            <p className="max-w-2xl leading-relaxed" style={{ color: 'var(--ink-700)' }}>
+              I&apos;m {siteConfig.name}, a WordPress developer with {yearsExperience}+ years of experience working with agencies and businesses across the United States, Canada, and the Philippines.
+              I handle development, website management, hosting, domains, DNS, migrations, and production troubleshooting.
+            </p>
+            <div>
+              <Button href="/about" variant="secondary">
+                More About Me
+              </Button>
+            </div>
           </div>
         </Container>
       </section>
 
       {/* Final CTA */}
       <ContactCTA
-        title="Need help with a WordPress website?"
-        description="I'm open to remote WordPress development, website management, technical support, and long-term agency opportunities."
+        title="Need reliable WordPress support?"
+        description="I'm available for WordPress development, website management, technical support, and long-term remote opportunities."
         primaryLabel="Contact Me"
         primaryHref="/contact"
         secondaryLabel="Download CV"

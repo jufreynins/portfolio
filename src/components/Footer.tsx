@@ -7,19 +7,12 @@ export default function Footer() {
   return (
     <footer className="border-t py-12 sm:py-14" style={{ borderColor: 'var(--line)' }}>
       <Container className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-2">
           <span className="font-heading text-xl" style={{ color: 'var(--ink-950)' }}>
             {siteConfig.name}
           </span>
           <span className="text-sm font-medium" style={{ color: 'var(--ink-700)' }}>
             WordPress Developer &amp; Website Technical Specialist
-          </span>
-          <span className="max-w-xs text-sm" style={{ color: 'var(--ink-400)' }}>
-            WordPress websites, hosting, DNS, and technical web support.
-          </span>
-          <span className="meta-index mt-1 flex items-center gap-2">
-            <span className="inline-flex h-1.5 w-1.5 rounded-full" style={{ background: 'var(--accent)' }} />
-            Open to remote WordPress opportunities
           </span>
         </div>
 
