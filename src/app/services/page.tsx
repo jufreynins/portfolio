@@ -37,7 +37,7 @@ const capabilities = [
 export default function ServicesPage() {
   return (
     <>
-      <section className="pt-28 pb-12 sm:pt-32 sm:pb-14" style={{ background: 'var(--paper-000)' }}>
+      <section className="pt-24 pb-10 sm:pt-28 sm:pb-12" style={{ background: 'var(--paper-000)' }}>
         <Container>
           <SectionHeading
             as="h1"
@@ -48,10 +48,10 @@ export default function ServicesPage() {
         </Container>
       </section>
 
-      <section className="py-14 sm:py-16" style={{ background: 'var(--paper-000)' }}>
-        <Container className="flex flex-col gap-10 divide-y" style={{ borderColor: 'var(--line)' }}>
+      <section className="py-12 sm:py-16 lg:py-20" style={{ background: 'var(--paper-000)' }}>
+        <Container className="flex flex-col gap-8 divide-y" style={{ borderColor: 'var(--line)' }}>
           {capabilities.map((capability, i) => (
-            <div key={capability.title} className="grid grid-cols-1 gap-4 pt-10 first:pt-0 lg:grid-cols-12 lg:gap-8" data-reveal>
+            <div key={capability.title} className="grid grid-cols-1 gap-4 pt-8 first:pt-0 lg:grid-cols-12 lg:gap-8" data-reveal>
               <div className="lg:col-span-1">
                 <span className="font-mono text-sm" style={{ color: 'var(--line-strong)' }}>
                   {String(i + 1).padStart(2, '0')}
@@ -72,14 +72,14 @@ export default function ServicesPage() {
         </Container>
       </section>
 
-      <section className="py-14 sm:py-16" style={{ background: 'var(--paper-050)' }}>
+      <section className="py-12 sm:py-16 lg:py-20" style={{ background: 'var(--paper-050)' }}>
         <Container className="flex flex-col gap-8">
           <SectionHeading eyebrow="Technology" title="Tools and technologies." />
           <TechGroup groups={techGroups} />
         </Container>
       </section>
 
-      <section className="py-14 sm:py-16" style={{ background: 'var(--paper-000)' }}>
+      <section className="py-12 sm:py-16 lg:py-20" style={{ background: 'var(--paper-000)' }}>
         <Container className="flex flex-col items-start gap-5 border-t pt-10" style={{ borderColor: 'var(--line)' }}>
           <span className="eyebrow">Beyond Client Work</span>
           <p className="max-w-xl leading-relaxed" style={{ color: 'var(--ink-700)' }}>

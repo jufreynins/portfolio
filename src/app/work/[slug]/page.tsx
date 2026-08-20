@@ -37,7 +37,7 @@ export default async function ProjectCaseStudyPage({ params }: { params: Promise
 
   return (
     <>
-      <section className="pt-28 pb-10 sm:pt-32 sm:pb-12" style={{ background: 'var(--paper-000)' }}>
+      <section className="pt-24 pb-8 sm:pt-28 sm:pb-10" style={{ background: 'var(--paper-000)' }}>
         <Container className="flex flex-col gap-5">
           <a href="/work" className="inline-flex w-fit items-center gap-1.5 text-sm font-medium transition-colors hover:text-[var(--accent)]" style={{ color: 'var(--ink-700)' }}>
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -90,14 +90,11 @@ export default async function ProjectCaseStudyPage({ params }: { params: Promise
         </Bleed>
       </section>
 
-      <section className="py-10 sm:py-14" style={{ background: 'var(--paper-000)' }}>
+      <section className="py-8 sm:py-10 lg:py-12" style={{ background: 'var(--paper-000)' }}>
         <Container className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="flex flex-col gap-10 lg:col-span-8">
             <div className="flex flex-col gap-3">
-              <span className="eyebrow">Project Overview</span>
-              <p className="leading-relaxed" style={{ color: 'var(--ink-950)' }}>
-                {project.description}
-              </p>
+              <span className="eyebrow">Business Need</span>
               <p className="leading-relaxed" style={{ color: 'var(--ink-950)' }}>
                 {project.goal}
               </p>
@@ -157,7 +154,7 @@ export default async function ProjectCaseStudyPage({ params }: { params: Promise
         </Container>
       </section>
 
-      <section className="border-t py-14 sm:py-16" style={{ borderColor: 'var(--line)', background: 'var(--paper-050)' }}>
+      <section className="border-t py-10 sm:py-12 lg:py-14" style={{ borderColor: 'var(--line)', background: 'var(--paper-050)' }}>
         <Container className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-col gap-1">
             <span className="eyebrow">Related Project</span>

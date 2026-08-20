@@ -15,7 +15,7 @@ export const metadata: Metadata = buildMetadata({
 export default function ToolsPage() {
   return (
     <>
-      <section className="pt-28 pb-8 sm:pt-32 sm:pb-10" style={{ background: 'var(--paper-050)' }}>
+      <section className="pt-24 pb-8 sm:pt-28 sm:pb-10" style={{ background: 'var(--paper-050)' }}>
         <Container className="flex flex-col gap-2">
           <span className="eyebrow">Web Tools</span>
           <h1 className="text-2xl sm:text-3xl" style={{ color: 'var(--ink-950)' }}>

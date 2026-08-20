@@ -17,7 +17,7 @@ export const metadata: Metadata = buildMetadata({
 export default function WorkPage() {
   return (
     <>
-      <section className="pt-28 pb-12 sm:pt-32 sm:pb-14" style={{ background: 'var(--paper-000)' }}>
+      <section className="pt-24 pb-10 sm:pt-28 sm:pb-12" style={{ background: 'var(--paper-000)' }}>
         <Container className="flex flex-col gap-4">
           <SectionHeading as="h1" eyebrow="Selected WordPress Work" title="Real WordPress client work." description="The business need, my role, and the WordPress technology behind each site." />
           <p className="text-sm" style={{ color: 'var(--ink-700)' }}>
@@ -30,7 +30,7 @@ export default function WorkPage() {
         </Container>
       </section>
 
-      <section className="pb-16 sm:pb-20" style={{ background: 'var(--paper-000)' }}>
+      <section className="pb-12 sm:pb-16 lg:pb-20" style={{ background: 'var(--paper-000)' }}>
         <Bleed>
           <WorkList projects={projects} />
         </Bleed>

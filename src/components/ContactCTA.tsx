@@ -27,7 +27,7 @@ export default function ContactCTA({
   secondaryExternal = false,
 }: ContactCTAProps) {
   return (
-    <section className="dark-grid-bg py-16 sm:py-20" style={{ background: 'var(--ink-canvas)' }}>
+    <section className="dark-grid-bg py-12 sm:py-16 lg:py-20" style={{ background: 'var(--ink-canvas)' }}>
       <Container className="flex flex-col items-start gap-6">
         <SectionHeading eyebrow={eyebrow} title={title} description={description} dark />
         <div className="flex flex-wrap items-center gap-6" data-reveal>

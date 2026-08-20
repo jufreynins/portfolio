@@ -32,7 +32,7 @@ const nextSteps = [
 export default function ContactPage() {
   return (
     <>
-      <section className="dark-grid-bg pt-28 pb-14 sm:pt-32 sm:pb-16" style={{ background: 'var(--ink-canvas)' }}>
+      <section className="dark-grid-bg pt-24 pb-10 sm:pt-28 sm:pb-12" style={{ background: 'var(--ink-canvas)' }}>
         <Container className="grid grid-cols-1 gap-10 lg:grid-cols-[2fr_3fr] lg:gap-12">
           <div className="flex flex-col gap-6">
             <SectionHeading
@@ -85,7 +85,7 @@ export default function ContactPage() {
       </section>
 
       {/* What Happens Next */}
-      <section className="py-14 sm:py-16" style={{ background: 'var(--paper-050)' }}>
+      <section className="py-12 sm:py-16 lg:py-20" style={{ background: 'var(--paper-050)' }}>
         <Container className="flex flex-col gap-8">
           <SectionHeading eyebrow="What Happens Next" title="A simple, no-pressure process" description="Here's what happens after you send a message." />
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-3" data-reveal data-reveal-type="stagger">

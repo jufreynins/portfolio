@@ -56,7 +56,7 @@ export default function AboutPage() {
   return (
     <>
       {/* Introduction */}
-      <section className="pt-28 pb-14 sm:pt-32 sm:pb-16" style={{ background: 'var(--paper-000)' }}>
+      <section className="pt-24 pb-10 sm:pt-28 sm:pb-12" style={{ background: 'var(--paper-000)' }}>
         <Container className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-7" data-reveal data-reveal-type="fade-up">
             <SectionHeading as="h1" eyebrow="About" title="A WordPress developer who understands the technical setup behind it." />
@@ -107,7 +107,7 @@ export default function AboutPage() {
       </section>
 
       {/* WordPress Experience */}
-      <section id="career" className="py-14 sm:py-16" style={{ background: 'var(--paper-000)' }}>
+      <section id="career" className="py-12 sm:py-16 lg:py-20" style={{ background: 'var(--paper-000)' }}>
         <Container className="flex flex-col gap-8">
           <SectionHeading
             eyebrow="WordPress Experience"
@@ -119,7 +119,7 @@ export default function AboutPage() {
       </section>
 
       {/* Technical Website Operations */}
-      <section className="py-14 sm:py-16" style={{ background: 'var(--paper-050)' }}>
+      <section className="py-12 sm:py-16 lg:py-20" style={{ background: 'var(--paper-050)' }}>
         <Container className="flex flex-col gap-8">
           <SectionHeading
             eyebrow="Technical Website Operations"
@@ -145,7 +145,7 @@ export default function AboutPage() {
       </section>
 
       {/* Development Skills */}
-      <section className="py-14 sm:py-16" style={{ background: 'var(--paper-000)' }}>
+      <section className="py-12 sm:py-16 lg:py-20" style={{ background: 'var(--paper-000)' }}>
         <Container className="flex flex-col gap-8">
           <SectionHeading eyebrow="Development Skills" title="The code behind the WordPress work." />
           <ul className="flex flex-wrap gap-x-6 gap-y-3">

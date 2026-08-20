@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import type { Project } from '@/data/projects';
-import ProjectFeature from './ProjectFeature';
+import ProjectCard from './ProjectCard';
 
 const FILTERS = ['All', 'Dynamic WordPress', 'E-Commerce'] as const;
 type Filter = (typeof FILTERS)[number];
@@ -44,9 +44,9 @@ export default function WorkList({ projects }: { projects: Project[] }) {
           No projects match this filter yet.
         </p>
       ) : (
-        <div className="flex flex-col gap-14 sm:gap-16">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((project, i) => (
-            <ProjectFeature key={project.slug} project={project} index={i + 1} priority={i < 2} />
+            <ProjectCard key={project.slug} project={project} priority={i < 3} />
           ))}
         </div>
       )}

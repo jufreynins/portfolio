@@ -109,7 +109,7 @@ export default function Header() {
           <span className="hidden sm:inline">{siteConfig.name}</span>
         </a>
 
-        <nav className="hidden 2xl:flex items-center gap-5" aria-label="Primary">
+        <nav className="hidden lg:flex items-center gap-4" aria-label="Primary">
           {siteConfig.nav.map((item) => (
             <a
               key={item.href}
@@ -125,7 +125,7 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="hidden 2xl:flex items-center gap-5">
+        <div className="hidden lg:flex items-center gap-5">
           <Button href={siteConfig.cvPath} variant="primary" target="_blank" rel="noopener noreferrer">
             Download CV
           </Button>
@@ -133,7 +133,7 @@ export default function Header() {
 
         <button
           type="button"
-          className="header-mobile-toggle 2xl:hidden inline-flex h-11 w-11 items-center justify-center rounded-[var(--radius-sm)] border"
+          className="header-mobile-toggle lg:hidden inline-flex h-11 w-11 items-center justify-center rounded-[var(--radius-sm)] border"
           style={{ borderColor: 'var(--line)', color: 'var(--ink-950)' }}
           aria-expanded="false"
           aria-controls="mobile-menu"
@@ -152,7 +152,7 @@ export default function Header() {
         </button>
       </Container>
 
-      <div id="mobile-menu" className="2xl:hidden hidden glass mx-4 mb-4 rounded-[var(--radius-md)] px-6 py-6" data-mobile-menu>
+      <div id="mobile-menu" className="lg:hidden hidden glass mx-4 mb-4 rounded-[var(--radius-md)] px-6 py-6" data-mobile-menu>
         <nav className="flex flex-col gap-1" aria-label="Mobile">
           {siteConfig.nav.map((item) => (
             <a

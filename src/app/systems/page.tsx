@@ -18,7 +18,7 @@ export const metadata: Metadata = buildMetadata({
 export default function SystemsPage() {
   return (
     <>
-      <section className="pt-28 pb-12 sm:pt-32 sm:pb-14" style={{ background: 'var(--paper-000)' }}>
+      <section className="pt-24 pb-10 sm:pt-28 sm:pb-12" style={{ background: 'var(--paper-000)' }}>
         <Container>
           <SectionHeading
             as="h1"
@@ -29,7 +29,7 @@ export default function SystemsPage() {
         </Container>
       </section>
 
-      <section className="py-14 sm:py-16" style={{ background: 'var(--paper-000)' }}>
+      <section className="py-12 sm:py-16 lg:py-20" style={{ background: 'var(--paper-000)' }}>
         <Container className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           {systems.map((system) => {
             const status = systemStatusStyle[system.status];

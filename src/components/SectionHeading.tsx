@@ -25,21 +25,17 @@ export default function SectionHeading({
 
   return (
     <div
-      className={`relative flex flex-col gap-5 ${
-        isCenter ? 'mx-auto max-w-2xl items-center text-center' : 'lg:grid lg:grid-cols-12 lg:items-baseline lg:gap-8'
-      }`}
+      className={`relative flex flex-col gap-5 ${isCenter ? 'mx-auto max-w-2xl items-center text-center' : ''}`}
       data-reveal
     >
       {eyebrow && (
-        <div className={`flex items-center gap-3 ${isCenter ? 'justify-center' : 'lg:col-span-3'}`}>
+        <div className={`flex items-center gap-3 ${isCenter ? 'justify-center' : ''}`}>
           <span className="h-px w-8 flex-shrink-0" style={{ background: hairlineColor }} />
           <span className="eyebrow">{eyebrow}</span>
         </div>
       )}
       <div
-        className={`flex flex-col gap-3 ${eyebrow && !isCenter ? 'lg:col-span-9' : !isCenter ? 'lg:col-span-12' : ''} ${
-          Tag === 'h1' ? 'max-w-3xl' : 'max-w-2xl'
-        } ${isCenter ? 'mx-auto' : ''}`}
+        className={`flex flex-col gap-3 ${Tag === 'h1' ? 'max-w-3xl' : 'max-w-2xl'} ${isCenter ? 'mx-auto' : ''}`}
       >
         <Tag className={`relative text-balance break-words ${titleClass}`} style={{ color: dark ? 'var(--on-dark)' : 'var(--ink-950)' }}>
           {title}
