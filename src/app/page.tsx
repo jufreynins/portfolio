@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import Container from '@/components/Container';
 import Button from '@/components/Button';
 import SectionHeading from '@/components/SectionHeading';
+import SkillCard from '@/components/SkillCard';
 import ContactCTA from '@/components/ContactCTA';
 import { siteConfig } from '@/config/site';
 import { buildMetadata } from '@/lib/seo';
@@ -74,32 +75,38 @@ const expertise = [
   {
     icon: icons.code,
     title: 'WordPress Development',
-    description: 'Custom WordPress builds, Elementor Pro, Gutenberg, responsive layouts, frontend customization, ACF, JetEngine, and WooCommerce.',
+    description: 'Custom builds and responsive frontend development.',
+    items: ['Elementor Pro & Gutenberg', 'ACF & JetEngine', 'WooCommerce', 'Frontend customization'],
   },
   {
     icon: icons.settings,
     title: 'Website Management',
-    description: 'Content updates, plugin and theme maintenance, backups, monitoring, production support, and ongoing website improvements.',
+    description: 'Ongoing maintenance and production support.',
+    items: ['Content updates', 'Plugin & theme maintenance', 'Backups & monitoring', 'Ongoing improvements'],
   },
   {
     icon: icons.alert,
     title: 'Troubleshooting & Support',
-    description: 'Plugin conflicts, PHP errors, broken layouts, form issues, frontend bugs, WP_DEBUG, error logs, FTP, and cPanel fixes.',
+    description: 'Diagnosing and fixing production issues fast.',
+    items: ['Plugin conflicts', 'PHP & frontend errors', 'Form issues', 'WP_DEBUG & error logs', 'FTP / cPanel fixes'],
   },
   {
     icon: icons.server,
     title: 'Hosting, Deployment & Migrations',
-    description: 'Cloudways, Hostinger, GoDaddy, WHM/cPanel, staging environments, backups, WordPress migrations, and production deployment.',
+    description: 'Getting sites hosted, staged, and deployed correctly.',
+    items: ['Cloudways, Hostinger, GoDaddy', 'WHM & cPanel', 'Staging environments', 'WordPress migrations'],
   },
   {
     icon: icons.globe,
     title: 'Domains, DNS, SSL & Email',
-    description: 'Nameservers, A, CNAME, MX and TXT records, subdomain connections, SSL, SPF, DKIM, DMARC, and email-delivery troubleshooting.',
+    description: 'Domain, DNS, and email configuration.',
+    items: ['Nameservers & DNS records', 'Subdomain connections', 'SSL setup', 'SPF, DKIM & DMARC'],
   },
   {
     icon: icons.trending,
     title: 'Performance & Technical SEO',
-    description: 'Caching, image optimization, redirects, Core Web Vitals improvements, GA4, Google Search Console, and technical SEO fundamentals.',
+    description: 'Faster sites and stronger technical SEO.',
+    items: ['Caching & image optimization', 'Core Web Vitals', 'Redirects', 'GA4 & Search Console'],
   },
 ];
 
@@ -130,19 +137,23 @@ const aboutPillars = [
 
 const toolGroups = [
   {
-    label: 'WordPress',
+    title: 'WordPress',
+    description: 'Page building and dynamic content.',
     items: ['WordPress', 'Elementor Pro', 'ACF Pro', 'JetEngine', 'Gutenberg', 'WooCommerce'],
   },
   {
-    label: 'Development',
+    title: 'Development',
+    description: 'Core languages behind every build.',
     items: ['PHP', 'HTML', 'CSS', 'JavaScript', 'jQuery', 'MySQL'],
   },
   {
-    label: 'Hosting & Operations',
+    title: 'Hosting & Operations',
+    description: "Where sites run and how they're managed.",
     items: ['Cloudways', 'Hostinger', 'cPanel', 'WHM', 'Cloudflare'],
   },
   {
-    label: 'Workflow',
+    title: 'Workflow',
+    description: 'Day-to-day development workflow.',
     items: ['GitHub', 'Claude Code', 'ChatGPT', 'Cursor'],
   },
 ];
@@ -159,10 +170,6 @@ export default function HomePage() {
 
         <Container>
           <div className="flex max-w-2xl flex-col items-start gap-5" data-hero-content>
-            <span className="eyebrow" data-hero-eyebrow>
-              WordPress Developer &amp; Website Technical Specialist
-            </span>
-
             <h1 className="text-balance">
               <span className="block overflow-hidden">
                 <span className="block" data-hero-line>
@@ -199,31 +206,12 @@ export default function HomePage() {
       <section className="py-16 sm:py-20 lg:py-28" style={{ background: 'var(--paper-050)' }}>
         <Container className="flex flex-col gap-8">
           <SectionHeading
-            eyebrow="What I Do"
             title="WordPress development and complete website support."
             description="From building responsive WordPress websites to resolving technical issues and managing the infrastructure behind them, I support the complete website lifecycle."
           />
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {expertise.map((item, i) => (
-              <div key={item.title} className="card-surface flex h-full flex-col gap-3 p-5" style={{ background: 'var(--paper-000)' }} data-reveal>
-                <div className="flex items-center justify-between">
-                  <span
-                    className="flex h-10 w-10 items-center justify-center rounded-[var(--radius-md)] border"
-                    style={{ background: 'var(--accent-soft)', color: 'var(--accent)', borderColor: 'var(--line)' }}
-                  >
-                    {item.icon}
-                  </span>
-                  <span className="font-mono text-xs" style={{ color: 'var(--ink-400)' }}>
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                </div>
-                <h3 className="text-base" style={{ color: 'var(--ink-950)' }}>
-                  {item.title}
-                </h3>
-                <p className="text-sm leading-relaxed" style={{ color: 'var(--ink-700)' }}>
-                  {item.description}
-                </p>
-              </div>
+            {expertise.map((item) => (
+              <SkillCard key={item.title} icon={item.icon} title={item.title} description={item.description} items={item.items} />
             ))}
           </div>
         </Container>
@@ -232,7 +220,7 @@ export default function HomePage() {
       {/* How I Work */}
       <section className="py-16 sm:py-20 lg:py-28" style={{ background: 'var(--paper-000)' }}>
         <Container className="flex flex-col gap-8">
-          <SectionHeading eyebrow="Process" title="How I work." />
+          <SectionHeading title="How I work." />
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {process.map((step, i) => (
               <div key={step.title} className="flex flex-col gap-2" data-reveal>
@@ -254,25 +242,10 @@ export default function HomePage() {
       {/* Tools & Platforms */}
       <section className="py-16 sm:py-20 lg:py-28" style={{ background: 'var(--paper-050)' }}>
         <Container className="flex flex-col gap-8">
-          <SectionHeading eyebrow="Stack" title="Tools I work with." />
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <SectionHeading title="Tools I work with." />
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {toolGroups.map((group) => (
-              <div key={group.label} className="flex flex-col gap-3" data-reveal>
-                <span className="eyebrow" style={{ color: 'var(--ink-400)' }}>
-                  {group.label}
-                </span>
-                <div className="flex flex-wrap gap-1.5">
-                  {group.items.map((tool) => (
-                    <span
-                      key={tool}
-                      className="meta-index rounded-full border px-2.5 py-1 normal-case"
-                      style={{ borderColor: 'var(--line)', color: 'var(--ink-700)' }}
-                    >
-                      {tool}
-                    </span>
-                  ))}
-                </div>
-              </div>
+              <SkillCard key={group.title} title={group.title} description={group.description} items={group.items} />
             ))}
           </div>
         </Container>
@@ -281,7 +254,7 @@ export default function HomePage() {
       {/* Short About */}
       <section id="about" className="py-16 sm:py-20 lg:py-28" style={{ background: 'var(--paper-000)' }}>
         <Container className="flex flex-col gap-8">
-          <SectionHeading eyebrow="About" title="A developer who handles more than the build." />
+          <SectionHeading title="A developer who handles more than the build." />
           <p className="max-w-2xl leading-relaxed" style={{ color: 'var(--ink-700)' }} data-reveal>
             I&apos;m {siteConfig.name}, a WordPress developer with {yearsExperience}+ years of experience working with agencies and businesses across the United States, Canada, and the Philippines.
             Beyond page building, I handle the technical work required to keep websites stable, secure, updated, and ready for production.

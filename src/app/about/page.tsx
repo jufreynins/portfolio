@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Container from '@/components/Container';
 import Button from '@/components/Button';
 import SectionHeading from '@/components/SectionHeading';
+import SkillCard from '@/components/SkillCard';
 import ExperienceTimeline from '@/components/ExperienceTimeline';
 import ContactCTA from '@/components/ContactCTA';
 import { siteConfig } from '@/config/site';
@@ -27,19 +28,23 @@ const capabilityHighlights = ['WordPress development', 'Elementor Pro', 'Dynamic
 
 const websiteOperationsGroups = [
   {
-    label: 'Hosting & Migrations',
+    title: 'Hosting & Migrations',
+    description: 'Where sites are hosted and deployed.',
     items: ['Cloudways, Hostinger, GoDaddy', 'WHM & cPanel', 'WPVivid backup & restore', 'Staging-to-production deployment'],
   },
   {
-    label: 'Domains & DNS',
+    title: 'Domains & DNS',
+    description: 'Domain and DNS configuration.',
     items: ['Nameserver updates', 'A, CNAME, MX & TXT records', 'DNS propagation checks', 'SPF, DKIM & DMARC'],
   },
   {
-    label: 'SSL & Security',
+    title: 'SSL & Security',
+    description: 'Keeping sites secure and current.',
     items: ['SSL installation & verification', 'Plugin/theme update management', 'Backup workflows', 'Basic hardening'],
   },
   {
-    label: 'Troubleshooting & Support',
+    title: 'Troubleshooting & Support',
+    description: 'Diagnosing and resolving issues.',
     items: ['WP_DEBUG & error logs', 'Plugin/theme conflict resolution', 'PHP & frontend errors', 'Form/email delivery issues'],
   },
 ];
@@ -59,7 +64,7 @@ export default function AboutPage() {
       <section className="pt-24 pb-10 sm:pt-28 sm:pb-12" style={{ background: 'var(--paper-000)' }}>
         <Container className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-7" data-reveal data-reveal-type="fade-up">
-            <SectionHeading as="h1" eyebrow="About" title="A WordPress developer who understands the technical setup behind it." />
+            <SectionHeading as="h1" title="A WordPress developer who understands the technical setup behind it." />
           </div>
 
           <div className="flex flex-col gap-6 lg:col-span-5" data-reveal data-reveal-type="fade-up">
@@ -110,7 +115,6 @@ export default function AboutPage() {
       <section id="career" className="py-12 sm:py-16 lg:py-20" style={{ background: 'var(--paper-000)' }}>
         <Container className="flex flex-col gap-8">
           <SectionHeading
-            eyebrow="WordPress Experience"
             title="Building and maintaining production WordPress websites."
             description="A run of freelance and contract engagements with agencies and direct clients, bracketing a multi-year in-house role — most of it WordPress work."
           />
@@ -122,23 +126,12 @@ export default function AboutPage() {
       <section className="py-12 sm:py-16 lg:py-20" style={{ background: 'var(--paper-050)' }}>
         <Container className="flex flex-col gap-8">
           <SectionHeading
-            eyebrow="Technical Website Operations"
             title="The setup behind the website."
             description="Hosting, migrations, domains, DNS, SSL, and troubleshooting — the operational side of running a WordPress site, not just building one."
           />
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {websiteOperationsGroups.map((group) => (
-              <div key={group.label} className="flex flex-col gap-3" data-reveal>
-                <span className="eyebrow">{group.label}</span>
-                <ul className="flex flex-col gap-2">
-                  {group.items.map((item) => (
-                    <li key={item} className="flex items-start gap-2 text-sm" style={{ color: 'var(--ink-950)' }}>
-                      <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full" style={{ background: 'var(--accent)' }} />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <SkillCard key={group.title} title={group.title} description={group.description} items={group.items} />
             ))}
           </div>
         </Container>
@@ -147,7 +140,7 @@ export default function AboutPage() {
       {/* Development Skills */}
       <section className="py-12 sm:py-16 lg:py-20" style={{ background: 'var(--paper-000)' }}>
         <Container className="flex flex-col gap-8">
-          <SectionHeading eyebrow="Development Skills" title="The code behind the WordPress work." />
+          <SectionHeading title="The code behind the WordPress work." />
           <ul className="flex flex-wrap gap-x-6 gap-y-3">
             {developmentSkills.map((item) => (
               <li key={item} className="flex items-center gap-2 text-sm font-medium" style={{ color: 'var(--ink-950)' }} data-reveal>

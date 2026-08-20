@@ -19,7 +19,7 @@ export default function WorkPage() {
     <>
       <section className="pt-24 pb-10 sm:pt-28 sm:pb-12" style={{ background: 'var(--paper-000)' }}>
         <Container className="flex flex-col gap-4">
-          <SectionHeading as="h1" eyebrow="Selected WordPress Work" title="Real WordPress client work." description="The business need, my role, and the WordPress technology behind each site." />
+          <SectionHeading as="h1" title="Real WordPress client work." description="The business need, my role, and the WordPress technology behind each site." />
           <p className="text-sm" style={{ color: 'var(--ink-700)' }}>
             Every project below is completed client work. Looking for personal systems instead? See{' '}
             <a href="/systems" className="font-medium underline" style={{ color: 'var(--accent)' }}>

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Container from '@/components/Container';
 import SectionHeading from '@/components/SectionHeading';
-import TechGroup from '@/components/TechGroup';
+import SkillCard from '@/components/SkillCard';
 import ContactCTA from '@/components/ContactCTA';
 import { siteConfig } from '@/config/site';
 import { techGroups } from '@/data/techSummary';
@@ -16,21 +16,23 @@ export const metadata: Metadata = buildMetadata({
 const capabilities = [
   {
     title: 'WordPress Development',
-    description:
-      'Custom WordPress builds and dynamic content with Elementor Pro, ACF, and JetEngine — plus the custom frontend work, troubleshooting, and maintenance that keeps a site reliable after launch.',
+    description: 'Custom builds and dynamic content, start to finish.',
+    items: ['Elementor Pro, ACF & JetEngine', 'Custom frontend work', 'Troubleshooting & maintenance'],
   },
   {
     title: 'Website Operations',
-    description: 'Hosting coordination, domain and DNS configuration, SSL verification, migrations, deployments, and production troubleshooting across Cloudways, Hostinger, and common hosting providers.',
+    description: 'Hosting, domains, and production support.',
+    items: ['Hosting coordination (Cloudways, Hostinger)', 'Domain & DNS configuration', 'SSL, migrations & deployments'],
   },
   {
     title: 'Web Systems',
-    description: 'React, Next.js, TypeScript, and Laravel for internal tools and workflows that go beyond what a page builder can deliver on its own.',
+    description: 'Internal tools beyond page builders.',
+    items: ['React & Next.js', 'TypeScript', 'Laravel'],
   },
   {
     title: 'AI-Assisted Development',
-    description:
-      'Claude Code, ChatGPT, and Cursor integrated into the day-to-day workflow — for faster iteration, research, and debugging support. Technical judgment and final review stay human, on every change.',
+    description: 'Faster iteration, human-reviewed.',
+    items: ['Claude Code', 'ChatGPT', 'Cursor'],
   },
 ];
 
@@ -41,7 +43,6 @@ export default function ServicesPage() {
         <Container>
           <SectionHeading
             as="h1"
-            eyebrow="Expertise"
             title="WordPress first, with the range to go further."
             description="WordPress development and website operations are the core of what I do — with web systems and AI-assisted workflows supporting it."
           />
@@ -49,33 +50,21 @@ export default function ServicesPage() {
       </section>
 
       <section className="py-12 sm:py-16 lg:py-20" style={{ background: 'var(--paper-000)' }}>
-        <Container className="flex flex-col gap-8 divide-y" style={{ borderColor: 'var(--line)' }}>
-          {capabilities.map((capability, i) => (
-            <div key={capability.title} className="grid grid-cols-1 gap-4 pt-8 first:pt-0 lg:grid-cols-12 lg:gap-8" data-reveal>
-              <div className="lg:col-span-1">
-                <span className="font-mono text-sm" style={{ color: 'var(--line-strong)' }}>
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-              </div>
-              <div className="lg:col-span-4">
-                <h2 className="text-2xl" style={{ color: 'var(--ink-950)' }}>
-                  {capability.title}
-                </h2>
-              </div>
-              <div className="lg:col-span-7">
-                <p className="max-w-xl leading-relaxed" style={{ color: 'var(--ink-700)' }}>
-                  {capability.description}
-                </p>
-              </div>
-            </div>
+        <Container className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+          {capabilities.map((capability) => (
+            <SkillCard key={capability.title} title={capability.title} description={capability.description} items={capability.items} />
           ))}
         </Container>
       </section>
 
       <section className="py-12 sm:py-16 lg:py-20" style={{ background: 'var(--paper-050)' }}>
         <Container className="flex flex-col gap-8">
-          <SectionHeading eyebrow="Technology" title="Tools and technologies." />
-          <TechGroup groups={techGroups} />
+          <SectionHeading title="Tools and technologies." />
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {techGroups.map((group) => (
+              <SkillCard key={group.label} title={group.label} items={group.items} />
+            ))}
+          </div>
         </Container>
       </section>
 

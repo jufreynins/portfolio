@@ -37,7 +37,6 @@ export default function ContactPage() {
           <div className="flex flex-col gap-6">
             <SectionHeading
               as="h1"
-              eyebrow="Contact"
               title="Let's connect."
               description="I'm currently open to remote WordPress development, WordPress support, website management, and technical web opportunities. I'm also open to selected development collaborations."
               titleClass="max-w-none"
@@ -87,7 +86,7 @@ export default function ContactPage() {
       {/* What Happens Next */}
       <section className="py-12 sm:py-16 lg:py-20" style={{ background: 'var(--paper-050)' }}>
         <Container className="flex flex-col gap-8">
-          <SectionHeading eyebrow="What Happens Next" title="A simple, no-pressure process" description="Here's what happens after you send a message." />
+          <SectionHeading title="A simple, no-pressure process" description="Here's what happens after you send a message." />
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-3" data-reveal data-reveal-type="stagger">
             {nextSteps.map((step, i) => (
               <div key={step.title} className="flex flex-col gap-3">

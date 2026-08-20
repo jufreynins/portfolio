@@ -22,7 +22,6 @@ export default function SystemsPage() {
         <Container>
           <SectionHeading
             as="h1"
-            eyebrow="Beyond WordPress"
             title="Personal systems, outside client work."
             description="A mix of live personal deployments and concept designs for internal tools — clearly labeled, never existing client or production systems."
           />
