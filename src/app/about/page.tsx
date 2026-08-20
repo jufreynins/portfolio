@@ -49,25 +49,16 @@ const websiteOperationsGroups = [
   },
 ];
 
-const developmentSkills = ['PHP', 'HTML', 'CSS', 'JavaScript', 'MySQL', 'Dynamic WordPress functionality (ACF, JetEngine, custom post types)'];
-
-const Check = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--accent)' }}>
-    <polyline points="20 6 9 17 4 12" />
-  </svg>
-);
+const developmentSkills = ['PHP', 'HTML', 'CSS', 'JavaScript', 'MySQL', 'ACF', 'JetEngine', 'Custom Post Types'];
 
 export default function AboutPage() {
   return (
     <>
-      {/* Introduction */}
-      <section className="pt-24 pb-10 sm:pt-28 sm:pb-12" style={{ background: 'var(--paper-000)' }}>
-        <Container className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
-          <div className="lg:col-span-7" data-reveal data-reveal-type="fade-up">
-            <SectionHeading as="h1" title="A WordPress developer who understands the technical setup behind it." />
-          </div>
-
-          <div className="flex flex-col gap-6 lg:col-span-5" data-reveal data-reveal-type="fade-up">
+      {/* Intro */}
+      <section className="pt-24 pb-12 sm:pt-28 sm:pb-16" style={{ background: 'var(--paper-000)' }}>
+        <Container className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-start lg:gap-16">
+          <div className="flex flex-col gap-5 lg:col-span-7" data-reveal data-reveal-type="fade-up">
+            <SectionHeading as="h1" eyebrow="About" title="A WordPress developer who understands the technical setup behind it." />
             <p className="leading-relaxed" style={{ color: 'var(--ink-700)' }}>
               I&apos;m {siteConfig.name}, a WordPress developer with {yearsExperience}+ years building, maintaining, and troubleshooting business websites with Elementor Pro, ACF, and JetEngine —
               often alongside agencies and remote teams, following their existing design systems. My work also covers what happens after launch: hosting, domain and DNS configuration, SSL, and
@@ -84,37 +75,62 @@ export default function AboutPage() {
               </a>{' '}
               — a way to explore problems beyond page-builder work.
             </p>
-            <ul className="flex flex-wrap gap-x-4 gap-y-2">
-              {capabilityHighlights.map((item) => (
-                <li key={item} className="flex items-center gap-1.5 text-sm font-medium" style={{ color: 'var(--ink-950)' }}>
-                  <Check />
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <dl className="flex flex-col divide-y" style={{ borderColor: 'var(--line)' }}>
-              {professionalFacts.map((fact) => (
-                <div key={fact.label} className="grid grid-cols-3 gap-4 py-4">
-                  <dt className="eyebrow col-span-1">{fact.label}</dt>
-                  <dd className="col-span-2 text-sm" style={{ color: 'var(--ink-950)' }}>
-                    {fact.value}
-                  </dd>
-                </div>
-              ))}
-            </dl>
             <div>
               <Button href={siteConfig.cvPath} variant="secondary" target="_blank" rel="noopener noreferrer">
                 Download CV
               </Button>
             </div>
           </div>
+
+          <div className="lg:col-span-5" data-reveal data-reveal-type="fade-up">
+            <div className="flex flex-col gap-6 rounded-[var(--radius-lg)] border p-6" style={{ background: 'var(--paper-050)', borderColor: 'var(--line)' }}>
+              <div className="flex items-center gap-3">
+                <span
+                  className="flex h-12 w-12 items-center justify-center rounded-[var(--radius-md)] font-mono text-lg font-semibold"
+                  style={{ background: 'var(--accent-soft)', color: 'var(--accent)' }}
+                >
+                  {siteConfig.initials}
+                </span>
+                <div className="flex flex-col">
+                  <span className="text-sm font-semibold" style={{ color: 'var(--ink-950)' }}>
+                    {siteConfig.name}
+                  </span>
+                  <span className="text-xs" style={{ color: 'var(--ink-700)' }}>
+                    WordPress Developer
+                  </span>
+                </div>
+              </div>
+
+              <dl className="flex flex-col divide-y" style={{ borderColor: 'var(--line)' }}>
+                {professionalFacts.map((fact) => (
+                  <div key={fact.label} className="flex flex-col gap-0.5 py-3 first:pt-0">
+                    <dt className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--ink-400)' }}>
+                      {fact.label}
+                    </dt>
+                    <dd className="text-sm" style={{ color: 'var(--ink-950)' }}>
+                      {fact.value}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+
+              <div className="flex flex-wrap gap-1.5 border-t pt-4" style={{ borderColor: 'var(--line)' }}>
+                {capabilityHighlights.map((item) => (
+                  <span key={item} className="rounded-full border px-2.5 py-1 text-xs" style={{ borderColor: 'var(--line)', color: 'var(--ink-700)', background: 'var(--paper-000)' }}>
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
         </Container>
       </section>
 
       {/* WordPress Experience */}
-      <section id="career" className="py-12 sm:py-16 lg:py-20" style={{ background: 'var(--paper-000)' }}>
+      <section id="career" className="py-12 sm:py-16 lg:py-20" style={{ background: 'var(--paper-050)' }}>
         <Container className="flex flex-col gap-8">
           <SectionHeading
+            eyebrow="Experience"
             title="Building and maintaining production WordPress websites."
             description="A run of freelance and contract engagements with agencies and direct clients, bracketing a multi-year in-house role — most of it WordPress work."
           />
@@ -123,9 +139,10 @@ export default function AboutPage() {
       </section>
 
       {/* Technical Website Operations */}
-      <section className="py-12 sm:py-16 lg:py-20" style={{ background: 'var(--paper-050)' }}>
+      <section className="py-12 sm:py-16 lg:py-20" style={{ background: 'var(--paper-000)' }}>
         <Container className="flex flex-col gap-8">
           <SectionHeading
+            eyebrow="Technical Operations"
             title="The setup behind the website."
             description="Hosting, migrations, domains, DNS, SSL, and troubleshooting — the operational side of running a WordPress site, not just building one."
           />
@@ -137,26 +154,18 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* Development Skills */}
-      <section className="py-12 sm:py-16 lg:py-20" style={{ background: 'var(--paper-000)' }}>
+      {/* Development Skills + Broader Interests */}
+      <section className="py-12 sm:py-16 lg:py-20" style={{ background: 'var(--paper-050)' }}>
         <Container className="flex flex-col gap-8">
-          <SectionHeading title="The code behind the WordPress work." />
-          <ul className="flex flex-wrap gap-x-6 gap-y-3">
+          <SectionHeading eyebrow="Beyond WordPress" title="The code behind the work, and what's next to it." />
+          <div className="flex flex-wrap gap-1.5" data-reveal>
             {developmentSkills.map((item) => (
-              <li key={item} className="flex items-center gap-2 text-sm font-medium" style={{ color: 'var(--ink-950)' }} data-reveal>
-                <Check />
+              <span key={item} className="rounded-full border px-3 py-1.5 text-sm" style={{ borderColor: 'var(--line)', color: 'var(--ink-700)', background: 'var(--paper-000)' }}>
                 {item}
-              </li>
+              </span>
             ))}
-          </ul>
-        </Container>
-      </section>
-
-      {/* Broader Technical Interests — intentionally brief, secondary */}
-      <section className="py-10 sm:py-12" style={{ background: 'var(--paper-050)' }}>
-        <Container className="flex flex-col gap-2 border-t pt-8" style={{ borderColor: 'var(--line)' }}>
-          <span className="eyebrow">Broader Technical Interests</span>
-          <p className="max-w-2xl text-sm leading-relaxed" style={{ color: 'var(--ink-700)' }}>
+          </div>
+          <p className="max-w-2xl text-sm leading-relaxed" style={{ color: 'var(--ink-700)' }} data-reveal>
             Outside client WordPress work, I build a handful of{' '}
             <a href="/systems" className="underline" style={{ color: 'var(--accent)' }}>
               personal web systems
