@@ -15,23 +15,29 @@ const sizes: Record<Size, string> = {
 const ghostBase =
   'gap-1.5 rounded-none bg-[linear-gradient(var(--accent),var(--accent))] bg-no-repeat bg-left-bottom bg-[length:0%_1px] pb-0.5 transition-[background-size,color] duration-300 hover:bg-[length:100%_1px] min-h-0 px-0 py-0';
 
+// Pill treatment for the dark tone's ghost variant, cloned from the reference site's
+// .btn-ghost-white (white/10 bg, white/30 border, backdrop-blur) — used specifically on
+// dark surfaces like ContactCTA's band, where a plain underline link reads too quiet.
+const ghostDark =
+  'rounded-[var(--radius-md)] gap-1.5 px-5 py-2.5 min-h-[44px] border border-[rgba(255,255,255,0.3)] bg-[rgba(255,255,255,0.1)] backdrop-blur-sm text-[var(--on-dark)] hover:bg-[rgba(255,255,255,0.18)] active:translate-y-0';
+
 // Two tones because the same variant needs opposite treatment on the ink-canvas dark
 // sections (Process, Final CTA, Contact) vs. the paper-000 light sections — a plain
 // ink-950 "primary" button would nearly disappear against an equally dark background.
 const variantsByTone: Record<Tone, Record<Variant, string>> = {
   light: {
     primary:
-      'rounded-[var(--radius-sm)] bg-[var(--ink-950)] text-[var(--on-dark)] hover:bg-[var(--accent)] hover:-translate-y-0.5 active:translate-y-0 shadow-[0_8px_24px_-8px_rgba(21,18,28,0.35)]',
+      'rounded-[var(--radius-md)] bg-[var(--accent)] text-[var(--on-accent)] hover:bg-[var(--accent-ink)] hover:-translate-y-0.5 active:translate-y-0 shadow-[var(--shadow-sm)]',
     secondary:
-      'rounded-[var(--radius-sm)] bg-transparent border border-[var(--line-strong)] text-[var(--ink-950)] hover:border-[var(--accent)] hover:text-[var(--accent)] active:translate-y-0',
+      'rounded-[var(--radius-md)] bg-transparent border border-[var(--line-strong)] text-[var(--ink-950)] hover:border-[var(--accent)] hover:text-[var(--accent)] active:translate-y-0',
     ghost: `${ghostBase} text-[var(--ink-700)] hover:text-[var(--ink-950)]`,
   },
   dark: {
     primary:
-      'rounded-[var(--radius-sm)] bg-[var(--accent)] text-[var(--on-accent)] hover:bg-[var(--accent-ink)] hover:-translate-y-0.5 active:translate-y-0 shadow-[0_8px_24px_-8px_rgba(103,61,230,0.5)]',
+      'rounded-[var(--radius-md)] bg-[var(--accent)] text-[var(--on-accent)] hover:bg-[var(--accent-ink)] hover:-translate-y-0.5 active:translate-y-0 shadow-[var(--shadow-brand)]',
     secondary:
-      'rounded-[var(--radius-sm)] bg-transparent border border-[rgba(247,245,242,0.3)] text-[var(--on-dark)] hover:border-[var(--accent)] hover:text-[var(--accent)] active:translate-y-0',
-    ghost: `${ghostBase} text-[rgba(247,245,242,0.75)] hover:text-[var(--on-dark)]`,
+      'rounded-[var(--radius-md)] bg-transparent border border-[rgba(247,245,242,0.3)] text-[var(--on-dark)] hover:border-[var(--accent)] hover:text-[var(--accent)] active:translate-y-0',
+    ghost: ghostDark,
   },
 };
 

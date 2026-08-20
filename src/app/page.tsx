@@ -103,6 +103,31 @@ const expertise = [
   },
 ];
 
+const process = [
+  {
+    title: 'Discover',
+    description: 'Understand the business, the existing site if there is one, and what the project actually needs before writing anything.',
+  },
+  {
+    title: 'Plan',
+    description: 'Scope the build or fix, choose the right tools — Elementor Pro, ACF, JetEngine — and set a clear timeline.',
+  },
+  {
+    title: 'Build',
+    description: 'Develop, test, and refine. Clean implementation, responsive by default, reviewed before it ships.',
+  },
+  {
+    title: 'Support',
+    description: 'Stay available after launch for updates, fixes, hosting, and anything else the site needs to keep running.',
+  },
+];
+
+const aboutPillars = [
+  { title: 'WordPress-first', description: 'Specialized, not spread thin across every framework.' },
+  { title: 'Full website support', description: 'Hosting, DNS, and troubleshooting — not just builds.' },
+  { title: 'Direct communication', description: 'Clear updates and honest timelines, start to finish.' },
+];
+
 const toolGroups = [
   {
     label: 'WordPress',
@@ -126,8 +151,11 @@ export default function HomePage() {
   return (
     <>
       {/* Hero */}
-      <section id="home" className="grid-overlay relative overflow-hidden pt-24 pb-10 sm:pt-28 sm:pb-14" style={{ background: 'var(--paper-000)' }} data-hero-section>
-        <div className="pointer-events-none absolute inset-0 -z-10" data-hero-bg />
+      <section id="home" className="grid-overlay relative overflow-hidden pt-28 pb-16 sm:pt-32 sm:pb-20" style={{ background: 'var(--paper-000)' }} data-hero-section>
+        <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden" data-hero-bg>
+          <div className="absolute -top-24 -right-24 h-72 w-72 rounded-full blur-3xl" style={{ background: 'var(--accent)', opacity: 0.12 }} />
+          <div className="absolute top-1/3 -left-20 h-64 w-64 rounded-full blur-3xl" style={{ background: 'var(--accent-2)', opacity: 0.1 }} />
+        </div>
 
         <Container>
           <div className="flex max-w-2xl flex-col items-start gap-5" data-hero-content>
@@ -168,7 +196,7 @@ export default function HomePage() {
       </section>
 
       {/* Core Expertise */}
-      <section className="py-12 sm:py-16 lg:py-20" style={{ background: 'var(--paper-050)' }}>
+      <section className="py-16 sm:py-20 lg:py-28" style={{ background: 'var(--paper-050)' }}>
         <Container className="flex flex-col gap-8">
           <SectionHeading
             eyebrow="What I Do"
@@ -176,14 +204,19 @@ export default function HomePage() {
             description="From building responsive WordPress websites to resolving technical issues and managing the infrastructure behind them, I support the complete website lifecycle."
           />
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {expertise.map((item) => (
+            {expertise.map((item, i) => (
               <div key={item.title} className="card-surface flex h-full flex-col gap-3 p-5" style={{ background: 'var(--paper-000)' }} data-reveal>
-                <span
-                  className="flex h-10 w-10 items-center justify-center rounded-[var(--radius-sm)] border"
-                  style={{ background: 'var(--accent-soft)', color: 'var(--accent)', borderColor: 'var(--line)' }}
-                >
-                  {item.icon}
-                </span>
+                <div className="flex items-center justify-between">
+                  <span
+                    className="flex h-10 w-10 items-center justify-center rounded-[var(--radius-md)] border"
+                    style={{ background: 'var(--accent-soft)', color: 'var(--accent)', borderColor: 'var(--line)' }}
+                  >
+                    {item.icon}
+                  </span>
+                  <span className="font-mono text-xs" style={{ color: 'var(--ink-400)' }}>
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                </div>
                 <h3 className="text-base" style={{ color: 'var(--ink-950)' }}>
                   {item.title}
                 </h3>
@@ -196,8 +229,30 @@ export default function HomePage() {
         </Container>
       </section>
 
+      {/* How I Work */}
+      <section className="py-16 sm:py-20 lg:py-28" style={{ background: 'var(--paper-000)' }}>
+        <Container className="flex flex-col gap-8">
+          <SectionHeading eyebrow="Process" title="How I work." />
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {process.map((step, i) => (
+              <div key={step.title} className="flex flex-col gap-2" data-reveal>
+                <span className="font-mono text-sm" style={{ color: 'var(--accent)' }}>
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <h3 className="text-base" style={{ color: 'var(--ink-950)' }}>
+                  {step.title}
+                </h3>
+                <p className="text-sm leading-relaxed" style={{ color: 'var(--ink-700)' }}>
+                  {step.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </section>
+
       {/* Tools & Platforms */}
-      <section className="py-12 sm:py-16 lg:py-20" style={{ background: 'var(--paper-000)' }}>
+      <section className="py-16 sm:py-20 lg:py-28" style={{ background: 'var(--paper-050)' }}>
         <Container className="flex flex-col gap-8">
           <SectionHeading eyebrow="Stack" title="Tools I work with." />
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
@@ -224,13 +279,25 @@ export default function HomePage() {
       </section>
 
       {/* Short About */}
-      <section id="about" className="py-12 sm:py-16 lg:py-20" style={{ background: 'var(--paper-050)' }}>
-        <Container className="flex flex-col gap-5">
+      <section id="about" className="py-16 sm:py-20 lg:py-28" style={{ background: 'var(--paper-000)' }}>
+        <Container className="flex flex-col gap-8">
           <SectionHeading eyebrow="About" title="A developer who handles more than the build." />
           <p className="max-w-2xl leading-relaxed" style={{ color: 'var(--ink-700)' }} data-reveal>
             I&apos;m {siteConfig.name}, a WordPress developer with {yearsExperience}+ years of experience working with agencies and businesses across the United States, Canada, and the Philippines.
             Beyond page building, I handle the technical work required to keep websites stable, secure, updated, and ready for production.
           </p>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3" data-reveal data-reveal-type="stagger">
+            {aboutPillars.map((pillar) => (
+              <div key={pillar.title} className="flex flex-col gap-1.5 border-l-2 pl-4" style={{ borderColor: 'var(--accent)' }}>
+                <h3 className="text-sm font-semibold" style={{ color: 'var(--ink-950)' }}>
+                  {pillar.title}
+                </h3>
+                <p className="text-sm leading-relaxed" style={{ color: 'var(--ink-700)' }}>
+                  {pillar.description}
+                </p>
+              </div>
+            ))}
+          </div>
           <div data-reveal>
             <Button href="/about" variant="secondary">
               More About Me

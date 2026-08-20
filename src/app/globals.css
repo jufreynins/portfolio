@@ -9,8 +9,8 @@
 @theme {
   /* Typography — one confident sans carries the identity (display + heading); mono is
      reserved for technical micro-labels only (see rule above); no serif display face. */
-  --font-heading: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
-  --font-body: var(--font-dm-sans), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-heading: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-sans: var(--font-body);
   --font-mono: var(--font-jetbrains-mono), ui-monospace, 'SF Mono', monospace;
 
@@ -29,10 +29,13 @@
   --ink-canvas: #100e16;
   --ink-canvas-raised: #1a1722;
 
-  /* The one brand color — a sharp accent, never a dominant background wash. */
-  --accent: #673de6;
-  --accent-ink: #4f2ec2;
-  --accent-soft: #efe9fc;
+  /* Primary brand color, cloned from the devoperands-website-v4 reference. */
+  --accent: #2563eb;
+  --accent-ink: #1d4ed8;
+  --accent-soft: #eff6ff;
+  /* Secondary reference accents — small highlights only, never a dominant background. */
+  --accent-2: #f59e0b;
+  --accent-3: #34d399;
 
   --on-accent: #ffffff;
   --on-dark: #f7f5f2;
@@ -96,7 +99,7 @@
   /* Reusable, non-Tailwind-reserved tokens — referenced via var(), not utility classes */
   --radius-xs: 2px;
   --radius-sm: 6px;
-  --radius-md: 10px;
+  --radius-md: 0.5rem;
   /* --radius-lg kept at its old value: it's the one radius token an existing rule
      (.card-surface below) depends on, and every untouched card on the site uses it
      until its own rebuild phase — changing the value here would flatten those cards
@@ -107,10 +110,10 @@
      not the default shape for buttons or cards. */
   --radius-full: 9999px;
 
-  --shadow-sm: 0 1px 2px rgba(21, 18, 28, 0.04), 0 4px 12px -6px rgba(21, 18, 28, 0.1);
-  --shadow-md: 0 8px 24px -12px rgba(21, 18, 28, 0.22);
-  --shadow-lg: 0 20px 44px -18px rgba(21, 18, 28, 0.32);
-  --shadow-brand: 0 12px 28px -14px rgba(103, 61, 230, 0.38);
+  --shadow-sm: 0 2px 8px -2px rgba(15, 23, 42, 0.06), 0 8px 24px -8px rgba(15, 23, 42, 0.08);
+  --shadow-md: 0 8px 24px -12px rgba(15, 23, 42, 0.16);
+  --shadow-lg: 0 20px 44px -18px rgba(15, 23, 42, 0.24);
+  --shadow-brand: 0 12px 28px -14px rgba(37, 99, 235, 0.38);
 
   --space-xs: 0.5rem;
   --space-sm: 1rem;
