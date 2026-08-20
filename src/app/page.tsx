@@ -4,8 +4,10 @@ import Container from '@/components/Container';
 import Button from '@/components/Button';
 import SectionHeading from '@/components/SectionHeading';
 import SkillCard from '@/components/SkillCard';
+import ProjectCard from '@/components/ProjectCard';
 import ContactCTA from '@/components/ContactCTA';
 import { siteConfig } from '@/config/site';
+import { projects } from '@/data/projects';
 import { buildMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = buildMetadata({
@@ -111,6 +113,8 @@ const expertise = [
 ];
 
 const capabilityStrip = ['WordPress Development', 'Website Management', 'Hosting & Deployment', 'DNS & SSL', 'Troubleshooting', 'Performance'];
+
+const featuredProjects = projects.filter((project) => project.featured);
 
 const toolGroups = [
   {
@@ -232,8 +236,29 @@ export default function HomePage() {
         </Container>
       </section>
 
-      {/* Tools & Technology */}
+      {/* Selected Work */}
       <section className="py-16 sm:py-20 lg:py-28" style={{ background: 'var(--paper-000)' }}>
+        <Container className="flex flex-col gap-8">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <SectionHeading
+              eyebrow="Selected Work"
+              title="Real WordPress sites, live in production."
+              description="A few examples of client work — from marketing agencies to nonprofits and e-commerce."
+            />
+            <Button href="/work" variant="secondary" className="flex-shrink-0">
+              View All Work
+            </Button>
+          </div>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            {featuredProjects.map((project, i) => (
+              <ProjectCard key={project.slug} project={project} priority={i < 2} />
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* Tools & Technology */}
+      <section className="py-16 sm:py-20 lg:py-28" style={{ background: 'var(--paper-050)' }}>
         <Container className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-5" data-reveal>
             <span className="eyebrow">Stack</span>
@@ -262,7 +287,7 @@ export default function HomePage() {
       </section>
 
       {/* Short About */}
-      <section id="about" className="py-16 sm:py-20 lg:py-28" style={{ background: 'var(--paper-050)' }}>
+      <section id="about" className="py-16 sm:py-20 lg:py-28" style={{ background: 'var(--paper-000)' }}>
         <Container className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-center lg:gap-16">
           <div className="lg:col-span-5" data-reveal data-reveal-type="fade-up">
             <div
