@@ -8,8 +8,6 @@ import ContactCTA from '@/components/ContactCTA';
 import { siteConfig } from '@/config/site';
 import { techGroups } from '@/data/techSummary';
 import { wordpressServices, type ServiceVisual } from '@/data/services';
-import { projects } from '@/data/projects';
-import { systems } from '@/data/systems';
 import { buildMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = buildMetadata({
@@ -75,12 +73,6 @@ const visualIcons: Record<ServiceVisual, ReactNode> = {
   ),
 };
 
-const relatedLookup = (slug: string | undefined, source: { slug: string; name: string }[], base: string) => {
-  if (!slug) return null;
-  const match = source.find((entry) => entry.slug === slug);
-  return match ? { href: `${base}/${match.slug}`, label: match.name } : null;
-};
-
 export default function ServicesPage() {
   return (
     <>
@@ -90,25 +82,16 @@ export default function ServicesPage() {
             as="h1"
             eyebrow={`${wordpressServices.length} Service Areas`}
             title="WordPress first, with the range to go further."
-            description="WordPress development and website operations are the core of what I do — with web systems and AI-assisted workflows supporting it. Every service below links to real client work or a personal system that demonstrates it."
+            description="WordPress development and website operations are the core of what I do — with web systems and AI-assisted workflows supporting it."
           />
         </Container>
       </section>
 
       <section className="py-12 sm:py-16 lg:py-20" style={{ background: 'var(--paper-000)' }}>
         <Container className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {wordpressServices.map((service) => {
-            const related = relatedLookup(service.relatedProjectSlug, projects, '/work') ?? relatedLookup(service.relatedSystemSlug, systems, '/systems');
-            return (
-              <ServiceCard
-                key={service.title}
-                service={service}
-                icon={visualIcons[service.visual]}
-                relatedHref={related?.href}
-                relatedLabel={related?.label}
-              />
-            );
-          })}
+          {wordpressServices.map((service) => (
+            <ServiceCard key={service.title} service={service} icon={visualIcons[service.visual]} />
+          ))}
         </Container>
       </section>
 
