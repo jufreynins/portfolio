@@ -115,6 +115,12 @@ const expertise = [
 
 const capabilityStrip = ['WordPress Development', 'Website Management', 'Hosting & Deployment', 'DNS & SSL', 'Troubleshooting', 'Performance'];
 
+const aboutFacts = [
+  { label: 'Experience', value: `${yearsExperience}+ years building for the web` },
+  { label: 'Focus', value: 'WordPress development & website management' },
+  { label: 'Availability', value: 'Remote, open to new opportunities' },
+];
+
 const featuredProjects = projects.filter((project) => project.featured);
 
 const toolGroups = [
@@ -277,16 +283,36 @@ export default function HomePage() {
       <section id="about" className="py-16 sm:py-20 lg:py-28" style={{ background: 'var(--paper-000)' }}>
         <Container className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-center lg:gap-16">
           <div className="lg:col-span-5" data-reveal data-reveal-type="fade-up">
-            <div
-              className="relative mx-auto flex aspect-square max-w-[240px] items-center justify-center rounded-[var(--radius-xl)] lg:max-w-none"
-              style={{ background: 'var(--paper-000)', border: '1px solid var(--line)' }}
-            >
-              <span
-                className="flex h-24 w-24 items-center justify-center rounded-full font-mono text-2xl font-semibold"
-                style={{ background: 'var(--accent-soft)', color: 'var(--accent)' }}
-              >
-                {siteConfig.initials}
-              </span>
+            <div className="mx-auto flex max-w-sm flex-col gap-6 rounded-[var(--radius-lg)] border p-6 lg:max-w-none" style={{ background: 'var(--paper-050)', borderColor: 'var(--line)' }}>
+              <div className="flex items-center gap-3">
+                <span
+                  className="flex h-12 w-12 items-center justify-center rounded-[var(--radius-md)] font-mono text-lg font-semibold"
+                  style={{ background: 'var(--accent-soft)', color: 'var(--accent)' }}
+                >
+                  {siteConfig.initials}
+                </span>
+                <div className="flex flex-col">
+                  <span className="text-sm font-semibold" style={{ color: 'var(--ink-950)' }}>
+                    {siteConfig.name}
+                  </span>
+                  <span className="text-xs" style={{ color: 'var(--ink-700)' }}>
+                    {siteConfig.shortTitle}
+                  </span>
+                </div>
+              </div>
+
+              <dl className="flex flex-col divide-y" style={{ borderColor: 'var(--line)' }}>
+                {aboutFacts.map((fact) => (
+                  <div key={fact.label} className="flex flex-col gap-0.5 py-3 first:pt-0">
+                    <dt className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--ink-400)' }}>
+                      {fact.label}
+                    </dt>
+                    <dd className="text-sm" style={{ color: 'var(--ink-950)' }}>
+                      {fact.value}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
             </div>
           </div>
 
