@@ -6,6 +6,7 @@ import SectionHeading from '@/components/SectionHeading';
 import SkillCard from '@/components/SkillCard';
 import ProjectCard from '@/components/ProjectCard';
 import ContactCTA from '@/components/ContactCTA';
+import HeroWebsiteMockup from '@/components/HeroWebsiteMockup';
 import { siteConfig } from '@/config/site';
 import { projects } from '@/data/projects';
 import { buildMetadata } from '@/lib/seo';
@@ -183,25 +184,11 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Placeholder hero visual — swap for public/images/home/hero-web-operations.png
-                (next/image, object-contain) once that asset is provided. */}
+            {/* Decorative browser-window mockup — an abstract "website," not a real
+                screenshot; see HeroWebsiteMockup.tsx. Swap for a real hero image later
+                only if one is provided — this isn't a temporary stand-in for one. */}
             <div className="lg:col-span-5" data-hero-support>
-              <div className="relative mx-auto aspect-square w-full max-w-[280px] sm:max-w-xs lg:max-w-none">
-                <div className="pointer-events-none absolute inset-0 -z-10 rounded-full blur-3xl" style={{ background: 'var(--accent)', opacity: 0.14 }} />
-                <div className="flex h-full w-full flex-col items-center justify-center gap-6 rounded-[var(--radius-xl)]" style={{ background: 'var(--paper-050)', border: '1px solid var(--line)' }}>
-                  <span
-                    className="flex h-20 w-20 items-center justify-center rounded-[var(--radius-lg)] font-mono text-xl font-semibold sm:h-24 sm:w-24 sm:text-2xl"
-                    style={{ background: 'var(--accent-soft)', color: 'var(--accent)' }}
-                  >
-                    {siteConfig.initials}
-                  </span>
-                  <div className="flex flex-col items-center gap-2">
-                    <span className="h-1.5 w-28 rounded-full sm:w-32" style={{ background: 'var(--line)' }} />
-                    <span className="h-1.5 w-20 rounded-full sm:w-24" style={{ background: 'var(--line)' }} />
-                    <span className="h-1.5 w-16 rounded-full sm:w-20" style={{ background: 'var(--accent-soft)' }} />
-                  </div>
-                </div>
-              </div>
+              <HeroWebsiteMockup />
             </div>
           </div>
         </Container>
