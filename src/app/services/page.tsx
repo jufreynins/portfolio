@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import Container from '@/components/Container';
 import SectionHeading from '@/components/SectionHeading';
-import SkillCard from '@/components/SkillCard';
 import ServiceCard from '@/components/ServiceCard';
+import TechBadge from '@/components/TechBadge';
 import ContactCTA from '@/components/ContactCTA';
 import { siteConfig } from '@/config/site';
 import { techGroups } from '@/data/techSummary';
@@ -98,9 +98,18 @@ export default function ServicesPage() {
       <section className="py-12 sm:py-16 lg:py-20" style={{ background: 'var(--paper-050)' }}>
         <Container className="flex flex-col gap-8">
           <SectionHeading title="Tools and technologies." />
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {techGroups.map((group) => (
-              <SkillCard key={group.label} title={group.label} items={group.items} />
+              <div key={group.label} className="flex flex-col gap-2.5" data-reveal>
+                <h3 className="text-sm font-semibold" style={{ color: 'var(--ink-950)' }}>
+                  {group.label}
+                </h3>
+                <div className="flex flex-wrap gap-1.5">
+                  {group.items.map((tool) => (
+                    <TechBadge key={tool} name={tool} />
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         </Container>

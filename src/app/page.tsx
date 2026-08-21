@@ -7,6 +7,7 @@ import SkillCard from '@/components/SkillCard';
 import ProjectCard from '@/components/ProjectCard';
 import ContactCTA from '@/components/ContactCTA';
 import HeroWebsiteMockup from '@/components/HeroWebsiteMockup';
+import TechBadge from '@/components/TechBadge';
 import { siteConfig } from '@/config/site';
 import { projects } from '@/data/projects';
 import { buildMetadata } from '@/lib/seo';
@@ -268,9 +269,7 @@ export default function HomePage() {
                 </h3>
                 <div className="flex flex-wrap gap-1.5">
                   {group.items.map((tool) => (
-                    <span key={tool} className="rounded-full border px-2.5 py-1 text-xs" style={{ borderColor: 'var(--line)', color: 'var(--ink-700)' }}>
-                      {tool}
-                    </span>
+                    <TechBadge key={tool} name={tool} />
                   ))}
                 </div>
               </div>
