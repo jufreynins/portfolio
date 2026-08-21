@@ -167,7 +167,7 @@ export default function SeoMetaPreview() {
             <PixelWidthBar label="Title" px={titlePx} limit={pixelLimits.title} />
             <PixelWidthBar label="Description" px={descriptionPx} limit={pixelLimits.description} />
             <p className="text-[11px] leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-              Pixel width is an approximation of Google&apos;s rendering — treat it as guidance, not a guarantee. The real cutoff varies by device and font rendering.
+              Pixel width is an approximation of Google&apos;s rendering. Treat it as guidance, not a guarantee, since the real cutoff varies by device and font rendering.
             </p>
           </div>
 
@@ -288,7 +288,7 @@ export default function SeoMetaPreview() {
           <div className="rounded-2xl border p-5 text-sm leading-relaxed sm:p-6" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)', color: 'var(--text-secondary)' }}>
             <p>
               <strong style={{ color: 'var(--text-primary)' }}>Guidelines:</strong> aim for a title around 50&ndash;60 characters and a description around 70&ndash;160 characters. Search engines
-              may still rewrite either one, and the exact cutoff is based on pixel width, not character count &mdash; treat both this and the pixel-width bars above as helpful targets, not hard rules.
+              may still rewrite either one, and the exact cutoff is based on pixel width, not character count. Treat both this and the pixel-width bars above as helpful targets, not hard rules.
             </p>
           </div>
         </div>

@@ -11,7 +11,7 @@ import { buildMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = buildMetadata({
   title: `About — WordPress Developer & Website Technical Specialist — ${siteConfig.name}`,
-  description: 'A closer look at Jufrey Niño Bayog — WordPress specialization, technical website operations, hosting and DNS support, and AI-assisted development workflows.',
+  description: 'A closer look at Jufrey Niño Bayog: WordPress specialization, technical website operations, hosting and DNS support, and AI-assisted development workflows.',
   canonical: `${siteConfig.url}/about`,
 });
 
@@ -60,7 +60,7 @@ export default function AboutPage() {
           <div className="flex flex-col gap-5 lg:col-span-7" data-reveal data-reveal-type="fade-up">
             <SectionHeading as="h1" eyebrow="About" title="A WordPress developer who understands the technical setup behind it." />
             <p className="leading-relaxed" style={{ color: 'var(--ink-700)' }}>
-              I&apos;m {siteConfig.name}, a WordPress developer with {yearsExperience}+ years building, maintaining, and troubleshooting business websites with Elementor Pro, ACF, and JetEngine —
+              I&apos;m {siteConfig.name}, a WordPress developer with {yearsExperience}+ years building, maintaining, and troubleshooting business websites with Elementor Pro, ACF, and JetEngine,
               often alongside agencies and remote teams, following their existing design systems. My work also covers what happens after launch: hosting, domain and DNS configuration, SSL, and
               business email delivery.
             </p>
@@ -72,8 +72,8 @@ export default function AboutPage() {
               and{' '}
               <a href="/tools" className="underline" style={{ color: 'var(--accent)' }}>
                 browser tools
-              </a>{' '}
-              — a way to explore problems beyond page-builder work.
+              </a>
+              , a way to explore problems beyond page-builder work.
             </p>
             <div>
               <Button href={siteConfig.cvPath} variant="secondary" target="_blank" rel="noopener noreferrer">
@@ -132,7 +132,7 @@ export default function AboutPage() {
           <SectionHeading
             eyebrow="Experience"
             title="Building and maintaining production WordPress websites."
-            description="A run of freelance and contract engagements with agencies and direct clients, bracketing a multi-year in-house role — most of it WordPress work."
+            description="A run of freelance and contract engagements with agencies and direct clients, bracketing a multi-year in-house role, most of it WordPress work."
           />
           <ExperienceTimeline entries={experience} />
         </Container>
@@ -144,7 +144,7 @@ export default function AboutPage() {
           <SectionHeading
             eyebrow="Technical Operations"
             title="The setup behind the website."
-            description="Hosting, migrations, domains, DNS, SSL, and troubleshooting — the operational side of running a WordPress site, not just building one."
+            description="Hosting, migrations, domains, DNS, SSL, and troubleshooting: the operational side of running a WordPress site, not just building one."
           />
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {websiteOperationsGroups.map((group) => (

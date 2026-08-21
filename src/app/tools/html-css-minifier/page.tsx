@@ -14,8 +14,8 @@ export const metadata: Metadata = buildMetadata({
 const tool = getToolById('html-css-minifier')!;
 
 const guideTips = [
-  'This is "Basic Minification": safe whitespace and comment removal, not a full parser-based optimizer — it never touches content inside strings, or inside <script>, <style>, <pre>, or <textarea>.',
-  'For CSS, spaces are only removed directly around { } and ; — spaces inside selectors and calc() expressions are preserved on purpose.',
+  'This is "Basic Minification": safe whitespace and comment removal, not a full parser-based optimizer. It never touches content inside strings, or inside <script>, <style>, <pre>, or <textarea>.',
+  'For CSS, spaces are only removed directly around { } and semicolons; spaces inside selectors and calc() expressions are preserved on purpose.',
   'For maximum compression in production, pair this with build-time tooling (Webpack, Vite, a WordPress minification plugin) rather than relying on manual minification alone.',
   'On mobile, switch between the Input and Output panels using the tabs above the editor.',
 ];

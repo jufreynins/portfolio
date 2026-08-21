@@ -140,7 +140,7 @@ export default function ImageConvertPanel() {
               <span>Higher quality</span>
             </div>
             <p className="hidden text-xs font-medium" style={{ color: 'var(--text-secondary)' }} data-quality-note>
-              PNG is lossless — quality doesn&apos;t apply to this format.
+              PNG is lossless; quality doesn&apos;t apply to this format.
             </p>
           </div>
         </div>

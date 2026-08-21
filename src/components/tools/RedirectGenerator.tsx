@@ -213,7 +213,7 @@ export default function RedirectGenerator() {
           </pre>
         </div>
         <p className="text-xs italic" style={{ color: 'var(--text-muted)' }}>
-          Review these rules before deploying to production — this tool validates the mapping you provide, not your live server configuration.
+          Review these rules before deploying to production. This tool validates the mapping you provide, not your live server configuration.
         </p>
       </div>
     </div>

@@ -4,7 +4,7 @@ export const siteConfig = {
   name: 'Jufrey Niño Bayog',
   title: 'WordPress Developer & Website Technical Specialist',
   shortTitle: 'WordPress Developer',
-  description: `WordPress Developer with ${yearsExperience}+ years of experience building, managing, and troubleshooting production WordPress websites — plus the hosting, domain, DNS, and technical operations needed to keep them running.`,
+  description: `WordPress Developer with ${yearsExperience}+ years of experience building, managing, and troubleshooting production WordPress websites, plus the hosting, domain, DNS, and technical operations needed to keep them running.`,
   url: 'https://jufreyninobayogportfolio.com',
   locale: 'en-US',
   yearsExperience,

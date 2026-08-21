@@ -14,8 +14,8 @@ export const metadata: Metadata = buildMetadata({
 const tool = getToolById('qr-code-generator')!;
 
 const guideTips = [
-  'Higher error correction lets a QR code still scan if part of it is damaged or covered — useful if you plan to add branding around it.',
-  'Very low contrast between foreground and background colors can make a code unreliable to scan — keep it high-contrast.',
+  'Higher error correction lets a QR code still scan if part of it is damaged or covered, useful if you plan to add branding around it.',
+  'Very low contrast between foreground and background colors can make a code unreliable to scan, so keep it high-contrast.',
   'SVG downloads stay crisp at any print size; PNG is simpler for quick digital use.',
   'The Wi-Fi format follows the standard used by phone camera apps to auto-join a network.',
 ];

@@ -10,7 +10,7 @@ import { buildMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = buildMetadata({
   title: `Selected WordPress Work — ${siteConfig.name}`,
-  description: 'Real WordPress websites built for businesses, agencies, and nonprofits — from marketing agencies to e-commerce and community organizations.',
+  description: 'Real WordPress websites built for businesses, agencies, and nonprofits, from marketing agencies to e-commerce and community organizations.',
   canonical: `${siteConfig.url}/work`,
 });
 
@@ -50,7 +50,7 @@ export default function WorkPage() {
 
       <ContactCTA
         title="Need a website like this one?"
-        description="Tell me a bit about what you're building — a website, a web system, or the technical setup behind it."
+        description="Tell me a bit about what you're building: a website, a web system, or the technical setup behind it."
       />
     </>
   );

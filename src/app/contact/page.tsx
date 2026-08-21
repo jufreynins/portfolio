@@ -25,7 +25,7 @@ const nextSteps = [
   },
   {
     title: 'Next Step',
-    description: "You'll get a clear response — whether that's a call, a resume request, or a project scope.",
+    description: "You'll get a clear response: a call, a resume request, or a project scope.",
   },
 ];
 

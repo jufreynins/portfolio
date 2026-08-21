@@ -230,8 +230,8 @@ export default function ImageResizer({ defaultMode = 'custom' }: ImageResizerPro
         const saved = percentSaved(item.originalSize, item.convertedSize);
         statusHtml =
           saved >= 0
-            ? `<p class="mt-2 text-xs font-semibold" style="color:var(--color-success)">Completed — ${formatBytes(item.convertedSize)} · ${saved.toFixed(0)}% smaller</p>`
-            : `<p class="mt-2 text-xs font-semibold" style="color:var(--color-warning)">Completed — ${formatBytes(item.convertedSize)} (${Math.abs(saved).toFixed(0)}% larger)</p>`;
+            ? `<p class="mt-2 text-xs font-semibold" style="color:var(--color-success)">Completed · ${formatBytes(item.convertedSize)} · ${saved.toFixed(0)}% smaller</p>`
+            : `<p class="mt-2 text-xs font-semibold" style="color:var(--color-warning)">Completed · ${formatBytes(item.convertedSize)} (${Math.abs(saved).toFixed(0)}% larger)</p>`;
       } else if (item.status === 'failed') {
         statusHtml = `<p class="mt-2 text-xs font-semibold" style="color:var(--color-error)">${escapeHtml(item.errorMessage ?? 'Resize failed.')}</p>`;
       }

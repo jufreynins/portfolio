@@ -14,9 +14,9 @@ export const metadata: Metadata = buildMetadata({
 const tool = getToolById('dns-email-record-checker')!;
 
 const guideTips = [
-  'A missing DKIM row usually means the selector wasn’t provided — check your email provider’s setup guide for the exact selector name (e.g. “google” for Google Workspace).',
-  'Multiple SPF records at the same host is invalid and can break mail delivery — merge them into one record.',
-  'DMARC lives at _dmarc.yourdomain.com, not at the root — this tool queries that automatically.',
+  'A missing DKIM row usually means the selector wasn’t provided. Check your email provider’s setup guide for the exact selector name (e.g. “google” for Google Workspace).',
+  'Multiple SPF records at the same host is invalid and can break mail delivery; merge them into one record.',
+  'DMARC lives at _dmarc.yourdomain.com, not at the root. This tool queries that automatically.',
   'Results come from a public DNS resolver (Cloudflare), so they reflect what the internet currently sees, not your registrar’s dashboard.',
 ];
 

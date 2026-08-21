@@ -47,7 +47,7 @@ export const systems: System[] = [
     caseStudy: {
       scope: 'A role-based revision tracker: clients submit requests, PMs assign and prioritize them, developers update status, and everyone can see history in one place instead of scattered email threads.',
       implementation: 'Built on Laravel with an Inertia.js + React + TypeScript frontend and a MySQL data model for tasks, roles, and activity logs. Role-based access controls what each of Admin/PM/Developer/Client can see and do.',
-      outcome: 'A working live demo that shows the full workflow end to end — request submission, assignment, status changes, and a time-stamped activity log per task.',
+      outcome: 'A working live demo that shows the full workflow end to end: request submission, assignment, status changes, and a time-stamped activity log per task.',
     },
   },
   {
@@ -64,9 +64,9 @@ export const systems: System[] = [
     screenshot: stockflowScreenshot,
     featured: true,
     caseStudy: {
-      scope: 'A structured inventory system: a searchable product catalog, stock counts that update with orders, low-stock alerts, and basic reporting — replacing a spreadsheet-based process.',
+      scope: 'A structured inventory system, replacing a spreadsheet-based process: a searchable product catalog, stock counts that update with orders, low-stock alerts, and basic reporting.',
       implementation: 'Built on Laravel with a React + TypeScript frontend and a MySQL schema for products, stock movements, and orders.',
-      outcome: 'A working live demo covering the core inventory loop — catalog, stock level changes, and low-stock alerting.',
+      outcome: 'A working live demo covering the core inventory loop: catalog, stock level changes, and low-stock alerting.',
     },
   },
   {

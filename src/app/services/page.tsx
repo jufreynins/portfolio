@@ -12,7 +12,7 @@ import { buildMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = buildMetadata({
   title: `Expertise — WordPress Development & Website Operations — ${siteConfig.name}`,
-  description: 'WordPress development, website operations, web systems, and AI-assisted development — the full scope of what I build and maintain.',
+  description: 'WordPress development, website operations, web systems, and AI-assisted development: the full scope of what I build and maintain.',
   canonical: `${siteConfig.url}/services`,
 });
 
@@ -82,7 +82,7 @@ export default function ServicesPage() {
             as="h1"
             eyebrow={`${wordpressServices.length} Service Areas`}
             title="WordPress first, with the range to go further."
-            description="WordPress development and website operations are the core of what I do — with web systems and AI-assisted workflows supporting it."
+            description="WordPress development and website operations are the core of what I do, with web systems and AI-assisted workflows supporting it."
           />
         </Container>
       </section>

@@ -46,7 +46,7 @@ export function validateRows(rows: RedirectRow[]): Map<string, RowIssue[]> {
     if (!source) rowIssues.push({ level: 'error', message: 'Source is required.' });
     if (!destination) rowIssues.push({ level: 'error', message: 'Destination is required.' });
     if (source && destination && source === destination) {
-      rowIssues.push({ level: 'warning', message: 'Source and destination are identical — this redirect does nothing.' });
+      rowIssues.push({ level: 'warning', message: 'Source and destination are identical, so this redirect does nothing.' });
     }
 
     if (source) {
@@ -62,7 +62,7 @@ export function validateRows(rows: RedirectRow[]): Map<string, RowIssue[]> {
   for (const [, ids] of bySource) {
     if (ids.length > 1) {
       for (const id of ids) {
-        issues.get(id)?.push({ level: 'error', message: 'Duplicate source — another rule already redirects this same path.' });
+        issues.get(id)?.push({ level: 'error', message: 'Duplicate source: another rule already redirects this same path.' });
       }
     }
   }
@@ -98,7 +98,7 @@ export function validateRows(rows: RedirectRow[]): Map<string, RowIssue[]> {
     if (isLoop) {
       issues.get(row.id)?.push({ level: 'error', message: 'This creates a redirect loop within the rules provided.' });
     } else {
-      issues.get(row.id)?.push({ level: 'warning', message: 'This creates a redirect chain — the destination is itself redirected elsewhere.' });
+      issues.get(row.id)?.push({ level: 'warning', message: 'This creates a redirect chain: the destination is itself redirected elsewhere.' });
     }
   }
 
@@ -106,7 +106,7 @@ export function validateRows(rows: RedirectRow[]): Map<string, RowIssue[]> {
 }
 
 export function toApache(rows: RedirectRow[]): string {
-  const lines = ['# Generated redirect rules — review before deploying to production.'];
+  const lines = ['# Generated redirect rules. Review before deploying to production.'];
   for (const r of rows) {
     if (!r.source || !r.destination) continue;
     lines.push(`Redirect ${r.type} ${normalizePath(r.source)} ${normalizePath(r.destination)}`);
@@ -115,7 +115,7 @@ export function toApache(rows: RedirectRow[]): string {
 }
 
 export function toNginx(rows: RedirectRow[]): string {
-  const lines = ['# Generated redirect rules — review before deploying to production.'];
+  const lines = ['# Generated redirect rules. Review before deploying to production.'];
   for (const r of rows) {
     if (!r.source || !r.destination) continue;
     const code = r.type === '301' ? 'permanent' : 'redirect';
@@ -125,7 +125,7 @@ export function toNginx(rows: RedirectRow[]): string {
 }
 
 export function toNetlify(rows: RedirectRow[]): string {
-  const lines = ['# Generated redirect rules — review before deploying to production.'];
+  const lines = ['# Generated redirect rules. Review before deploying to production.'];
   for (const r of rows) {
     if (!r.source || !r.destination) continue;
     lines.push(`${normalizePath(r.source)}  ${normalizePath(r.destination)}  ${r.type}!`);

@@ -16,10 +16,10 @@ export const metadata: Metadata = buildMetadata({
 const tool = getToolById('developer-data-toolkit')!;
 
 const guideTips = [
-  'Format switches to a readable, indented view; Minify collapses it to a compact single line — useful when you need the smallest possible payload.',
-  'Invalid JSON highlights the approximate error line in the input pane and shows the parser’s message with line and column when available — your input is never cleared.',
-  '2 spaces, 4 spaces, or tabs — pick whatever matches your project’s formatting convention.',
-  'Parsing and formatting run entirely in your browser using the native JSON API — nothing you paste here is uploaded or stored anywhere.',
+  'Format switches to a readable, indented view; Minify collapses it to a compact single line, useful when you need the smallest possible payload.',
+  'Invalid JSON highlights the approximate error line in the input pane and shows the parser’s message with line and column when available. Your input is never cleared.',
+  '2 spaces, 4 spaces, or tabs: pick whatever matches your project’s formatting convention.',
+  'Parsing and formatting run entirely in your browser using the native JSON API; nothing you paste here is uploaded or stored anywhere.',
 ];
 
 // Code-editor-style title bar instead of a generic icon+description header

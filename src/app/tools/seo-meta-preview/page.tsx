@@ -16,10 +16,10 @@ export const metadata: Metadata = buildMetadata({
 const tool = getToolById('seo-social-preview')!;
 
 const guideTips = [
-  'Search engines truncate titles and descriptions that run too long — the pixel-width bars approximate that cutoff more closely than a character count alone.',
-  'Mobile search results generally show less text than desktop before truncating — check both device previews here.',
+  'Search engines truncate titles and descriptions that run too long. The pixel-width bars approximate that cutoff more closely than a character count alone.',
+  'Mobile search results generally show less text than desktop before truncating, so check both device previews here.',
   'These are guidelines, not guarantees: Google sometimes rewrites titles and descriptions automatically regardless of length.',
-  'Everything here runs locally in your browser — your title, description, and URL are only used to render the preview.',
+  'Everything here runs locally in your browser; your title, description, and URL are only used to render the preview.',
 ];
 
 // Browser address-bar chrome — sets the "search result simulator" framing immediately
@@ -42,10 +42,10 @@ const header = (
           <line x1="21" y1="21" x2="16.65" y2="16.65" />
         </svg>
         <span className="text-sm font-medium" style={{ color: 'var(--ink-950)' }}>
-          SEO Meta Preview
+          SEO Meta Preview:
         </span>
         <span className="hidden text-xs sm:inline" style={{ color: 'var(--ink-700)' }}>
-          — see how your title and description render in search results
+          see how your title and description render in search results
         </span>
       </div>
     </Container>
@@ -61,7 +61,7 @@ export default function SeoMetaPreviewPage() {
       cta={{
         eyebrow: 'Need SEO foundations built in?',
         description:
-          'I can build clean, crawlable WordPress pages with proper titles, meta descriptions, and structured content baked in from the start — not bolted on afterward.',
+          'I can build clean, crawlable WordPress pages with proper titles, meta descriptions, and structured content baked in from the start, not bolted on afterward.',
         variant: 'light',
       }}
     >

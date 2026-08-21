@@ -8,7 +8,7 @@ import { buildMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = buildMetadata({
   title: `Web Tools — ${siteConfig.name}`,
-  description: 'Practical tools for building, launching, auditing, and maintaining websites — DNS checks, launch checklists, schema markup, redirects, accessibility, and more.',
+  description: 'Practical tools for building, launching, auditing, and maintaining websites: DNS checks, launch checklists, schema markup, redirects, accessibility, and more.',
   canonical: `${siteConfig.url}/tools`,
 });
 
@@ -22,7 +22,7 @@ export default function ToolsPage() {
             Practical tools for building, launching, auditing, and maintaining websites.
           </h1>
           <p className="text-sm sm:text-base" style={{ color: 'var(--ink-700)' }}>
-            Free, focused utilities — most run entirely in your browser with no account or upload required.
+            Free, focused utilities. Most run entirely in your browser with no account or upload required.
           </p>
         </Container>
       </section>

@@ -15,14 +15,14 @@ export interface ExperienceEntry {
 /** Real work history — dates and employers sourced directly from the CV. Do not invent or extend. */
 export const experience: ExperienceEntry[] = [
   {
-    period: 'Jan 2024 — Present',
+    period: 'Jan 2024 – Present',
     role: 'Freelance / Contract WordPress Developer',
-    org: 'Independent — Philippines, United States, Canada',
+    org: 'Independent (Philippines, United States, Canada)',
     summary:
-      'Working independently with agencies and direct clients on fixed-scope WordPress projects — site builds, ongoing maintenance, hosting & DNS support, and migrations.',
+      'Working independently with agencies and direct clients on fixed-scope WordPress projects: site builds, ongoing maintenance, hosting & DNS support, and migrations.',
     projects: [
       {
-        client: 'Spirit Media (United States) — AI Agency',
+        client: 'Spirit Media (United States), AI Agency',
         period: 'Jan – Jun 2026',
         detail:
           'Returned as an AI-Assisted Developer after the agency’s pivot from WordPress web design to AI-driven books and websites; contributed to AI-generated book production and platform workflows.',
@@ -56,16 +56,16 @@ export const experience: ExperienceEntry[] = [
     ],
   },
   {
-    period: '2021 — 2023',
+    period: '2021 – 2023',
     role: 'Website Developer',
-    org: 'National Meat Inspection Service — Philippines',
+    org: 'National Meat Inspection Service (Philippines)',
     summary:
       'Built and customized WordPress websites alongside internal system development; backend customization, updates, maintenance, and bug fixing.',
   },
   {
-    period: '2019 — 2020',
+    period: '2019 – 2020',
     role: 'Freelance WordPress CMS Designer',
-    org: 'Independent — Philippines',
+    org: 'Independent (Philippines)',
     summary:
       'Designed user-friendly WordPress themes and templates, implemented plugins and widgets, and optimized for mobile responsiveness and on-page SEO. Clients: Meler Production, Elopement Wedding Planner, United Realty Group, Randell Tiongson Personal Finance.',
   },

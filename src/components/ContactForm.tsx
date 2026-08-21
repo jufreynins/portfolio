@@ -152,7 +152,7 @@ export default function ContactForm({ dark = false }: ContactFormProps) {
         }
 
         if (status) {
-          status.textContent = "Thank you — your message has been received. I'll respond within one business day.";
+          status.textContent = "Thank you! Your message has been received. I'll respond within one business day.";
           status.style.color = formSuccessColor;
         }
         form.reset();

@@ -113,7 +113,7 @@ export default function HandoffBuilder() {
         const rows = contacts.filter((c) => c.name.trim());
         if (rows.length === 0) continue;
         lines.push('## Contacts and Responsibilities', '');
-        for (const c of rows) lines.push(`- **${c.name}** — ${c.role}${c.info ? ` (${c.info})` : ''}`);
+        for (const c of rows) lines.push(`- **${c.name}:** ${c.role}${c.info ? ` (${c.info})` : ''}`);
         lines.push('');
         continue;
       }
@@ -126,7 +126,7 @@ export default function HandoffBuilder() {
       for (const f of filled) lines.push(`- **${f.label}:** ${sectionValues[f.key]}`);
       lines.push('');
     }
-    lines.push('---', '_Note: this document intentionally excludes passwords, API keys, and other credentials — see where each is stored instead._');
+    lines.push('---', '_Note: this document intentionally excludes passwords, API keys, and other credentials. See where each is stored instead._');
     return lines.join('\n');
   }
 
@@ -151,7 +151,7 @@ export default function HandoffBuilder() {
           <path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L14.71 3.86a2 2 0 0 0-3.42 0Z" />
         </svg>
         <p className="text-xs leading-relaxed" style={{ color: 'var(--text-primary)' }}>
-          <strong>Never enter actual passwords, API keys, or recovery codes.</strong> Note where access is stored (a password manager, a client&apos;s account) — not the credential itself.
+          <strong>Never enter actual passwords, API keys, or recovery codes.</strong> Note where access is stored (a password manager, a client&apos;s account), not the credential itself.
         </p>
       </div>
 

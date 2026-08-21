@@ -125,7 +125,7 @@ export default function FaviconGenerator() {
     setStatus('ready');
     setSettingsDirty(false);
     setErrorMessage('');
-    announce(`${file.name} loaded — ready to generate.`);
+    announce(`${file.name} loaded, ready to generate.`);
   }
 
   function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -451,7 +451,7 @@ export default function FaviconGenerator() {
               </div>
               {settingsDirty && status === 'generated' && (
                 <p className="text-xs font-medium" style={{ color: 'var(--color-warning)' }}>
-                  Settings changed — click Regenerate to apply them.
+                  Settings changed. Click Regenerate to apply them.
                 </p>
               )}
 

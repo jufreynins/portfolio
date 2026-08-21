@@ -14,9 +14,9 @@ export const metadata: Metadata = buildMetadata({
 const tool = getToolById('utm-builder')!;
 
 const guideTips = [
-  'Existing query parameters on your destination URL are preserved — UTM parameters are added alongside them, not instead of them.',
+  'Existing query parameters on your destination URL are preserved; UTM parameters are added alongside them, not instead of them.',
   'Keep source/medium/campaign values lowercase and consistent (e.g. always "email" not sometimes "Email") so analytics reports group them correctly.',
-  '"Save to History" keeps a local list in this browser only — nothing is sent anywhere.',
+  '"Save to History" keeps a local list in this browser only. Nothing is sent anywhere.',
   'Use utm_content to A/B test different links or placements within the same campaign.',
 ];
 

@@ -45,7 +45,7 @@ export const wordpressServices: WordPressService[] = [
   },
   {
     title: 'Landing Pages',
-    outcome: 'A focused, fast-loading page built around a single goal — sign-ups, bookings, or leads.',
+    outcome: 'A focused, fast-loading page built around a single goal: sign-ups, bookings, or leads.',
     whoFor: 'Campaigns, product launches, and offers that need a dedicated page instead of a full site rebuild.',
     problem: 'Squeezing a focused campaign message onto a general-purpose homepage buries the call to action.',
     deliverables: ['Elementor Pro page building', 'Reusable global templates', 'Conversion-focused layout', 'Editor-friendly structure for future changes'],
@@ -66,7 +66,7 @@ export const wordpressServices: WordPressService[] = [
   {
     title: 'Browser-Based Web Tools',
     outcome: 'A focused utility that solves one task well, without an account or upload.',
-    whoFor: 'Teams that repeatedly need a small technical task done — image conversion, SEO checks, formatting — without extra software.',
+    whoFor: 'Teams that repeatedly need a small technical task done (image conversion, SEO checks, formatting) without extra software.',
     problem: 'General-purpose software is overkill for a single repeated task, and uploading files to a third-party service raises privacy questions.',
     deliverables: ['Client-side, local processing', 'No account or file uploads', 'Instant, downloadable results'],
     technology: 'TypeScript, Canvas API, JSZip',
@@ -83,7 +83,7 @@ export const wordpressServices: WordPressService[] = [
   },
   {
     title: 'Hosting, Domain & Launch Support',
-    outcome: 'A website connected to the right domain, hosting, and email setup — verified before launch, not after.',
+    outcome: 'A website connected to the right domain, hosting, and email setup, verified before launch instead of after.',
     whoFor: 'Businesses launching a new site, changing hosting providers, or dealing with a domain, SSL, or email-delivery issue.',
     problem: 'Domain, DNS, SSL, and email settings are easy to misconfigure, and a single wrong record can break a website or its email.',
     deliverables: [
@@ -103,7 +103,7 @@ export const wordpressServices: WordPressService[] = [
     title: 'Maintenance & Agency Support',
     outcome: 'A site that stays fast, secure, and current without you having to think about it.',
     whoFor: 'Site owners who want ongoing peace of mind after launch, and agencies who need reliable development support.',
-    problem: 'Websites need upkeep — plugin updates, small fixes, content changes — and neglecting it leads to slow, insecure, or broken pages.',
+    problem: 'Websites need upkeep: plugin updates, small fixes, content changes. Neglecting it leads to slow, insecure, or broken pages.',
     deliverables: ['Website maintenance & updates', 'Performance optimization', 'Responsive & UI fixes', 'Agency development support'],
     technology: 'Cloudways, Hostinger, WHM/cPanel, performance auditing',
     visual: 'checklist',

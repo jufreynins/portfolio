@@ -16,7 +16,7 @@ export const metadata: Metadata = buildMetadata({
 const tool = getToolById('css-visual-generator')!;
 
 const guideTips = [
-  'Click anywhere on the color rail to add a stop at that spot, or drag an existing marker to reposition it — arrow keys nudge the selected stop, Delete removes it.',
+  'Click anywhere on the color rail to add a stop at that spot, or drag an existing marker to reposition it. Arrow keys nudge the selected stop, Delete removes it.',
   'Linear gradients use an angle; radial gradients use a shape and position; conic gradients rotate around a starting angle and position.',
   'Reverse Colors flips the stop order without changing positions; Random Gradient keeps the current type but shuffles colors and positions.',
   'Download PNG renders the exact gradient you see to an image file, sized for use as a background or banner.',
@@ -53,7 +53,7 @@ export default function CssGradientGeneratorPage() {
       cta={{
         eyebrow: 'Need a custom design system?',
         description:
-          'I can turn gradients, color systems, and UI details like this into a fast, polished WordPress site — built with Elementor, custom CSS, and clean, maintainable code.',
+          'I can turn gradients, color systems, and UI details like this into a fast, polished WordPress site, built with Elementor, custom CSS, and clean, maintainable code.',
         variant: 'light',
       }}
     >

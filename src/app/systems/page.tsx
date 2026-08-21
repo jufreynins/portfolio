@@ -11,7 +11,7 @@ import { systems, systemStatusStyle } from '@/data/systems';
 
 export const metadata: Metadata = buildMetadata({
   title: `Systems — ${siteConfig.name}`,
-  description: 'Personal web system concepts and live deployments — clearly labeled experiments outside client work, not existing production systems.',
+  description: 'Personal web system concepts and live deployments: clearly labeled experiments outside client work, not existing production systems.',
   canonical: `${siteConfig.url}/systems`,
 });
 
@@ -23,7 +23,7 @@ export default function SystemsPage() {
           <SectionHeading
             as="h1"
             title="Personal systems, outside client work."
-            description="A mix of live personal deployments and concept designs for internal tools — clearly labeled, never existing client or production systems."
+            description="A mix of live personal deployments and concept designs for internal tools, clearly labeled and never existing client or production systems."
           />
         </Container>
       </section>
@@ -117,7 +117,7 @@ export default function SystemsPage() {
       <ContactCTA
         eyebrow="Need something similar?"
         title="Let's talk about your workflow."
-        description="If a workflow like this sounds familiar — spreadsheets, email threads, or disconnected tools — tell me about it."
+        description="If a workflow like this sounds familiar (spreadsheets, email threads, disconnected tools), tell me about it."
       />
     </>
   );

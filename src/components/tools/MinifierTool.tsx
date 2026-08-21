@@ -31,7 +31,7 @@ export default function MinifierTool() {
       setError('');
       return mode === 'html' ? minifyHtml(input) : minifyCss(input);
     } catch {
-      setError('Could not process this input — check for unmatched brackets or quotes.');
+      setError('Could not process this input. Check for unmatched brackets or quotes.');
       return '';
     }
   }, [input, mode]);
@@ -126,7 +126,7 @@ export default function MinifierTool() {
       </div>
 
       <p className="text-xs italic" style={{ color: 'var(--text-muted)' }}>
-        This performs conservative whitespace and comment removal, not full parser-based optimization — safe for production, but not the smallest possible output.
+        This performs conservative whitespace and comment removal, not full parser-based optimization. Safe for production, but not the smallest possible output.
       </p>
     </div>
   );

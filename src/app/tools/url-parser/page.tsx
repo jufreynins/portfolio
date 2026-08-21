@@ -14,10 +14,10 @@ export const metadata: Metadata = buildMetadata({
 const tool = getToolById('url-parser')!;
 
 const guideTips = [
-  'A password shown as "present" is never displayed — this tool only flags that one exists in the URL, which is itself worth knowing since credentials in URLs are a common leak.',
+  'A password shown as "present" is never displayed. This tool only flags that one exists in the URL, which is itself worth knowing since credentials in URLs are a common leak.',
   'Duplicate parameter keys (like two "color" params) are both preserved when parsing and rebuilding.',
   '"Decode All" and "Encode All" apply to parameter values only, not keys.',
-  "Registrable-domain analysis (e.g. distinguishing \"example.co.uk\" from a subdomain) isn't included — it needs a public suffix list this tool doesn't bundle.",
+  "Registrable-domain analysis (e.g. distinguishing \"example.co.uk\" from a subdomain) isn't included; it needs a public suffix list this tool doesn't bundle.",
 ];
 
 export default function UrlParserPage() {

@@ -14,7 +14,7 @@ export const metadata: Metadata = buildMetadata({
 const tool = getToolById('website-launch-checklist')!;
 
 const guideTips = [
-  "Switching project type changes which items are shown by default — anything you've already checked stays checked.",
+  "Switching project type changes which items are shown by default, but anything you've already checked stays checked.",
   'Add custom items to any category for launch requirements specific to this project.',
   'Progress is saved in this browser only, so it will still be here if you close the tab and come back.',
   'Print or export the checklist to share it with a client or teammate as a launch record.',

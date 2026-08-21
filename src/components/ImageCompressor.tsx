@@ -127,9 +127,9 @@ export default function ImageCompressor() {
         canDownload = true;
         const saved = percentSaved(item.originalSize, item.convertedSize);
         if (saved >= 0) {
-          statusHtml = `<p class="mt-2 text-xs font-semibold" style="color:var(--color-success)">Completed — ${formatBytes(item.convertedSize)} · Saved ${saved.toFixed(0)}%</p>`;
+          statusHtml = `<p class="mt-2 text-xs font-semibold" style="color:var(--color-success)">Completed · ${formatBytes(item.convertedSize)} · Saved ${saved.toFixed(0)}%</p>`;
         } else {
-          statusHtml = `<p class="mt-2 text-xs font-semibold" style="color:var(--color-warning)">File size increased by ${Math.abs(saved).toFixed(0)}% — try a lower quality.</p>`;
+          statusHtml = `<p class="mt-2 text-xs font-semibold" style="color:var(--color-warning)">File size increased by ${Math.abs(saved).toFixed(0)}%. Try a lower quality.</p>`;
         }
       } else if (item.status === 'failed') {
         statusHtml = `<p class="mt-2 text-xs font-semibold" style="color:var(--color-error)">${escapeHtml(item.errorMessage ?? 'Compression failed.')}</p>`;
@@ -273,7 +273,7 @@ export default function ImageCompressor() {
       }
 
       if (previewMultiNoteEl) {
-        previewMultiNoteEl.textContent = items.length > 1 ? `Showing 1 of ${items.length} images — see the full list on the right.` : '';
+        previewMultiNoteEl.textContent = items.length > 1 ? `Showing 1 of ${items.length} images. See the full list on the right.` : '';
       }
     }
 

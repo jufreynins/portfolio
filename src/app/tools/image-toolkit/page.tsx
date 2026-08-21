@@ -9,17 +9,17 @@ import { buildMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = buildMetadata({
   title: `Free Image Toolkit — Convert, Compress & Resize | ${siteConfig.name}`,
-  description: 'Convert between JPG, PNG, and WebP, compress file size, and resize or crop images by custom dimensions, percentage, or social media preset — all in one browser-based workspace. No uploads.',
+  description: 'Convert between JPG, PNG, and WebP, compress file size, and resize or crop images by custom dimensions, percentage, or social media preset, all in one browser-based workspace. No uploads.',
   canonical: `${siteConfig.url}/tools/image-toolkit`,
 });
 
 const tool = getToolById('image-toolkit')!;
 
 const guideTips = [
-  'Convert either direction between JPG, PNG, and WebP — including WebP back to JPG or PNG for broader compatibility.',
+  'Convert either direction between JPG, PNG, and WebP, including WebP back to JPG or PNG for broader compatibility.',
   'Compress keeps your original format; Convert changes it. Reach for Compress when you just need a smaller file, Convert when you need a different one.',
   'Resize by exact pixel dimensions, a percentage scale, or a social media preset, then drag the crop box (or its corner handles) to control what stays in frame.',
-  'PNG is lossless, so quality sliders have little effect on it — convert to WebP first if you need a meaningfully smaller PNG.',
+  'PNG is lossless, so quality sliders have little effect on it. Convert to WebP first if you need a meaningfully smaller PNG.',
   'Add up to 10 images at once in any mode and download everything together as a ZIP.',
   'Everything runs locally in your browser using the Canvas API. Your files are never uploaded or stored.',
 ];
@@ -57,7 +57,7 @@ const header = (
         </div>
       </div>
       <p className="max-w-xl text-sm" style={{ color: 'var(--ink-700)' }}>
-        Convert, compress, resize, and crop images — all in one browser-based workspace. No uploads, no storage, no account.
+        Convert, compress, resize, and crop images, all in one browser-based workspace. No uploads, no storage, no account.
       </p>
     </Container>
   </section>

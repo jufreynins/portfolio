@@ -203,7 +203,7 @@ export const EXAMPLES: Record<SchemaType, { fields: SimpleFields; faq?: FaqItem[
     fields: {},
     faq: [
       { id: 'ex-1', question: 'How long does a WordPress website take to build?', answer: 'Most business websites take two to four weeks depending on scope and content readiness.' },
-      { id: 'ex-2', question: 'Do you offer ongoing maintenance?', answer: 'Yes — maintenance and support plans are available after launch.' },
+      { id: 'ex-2', question: 'Do you offer ongoing maintenance?', answer: 'Yes, maintenance and support plans are available after launch.' },
     ],
   },
   BreadcrumbList: {

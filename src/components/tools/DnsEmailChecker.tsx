@@ -135,14 +135,14 @@ export default function DnsEmailChecker() {
 
     const websiteRows: RowResult[] = [
       row('A', 'A', hostname, a, { emptyExplains: 'No IPv4 address for this host.', foundExplains: 'Points this host to an IPv4 address.', nextAction: 'Add an A record with your hosting provider.' }),
-      row('AAAA', 'AAAA', hostname, aaaa, { emptyExplains: 'No IPv6 record — optional, most sites work fine on IPv4 only.', foundExplains: 'Points this host to an IPv6 address.' }),
-      row('CNAME', 'CNAME', hostname, cname, { emptyExplains: 'No CNAME on this host — common for a root domain, which typically uses A/AAAA instead.', foundExplains: 'Aliases this host to another hostname.' }),
+      row('AAAA', 'AAAA', hostname, aaaa, { emptyExplains: 'No IPv6 record; optional, most sites work fine on IPv4 only.', foundExplains: 'Points this host to an IPv6 address.' }),
+      row('CNAME', 'CNAME', hostname, cname, { emptyExplains: 'No CNAME on this host; common for a root domain, which typically uses A/AAAA instead.', foundExplains: 'Aliases this host to another hostname.' }),
       row('NS', 'NS', hostname, ns, { emptyExplains: 'Could not determine nameservers for this host.', foundExplains: 'Nameservers currently answering for this domain.' }),
     ];
 
     const mailRows: RowResult[] = [
       row('MX', 'MX', hostname, mx, {
-        emptyExplains: 'No mail server configured — email sent to this domain may not be delivered.',
+        emptyExplains: 'No mail server configured; email sent to this domain may not be delivered.',
         foundExplains: 'Mail servers responsible for delivering email to this domain.',
         nextAction: 'Add MX records with your email provider (Google Workspace, Microsoft 365, etc.).',
       }),
@@ -164,18 +164,18 @@ export default function DnsEmailChecker() {
           host: hostname,
           status: 'Missing',
           values: [],
-          explanation: 'No SPF record — receiving mail servers can’t verify authorized senders for this domain.',
+          explanation: 'No SPF record: receiving mail servers can’t verify authorized senders for this domain.',
           nextAction: 'Add a TXT record starting with v=spf1.',
         };
       } else if (spfRecords.length > 1) {
-        spfResult = { key: 'SPF', type: 'SPF', host: hostname, status: 'Needs Review', values: spfRecords.map((data) => ({ data })), explanation: 'Multiple SPF records found — only one is allowed per domain and this can break mail delivery.' };
+        spfResult = { key: 'SPF', type: 'SPF', host: hostname, status: 'Needs Review', values: spfRecords.map((data) => ({ data })), explanation: 'Multiple SPF records found; only one is allowed per domain and this can break mail delivery.' };
       } else {
         spfResult = { key: 'SPF', type: 'SPF', host: hostname, status: 'Found', values: [{ data: spfRecords[0] }], explanation: 'Lists which mail servers are authorized to send email for this domain.' };
       }
     }
 
     const dmarcRow = row('DMARC', 'DMARC', `_dmarc.${hostname}`, dmarcTxt, {
-      emptyExplains: 'No DMARC record — add one for reporting and stronger protection against spoofing.',
+      emptyExplains: 'No DMARC record; add one for reporting and stronger protection against spoofing.',
       foundExplains: 'Tells receiving servers what to do with mail that fails SPF/DKIM checks.',
       nextAction: `Add a TXT record at _dmarc.${hostname} starting with v=DMARC1.`,
     });
@@ -191,7 +191,7 @@ export default function DnsEmailChecker() {
       dkimResult = { key: 'DKIM', type: 'DKIM', host: hostname, status: 'Not Applicable', values: [], explanation: 'Provide your email provider’s DKIM selector (e.g. “google” or “selector1”) to check this record.' };
     } else {
       dkimResult = row(`${selector.trim()}._domainkey`, 'DKIM', `${selector.trim()}._domainkey.${hostname}`, dkimTxt, {
-        emptyExplains: `No DKIM record found at this selector — verify the selector name with your email provider.`,
+        emptyExplains: `No DKIM record found at this selector; verify the selector name with your email provider.`,
         foundExplains: 'Lets receiving servers cryptographically verify mail sent from this domain.',
         nextAction: 'Confirm the selector value from your email provider’s setup instructions.',
       });
@@ -223,7 +223,7 @@ export default function DnsEmailChecker() {
     <div className="flex flex-col gap-6">
       <form onSubmit={runCheck} className="flex flex-col gap-4 rounded-2xl border p-5 sm:p-6" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-warm)' }}>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <Field label="Domain" htmlFor="dns-domain" required hint="example.com, www.example.com, or a full URL — we'll extract the hostname.">
+          <Field label="Domain" htmlFor="dns-domain" required hint="example.com, www.example.com, or a full URL; we'll extract the hostname.">
             <input
               id="dns-domain"
               type="text"
@@ -236,7 +236,7 @@ export default function DnsEmailChecker() {
               aria-invalid={!!errorMessage}
             />
           </Field>
-          <Field label="DKIM Selector" htmlFor="dns-selector" hint="Optional — needed only to check a DKIM record.">
+          <Field label="DKIM Selector" htmlFor="dns-selector" hint="Optional, needed only to check a DKIM record.">
             <input
               id="dns-selector"
               type="text"

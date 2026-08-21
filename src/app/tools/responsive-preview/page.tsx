@@ -14,10 +14,10 @@ export const metadata: Metadata = buildMetadata({
 const tool = getToolById('responsive-preview')!;
 
 const guideTips = [
-  'Many websites (including this one) send security headers that block embedding in an iframe — if a preview stays blank, use "Open in New Window" and resize your browser instead.',
-  "This tool loads the real live page, so interactions like scrolling and hover states work — it isn't a static screenshot.",
+  'Many websites (including this one) send security headers that block embedding in an iframe. If a preview stays blank, use "Open in New Window" and resize your browser instead.',
+  "This tool loads the real live page, so interactions like scrolling and hover states work; it isn't a static screenshot.",
   'Landscape flips the width and height of the selected preset, useful for checking tablets and phones rotated sideways.',
-  'Nothing you preview here is stored, proxied, or sent through a server — the browser loads the page directly.',
+  'Nothing you preview here is stored, proxied, or sent through a server. The browser loads the page directly.',
 ];
 
 export default function ResponsivePreviewPage() {

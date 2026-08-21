@@ -423,7 +423,7 @@ export default function GradientGenerator() {
               )}
 
               <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
-                {state.stops.length} of {MAX_STOPS} stops used &mdash; at least {MIN_STOPS} required.
+                {state.stops.length} of {MAX_STOPS} stops used (at least {MIN_STOPS} required).
               </p>
             </div>
           </ToolGuideAccordion>

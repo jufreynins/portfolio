@@ -164,7 +164,7 @@ export default function HomePage() {
               </h1>
 
               <p className="max-w-lg leading-relaxed" style={{ color: 'var(--ink-700)', fontSize: 'var(--text-lead)' }} data-hero-support>
-                I help agencies and businesses build, manage, troubleshoot, and maintain production WordPress websites—from custom development and ongoing updates to hosting, domains, DNS,
+                I help agencies and businesses build, manage, troubleshoot, and maintain production WordPress websites, from custom development and ongoing updates to hosting, domains, DNS,
                 migrations, and technical support.
               </p>
 
@@ -237,7 +237,7 @@ export default function HomePage() {
             <SectionHeading
               eyebrow="Selected Work"
               title="Real WordPress sites, live in production."
-              description="A few examples of client work — from marketing agencies to nonprofits and e-commerce."
+              description="A few examples of client work, from marketing agencies to nonprofits and e-commerce."
             />
             <Button href="/work" variant="secondary" className="flex-shrink-0">
               View All Work
@@ -258,7 +258,7 @@ export default function HomePage() {
             <span className="eyebrow">Stack</span>
             <h2 className="mt-3 max-w-sm">Tools and technologies.</h2>
             <p className="mt-4 max-w-sm leading-relaxed" style={{ color: 'var(--ink-700)' }}>
-              WordPress is my primary focus — these are the supporting development and infrastructure tools I use alongside it.
+              WordPress is my primary focus. These are the supporting development and infrastructure tools I use alongside it.
             </p>
           </div>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:col-span-7">

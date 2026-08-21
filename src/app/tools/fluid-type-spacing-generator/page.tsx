@@ -14,10 +14,10 @@ export const metadata: Metadata = buildMetadata({
 const tool = getToolById('fluid-type-spacing-generator')!;
 
 const guideTips = [
-  'The slider simulates a real browser viewport by computing the value mathematically — the generated clamp() itself uses real vw units once you paste it into your site.',
+  'The slider simulates a real browser viewport by computing the value mathematically; the generated clamp() itself uses real vw units once you paste it into your site.',
   'Typography usually looks best scaling by about 1.25–1.5× between minimum and maximum viewport.',
-  'Root font size only matters when using rem — it converts your rem values to px to calculate the slope correctly.',
-  'A reversed range (max value smaller than min value) is valid — useful for spacing that should shrink on larger screens.',
+  'Root font size only matters when using rem, since it converts your rem values to px to calculate the slope correctly.',
+  'A reversed range (max value smaller than min value) is valid, useful for spacing that should shrink on larger screens.',
 ];
 
 export default function FluidTypeSpacingGeneratorPage() {

@@ -9,17 +9,17 @@ import { buildMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = buildMetadata({
   title: `Free Favicon Generator — Full Icon Set from One Image | ${siteConfig.name}`,
-  description: 'Generate a complete favicon set — favicon.ico plus Apple touch and Android/PWA icons — from a single source image, directly in your browser. No uploads.',
+  description: 'Generate a complete favicon set (favicon.ico plus Apple touch and Android/PWA icons) from a single source image, directly in your browser. No uploads.',
   canonical: `${siteConfig.url}/tools/favicon-generator`,
 });
 
 const tool = getToolById('brand-asset-generator')!;
 
 const guideTips = [
-  'This tool builds an actual multi-resolution favicon.ico (16, 32, and 48px in one file) — the format modern browsers and Windows both expect, not just a renamed PNG.',
+  'This tool builds an actual multi-resolution favicon.ico (16, 32, and 48px in one file): the format modern browsers and Windows both expect, not just a renamed PNG.',
   'Alongside favicon.ico, you get 180×180 (Apple touch icon), 192×192, and 512×512 PNGs for Android home screens and installable web apps.',
   'For the cleanest result, start with a square-ish image. Use Cover to crop a non-square image to fill the square, or Contain to fit the whole image with a background fill instead.',
-  'Everything decodes and resizes locally in your browser using the Canvas API — your file is never uploaded.',
+  'Everything decodes and resizes locally in your browser using the Canvas API; your file is never uploaded.',
 ];
 
 const steps = ['Upload', 'Preview sizes', 'Download'];

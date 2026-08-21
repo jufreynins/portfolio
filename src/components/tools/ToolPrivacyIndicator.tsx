@@ -29,7 +29,7 @@ export default function ToolPrivacyIndicator() {
           className="absolute left-0 top-full z-10 mt-2 w-72 rounded-[var(--radius-md)] border p-4 text-xs leading-relaxed shadow-lg"
           style={{ borderColor: 'var(--border-color)', background: 'var(--surface-white)', color: 'var(--text-secondary)', boxShadow: 'var(--shadow-md)' }}
         >
-          Everything here runs client-side using your browser&apos;s own APIs (Canvas, JSZip, etc.). Your files and data are never uploaded to a server or stored in a database &mdash; closing or refreshing this page clears everything.
+          Everything here runs client-side using your browser&apos;s own APIs (Canvas, JSZip, etc.). Your files and data are never uploaded to a server or stored in a database. Closing or refreshing this page clears everything.
         </div>
       )}
     </div>

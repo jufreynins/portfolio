@@ -47,7 +47,7 @@ export const HANDOFF_SECTIONS: HandoffSectionDef[] = [
     fields: [
       { key: 'provider', label: 'Provider', type: 'text', placeholder: 'Cloudways, Hostinger…' },
       { key: 'plan', label: 'Plan / tier', type: 'text' },
-      { key: 'accessStoredAt', label: 'Where access is stored', type: 'text', hint: 'Never enter the actual password or key here — just where it lives, e.g. "Client\'s 1Password vault".' },
+      { key: 'accessStoredAt', label: 'Where access is stored', type: 'text', hint: 'Never enter the actual password or key here, just where it lives, e.g. "Client\'s 1Password vault".' },
     ],
   },
   {

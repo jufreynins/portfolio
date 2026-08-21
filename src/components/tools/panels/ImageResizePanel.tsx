@@ -179,7 +179,7 @@ export default function ImageResizePanel() {
             </div>
             <input type="range" id="percentage-slider" min={MIN_PERCENTAGE} max={MAX_PERCENTAGE} step={5} defaultValue={DEFAULT_PERCENTAGE} className="webp-range w-full" data-percentage-slider />
             <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
-              Scales the full image proportionally &mdash; no cropping.
+              Scales the full image proportionally, no cropping.
             </p>
           </div>
 

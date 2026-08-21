@@ -17,7 +17,7 @@ const guideTips = [
   'Large text (18pt+/24px, or 14pt+/19px bold) has a lower contrast requirement than normal body text.',
   'AA is the baseline most sites and legal requirements target; AAA is a stricter, optional standard.',
   'Contrast is calculated using the WCAG 2.x relative luminance formula, the same one browsers and accessibility auditing tools use.',
-  'The suggested alternative only adjusts the foreground color — sometimes adjusting the background instead gives a better visual result.',
+  'The suggested alternative only adjusts the foreground color; sometimes adjusting the background instead gives a better visual result.',
 ];
 
 export default function ContrastCheckerPage() {

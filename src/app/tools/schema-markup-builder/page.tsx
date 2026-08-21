@@ -15,7 +15,7 @@ const tool = getToolById('schema-markup-builder')!;
 
 const guideTips = [
   "FAQPage markup can make questions eligible for rich results in Google Search, but eligibility depends on Google's current guidelines.",
-  'BreadcrumbList should match the actual navigation path to the page, in order — position numbers are generated automatically.',
+  'BreadcrumbList should match the actual navigation path to the page, in order; position numbers are generated automatically.',
   'Only fields you fill in are included in the output; empty fields are left out rather than rendered as blank values.',
   "Validate the output with Google's Rich Results Test before publishing to a live page.",
 ];

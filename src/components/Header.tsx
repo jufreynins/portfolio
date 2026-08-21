@@ -83,7 +83,7 @@ export default function Header() {
       />
 
       <Container className="flex items-center justify-between py-4 transition-[padding] duration-300" data-header-inner>
-        <a href="/" className="site-logo-link flex items-center gap-2.5 text-xl font-heading tracking-tight" style={{ color: 'var(--ink-950)' }} aria-label={`${siteConfig.name} — Home`}>
+        <a href="/" className="site-logo-link flex items-center gap-2.5 text-xl font-heading tracking-tight" style={{ color: 'var(--ink-950)' }} aria-label={`${siteConfig.name}, Home`}>
           <span
             className="flex h-9 w-9 items-center justify-center rounded-[var(--radius-sm)] border font-mono text-xs font-medium"
             style={{ background: 'var(--accent-soft)', color: 'var(--accent)', borderColor: 'var(--line)' }}
