@@ -1,6 +1,7 @@
 import type { StaticImageData } from 'next/image';
 import revisiondeskScreenshot from '../assets/images/personal-projects/revisiondesk.png';
 import stockflowScreenshot from '../assets/images/personal-projects/stockflow.png';
+import laundryManagementScreenshot from '../assets/images/personal-projects/laundry-management-system.png';
 
 export type SystemStatus = 'Live' | 'Prototype' | 'In Development' | 'Concept';
 
@@ -94,14 +95,15 @@ export const systems: System[] = [
   {
     slug: 'laundry-management-system',
     name: 'Laundry Management System',
-    category: 'Laundry & Service Operations',
+    category: 'AI-Assisted Web App',
     status: 'Live',
-    users: 'Laundry shop owners and staff managing customer accounts.',
-    problem: 'Managing customer records and account settings for a laundry business by hand or across disconnected tools makes it hard to keep information organized and consistent.',
-    modules: ['Customer directory & records', 'New customer registration', 'Admin settings & configuration'],
-    techDirection: 'Laravel, React + TypeScript, MySQL',
-    routeLabel: 'laundry-management-system.jufreyninobayogportfolio.com/customers',
+    users: 'Laundry shop owners and staff managing orders, customers, and day-to-day operations.',
+    problem: 'Running a laundry business across paper logs, spreadsheets, and disconnected tools makes it hard to track order status, payments, deliveries, and stock in one place.',
+    modules: ['Order pipeline (check-in through pickup/delivery)', 'Customer directory & records', 'Payments & expenses', 'Inventory & suppliers', 'Reports & role-based audit logs'],
+    techDirection: 'Laravel, React + TypeScript, MySQL, built with AI-assisted development in Claude Code, human-reviewed',
+    routeLabel: 'laundry-management-system.jufreyninobayogportfolio.com/dashboard',
     href: 'https://laundry-management-system.jufreyninobayogportfolio.com/',
+    screenshot: laundryManagementScreenshot,
   },
   {
     slug: 'attendance-monitoring-system',
