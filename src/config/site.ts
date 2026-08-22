@@ -34,6 +34,7 @@ export const siteConfig = {
     { label: 'Expertise', href: '/services' },
     { label: 'About', href: '/about' },
     { label: 'Work', href: '/work' },
+    { label: 'AI Apps', href: '/systems' },
     { label: 'Tools', href: '/tools' },
     { label: 'Contact', href: '/contact' },
   ],
