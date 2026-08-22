@@ -781,6 +781,18 @@ export default function ImageResizer({ defaultMode = 'custom' }: ImageResizerPro
     // --- Upload wiring ---
     browseBtn?.addEventListener('click', () => fileInput.click(), { signal });
 
+    // Click anywhere in the dropzone opens the file picker too, as long as the click
+    // didn't originate on the browse button itself (which already opens it above) —
+    // avoids opening the OS file dialog twice from one click.
+    dropzone.addEventListener(
+      'click',
+      (e) => {
+        if ((e.target as HTMLElement).closest('button')) return;
+        fileInput.click();
+      },
+      { signal }
+    );
+
     fileInput.addEventListener(
       'change',
       () => {

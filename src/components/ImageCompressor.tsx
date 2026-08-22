@@ -68,6 +68,7 @@ export default function ImageCompressor() {
     const qualitySlider = document.querySelector<HTMLInputElement>('[data-quality-slider]');
     const qualityValueEl = document.querySelector<HTMLElement>('[data-quality-value]');
     const qualityLabelEl = document.querySelector<HTMLElement>('[data-quality-label]');
+    const qualityPresetButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-quality-preset]'));
     const listEl = document.querySelector<HTMLElement>('[data-list]');
     const emptyStateEl = document.querySelector<HTMLElement>('[data-empty-state]');
     const summaryEl = document.querySelector<HTMLElement>('[data-summary]');
@@ -482,6 +483,18 @@ export default function ImageCompressor() {
 
     browseBtn?.addEventListener('click', () => fileInput.click(), { signal });
 
+    // Click anywhere in the dropzone opens the file picker too, as long as the click
+    // didn't originate on the browse button itself (which already opens it above) —
+    // avoids opening the OS file dialog twice from one click.
+    dropzone.addEventListener(
+      'click',
+      (e) => {
+        if ((e.target as HTMLElement).closest('button')) return;
+        fileInput.click();
+      },
+      { signal }
+    );
+
     fileInput.addEventListener(
       'change',
       () => {
@@ -529,6 +542,16 @@ export default function ImageCompressor() {
     window.addEventListener('dragover', (e) => hasFiles(e) && e.preventDefault(), { signal });
     window.addEventListener('drop', (e) => hasFiles(e) && e.preventDefault(), { signal });
 
+    function updatePresetButtons(percent: number) {
+      qualityPresetButtons.forEach((btn) => {
+        const isActive = Number(btn.dataset.presetValue) === percent;
+        btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        btn.style.background = isActive ? 'var(--tool-accent-soft)' : '';
+        btn.style.borderColor = isActive ? 'var(--tool-accent)' : '';
+        btn.style.color = isActive ? 'var(--tool-accent)' : '';
+      });
+    }
+
     if (qualitySlider) {
       qualitySlider.addEventListener(
         'input',
@@ -536,11 +559,25 @@ export default function ImageCompressor() {
           const percent = Number(qualitySlider.value);
           currentQuality = percent / 100;
           updateQualityDisplay(percent);
+          updatePresetButtons(percent);
           if (items.length) debouncedReconvert();
         },
         { signal }
       );
     }
+
+    qualityPresetButtons.forEach((btn) => {
+      btn.addEventListener(
+        'click',
+        () => {
+          const percent = Number(btn.dataset.presetValue);
+          if (!qualitySlider || Number.isNaN(percent)) return;
+          qualitySlider.value = String(percent);
+          qualitySlider.dispatchEvent(new Event('input', { bubbles: true }));
+        },
+        { signal }
+      );
+    });
 
     listEl.addEventListener(
       'click',
@@ -565,6 +602,7 @@ export default function ImageCompressor() {
     });
 
     updateQualityDisplay(Math.round(currentQuality * 100));
+    updatePresetButtons(Math.round(currentQuality * 100));
     render();
 
     return () => {
