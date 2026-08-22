@@ -11,6 +11,8 @@ import heritageLuxCabinetryCard from '../assets/images/projects/heritage-lux-cab
 import heritageLuxCabinetryHero from '../assets/images/projects/heritage-lux-cabinetry-hero.png';
 import risePeerRecoveryCard from '../assets/images/projects/rise-peer-recovery-card.png';
 import risePeerRecoveryHero from '../assets/images/projects/rise-peer-recovery-hero.png';
+import copanoPropertyServicesCard from '../assets/images/projects/copano-property-services-card.png';
+import copanoPropertyServicesHero from '../assets/images/projects/copano-property-services-hero.png';
 
 export type ProjectStatus = 'Live';
 
@@ -153,6 +155,23 @@ export const projects: Project[] = [
     url: 'https://risepeerrecovery.org/',
     image: risePeerRecoveryCard,
     mockupImage: risePeerRecoveryHero,
+  },
+  {
+    slug: 'copano-property-services',
+    name: 'Copano Property Services',
+    category: 'Cleaning & Property Services',
+    status: 'Live',
+    role: 'WordPress Developer',
+    results: 'A modern, professional site that clearly communicates service coverage and experience, making it easier for property managers and businesses to request a quote.',
+    business: 'A cleaning, property maintenance, and hygiene services company serving Sydney, Greater Western Sydney, Illawarra, Newcastle, Blue Mountains, and the Southern Highlands.',
+    goal: 'Modernize an existing site to clearly present services and service-area coverage, and make it easy for property managers and businesses to request a quote.',
+    contribution: 'Redesigned and rebuilt the site on WordPress with Elementor Pro, restructuring the services and coverage-area content and refreshing the frontend design.',
+    description:
+      'A redesigned and rebuilt website for a cleaning and property maintenance company serving multiple regions of New South Wales. Presents services, coverage areas, and 21+ years of experience clearly, with a simple path to request a quote.',
+    technologies: ['WordPress', 'Elementor Pro'],
+    url: 'https://copano.com.au/',
+    image: copanoPropertyServicesCard,
+    mockupImage: copanoPropertyServicesHero,
   },
 ];
 
