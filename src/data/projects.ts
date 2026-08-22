@@ -1,6 +1,4 @@
 import type { StaticImageData } from 'next/image';
-import medicMediaCard from '../assets/images/projects/medic-media-card.png';
-import medicMediaHero from '../assets/images/projects/medic-media-hero.png';
 import neighborhoodPlumbingCard from '../assets/images/projects/neighborhood-plumbing-drain-card.png';
 import neighborhoodPlumbingHero from '../assets/images/projects/neighborhood-plumbing-drain-hero.png';
 import martinCountyHumaneCard from '../assets/images/projects/martin-county-humane-society-card.png';
@@ -39,26 +37,6 @@ export interface Project {
 }
 
 export const projects: Project[] = [
-  {
-    slug: 'medic-media',
-    name: 'Medic Media',
-    category: 'Marketing Agency',
-    status: 'Live',
-    role: 'WordPress Developer',
-    results:
-      'A polished, conversion-focused site that gives the agency a professional online presence to support client acquisition.',
-    business: 'A med spa marketing agency serving aesthetic and wellness clinics.',
-    goal: 'Communicate services, expertise, and value clearly enough to support client growth in a competitive industry.',
-    contribution:
-      'Built a conversion-focused WordPress site combining high-end visual design with strategic marketing messaging, using Elementor Pro and JetEngine for dynamic content.',
-    description:
-      'A conversion-focused website built for a med spa marketing agency, combining high-end visual design with strategic marketing messaging. Designed to clearly communicate services, expertise, and value while supporting client growth in a competitive industry.',
-    technologies: ['WordPress', 'Elementor Pro', 'JetEngine'],
-    url: 'https://www.medic-media.com/',
-    image: medicMediaCard,
-    mockupImage: medicMediaHero,
-    featured: true,
-  },
   {
     slug: 'neighborhood-plumbing-drain',
     name: 'Neighborhood Plumbing & Drain',
