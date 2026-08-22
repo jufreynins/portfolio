@@ -1,11 +1,16 @@
 import type { StaticImageData } from 'next/image';
-import medicMedia from '../assets/images/projects/medic-media.png';
-import medicMediaMockup from '../assets/images/projects/medic-media-mockup.png';
-import neighborhoodPlumbing from '../assets/images/projects/neighborhood-plumbing.png';
-import martinCountyHumane from '../assets/images/projects/martin-county-humane.png';
-import pedalShack from '../assets/images/projects/pedal-shack.png';
-import daviessCountyRuralWater from '../assets/images/projects/daviess-county-rural-water.png';
-import heritageLuxCabinetry from '../assets/images/projects/heritage-lux-cabinetry.png';
+import medicMediaCard from '../assets/images/projects/medic-media-card.png';
+import medicMediaHero from '../assets/images/projects/medic-media-hero.png';
+import neighborhoodPlumbingCard from '../assets/images/projects/neighborhood-plumbing-drain-card.png';
+import neighborhoodPlumbingHero from '../assets/images/projects/neighborhood-plumbing-drain-hero.png';
+import martinCountyHumaneCard from '../assets/images/projects/martin-county-humane-society-card.png';
+import martinCountyHumaneHero from '../assets/images/projects/martin-county-humane-society-hero.png';
+import pedalShackCard from '../assets/images/projects/the-pedal-shack-card.png';
+import pedalShackHero from '../assets/images/projects/the-pedal-shack-hero.png';
+import daviessCountyRuralWaterCard from '../assets/images/projects/daviess-county-rural-water-card.png';
+import daviessCountyRuralWaterHero from '../assets/images/projects/daviess-county-rural-water-hero.png';
+import heritageLuxCabinetryCard from '../assets/images/projects/heritage-lux-cabinetry-card.png';
+import heritageLuxCabinetryHero from '../assets/images/projects/heritage-lux-cabinetry-hero.png';
 
 export type ProjectStatus = 'Live';
 
@@ -24,8 +29,8 @@ export interface Project {
   url: string;
   image: StaticImageData;
   /** Desktop + mobile device mockup for the case-study page hero — built from a real
-   *  screenshot of the live site, not every project has one yet. Falls back to `image`
-   *  on the case-study page when absent; project cards always use `image`. */
+   *  screenshot of the live site. Falls back to `image` on the case-study page when
+   *  absent; project cards always use `image`. */
   mockupImage?: StaticImageData;
   /** Homepage "Selected Work" picks — curated for breadth, not just insertion order. */
   featured?: boolean;
@@ -48,8 +53,8 @@ export const projects: Project[] = [
       'A conversion-focused website built for a med spa marketing agency, combining high-end visual design with strategic marketing messaging. Designed to clearly communicate services, expertise, and value while supporting client growth in a competitive industry.',
     technologies: ['WordPress', 'Elementor Pro', 'JetEngine'],
     url: 'https://www.medic-media.com/',
-    image: medicMedia,
-    mockupImage: medicMediaMockup,
+    image: medicMediaCard,
+    mockupImage: medicMediaHero,
     featured: true,
   },
   {
@@ -68,7 +73,8 @@ export const projects: Project[] = [
       'A service-focused website built for a trusted local plumbing company, designed to highlight reliability, transparent pricing, and 24/7 customer support. The project emphasizes clear service information, strong trust signals, and easy scheduling for homeowners.',
     technologies: ['WordPress', 'Elementor Pro'],
     url: 'https://neighborhoodplumbinganddrain.com/',
-    image: neighborhoodPlumbing,
+    image: neighborhoodPlumbingCard,
+    mockupImage: neighborhoodPlumbingHero,
   },
   {
     slug: 'martin-county-humane-society',
@@ -86,7 +92,8 @@ export const projects: Project[] = [
       'A compassionate, user-friendly website designed to highlight adoptable pets and inspire meaningful connections. The project focuses on clear storytelling, warm visuals, and intuitive navigation to encourage adoption and community engagement.',
     technologies: ['WordPress', 'Elementor Pro', 'Custom Post Types'],
     url: 'https://martincountyhumane.org/',
-    image: martinCountyHumane,
+    image: martinCountyHumaneCard,
+    mockupImage: martinCountyHumaneHero,
     featured: true,
   },
   {
@@ -105,7 +112,8 @@ export const projects: Project[] = [
       'A dynamic website built for a community-driven bike shop, showcasing bikes, e-bikes, accessories, and repair services. Designed to highlight trusted brands, simplify browsing, and connect riders with everything they need to get rolling.',
     technologies: ['WordPress', 'Elementor Pro', 'WooCommerce'],
     url: 'https://thepedalshackodon.com/',
-    image: pedalShack,
+    image: pedalShackCard,
+    mockupImage: pedalShackHero,
     featured: true,
   },
   {
@@ -124,7 +132,8 @@ export const projects: Project[] = [
       'A reliable, information-focused website built to communicate trust, service coverage, and water quality standards. Designed to clearly present essential services, infrastructure updates, and customer resources for the community.',
     technologies: ['WordPress', 'Elementor Pro'],
     url: 'https://dcrws.com/',
-    image: daviessCountyRuralWater,
+    image: daviessCountyRuralWaterCard,
+    mockupImage: daviessCountyRuralWaterHero,
   },
   {
     slug: 'heritage-lux-cabinetry',
@@ -142,7 +151,8 @@ export const projects: Project[] = [
       'A refined website designed to showcase custom cabinetry and handcrafted furniture, blending timeless craftsmanship with modern aesthetics. Built to highlight the brand’s process, partnerships, and commitment to quality from concept to completion.',
     technologies: ['WordPress', 'Elementor Pro'],
     url: 'https://heritageluxcabinetry.com/',
-    image: heritageLuxCabinetry,
+    image: heritageLuxCabinetryCard,
+    mockupImage: heritageLuxCabinetryHero,
     featured: true,
   },
 ];
