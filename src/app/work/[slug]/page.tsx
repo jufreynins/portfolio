@@ -78,8 +78,8 @@ export default async function ProjectCaseStudyPage({ params }: { params: Promise
         <Bleed>
           <div className="corner-marks overflow-hidden rounded-[var(--radius-md)]" style={{ color: 'var(--ink-950)' }}>
             <Image
-              src={project.image}
-              alt={`Screenshot of the ${project.name} website`}
+              src={project.mockupImage ?? project.image}
+              alt={project.mockupImage ? `Desktop and mobile preview of the ${project.name} website` : `Screenshot of the ${project.name} website`}
               width={1920}
               height={1080}
               priority

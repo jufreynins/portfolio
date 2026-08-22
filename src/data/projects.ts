@@ -1,5 +1,6 @@
 import type { StaticImageData } from 'next/image';
 import medicMedia from '../assets/images/projects/medic-media.png';
+import medicMediaMockup from '../assets/images/projects/medic-media-mockup.png';
 import neighborhoodPlumbing from '../assets/images/projects/neighborhood-plumbing.png';
 import martinCountyHumane from '../assets/images/projects/martin-county-humane.png';
 import pedalShack from '../assets/images/projects/pedal-shack.png';
@@ -22,6 +23,10 @@ export interface Project {
   technologies: string[];
   url: string;
   image: StaticImageData;
+  /** Desktop + mobile device mockup for the case-study page hero — built from a real
+   *  screenshot of the live site, not every project has one yet. Falls back to `image`
+   *  on the case-study page when absent; project cards always use `image`. */
+  mockupImage?: StaticImageData;
   /** Homepage "Selected Work" picks — curated for breadth, not just insertion order. */
   featured?: boolean;
 }
@@ -44,6 +49,7 @@ export const projects: Project[] = [
     technologies: ['WordPress', 'Elementor Pro', 'JetEngine'],
     url: 'https://www.medic-media.com/',
     image: medicMedia,
+    mockupImage: medicMediaMockup,
     featured: true,
   },
   {
