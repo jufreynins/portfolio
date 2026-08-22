@@ -11,6 +11,8 @@ import daviessCountyRuralWaterCard from '../assets/images/projects/daviess-count
 import daviessCountyRuralWaterHero from '../assets/images/projects/daviess-county-rural-water-hero.png';
 import heritageLuxCabinetryCard from '../assets/images/projects/heritage-lux-cabinetry-card.png';
 import heritageLuxCabinetryHero from '../assets/images/projects/heritage-lux-cabinetry-hero.png';
+import risePeerRecoveryCard from '../assets/images/projects/rise-peer-recovery-card.png';
+import risePeerRecoveryHero from '../assets/images/projects/rise-peer-recovery-hero.png';
 
 export type ProjectStatus = 'Live';
 
@@ -154,6 +156,25 @@ export const projects: Project[] = [
     image: heritageLuxCabinetryCard,
     mockupImage: heritageLuxCabinetryHero,
     featured: true,
+  },
+  {
+    slug: 'rise-peer-recovery',
+    name: 'RISE Peer Recovery',
+    category: 'Nonprofit / Recovery Support',
+    status: 'Live',
+    role: 'WordPress Developer',
+    results:
+      'A clear, trustworthy site that connects people to certified peer recovery coaches and makes referring, donating, and learning about programs simple.',
+    business: 'A certified Recovery Community Organization connecting people to certified peer recovery coaches across five counties in southern Indiana.',
+    goal: 'Make it easy to refer someone for support, donate, and understand program and county coverage, while sharing community stories.',
+    contribution:
+      'Built the site from scratch on WordPress with Elementor Pro and JetEngine, including dynamic county and program listings, a donation flow, and a referral form.',
+    description:
+      'A website built from scratch for a certified Recovery Community Organization serving five counties in southern Indiana. Connects people to certified peer recovery coaches through referral and donation flows, with dynamic program and county listings and community stories.',
+    technologies: ['WordPress', 'Elementor Pro', 'JetEngine'],
+    url: 'https://risepeerrecovery.org/',
+    image: risePeerRecoveryCard,
+    mockupImage: risePeerRecoveryHero,
   },
 ];
 
